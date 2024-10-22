@@ -1,0 +1,78 @@
+.site-branding{
+	display: none;
+}
+.ast-container {
+  max-width: 100% !important;
+}
+
+.ast-left-sidebar #primary {
+	padding-left: 10px !important;
+	margin-top: 10px !important;
+}
+
+.entry-header .ast-no-thumbnail .ast-no-meta, .single .entry-header{
+	margin-bottom: 0px !important;
+}
+
+.entry-content p {
+	margin-bottom: 15px !important;
+}
+.sidebar-main {
+  position: fixed;
+  top: 6%;
+  left: 0;
+  height: 700px !important;
+  width: 25%;
+  overflow-y: scroll;
+}
+
+.main-header-bar {
+	line-height: 0 !important;
+}
+
+.saboxplugin-wrap{
+	display: none !important;
+}
+
+.comments-area{
+	display: none !important;
+}
+
+.site-footer
+{
+	display: none !important;
+}
+
+body,span,pre {
+  font-family: Segoe UI,SegoeUI,Helvetica Neue,Helvetica,Arial,sans-serif !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  text-decoration: none !important;
+  font-size: 1rem !important;
+  text-indent: 0pt !important;
+  line-height: 170% !important;
+  text-align: justify !important;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizelegibility;
+}
+h6,h5,h4,h3,h2,h1 {
+	margin: 0px !important;
+	padding: 10px 10px !important;
+  font-family: Verdana, serif !important;
+}
+
+h6 strong,h5 strong,h4 strong,h3 strong,h2 strong,h1 strong {
+	color: #00AF50 !important;
+	font-family: Segoe UI,SegoeUI,Helvetica Neue,Helvetica,Arial,sans-serif !important;
+	letter-spacing: 1px;
+	font-weight: 500 !important;
+}
+
+.current-lesson .lesson-title {
+	font-weight: 500 !important;
+	color: red;
+}
+
+.current-lesson .lesson-title a {
+	color: red !important;
+}
