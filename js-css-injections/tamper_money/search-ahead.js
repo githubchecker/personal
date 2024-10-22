@@ -128,10 +128,11 @@
 
     // Handle keydown event to show search input
     document.addEventListener('keydown', (e) => {
-       const activeElement = document.activeElement;
+        const activeElement = document.activeElement;
         const isInputFocused = activeElement && (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA' || activeElement.isContentEditable);
+        const isKeyCombination = e.ctrlKey || e.altKey || e.shiftKey;
 
-        if (!searchInput && !isInputFocused && /^[a-z0-9]$/i.test(e.key)) {
+        if (!searchInput && !isInputFocused && !isKeyCombination && /^[a-z0-9]$/i.test(e.key)) {
             createSearchInput(e.key);
         } else if (e.key === 'Escape' && searchInput) {
             searchInput.value = '';
