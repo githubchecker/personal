@@ -14,54 +14,73 @@
 
     // --- CONFIGURATION ---
     // You can easily change the styles applied in focus mode here.
+    // Add or remove properties like fontSize, lineHeight, etc., for each profile.
     const styleProfiles = {
         p1: {
             fontFamily: 'MATH, "Cambria Math", serif',
-            /*lineHeight: '20px',*/
-            /*letterSpacing: '0px',*/
+            fontSize: '18px',
+            //lineHeight: '20px',
+            //letterSpacing: '0px',
             wordSpacing: '1.5px'
         },
         p2: {
             fontFamily: 'MONOSPACE, "Courier New", monospace',
-            /*lineHeight: '20px',*/
-            /*letterSpacing: '0px',*/
+            fontSize: '16px',
+            //lineHeight: '20px',
+            letterSpacing: '-0.2px',
             wordSpacing: '-1px'
         },
         p3: {
             fontFamily: 'serif, Georgia, "Times New Roman"',
-            /*lineHeight: '20px',*/
-            /*letterSpacing: '0px',*/
-            /*wordSpacing: '1px'*/
+            fontSize: '17px',
+            lineHeight: '1.7',
+            //letterSpacing: '0px',
+            //wordSpacing: '1px'
         },
         p4: {
-            fontFamily: 'Minion Pro',
-            font-size: 16px,
-            /*lineHeight: '20px',*/
-            /*letterSpacing: '0px',*/
-            /*wordSpacing: '1px'*/
+            fontFamily: '"Minion Pro", serif',
+            fontSize: '19px',
+            lineHeight: '1.8',
+            letterSpacing: '0.2px',
+            //wordSpacing: '1px'
         }
     };
 
     // --- EDIT THIS LINE TO CHANGE THE ACTIVE STYLE ---
-    const activeProfileName = 'p4'; // Options are: 'p1', 'p2', 'p3'
+    const activeProfileName = 'p2'; // Options are: 'p1', 'p2', 'p3', 'p4'
     // --------------------------------------------------
 
 
     setTimeout(() => {
         const activeProfile = styleProfiles[activeProfileName];
 
-        // Dynamically generate the CSS for focus mode
+        // --- Robust CSS Generation ---
+        const generateFocusStyles = (profile) => {
+            let styles = '';
+            if (profile.fontFamily)    styles += `font-family: ${profile.fontFamily} !important;\n`;
+            if (profile.fontSize)      styles += `font-size: ${profile.fontSize} !important;\n`;
+            if (profile.lineHeight)    styles += `line-height: ${profile.lineHeight} !important;\n`;
+            if (profile.letterSpacing) styles += `letter-spacing: ${profile.letterSpacing} !important;\n`;
+            if (profile.wordSpacing)   styles += `word-spacing: ${profile.wordSpacing} !important;\n`;
+            return styles;
+        };
+
+        const focusModeCss = generateFocusStyles(activeProfile);
+
+        // --- All Styles ---
         const cssStyles = `
         body.focus-mode-active {
             display: flex;
         }
 
+        /* Static style for paragraphs in focus mode */
+        body.focus-mode-active p {
+            color: #535252 !important;
+        }
+
         /* Dynamically applied styles for focus mode */
         body.focus-mode-active * {
-            font-family: ${activeProfile.fontFamily} !important;
-            line-height: ${activeProfile.lineHeight} !important;
-            letter-spacing: ${activeProfile.letterSpacing} !important;
-            word-spacing: ${activeProfile.wordSpacing} !important;
+            ${focusModeCss}
         }
 
         .focus-mode-fab {
