@@ -32,11 +32,18 @@
             /*lineHeight: '20px',*/
             /*letterSpacing: '0px',*/
             /*wordSpacing: '1px'*/
+        },
+        p4: {
+            fontFamily: 'Minion Pro',
+            font-size: 16px,
+            /*lineHeight: '20px',*/
+            /*letterSpacing: '0px',*/
+            /*wordSpacing: '1px'*/
         }
     };
 
     // --- EDIT THIS LINE TO CHANGE THE ACTIVE STYLE ---
-    const activeProfileName = 'p2'; // Options are: 'p1', 'p2', 'p3'
+    const activeProfileName = 'p4'; // Options are: 'p1', 'p2', 'p3'
     // --------------------------------------------------
 
 
