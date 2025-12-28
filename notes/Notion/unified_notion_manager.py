@@ -105,8 +105,12 @@ def run_official_uploader():
                             elif "[!CAUTION]" in raw: callout_type="CAUTION"; emoji="🛑"; color="red_background"
                             
                             if callout_type:
-                                clean_text = raw.replace(f"[!{callout_type}]", "").strip()
-                                tokens[j].content = clean_text 
+                                tag = f"[!{callout_type}]"
+                                # Strip tag from children for Rich Text
+                                for child in tokens[j].children:
+                                    if child.type == 'text' and tag in child.content:
+                                        child.content = child.content.replace(tag, "").strip()
+                                
                                 rich_text = build_rich_text(tokens[j].children)
                                 blocks.append({"object": "block", "type": "callout", "callout": {"rich_text": rich_text, "icon": {"emoji": emoji}, "color": color}})
                             else:
@@ -131,13 +135,23 @@ def run_official_uploader():
                          blocks.append({"object": "block", "type": "table", "table": {"table_width": max(len(r) for r in rows), "has_column_header": True, "has_row_header": False, "children": [{"type": "table_row", "table_row": {"cells": r}} for r in rows]}})
                     i = end_idx + 1
 
-                elif token.type == "fence":
-                    lang = token.info.split()[0].lower() if token.info else "plain text"
+                elif token.type == "fence" or token.type == "code_block":
+                    lang = "plain text"
+                    if token.type == "fence" and token.info:
+                        lang = token.info.split()[0].lower()
+                    
                     code = token.content
                     
                     # Language Map
                     valid_langs = {"abap", "agda", "arduino", "assembly", "bash", "basic", "bnf", "c", "c#", "c++", "clojure", "coffeescript", "coq", "css", "dart", "dhall", "diff", "docker", "ebnf", "elixir", "elm", "erlang", "f#", "flow", "fortran", "gherkin", "glsl", "go", "graphql", "groovy", "haskell", "hcl", "html", "idris", "java", "javascript", "json", "julia", "kotlin", "latex", "less", "lisp", "livescript", "llvm ir", "lua", "makefile", "markdown", "markup", "matlab", "mathematica", "mermaid", "nix", "notion formula", "objective-c", "ocaml", "pascal", "perl", "php", "plain text", "powershell", "prolog", "protobuf", "purescript", "python", "r", "racket", "reason", "ruby", "rust", "sass", "scala", "scheme", "scss", "shell", "smalltalk", "solidity", "sql", "swift", "toml", "typescript", "vb.net", "verilog", "vhdl", "visual basic", "webassembly", "xml", "yaml", "java/c/c++/c#"}
-                    alias_map = {"dotnetcli": "shell", "console": "shell", "log": "shell", "output": "shell", "t4": "c#", "tsql": "sql", "mssql": "sql", "plsql": "sql", "powershell": "powershell", "cs": "c#", "js": "javascript", "ts": "typescript", "py": "python"}
+                    alias_map = {
+                        "dotnetcli": "shell", "console": "shell", "log": "shell", "output": "shell", 
+                        "t4": "c#", "tsql": "sql", "mssql": "sql", "plsql": "sql", 
+                        "powershell": "powershell", "cs": "c#", "csharp": "c#",
+                        "js": "javascript", "ts": "typescript", "py": "python",
+                        "xml": "xml", "json": "json", "html": "html", "css": "css",
+                        "bash": "bash", "sh": "bash", "zsh": "bash"
+                    }
                     
                     clean_lang = alias_map.get(lang, lang)
                     if clean_lang not in valid_langs: clean_lang = "plain text"
@@ -170,7 +184,11 @@ def run_official_uploader():
 
     def upload_recursive(path, parent_id, level=0):
         indent = "  " * level
-        for item in sorted(os.listdir(path)):
+        
+        def natural_sort_key(s):
+            return [int(text) if text.isdigit() else text.lower() for text in re.split(r'(\d+)', s)]
+
+        for item in sorted(os.listdir(path), key=natural_sort_key):
             full_path = os.path.join(path, item)
             if os.path.isdir(full_path):
                 print(f"{indent}[Folder] {item}")
