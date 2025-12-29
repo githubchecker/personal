@@ -269,11 +269,11 @@ def fetch_and_convert(url):
         print(f"    Error scraping {url}: {e}")
         return f"# Error\nFailed to fetch {url}\n{e}"
 
-def process_toc_recursive(element, current_path):
+def process_toc_recursive(element, current_path, index=None):
     """Recursively processes UL/LI structure."""
     if element.name == 'ul':
-        for li in element.find_all('li', recursive=False):
-            process_toc_recursive(li, current_path)
+        for i, li in enumerate(element.find_all('li', recursive=False), 1):
+            process_toc_recursive(li, current_path, index=i)
     
     elif element.name == 'li':
         link = element.find('a', recursive=False)
@@ -282,14 +282,33 @@ def process_toc_recursive(element, current_path):
         item_name = "Untitled"
         target_url = None
         
+        # 1. Try extracting name from Link
         if link:
-            item_name = clean_filename(link.get_text())
+            raw_text = link.get_text(strip=True)
+            if raw_text: item_name = clean_filename(raw_text)
             href = link.get('href')
             if href:
                 target_url = urljoin(BASE_URL, href)
-        else:
+        
+        # 2. Try extracting from direct text if still Untitled
+        if item_name == "Untitled":
              text = element.find(string=True, recursive=False)
-             if text: item_name = clean_filename(text)
+             if text and text.strip(): 
+                 item_name = clean_filename(text)
+        
+        # 3. Last Resort: Get all text (careful not include nested UL text if possible, but soup.get_text does)
+        # We assume clean_filename handles basic stripping.
+        if item_name == "Untitled":
+             # Try to get text *excluding* the nested UL
+             # brute force: get text, remove nested UL text? 
+             # Simpler: just get first non-empty string in descendants
+             for s in element.stripped_strings:
+                 item_name = clean_filename(s)
+                 break
+        
+        # Apply Numbering
+        if index is not None:
+            item_name = f"{index}. {item_name}"
 
         # Folder Logic
         if nested_ul:
