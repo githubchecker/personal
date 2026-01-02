@@ -215,8 +215,9 @@ class MicrosoftLearnScraper(BaseScraper):
 
 # --- Orchestration ---
 
-INPUT_TOC_FILE = "Scripts/toc.html"
-OUTPUT_DIR = "Scraped_Docs"
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+INPUT_TOC_FILE = os.path.join(SCRIPT_DIR, "toc.html")
+OUTPUT_DIR = os.path.join(SCRIPT_DIR, "Scraped_Docs")
 BASE_URL = "https://learn.microsoft.com/en-us/aspnet/core/"
 
 def clean_filename(text):
