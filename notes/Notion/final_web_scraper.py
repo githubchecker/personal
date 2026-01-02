@@ -166,19 +166,20 @@ class MicrosoftLearnScraper(BaseScraper):
                 tag.decompose()
 
         # 2a. Text-Based Removal (Stubborn artifacts)
-        # Remove elements that are just "Table of contents" or "Exit editor mode"
-        # We iterate over all divs and navs to check their direct text match
+        # Iterate over all tags to find direct text matches anywhere
         text_targets = ["Table of contents", "Exit editor mode", "Summarize this article for me"]
-        for tag in soup.find_all(['div', 'nav', 'button', 'span']):
+        for tag in soup.find_all(True):  # All tags
             if tag.get_text(strip=True) in text_targets:
-                tag.decompose()
+                # If it's a small element like a button or span, decomposition is safe
+                if tag.name in ['div', 'nav', 'button', 'span', 'section']:
+                    tag.decompose()
         
         # Remove specific warning block (text processing)
         # "Access to this page requires authorization" is usually in a div with a link
-        for div in soup.find_all('div'):
-             txt = div.get_text(strip=True)
+        for tag in soup.find_all(True):
+             txt = tag.get_text(strip=True)
              if "Access to this page requires authorization" in txt and len(txt) < 300:
-                 div.decompose()
+                 tag.decompose()
 
         # 3. Tab Groups -> Unwrap
         for tg in soup.find_all('div', class_='tabGroup'):
@@ -191,16 +192,21 @@ class MicrosoftLearnScraper(BaseScraper):
             if marker in text:
                 text = text.split(marker)[0].strip()
         
-        # Intro Cleanup
-        lines = text.splitlines()
-        while lines and not lines[0].strip(): lines.pop(0)
+        # Regex to collapse excessive blank lines (3 or more -> 2)
+        text = re.sub(r'\n{3,}', '\n\n', text)
         
+        # Intro Cleanup: Ensure document starts with the content
+        text = text.strip()
+        
+        # Final sanity check for common leakage
+        lines = text.splitlines()
         cleaned_lines = []
         for line in lines:
-             if line.strip() in ["Back to top", "On this page"]: continue
+             l = line.strip()
+             if l in ["Back to top", "On this page", "Summarize this article for me"]: continue
              cleaned_lines.append(line)
         
-        return "\n".join(cleaned_lines)
+        return "\n".join(cleaned_lines).strip()
 
     def scrape(self, url):
         html = self.fetch_html(url)
@@ -217,7 +223,8 @@ class MicrosoftLearnScraper(BaseScraper):
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 INPUT_TOC_FILE = os.path.join(SCRIPT_DIR, "toc.html")
-OUTPUT_DIR = os.path.join(SCRIPT_DIR, "Scraped_Docs")
+# Set output directory to a 'dump' folder under SCRIPT_DIR
+OUTPUT_DIR = os.path.join(SCRIPT_DIR, "dump")
 BASE_URL = "https://learn.microsoft.com/en-us/aspnet/core/"
 
 def clean_filename(text):
