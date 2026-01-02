@@ -1,276 +1,231 @@
+
 import os
+import time
 import requests
 from bs4 import BeautifulSoup
-import re
-import time
-import urllib.parse
 from urllib.parse import urljoin
-
-# --- Configuration ---
-INPUT_TOC_FILE = "toc.html"
-OUTPUT_DIR = "Scraped_Docs"
-# Optional: Set this if links in TOC are relative
-BASE_URL = "https://learn.microsoft.com" 
+import re
+from markdownify import MarkdownConverter
 
 # Headers to mimic a browser
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
 }
 
-def clean_filename(name):
-    """Sanitizes strings to be safe for filenames."""
-    cleaned = re.sub(r'[\\/*?:"<>|]', "", name)
-    cleaned = "".join(ch for ch in cleaned if ord(ch) >= 32)
-    cleaned = re.sub(r'\s+', ' ', cleaned)
-    return cleaned.strip() or "Untitled"
-
-def is_sql(content):
-    """Heuristic to check if content is SQL."""
-    keywords = [
-        r'\bCREATE\s+DATABASE\b', r'\bCREATE\s+TABLE\b', r'\bINSERT\s+INTO\b',
-        r'\bSELECT\s+.*?\s+FROM\b', r'\bUPDATE\s+.*?\s+SET\b', r'\bDELETE\s+FROM\b',
-        r'\bUSE\s+\[?\w+\]?', r'\bGO\s*$', r'\bNVARCHAR\b', r'\bPRIMARY\s+KEY\b'
-    ]
-    content_upper = content.upper()
-    if "namespace " in content and "class " in content: return False # C# false positive check
-    
-    match_count = 0
-    for pattern in keywords:
-        if re.search(pattern, content_upper, re.MULTILINE):
-            match_count += 1
-            if match_count >= 2: return True
-    return False
-
-def clean_intro_text(content):
+class CustomConverter(MarkdownConverter):
     """
-    Cleans up tutorial introductions:
-    - Removes 'Back to' links.
-    - Removes redundant agenda lists (1. ... 2. ...) before the first real header.
-    - Removes dangling phrases like 'discuss the following points:'.
+    Custom Markdownify Converter for MS Learn specifics.
     """
-    lines = content.splitlines()
-    new_lines = []
-    header_found = False
-    
-    hanging_phrases = [
-        "discuss the following pointers", "discuss the following points",
-        "discuss the following topics", "discuss the following concepts"
-    ]
+    def __init__(self, base_url, **kwargs):
+        super().__init__(**kwargs)
+        self.base_url = base_url
 
-    for line in lines:
-        stripped = line.strip()
-        
-        # 1. Remove "Back to:" link
-        if not header_found and stripped.startswith("Back to") and "asp-net-core-tutorials" in stripped.lower():
-            continue
-            
-        # Stop intro processing if we hit a Header (H1 or H2)
-        if stripped.startswith("#"):
-            header_found = True
-            
-        # 2. Remove Numbered List (Agenda) before first header
-        # Regex: Start of line, number, dot, space.
-        if not header_found and re.match(r'^\d+\.\s.*', stripped):
-            continue
-        
-        # 3. Remove Hanging Phrases in Intro
-        if not header_found:
-            for phrase in hanging_phrases:
-                if phrase in line:
-                    # Replace specific connective variations
-                    line = line.replace(" and " + phrase, ".")
-                    line = line.replace(", " + phrase, ".")
-                    line = line.replace(" " + phrase, ".")
-                    line = line.replace(phrase, "")
-                    # Clean up trailing punctuation/colons if left
-                    line = re.sub(r'[:\.]+\s*$', '.', line)
+    def convert_a(self, el, text, convert_as_inline=False, **kwargs):
+        href = el.get('href')
+        if href and not href.startswith('http'):
+            href = urljoin(self.base_url, href)
+        if not text: text = href
+        return f"[{text}]({href})" if href else text
 
-        new_lines.append(line)
-        
-    return "\n".join(new_lines)
+    def convert_img(self, el, text, convert_as_inline=False, **kwargs):
+        src = el.get('src') or el.get('data-src') or el.get('data-original')
+        alt = el.get('alt', '')
+        if src and not src.startswith('http'):
+            src = urljoin(self.base_url, src)
+        return f"![{alt}]({src})" if src else ""
 
-def html_to_markdown_custom(html_content, base_url, default_lang=''):
-    """
-    Custom HTML to Markdown converter from doc_manager.py
-    optimized for MS Learn and Technical Docs.
-    """
-    soup = BeautifulSoup(html_content, 'html.parser')
-    
-    # 1. Handle Images (Lazy Loading support)
-    for img in soup.find_all('img'):
-        if not img.parent: continue
-        src = img.get('data-src') or img.get('data-original') or img.get('src')
-        alt = img.get('alt', 'Image')
-        if src:
-            if not src.startswith('http'):
-                src = urljoin(base_url, src)
-            img.replace_with(f"![{alt}]({src})")
-
-    # 2. MS Learn Tab Groups (Convert to Header Sections)
-    for tab_group in soup.find_all('div', class_='tabGroup'):
-        if not tab_group.parent: continue
-        tab_group.unwrap()
-
-    # 3. Links
-    for a in soup.find_all('a'):
-        if not a.parent: continue
-        href = a.get('href', '')
-        text = a.get_text(strip=True)
-        if href:
-            if not href.startswith('http'):
-                href = urljoin(base_url, href)
-            a.replace_with(f"[{text}]({href})")
-
-    # 4. Code Blocks (Preserve Language + SQL Detection)
-    for pre in soup.find_all('pre'):
-        if not pre.parent: continue
-        code = pre.find('code')
-        lang = default_lang
-        if code and code.has_attr('class'):
-            for c in code['class']:
+    def convert_pre(self, el, text, convert_as_inline=False, **kwargs):
+        code = el.find('code')
+        language = ""
+        if code:
+            # Extract language from class (e.g. lang-csharp)
+            classes = code.get('class', [])
+            for c in classes:
                 if c.startswith('lang-'):
-                    lang = c.replace('lang-', '')
-        
-        text = code.get_text() if code else pre.get_text()
-        
-        # Heuristic SQL Detection
-        if (not lang or lang == 'plain') and is_sql(text):
-            lang = 'sql'
+                    language = c.replace('lang-', '')
+            # Heuristic SQL
+            if not language and self._is_sql(code.get_text()):
+                language = 'sql'
+            
+            raw_text = code.get_text()
+        else:
+            raw_text = el.get_text()
+            
+        return f"\n\n```{language}\n{raw_text.strip()}\n```\n\n"
 
-        new_text = f"\n\n```{lang}\n{text.strip()}\n```\n\n"
-        pre.replace_with(new_text)
+    def convert_code(self, el, text, convert_as_inline=False, **kwargs):
+        return f" `{text}` " if text else ""
 
-    # 5. Headers (H1-H6)
-    for i in range(1, 7):
-        for h in soup.find_all(f'h{i}'):
-            if not h.parent: continue
-            prefix = '#' * i
-            h.replace_with(f"\n\n{prefix} {h.get_text(strip=True)}\n\n")
+    def convert_strong(self, el, text, convert_as_inline=False, **kwargs):
+        return f"**{text}**" if text else ""
 
-    # 6. Alerts (Note, Tip, Warning) -> GitHub Alert Syntax
-    for div in soup.find_all('div'):
-        if not div.parent: continue
-        classes = [c.upper() for c in div.get('class', [])]
+    def convert_b(self, el, text, convert_as_inline=False, **kwargs):
+        return f"**{text}**" if text else ""
+
+    def convert_em(self, el, text, convert_as_inline=False, **kwargs):
+        return f"*{text}*" if text else ""
+
+    def convert_i(self, el, text, convert_as_inline=False, **kwargs):
+        return f"*{text}*" if text else ""
+
+    def convert_div(self, el, text, convert_as_inline=False, **kwargs):
+        # Handle Alerts
+        classes = [c.upper() for c in el.get('class', [])]
         alert_type = None
-        if 'NOTE' in classes: alert_type = 'NOTE'
-        elif 'TIP' in classes: alert_type = 'TIP'
+        if 'NOTE' in classes or 'ALERT-INFO' in classes: alert_type = 'NOTE'
+        elif 'TIP' in classes or 'ALERT-SUCCESS' in classes: alert_type = 'TIP'
         elif 'IMPORTANT' in classes: alert_type = 'IMPORTANT'
-        elif 'WARNING' in classes: alert_type = 'WARNING'
+        elif 'WARNING' in classes or 'ALERT-WARNING' in classes: alert_type = 'WARNING'
         elif 'CAUTION' in classes: alert_type = 'CAUTION'
-        
+
         if alert_type:
-            content = div.get_text(separator=' ', strip=True)
-            div.replace_with(f"\n> [!{alert_type}]\n> {content}\n")
-
-    # 7. Tables (Basic Markdown Table generation)
-    for table in soup.find_all('table'):
-        if not table.parent: continue
-        rows = []
-        headers = []
+            # Strip "Note" prefix if present in text
+            # Note: 'text' passed here is already converted markdown of children.
+            # We need raw text to check prefix? 
+            # Actually, `text` is the inner content.
+            # MS Learn alerts usually have the type as the first word.
+            clean_text = text.strip()
+            # Simple check: if it starts with the alert type (case insensitive)
+            if clean_text.upper().startswith(alert_type):
+                clean_text = clean_text[len(alert_type):].strip()
+            
+            # Format as blockquote with alert syntax
+            lines = clean_text.splitlines()
+            quoted_lines = [f"> {line}" for line in lines]
+            return f"\n> [!{alert_type}]\n" + "\n".join(quoted_lines) + "\n\n"
         
-        # Extract headers
-        thead = table.find('thead')
-        if thead:
-            headers = [th.get_text(strip=True) for th in thead.find_all('th')]
-        
-        # Extract rows
-        tbody = table.find('tbody') or table
-        for tr in tbody.find_all('tr'):
-            cells = [td.get_text(strip=True) for td in tr.find_all(['td', 'th'])]
-            if cells:
-                rows.append(cells)
-        
-        # If no headers found but rows exist, use empty headers
-        if not headers and rows:
-             headers = [""] * len(rows[0])
+        # Default recursive usage for other divs (unwrap)
+        return text
 
-        if headers:
-            md_table = "\n\n| " + " | ".join(headers) + " |\n"
-            md_table += "| " + " | ".join(["---"] * len(headers)) + " |\n"
-            for row in rows:
-                while len(row) < len(headers): row.append("")
-                md_table += "| " + " | ".join(row) + " |\n"
-            table.replace_with(md_table)
+    def _is_sql(self, text):
+        keywords = ["SELECT", "INSERT", "UPDATE", "DELETE", "FROM", "WHERE", "JOIN"]
+        count = sum(1 for k in keywords if k in text.upper())
+        return count >= 2
 
-    # 8. Lists (Bold Keys Logic)
-    for li in soup.find_all('li'):
-         if not li.parent: continue
-         content = li.get_text(strip=True)
-         
-         # Bold "Key: Value" pattern
-         if ':' in content and not content.startswith('**'):
-             parts = content.split(':', 1)
-             key = parts[0].strip()
-             val = parts[1].strip()
-             # Heuristic: keys usually aren't super long sentences
-             if len(key) < 50: 
-                 content = f"**{key}:** {val}"
-         
-         li.replace_with(f"* {content}\n")
 
-    final_text = soup.get_text().strip()
-    
-    # 9. Clean Intro (Back to, Agenda lists, Dangling phrases)
-    final_text = clean_intro_text(final_text)
+class BaseScraper:
+    def __init__(self, base_url):
+        self.base_url = base_url
 
-    # 10. Footer Truncation
-    marker = "In the next article,"
-    if marker in final_text:
-        final_text = final_text.split(marker)[0].strip()
+    def fetch_html(self, url):
+        try:
+            print(f"    Fetching: {url}")
+            response = requests.get(url, headers=HEADERS, timeout=15)
+            response.raise_for_status()
+            return response.text
+        except Exception as e:
+            print(f"    Error fetching {url}: {e}")
+            return None
 
-    return final_text
-
-def fetch_and_convert(url):
-    """Fetches URL and converts main content to Markdown."""
-    try:
-        print(f"    Fetching: {url}")
-        response = requests.get(url, headers=HEADERS, timeout=15)
-        response.raise_for_status()
+    def extract_main_content(self, soup):
+        # Specific MS Learn attribute (User Suggested)
+        content_div = soup.find(attrs={"data-main-column": True})
         
-        soup = BeautifulSoup(response.text, 'html.parser')
-        
-        # Smart Content Detection (Merged from doc_manager.py)
-        content_div = None
-        
-        # 1. Try WordPress/DotNetTutorials style
-        content_div = soup.find('div', class_='entry-content')
-        
-        # 2. Try MS Learn aggregated content
         if not content_div:
-            content_nodes = soup.find_all('div', class_='content')
-            if content_nodes:
-                 content_div = soup.new_tag("div")
-                 for node in content_nodes: content_div.append(node)
+            content_div = soup.find('div', class_='entry-content')
         
-        # 3. Fallback generic
         if not content_div:
             content_div = (soup.find('main') or 
                            soup.find('article') or 
                            soup.find('div', attrs={'id': 'content'}))
+        return content_div or soup.body
 
-        if not content_div:
-            print("    Warning: No main content found. Using body.")
-            content_div = soup.body
+    def html_to_markdown(self, soup):
+        # Use markdownify with custom converter
+        # heading_style='ATX' -> # Header
+        converter = CustomConverter(base_url=self.base_url, heading_style='ATX')
+        return converter.convert_soup(soup)
 
-        # Cleanup Junk
-        selectors_to_remove = [
-            '.page-metadata-container', '.doc-outline', '#action-panel', 
-            '.feedback-section', '.page-actions', 'bread-crumbs', 
-            '#article-header', '.display-none-print', 'script', 'style', 'footer', 'nav'
+
+class MicrosoftLearnScraper(BaseScraper):
+    def preprocess_html(self, soup, url):
+        # 1. Global Moniker Filter
+        if 'view=' in url:
+            try:
+                target_version = url.split('view=')[1].split('&')[0]
+                # Safe Iteration
+                for tag in list(soup.find_all(attrs={"data-moniker": True})):
+                     if tag.attrs is None or not tag.has_attr('data-moniker'): continue
+                     monikers = tag['data-moniker'].split()
+                     if target_version not in monikers:
+                         tag.decompose()
+            except IndexError:
+                pass
+
+        # 2. Cleanup
+        selectors = [
+             '.page-metadata-container', '.doc-outline', '#action-panel', 
+             '.feedback-section', '.page-actions', 'bread-crumbs', 
+             '#article-header', '.display-none-print', 'script', 'style', 'footer', 'nav',
+             # New aggressive filters
+             '.toc', '.toc-container', 'button.toc-button', 
+             '.edit-mode-alert', '.authorization-alert', '.azure-study-group-notification'
         ]
-        for selector in selectors_to_remove:
-            for tag in content_div.select(selector):
+        for sel in selectors:
+            for tag in soup.select(sel):
                 tag.decompose()
 
-        # Convert
-        return html_to_markdown_custom(str(content_div), url)
+        # 2a. Text-Based Removal (Stubborn artifacts)
+        # Remove elements that are just "Table of contents" or "Exit editor mode"
+        # We iterate over all divs and navs to check their direct text match
+        text_targets = ["Table of contents", "Exit editor mode", "Summarize this article for me"]
+        for tag in soup.find_all(['div', 'nav', 'button', 'span']):
+            if tag.get_text(strip=True) in text_targets:
+                tag.decompose()
+        
+        # Remove specific warning block (text processing)
+        # "Access to this page requires authorization" is usually in a div with a link
+        for div in soup.find_all('div'):
+             txt = div.get_text(strip=True)
+             if "Access to this page requires authorization" in txt and len(txt) < 300:
+                 div.decompose()
 
-    except Exception as e:
-        print(f"    Error scraping {url}: {e}")
-        return f"# Error\nFailed to fetch {url}\n{e}"
+        # 3. Tab Groups -> Unwrap
+        for tg in soup.find_all('div', class_='tabGroup'):
+            tg.unwrap()
+
+    def postprocess_markdown(self, text):
+        # Footer Truncation
+        markers = ["In the next article,", "## Additional resources", "## See also"]
+        for marker in markers:
+            if marker in text:
+                text = text.split(marker)[0].strip()
+        
+        # Intro Cleanup
+        lines = text.splitlines()
+        while lines and not lines[0].strip(): lines.pop(0)
+        
+        cleaned_lines = []
+        for line in lines:
+             if line.strip() in ["Back to top", "On this page"]: continue
+             cleaned_lines.append(line)
+        
+        return "\n".join(cleaned_lines)
+
+    def scrape(self, url):
+        html = self.fetch_html(url)
+        if not html: return f"# Error\nFailed to fetch {url}"
+        
+        soup = BeautifulSoup(html, 'html.parser')
+        main_soup = self.extract_main_content(soup)
+        self.preprocess_html(main_soup, url)
+        md = self.html_to_markdown(main_soup)
+        md = self.postprocess_markdown(md)
+        return md
+
+# --- Orchestration ---
+
+INPUT_TOC_FILE = "Scripts/toc.html"
+OUTPUT_DIR = "Scraped_Docs"
+BASE_URL = "https://learn.microsoft.com/en-us/aspnet/core/"
+
+def clean_filename(text):
+    text = re.sub(r'[\\/*?:"<>|]', "", text)
+    # Robust whitespace normalization
+    text = " ".join(text.split())
+    return text.strip() or "Untitled"
 
 def process_toc_recursive(element, current_path, index=None):
-    """Recursively processes UL/LI structure."""
     if element.name == 'ul':
         for i, li in enumerate(element.find_all('li', recursive=False), 1):
             process_toc_recursive(li, current_path, index=i)
@@ -278,80 +233,55 @@ def process_toc_recursive(element, current_path, index=None):
     elif element.name == 'li':
         link = element.find('a', recursive=False)
         nested_ul = element.find('ul', recursive=False)
-        
         item_name = "Untitled"
         target_url = None
         
-        # 1. Try extracting name from Link
         if link:
-            raw_text = link.get_text(strip=True)
-            if raw_text: item_name = clean_filename(raw_text)
-            href = link.get('href')
-            if href:
-                target_url = urljoin(BASE_URL, href)
+            item_name = clean_filename(link.get_text(strip=True))
+            if link.get('href'):
+                target_url = urljoin(BASE_URL, link['href'])
         
-        # 2. Try extracting from direct text if still Untitled
         if item_name == "Untitled":
-             text = element.find(string=True, recursive=False)
-             if text and text.strip(): 
-                 item_name = clean_filename(text)
-        
-        # 3. Last Resort: Get all text (careful not include nested UL text if possible, but soup.get_text does)
-        # We assume clean_filename handles basic stripping.
-        if item_name == "Untitled":
-             # Try to get text *excluding* the nested UL
-             # brute force: get text, remove nested UL text? 
-             # Simpler: just get first non-empty string in descendants
              for s in element.stripped_strings:
                  item_name = clean_filename(s)
                  break
         
-        # Apply Numbering
         if index is not None:
             item_name = f"{index}. {item_name}"
 
-        # Folder Logic
+        # Folder or File?
         if nested_ul:
             new_dir = os.path.join(current_path, item_name)
             os.makedirs(new_dir, exist_ok=True)
-            
-            # If folder has content, save as {Folder}.md inside
             if target_url:
-                md_content = fetch_and_convert(target_url)
+                scraper = MicrosoftLearnScraper(BASE_URL)
+                md = scraper.scrape(target_url)
                 with open(os.path.join(current_path, f"{item_name}.md"), "w", encoding="utf-8") as f:
-                    f.write(md_content)
-            
+                    f.write(md)
             process_toc_recursive(nested_ul, new_dir)
-        
-        # File Logic
         elif target_url:
-            md_content = fetch_and_convert(target_url)
+            scraper = MicrosoftLearnScraper(BASE_URL)
+            md = scraper.scrape(target_url)
             with open(os.path.join(current_path, f"{item_name}.md"), "w", encoding="utf-8") as f:
-                f.write(md_content)
+                f.write(md)
             time.sleep(0.5)
 
 def main():
     if not os.path.exists(INPUT_TOC_FILE):
-        print(f"Error: {INPUT_TOC_FILE} not found. Please create it with your <ul> structure.")
+        print(f"Error: {INPUT_TOC_FILE} not found.")
         return
 
-    print(f"Reading {INPUT_TOC_FILE}...")
+    print("Starting Modular Web Scraper (Markdownify)...")
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
     with open(INPUT_TOC_FILE, "r", encoding="utf-8") as f:
-        html = f.read()
-
-    soup = BeautifulSoup(html, 'html.parser')
-    root_ul = soup.find('ul')
+        soup = BeautifulSoup(f.read(), 'html.parser')
     
-    if not root_ul:
-        print("Error: No root <ul> found.")
-        return
-
-    if not os.path.exists(OUTPUT_DIR):
-        os.makedirs(OUTPUT_DIR)
-
-    print("Starting Final Web Scraper...")
-    process_toc_recursive(root_ul, OUTPUT_DIR)
-    print("\nDone! Content saved in:", OUTPUT_DIR)
+    root = soup.find('ul')
+    if root:
+        process_toc_recursive(root, OUTPUT_DIR)
+        print("Done.")
+    else:
+        print("No root UL found.")
 
 if __name__ == "__main__":
     main()
