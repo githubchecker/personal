@@ -823,10 +823,23 @@ Example:
 📈 **Comparison:** [How this curriculum compares to average courses]
 ```
 
-### Rule 11: MINIMUM TOPIC COUNT ENFORCEMENT
-**⚠️ CRITICAL: Outlines MUST meet minimum topic counts. Do NOT compress.**
+### Rule 11: MINIMUM TOPIC COUNT ENFORCEMENT ⚠️ PATH 1 (BROAD TOPICS) ONLY
 
-**Minimum Requirements by Category (AI detects dynamically):**
+**⚠️ CRITICAL SCOPE:** This rule ONLY applies to BROAD topics in PATH 1.
+**DO NOT apply to NARROW topics in PATH 2** (those use compact 2-4 module structure).
+
+**Before applying minimums, verify:**
+```
+IF {{SCOPE}} = NARROW:
+  → SKIP this entire rule
+  → Use PATH 2 compact structure (2-4 modules max)
+  → DO NOT enforce category minimums
+
+IF {{SCOPE}} = BROAD:
+  → Apply minimums below based on {{CATEGORY}}
+```
+
+**Minimum Requirements by Category (For BROAD Topics Only):**
 
 | Category | Min Modules | Min Topics | Min Sub-Topics/Module |
 |----------|-------------|------------|----------------------|
@@ -866,6 +879,13 @@ Example patterns (AI determines per topic):
 
 ```markdown
 Before outputting outline, AI verifies:
+
+⚠️ STEP 1: Check Scope First
+[ ] What is {{SCOPE}}? BROAD or NARROW?
+[ ] If {{SCOPE}} = NARROW → SKIP remaining checks, use PATH 2 (2-4 modules max)
+[ ] If {{SCOPE}} = BROAD → Continue to STEP 2
+
+⚠️ STEP 2: Apply Minimums (BROAD Topics Only)
 [ ] Module count >= minimum for detected {{CATEGORY}}
 [ ] No module combines unrelated concepts (flag: module title has "and" or "&" for unrelated topics)
 [ ] Each module has >= minimum sub-topics for category
@@ -909,6 +929,19 @@ If verification fails → EXPAND outline until requirements met.
 
 ### Rule 7: TRANSITION PATHS (Core → Ecosystem)
 **Teach minimal ecosystem tools without deviating from main topic:**
+
+**⚠️ HARD LIMITS (Prevent Scope Creep):**
+```
+MAXIMUM 4 ecosystem tools total (across all categories)
+MAXIMUM 12 hours total for ALL ecosystem content combined
+EACH tool: 2-3 hours maximum (not 2-4)
+
+If research identifies more tools:
+1. Rank by job market demand (%)
+2. Select top 4 ONLY
+3. Mention others in "Alternatives" section only
+4. Do NOT create full modules for more than 4 tools
+```
 
 **Pattern:**
 ```markdown
