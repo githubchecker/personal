@@ -1,53 +1,5 @@
 # XSS
 
-# XSS Mastery: From Script Kiddie to Security Architect
-
-## Curriculum Syllabus
-
-### Phase 1: The Fundamentals (Know Your Enemy)
-
-1. **Definition**: What exactly is XSS, and why does the browser execute malicious code?
-2. **Reflected XSS**: How does a URL parameter behave as a weapon?
-3. **Stored XSS**: Why is this considered the most dangerous form (e.g., Comments section)?
-4. **DOM-based XSS**: How can XSS happen without the server ever seeing the payload?
-5. **The Impact**: Beyond "alert(1)", what can an attacker actually steal? (Cookies, Tokens, Keylogging).
-6. **XSS vs. CSRF**: How do they differ, and how do they often work together?
-7. **The Same Origin Policy (SOP)**: What is it, and how does XSS bypass it?
-8. **Blind XSS**: What happens when the payload fires in an Admin panel you can't see?
-
-### Phase 2: The Attack Surface (Context is King)
-
-1. **HTML Context**: Why is `<script>` not the only tag you need to fear? (`<img>`, `<body>`).
-2. **Attribute Context**: How can `onclick` or `href` be exploited even without tags?
-3. **JavaScript Context**: Why is putting untrusted data inside a `<script>` block (even nicely quoted) suicide?
-4. **CSS/Style Context**: Can you execute JS from CSS? (Historical vs Modern vectors).
-5. **URL Context**: The `javascript:` pseudo-protocol danger in links.
-6. **JSON/API Context**: Can a JSON response trigger XSS?
-7. **File Uploads**: How does an SVG file become an XSS vector?
-8. **Polyglots**: What is a "Polyglot" payload and how does it break multiple contexts?
-
-### Phase 3: The Shield (Defense in Depth)
-
-1. **Output Encoding (The Silver Bullet)**: What is the difference between HTML Encoding, URL Encoding, and JavaScript Encoding?
-2. [**ASP.NET](http://asp.net/) Core Default Defenses**: What does Razor do automatically for you (`@Variable`)?
-3. **The `HtmlString` Trap**: When does a developer accidentally bypass protection (`@Html.Raw`)?
-4. **Content Security Policy (CSP)**: The nuclear option. How does `script-src 'self'` stop attacks?
-5. **CSP Nonces & Hashes**: How to allow legitimate inline scripts while blocking attacks.
-6. **HttpOnly Cookies**: How does this mitigate the *impact* of XSS (even if it doesn't stop the attack)?
-7. **Sanitization**: When you *must* allow HTML (e.g., Rich Text Editors), how do you use **HtmlSanitizer** safely?
-8. **Input Validation**: Why is "Allowlisting" better than "Blocklisting" (`<script>`)?
-
-### Phase 4: Modern Warfare (Frameworks & Architecture)
-
-1. **React/Angular/Vue**: How does `dangerouslySetInnerHTML` expose you?
-2. **Blazor WASM**: Is WebAssembly immune to XSS? (Spoiler: No).
-3. **Trusted Types**: The future of browser security. How to enforce type-safe HTML assignment.
-4. **WAF (Azure Front Door)**: How do WAF rules regex-match payloads, and can they be bypassed?
-5. **Mutation XSS (mXSS)**: How can the browser's own HTML parser turn safe text into unsafe scripts?
-6. **Reporting**: Using `Report-To` headers to get alerts when XSS is attempted on your site.
-
----
-
 ## Phase 1: The Fundamentals (Know Your Enemy)
 
 *Goal: Understand the mechanics. If you can't write an exploit, you can't fix it.*

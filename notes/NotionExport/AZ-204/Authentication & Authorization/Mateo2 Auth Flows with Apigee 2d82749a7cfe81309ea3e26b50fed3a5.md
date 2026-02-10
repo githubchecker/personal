@@ -37,7 +37,7 @@ This is the most common and fundamental pattern. An external client (a mobile ap
     
 3. **Apigee (The Verification):** Apigee executes a policy called **`VerifyJWT`**. This is the most important part. This policy performs several critical checks **without calling Azure AD**.
     - **A) Checks the Signature:** How does Apigee know the token wasn't faked? Azure AD publishes its public signing keys to a well-known URL (a JWKS - JSON Web Key Set - URI). Apigee fetches these keys (and caches them) and uses them to mathematically verify that the token was indeed signed by Azure AD and hasn't been tampered with.
-    - **B) Checks the Issuer (`iss`):** It checks that the issuer claim in the token is correct (e.g., `https://sts.windows.net/YOUR_TENANT_ID/`).
+        - **B) Checks the Issuer (`iss`):** It checks that the issuer claim in the token is correct (e.g., `https://sts.windows.net/YOUR_TENANT_ID/`).
     - **C) Checks the Audience (`aud`):** It checks that the token was intended for this API (e.g., `api://YOUR_COMMENTS_API_CLIENT_ID`). This prevents a token for "API A" from being used to access "API B".
     - **D) Checks the Expiry (`exp`):** It ensures the token has not expired.
     - **E) Checks Scopes/Roles:** It can extract the `scp` or `roles` claims and make decisions based on them.

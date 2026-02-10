@@ -10,4 +10,6 @@
 
 [ASB Auto Complete Message vs Peek Lock](Eventing%20in%20Azure/ASB%20Auto%20Complete%20Message%20vs%20Peek%20Lock%202d82749a7cfe81d1867cec2ed10929fe.md)
 
+[ASB Retry](Eventing%20in%20Azure/ASB%20Retry%202e62749a7cfe807cbc22ddf89e0adcb5.md)
+
 [Best way to Handle Burst of Events](Eventing%20in%20Azure/Best%20way%20to%20Handle%20Burst%20of%20Events%202d82749a7cfe81b087ecc8a37bb8b929.md)

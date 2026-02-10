@@ -224,3 +224,5 @@ Partitioning**](Storage%20CosmosDB/RUs,%20Throughput,%20and%20Horizontal%20Parti
 [Throughput limit on Container vs Database level?](Storage%20CosmosDB/Throughput%20limit%20on%20Container%20vs%20Database%20level%202d82749a7cfe819ca043ec8ab42b5bbd.md)
 
 [**Leases Container & CosmosDB Change Feed**](Storage%20CosmosDB/Leases%20Container%20&%20CosmosDB%20Change%20Feed%202d82749a7cfe8181a891c6114d000b2c.md)
+
+[Consistency Levels](Storage%20CosmosDB/Consistency%20Levels%202e92749a7cfe80f3ad17e24e47226779.md)

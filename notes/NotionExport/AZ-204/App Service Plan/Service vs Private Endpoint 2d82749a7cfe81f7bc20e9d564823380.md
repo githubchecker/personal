@@ -117,3 +117,7 @@
 | **NSG Control** | Limited (cannot distinguish between good/bad PaaS services) | **Full Granular Control** | **This is the key.** Allows you to create specific rules to block data exfiltration. |
 | **Connectivity** | From your VNet only | From VNet, peered VNets, and on-premises | More flexible connectivity model. |
 - By bringing the service *into* your private network, a Private Endpoint subjects the PaaS service to the same robust network controls (like NSGs and Azure Firewall) that you would use for your own virtual machines, effectively solving the data exfiltration problem.
+
+[https://www.youtube.com/watch?v=ZWHI4zvdB5E](https://www.youtube.com/watch?v=ZWHI4zvdB5E)
+
+[https://www.youtube.com/watch?v=X319wzJOSSA](https://www.youtube.com/watch?v=X319wzJOSSA)
