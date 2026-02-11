@@ -125,10 +125,6 @@ In the React community, tools like **Prettier** are used to automatically handle
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 3.3 Numbers & 3.4 Template Literals (Handling data in React)
-- **REPEAT** → Show me more ASI traps
-- **BREAK** → Pause study session
 
 # SECTION 1: THE RUNTIME & SYNTAX FOUNDATIONS
 
@@ -252,10 +248,6 @@ Because React operates in strict mode, you are protected from accidentally creat
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 1.5 Polyfills & Transpilers (The final foundation topic)
-- **REPEAT** → Show me how to use the "Call Stack" in DevTools
-- **BREAK** → Pause study session
 
 # SECTION 1: THE RUNTIME & SYNTAX FOUNDATIONS
 
@@ -315,12 +307,6 @@ When you work with React, a transpiler called **Babel** (inside Vite or Webpack)
 
 ---
 
-**SECTION 1 COMPLETE**
-
-**YOUR OPTIONS:**
-- **NEXT** → 2.1 Variables (`let`, `const`, `var`) - Revisit for Deep Engine Dive
-- **REPEAT** → Show me how Babel changes JSX into JS
-- **BREAK** → Pause study session
 
 # SECTION 2: VARIABLES & THE ENGINE
 
@@ -396,10 +382,6 @@ When mapping over data to create a list, the scope of `let` ensures that each li
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 2.2 Hoisting (Reviewing the Engine's Creation Phase)
-- **REPEAT** → Show me the `window` object binding difference
-- **BREAK** → Pause study session
 
 # SECTION 2: VARIABLES & THE ENGINE
 
@@ -490,10 +472,6 @@ function Container({ children }) {
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 2.3 The Temporal Dead Zone (TDZ) - Reviewing the "Crash" mechanics
-- **REPEAT** → Show me more "Arrow Function" hoisting traps
-- **BREAK** → Pause study session
 
 # SECTION 2: VARIABLES & THE ENGINE
 
@@ -583,10 +561,6 @@ When using `useEffect`, if you reference a variable declared with `const` furthe
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 2.4 Garbage Collection (The Engine's Cleanup Mechanics)
-- **REPEAT** → Show me why `var` does not have a TDZ
-- **BREAK** → Pause study session
 
 # SECTION 2: VARIABLES & THE ENGINE
 
@@ -680,12 +654,6 @@ useEffect(() => {
 
 ---
 
-**SECTION 2 COMPLETE**
-
-**YOUR OPTIONS:**
-- **NEXT** → 3.1 The 8 Data Types (Starting Section 3: Data & Primitives)
-- **REPEAT** → Explain "Mark-and-Sweep" in more detail
-- **BREAK** → Pause study session
 
 # SECTION 3: DATA TYPES & STRINGS
 
@@ -761,10 +729,6 @@ In React, you will constantly pass data as **Props**. You must know the type of 
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 3.2 Null vs. Undefined (Deep distinction)
-- **REPEAT** → Show me all 8 types in a single code block
-- **BREAK** → Pause study session
 
 # SECTION 3: DATA TYPES & STRINGS
 
@@ -848,10 +812,6 @@ If a parent component doesn't pass a specific prop, that prop will be `undefined
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 3.3 Numbers & Math (Handling Prices and Percents)
-- **REPEAT** → Show more examples of "Undefined" bugs in objects
-- **BREAK** → Pause study session
 
 # SECTION 3: DATA TYPES & STRINGS
 
@@ -932,10 +892,6 @@ Avoid using `Math.random()` for React keys. Because it generates a new number on
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 3.4 Template Literals (The modern way to build strings)
-- **REPEAT** → Show more examples of `Math.floor` vs `Math.trunc`
-- **BREAK** → Pause study session
 
 # SECTION 3: DATA TYPES & STRINGS
 
@@ -1023,10 +979,6 @@ When you need to show a formatted string inside a component (like "Showing 1-10 
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 3.5 Methods of Primitives (How strings act like objects)
-- **REPEAT** → Show more examples of logic inside `${ }`
-- **BREAK** → Pause study session
 
 # SECTION 3: DATA TYPES & STRINGS
 
@@ -1103,10 +1055,6 @@ Because `null` and `undefined` crash when methods are called, you must use **Opt
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 3.6 Type Conversions & Coercion (The `==` vs `===` trap)
-- **REPEAT** → Show me more common String methods used in React
-- **BREAK** → Pause study session
 
 # SECTION 3: DATA TYPES & STRINGS
 
@@ -1201,12 +1149,6 @@ React uses an algorithm similar to `===` to decide if a component should re-rend
 
 ---
 
-**SECTION 3 COMPLETE**
-
-**YOUR OPTIONS:**
-- **NEXT** → 4.1 Logical Operators (Starting Section 4: Logic & JSX)
-- **REPEAT** → Show more "Truthy/Falsy" edge cases
-- **BREAK** → Pause study session
 
 
 
@@ -1296,10 +1238,6 @@ As mentioned in the previous section, if `items.length` is `0`, React will rende
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 4.2 Nullish Coalescing (`??`) (The subtle difference from `||`)
-- **REPEAT** → Show more examples of the "0" bug in React
-- **BREAK** → Pause study session
 
 # SECTION 4: LOGIC & CONTROL FLOW
 
@@ -1380,10 +1318,6 @@ APIs often return empty strings `""` for things like middle names. If you use `|
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 4.3 Ternary Operator (`? :`) (The CSS/JSX Logic Hero)
-- **REPEAT** → Show more examples of `??` vs `||` in forms
-- **BREAK** → Pause study session
 
 # SECTION 4: LOGIC & CONTROL FLOW
 
@@ -1488,10 +1422,6 @@ Commonly used to change button text while a form is submitting.
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 4.4 Optional Chaining (`?.`) (The Crash-Protection Hero)
-- **REPEAT** → Show me how to use Ternary inside a Template Literal
-- **BREAK** → Pause study session
 
 # SECTION 4: LOGIC & CONTROL FLOW
 
@@ -1591,10 +1521,6 @@ const name = data?.user?.name ?? "Guest";
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 4.5 Loops (`for`, `while`) & 4.6 The `switch` Statement
-- **REPEAT** → Show more examples of `?.` with functions
-- **BREAK** → Pause study session
 
 # SECTION 4: LOGIC & CONTROL FLOW
 
@@ -1941,12 +1867,6 @@ function reducer(state, action) {
 
 ---
 
-**SECTION 4 COMPLETE**
-
-**YOUR OPTIONS:**
-- **NEXT** → 5.1 Object Literals & Property Access (Starting Section 5: Objects)
-- **REPEAT** → Explain why `switch` uses strict equality in more detail
-- **BREAK** → Pause study session
 
 # SECTION 5: OBJECTS & MEMORY
 
@@ -2044,10 +1964,6 @@ const handleChange = (e) => {
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 5.2 Shorthand & Computed Properties (React's favorite shortcuts)
-- **REPEAT** → Show more examples of "Computed Keys"
-- **BREAK** → Pause study session
 
 # SECTION 5: OBJECTS & MEMORY
 
@@ -2147,10 +2063,6 @@ return <Profile user={user} />;
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 5.3 Reference vs. Value (The most important React concept)
-- **REPEAT** → Show more complex "Computed Property" logic
-- **BREAK** → Pause study session
 
 # SECTION 5: OBJECTS & MEMORY
 
@@ -2238,10 +2150,6 @@ Passing a new object literal like `<Child data={{ id: 1 }} />` inside a render f
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 5.4 Object Methods & `this` (The most confusing interview topic)
-- **REPEAT** → Show more examples of "Shallow" vs "Deep" copying
-- **BREAK** → Pause study session
 
 # SECTION 5: OBJECTS & MEMORY
 
@@ -2335,10 +2243,6 @@ Understanding that `this` depends on the **Caller** helps you debug why a librar
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 5.5 JSON Methods (The API data standard)
-- **REPEAT** → Show more "Lost this" scenarios with callbacks
-- **BREAK** → Pause study session
 
 # SECTION 5: OBJECTS & MEMORY
 
@@ -2665,10 +2569,6 @@ If you use **Function Declarations**, you can call your "Sub-components" at the 
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 6.2 Arrow Functions (The modern React standard)
-- **REPEAT** → Show more examples of "Block Scoped" functions
-- **BREAK** → Pause study session
 
 # SECTION 6: FUNCTIONS (THE HEART OF REACT)
 
@@ -2757,10 +2657,6 @@ React development involves a lot of list processing. Arrow functions make method
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 6.3 Parameters & Default Values (Handling API data)
-- **REPEAT** → Show more comparisons between Traditional and Arrow `this`
-- **BREAK** → Pause study session
 
 # SECTION 6: FUNCTIONS (THE HEART OF REACT)
 
@@ -2839,10 +2735,6 @@ When using hooks like `useReducer`, you often set default values in the reducer 
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 6.4 Closures (The "Magic" behind React Hooks)
-- **REPEAT** → Show me how to use a function as a default value
-- **BREAK** → Pause study session
 
 # SECTION 6: FUNCTIONS (THE HEART OF REACT)
 
@@ -2934,10 +2826,6 @@ Building your own hooks is essentially just writing a function that returns othe
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 6.5 Call, Apply, and Bind (Manually setting the context)
-- **REPEAT** → Show more "Stale Closure" examples in a React context
-- **BREAK** → Pause study session
 
 # SECTION 6: FUNCTIONS (THE HEART OF REACT)
 
@@ -3022,10 +2910,6 @@ Some older non-React libraries (like older versions of D3 or jQuery) might expec
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 6.6 Currying & Partials (Advanced handler patterns)
-- **REPEAT** → Show more examples of "Method Borrowing"
-- **BREAK** → Pause study session
 
 # SECTION 6: FUNCTIONS (THE HEART OF REACT)
 
@@ -3409,12 +3293,6 @@ Understanding how the "Stack" works helps you visualize how React travels down y
 
 ---
 
-**SECTION 6 COMPLETE**
-
-**YOUR OPTIONS:**
-- **NEXT** → 7.1 Basic Array Methods (Starting Section 7: Arrays & Data)
-- **REPEAT** → Show a recursive search through a JSON object
-- **BREAK** → Pause study session
 
 # SECTION 7: ARRAYS & ADVANCED DATA HANDLING
 
@@ -3504,10 +3382,6 @@ If you are building a **Notification Toast** system, you use a "Queue" logic. Ne
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 7.2 Advanced Array Methods (`.map`, `.filter`, `.reduce`)
-- **REPEAT** → Show more examples of renumbering performance
-- **BREAK** → Pause study session
 
 # SECTION 7: ARRAYS & ADVANCED DATA HANDLING
 
@@ -3615,10 +3489,6 @@ const toggleComplete = (id) => {
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 7.3 Destructuring (props, arrays, and hooks)
-- **REPEAT** → Show a more complex `.reduce` example
-- **BREAK** → Pause study session
 
 
 # SECTION 7: ARRAYS & ADVANCED DATA HANDLING
@@ -3711,10 +3581,6 @@ setData(results);
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 7.4 Spread & Rest (`...`) (The Immutability Champion)
-- **REPEAT** → Show examples of "Nested" destructuring
-- **BREAK** → Pause study session
 
 # SECTION 7: ARRAYS & ADVANCED DATA HANDLING
 
@@ -3814,10 +3680,6 @@ const MyButton = ({ label, ...otherProps }) => {
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 7.5 Map & Set (Specialized Collections)
-- **REPEAT** → Show how to do a "Deep Spread" for nested state
-- **BREAK** → Pause study session
 
 # SECTION 7: ARRAYS & ADVANCED DATA HANDLING
 
@@ -4334,10 +4196,6 @@ console.log(me.codes); // true (Inherited from the blueprint)
 ```
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 8.2 Property Descriptors (Writable, Enumerable, Configurable)
-- **REPEAT** → Show me the difference between "Shadowing" and "Inheriting"
-- **BREAK** → Pause study session
 
 # SECTION 8: ADVANCED INTERVIEW TOPICS
 
@@ -4434,10 +4292,6 @@ Older frameworks (like Vue 2) used `Object.defineProperty` to turn every piece o
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 8.3 Getters & Setters (Computed Accessors)
-- **REPEAT** → Explain the difference between `Object.seal` and `Object.freeze` again
-- **BREAK** → Pause study session
 
 
 # SECTION 8: ADVANCED INTERVIEW TOPICS
@@ -4539,10 +4393,6 @@ When you write a custom hook, you often return an object. You can use Getters to
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 8.4 Classes (The blueprint for React objects)
-- **REPEAT** → Show how Getters/Setters work inside a Class
-- **BREAK** → Pause study session
 
 
 # SECTION 8: THE CLASS SYSTEM & PROTOTYPES
@@ -4628,10 +4478,6 @@ TypeScript uses classes to implement `interfaces`, enforcing a strict "contract"
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 8.5 Class Inheritance (`extends` and `super`)
-- **REPEAT** → Show how the same `User` class is written in pure prototypes
-- **BREAK** → Pause study session
 
 
 # SECTION 8: THE CLASS SYSTEM & PROTOTYPES
@@ -4742,10 +4588,6 @@ In any large application (React, Angular, or Node.js), you will create your own 
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 8.6 Private & Protected Properties (Encapsulation)
-- **REPEAT** → Show what happens if I forget to pass arguments to `super()`
-- **BREAK** → Pause study session
 
 # SECTION 8: THE CLASS SYSTEM & PROTOTYPES
 
@@ -4841,10 +4683,6 @@ In React Functional Components, we achieve "Privateness" using **Closures** (Sec
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 8.7 Static Properties & Methods (Logic belonging to the Class)
-- **REPEAT** → Show how Getters/Setters interact with Private `#` properties
-- **BREAK** → Pause study session
 
 # SECTION 8: THE CLASS SYSTEM & PROTOTYPES
 
@@ -5116,10 +4954,6 @@ TS allows you to define exactly what your error objects look like. In an intervi
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 9.2 Promises (The Async foundation)
-- **REPEAT** → Show more examples of the "Asynchronous Trap"
-- **BREAK** → Pause study session
 
 # SECTION 9: ERROR HANDLING & ASYNC
 
@@ -5227,10 +5061,6 @@ TS uses **Generics** to define what a Promise returns. You will often see code l
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 9.3 Async/Await (The modern way to write Promises)
-- **REPEAT** → Explain the "Microtask Queue" vs "Macrotask Queue" in more detail
-- **BREAK** → Pause study session
 
 # SECTION 9: ERROR HANDLING & ASYNC
 
@@ -5347,13 +5177,6 @@ async function getAge(): Promise<number> {
 While Angular code often uses Observables, you can use `async/await` in your service logic to handle one-off Promises (like converting a Blob to Base64) before passing data to the UI.
 
 ---
-
-**SECTION 9 COMPLETE**
-
-**YOUR OPTIONS:**
-- **NEXT** → 10.1 Export & Import (Starting Section 10: Modules)
-- **REPEAT** → Show why `forEach` fails with `await`
-- **BREAK** → Pause study session
 
 ---
 
@@ -5963,10 +5786,6 @@ Angular uses **TypeScript Classes** (`@NgModule`) to handle imports/exports logi
 
 ---
 
-**YOUR OPTIONS:**
-- **NEXT** → 10.2 The Proxy API (How Libraries like MobX/Vue work)
-- **REPEAT** → Explain the "Barrel Pattern" with a folder diagram
-- **BREAK** → Pause study session
 
 # SECTION 10: MODULES & ADVANCED ENGINE
 
