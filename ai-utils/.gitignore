@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/FyersAuthenticator/fyer_authenticator_settings.json
+*/browser_packs/*
