@@ -1,0 +1,24 @@
+# ====================
+# Build Artifacts
+# ====================
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+obj/*
+
+# ====================
+# Agent Operational Files (never include in context)
+# ====================
+new_files_to_consider.txt
+.gitignore
+.aicontextignore.txt
+.git/
+run_agent.bat
+*ai_context*
+*.docx
