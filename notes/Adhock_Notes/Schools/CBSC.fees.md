@@ -26,25 +26,6 @@
 | **11.**| **Lakshmipat Singhania** | *Missing* | *Missing* | *Missing* | ***N/A*** |
 | | *(Audit Note)* | *The uploaded image for LSA only starts at "Session Fee" and "Tuition Fee". No admission fee table was provided in the screenshot.* | | | |
 
-### Final Verified Yearly Recurring Fees (Classes I to XII)
-*(Mandatory Academic Fees Only. Transport is completely excluded).*
-
-| Class | GD Goenka Dakshin. | GD Goenka Shyamnagar | Bhavan's GKV | Mahadevi Birla | DPS Ruby Park | Newtown School | Lakshmipat Singhania | Agarpara SVA | South Point |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Class I** | 103,350 | 110,110 | 93,000 | 109,950 | 110,300 | 138,000 | 169,200 | 28,800 | 88,300 |
-| **Class II** | 103,350 | 110,110 | 96,200 | 114,750 | 110,300 | 138,000 | 169,200 | 28,800 | 96,100 |
-| **Class III** | 103,350 | 110,110 | 96,200 | 126,650 | 110,300 | 138,000 | 178,200 | 28,800 | 96,260 |
-| **Class IV** | 105,590 | 116,160 | 96,200 | 126,650 | 110,300 | 138,000 | 178,200 | 28,800 | 96,560 |
-| **Class V** | 105,590 | 116,160 | 96,200 | 126,650 | 110,300 | 138,000 | 178,200 | 28,800 | 94,160 |
-| **Class VI** | 107,990 | 118,580 | 96,200 | 138,250 | 110,300 | 142,000 | 198,000 | 28,800 | *N/A* |
-| **Class VII** | 107,990 | 119,790 | 96,200 | 138,250 | 110,300 | 142,000 | 198,000 | 28,800 | *N/A* |
-| **Class VIII**| 112,590 | 119,790 | 96,200 | 132,050 | 110,300 | 142,000 | 198,000 | 32,400 | *N/A* |
-| **Class IX** | 112,590 | 127,050 | 98,750 | 146,550 | 110,300 | 142,000 | 222,000 | 33,600 | *N/A* |
-| **Class X** | 112,590 | 127,050 | 98,750 | 146,550 | 110,300 | 142,000 | 222,000 | 33,600 | *N/A* |
-| **Class XI** | 116,180 | 166,500 | 101,750 | 140,300 | 125,300 | *N/A* | 250,800 | *N/A* | *N/A* |
-| **Class XII** | 116,180 | 166,500 | 101,750 | 145,700 | 125,300 | *N/A* | 250,800 | *N/A* | *N/A* |
-*(Note: Birla High School Mukundapur & Moira St. are excluded as their documents only provided Nursery data).*
-
 ---
 
 #### B. Certified Yearly Recurring Fees (Nursery to Class XII)
