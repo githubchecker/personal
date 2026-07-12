@@ -122,3 +122,31 @@
 *   *Formula:* 1 Quarter Recurring Base × 4.
 *   **Nursery to UKG:** Quarter Base = Tuition (37,845) + Allied Activity (4,455) + Supp. Facilities (2,400) = 44,700. 
     *   44,700 × 4 = **178,800**
+
+---
+Here is the final **Total First-Year Cost Table**. 
+
+### 🏫 Total First-Year Fees (Admission + Year 1 Recurring)
+*(Calculated for Nursery/Entry-Level. Transport fees are excluded).*
+
+| Rank | School Name | (A) Pure One-Time Admission Fee (₹) | (B) First-Year Recurring Fee (₹) *(Nursery/Entry Level)* | **Total First-Year Out-of-Pocket (A + B) (₹)** |
+| :--- | :--- | :--- | :--- | :--- |
+| **1.** | **Agarpara SVA** *(Class 1)* | 14,000 | 45,200 *(See Note 1)* | **59,200** |
+| **2.** | **South Point** | 63,000 | 83,100 | **146,100** |
+| **3.** | **G D Goenka Shyamnagar** | 66,000 | 94,380 | **160,380** |
+| **4.** | **GD Goenka Dakshineshwar** | 77,500 | 93,390 | **170,890** |
+| **5.** | **Bhavan's GKV** | 85,000 | 93,000 | **178,000** |
+| **6.** | **Mahadevi Birla** | 1,04,000 | 108,550 | **212,550** |
+| **7.** | **DPS Ruby Park** | 1,15,000 | 104,600 | **219,600** |
+| **8.** | **Birla HS Mukundapur** | 1,00,200 | 169,020 | **269,220** |
+| **9.** | **Birla HS Moira Street** | 1,00,200 | 178,800 | **279,000** |
+| **10.**| **Newtown School** | 2,02,500 | 134,000 | **336,500** |
+| **11.**| **Lakshmipat Singhania** | *N/A (Missing Data)* | 169,200 *(Montessori)* | ***Cannot Calculate*** |
+
+---
+
+### 📝 Important Notes on the Calculation:
+
+*   **Note 1: Agarpara SVA (Special New Student Rule):** Because they did not provide Nursery data, I used Class 1. For an *existing* Class 1 student, the recurring fee is ₹28,800. However, the image explicitly stated that **New Students** pay a highly inflated "Annual Fee" of ₹26,000 for their first year instead of the normal ₹6,420. Therefore, their First Year Recurring cost is calculated as: **₹26,000 (New Student Annual Fee) + ₹19,200 (Monthly Tuition × 12) = ₹45,200**. 
+*   **Bhavan's GKV:** Used the base "Primary" level fee (₹93,000) as their entry-level recurring cost, as Nursery was not explicitly separated in their fee chart.
+*   **Lakshmipat Singhania:** Because the one-time admission fee chart was completely missing from the original upload, it is impossible to calculate their true first-year total. However, their Year 1 recurring fee is ₹169,200.
