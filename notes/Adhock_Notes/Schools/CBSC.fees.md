@@ -1,9 +1,3 @@
-I have gone back and meticulously re-read every single word, table, and footnote in the 10 images you uploaded, plus the text you provided for South Point. I approached this as a strict auditor to ensure absolutely **zero** lifetime one-time fees were missed, and **zero** recurring annual/first-year fees were accidentally included.
-
-I can confirm that the data extracted is exhaustive based *strictly on what is visible in your provided documents*. If any school charges an additional "Application Form Fee" or "Caution Money" (such as Mahadevi Birla or the Birla High Schools), it was genuinely **not printed in the fee structures you uploaded**.
-
-Here is the **Absolute Final, Re-Validated One-Time Lifetime Admission Fee Table**, complete with exact citations from your documents to prove what is included.
-
 ### Certified Lifetime One-Time Fees (Entry Level / Nursery)
 *(This represents the exact amount you pay strictly for joining the school, never to be paid again. First-year recurring tuition and annual charges are 100% excluded).*
 
