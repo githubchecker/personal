@@ -532,8 +532,8 @@ To navigate your roadmap from Agent to Fine-Tuner, here is the cutoff:
 - **Study "Embeddings"** immediately. This is the only "Internal" concept strictly required to build the "Knowledge Base" for a bot.
 - **When you reach Fine-Tuning (LoRA)**, come back and watch a 10-minute YouTube video on "How Transformer Attention Works." That is all the depth you will need.
 
-[Model Creation](Basics/Model%20Creation%202ee2749a7cfe801c9974e18405f07d2d.md)
+[Model Creation](Phase%200%20-%20Foundations/Phase%200.0%20-%20Conceptual%20Foundations/0.0.11%20Optional%20-%20Model%20Creation%20Full%20Internals.md)
 
-[Model Usage](Basics/Model%20Usage%202ee2749a7cfe808baf9ddc468446a48f.md)
+[Model Usage](Phase%200%20-%20Foundations/Phase%200.0%20-%20Conceptual%20Foundations/0.0.12%20Optional%20-%20Model%20Usage%20Full%20Internals.md)
 
-[Transformers](Basics/Transformers%202ee2749a7cfe808d8fbdc18018367aa0.md)
+[Transformers](Phase%200%20-%20Foundations/Phase%200.0%20-%20Conceptual%20Foundations/0.0.10%20Optional%20-%20Transformers%20Full%20Internals.md)

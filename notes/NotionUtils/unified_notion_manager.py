@@ -42,7 +42,8 @@ def run_official_uploader():
         
         for token in inline_tokens:
             if token.type == "text":
-                rich_text.append({"type": "text", "text": {"content": token.content, "link": {"url": current_link} if current_link else None}, "annotations": current_annotations.copy()})
+                valid_url = current_link if current_link and (current_link.startswith("http://") or current_link.startswith("https://")) else None
+                rich_text.append({"type": "text", "text": {"content": token.content, "link": {"url": valid_url} if valid_url else None}, "annotations": current_annotations.copy()})
             elif token.type == "code_inline":
                 rich_text.append({"type": "text", "text": {"content": token.content}, "annotations": {"bold": False, "italic": False, "strikethrough": False, "underline": False, "code": True, "color": "red"}})
             elif token.type == "strong_open": current_annotations["bold"] = True
