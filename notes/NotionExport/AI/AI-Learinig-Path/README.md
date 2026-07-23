@@ -16,7 +16,6 @@ New AI word? → [AI Terms — Plain-English Glossary](AI%20Terms%20-%20Plain%20
 - [**Phase 4 — LLMOps & Production**](Phase%204%20-%20LLMOps%20and%20Production/README.md) — evaluation, observability, guardrails/security, caching, fallbacks, cost
 
 ## Also here
-- [Basics.md](Basics.md) — the original novice→expert overview & tech-stack Q&A (AWS-centric; superseded by the phases, kept for reference).
 - [Ultimate Learning Guide](Ultimate_Learning_Guide.ai.prompt.md) — heavyweight curriculum generator (used only for brand-new broad topics).
 
 **Status:** Phase 0.0 · 0.1 · 0.2 · 0.3 · 1 · 2 · 3 · 4 complete — Phase 5 (Azure AI-102) next.
