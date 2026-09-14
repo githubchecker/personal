@@ -16,6 +16,7 @@ client, a Pydantic `BaseModel`), so understanding how they work makes every libr
 - **`__init__`** — the constructor; runs automatically when you create an instance.
 - **`self`** — the current instance, inside a method.
 - **Inheritance** — a class building on another; **dunder** — special `__methods__` Python calls for you.
+- **`Enum` (Enumeration)** — a symbolic set of named constant values; prevents invalid string bugs and provides type-safe options.
 
 ## 🎈 Stage 1 — The Simple Idea (analogy: a cookie cutter and cookies)
 
@@ -144,6 +145,161 @@ print(p == Point(1, 2))            # True
 
 (When you also need **validation**, reach for a Pydantic model instead — that's Lesson 13.)
 
+### 12.7 Enumerations (`Enum`): Typesafe Named Constants
+
+When a variable can only take one of a fixed set of options (e.g. LLM roles, task statuses, model tiers), using raw strings (`"admin"`, `"user"`) is fragile because typos (`"admim"`) fail silently at runtime. Python provides the **`enum`** module to define type-safe enumerations.
+
+#### 1. Defining an Enum & Accessing `.name` and `.value`
+Every member of an `Enum` is a constant object that possesses two primary attributes:
+* **`.name`**: The member's variable name as a string (e.g., `"ADMIN"`).
+* **`.value`**: The underlying value assigned to that member (e.g., `"admin"`, `1`, etc.).
+
+```python
+from enum import Enum, auto
+
+class Role(Enum):
+    ADMIN = "admin"
+    USER = "user"
+    GUEST = "guest"
+
+current_role = Role.ADMIN
+
+print(current_role)             # Role.ADMIN (the enum member object)
+print(current_role.name)        # 'ADMIN' (member identifier as a string)
+print(current_role.value)       # 'admin' (underlying value)
+```
+
+#### 2. What Types Can an Enum Value Be? (Int, String, Auto, or Custom)
+An Enum value can be **any Python data type**:
+
+```python
+from enum import Enum, IntEnum, StrEnum, auto
+
+# (a) Standard Enum with integer values:
+class HTTPStatusCode(Enum):
+    OK = 200
+    NOT_FOUND = 404
+    INTERNAL_ERROR = 500
+
+# (b) IntEnum (Subclasses int — directly comparable with integers):
+class Priority(IntEnum):
+    LOW = 1
+    MEDIUM = 2
+    HIGH = 3
+
+print(Priority.HIGH == 3)            # True! (IntEnum compares equal to raw ints)
+print(Priority.HIGH > Priority.LOW)  # True! (supports ordering comparisons)
+
+# (c) StrEnum (Python 3.11+ / Subclasses str — ideal for JSON & LLM APIs):
+class ModelTier(StrEnum):
+    FLAGSHIP = "gpt-4o"
+    FAST = "gpt-4o-mini"
+    EMBEDDING = "text-embedding-3-small"
+
+print(ModelTier.FLAGSHIP == "gpt-4o")  # True! (StrEnum compares equal to raw strings)
+
+# (d) auto() — Automatic value assignment (no manual numbering needed):
+class AgentState(Enum):
+    IDLE = auto()                    # gets 1
+    PLANNING = auto()                # gets 2
+    EXECUTING = auto()               # gets 3
+    COMPLETED = auto()               # gets 4
+
+# (e) Custom / Complex values (tuples, dicts):
+class ModelSpec(Enum):
+    # Tuple: (context_window, cost_per_1k_tokens)
+    GPT4O = (128_000, 0.005)
+    CLAUDE_SONNET = (200_000, 0.003)
+
+print(ModelSpec.GPT4O.value[0])      # 128000
+```
+
+#### 3. How to Compare Enums
+In Python, Enum members are **canonical singletons** (there is only ever one instance of `Role.ADMIN` in memory).
+
+##### (a) Identity Comparison (`is` / `is not`) — THE RECOMMENDED WAY:
+```python
+user_role = Role.ADMIN
+
+# ✅ FASTEST & SAFEST (checks memory identity directly):
+if user_role is Role.ADMIN:
+    print("Full administrative access granted.")
+
+if user_role is not Role.GUEST:
+    print("User is not a guest.")
+```
+
+##### (b) Equality Comparison (`==` / `!=`):
+```python
+if user_role == Role.ADMIN:
+    print("Matches!")
+```
+
+> ⚠️ **The Standard `Enum` vs. Raw Value Trap:**
+> In a standard `Enum`, members do **NOT** compare equal to their raw values!
+> ```python
+> class Status(Enum):
+>     READY = 1
+> 
+> # ❌ TRAP:
+> print(Status.READY == 1)        # False! Status.READY is an Enum object, not an int!
+> print(Status.READY.value == 1)  # True (comparing the .value attribute)
+> 
+> # If you want direct equality with raw values, use IntEnum or StrEnum:
+> class SafeStatus(IntEnum):
+>     READY = 1
+> 
+> print(SafeStatus.READY == 1)    # True!
+> ```
+
+##### (c) Ordering Comparisons (`<`, `>`, `<=`, `>=`):
+* Standard `Enum` members **do not have ordering**:
+  `Role.ADMIN < Role.USER` raises `TypeError: '<' not supported between instances of 'Role' and 'Role'`.
+* Use **`IntEnum`** when you need ordering comparisons (e.g., `Priority.HIGH > Priority.LOW`).
+
+##### (d) Pattern Matching with `match / case`:
+```python
+state = AgentState.PLANNING
+
+match state:
+    case AgentState.IDLE:
+        print("Waiting for prompt...")
+    case AgentState.PLANNING:
+        print("Generating execution plan...")
+    case AgentState.EXECUTING:
+        print("Running agent tools...")
+    case _:
+        print("Unknown state")
+```
+
+#### 4. Lookup by Value and Lookup by Name
+Enums make it clean to parse incoming API strings into typed Enum instances:
+
+```python
+# 1. Lookup by Value: Enum(value)
+# Useful when receiving raw strings from an external REST API or JSON payload:
+incoming_data = "user"
+role = Role(incoming_data)           # Returns Role.USER
+print(role is Role.USER)             # True
+
+# Invalid value raises ValueError:
+# Role("superadmin")                 # 💥 ValueError: 'superadmin' is not a valid Role
+
+# 2. Lookup by Name: Enum[name]
+# Useful when looking up by the uppercase identifier string:
+role = Role["ADMIN"]                 # Returns Role.ADMIN
+```
+
+#### 5. Iterating over Enum Members
+```python
+for member in Role:
+    print(f"Name: {member.name:10} | Value: {member.value}")
+# Output:
+# Name: ADMIN      | Value: admin
+# Name: USER       | Value: user
+# Name: GUEST      | Value: guest
+```
+
 ## 🚀 Stage 3 — In Practice / Why It Matters
 
 Every library hands you objects: `client = OpenAI()` then `client.chat.completions.create(...)`.
@@ -170,6 +326,9 @@ Make a `BankAccount` class with `__init__(self, balance=0)`, a `deposit(amount)`
 | --- | --- | --- |
 | `TypeError: method() missing 1 required positional argument: 'self'` | Forgot `self` in a method definition | Make `self` the first parameter |
 | `AttributeError: object has no attribute 'x'` | Used `self.x` before it was set | Set it in `__init__` |
+| `Status.READY == 1` returns `False` | Comparing standard `Enum` member directly to a raw integer | Compare against member (`status is Status.READY`), use `.value`, or use `IntEnum` |
+| `TypeError: '<' not supported between instances of 'Role'` | Tried to sort or order standard `Enum` members | Standard `Enum` has no ordering; use `IntEnum` for ordered numeric enums |
+| `ValueError: 'X' is not a valid Enum` | Called `Enum(value)` with an unregistered value | Verify input or handle invalid values with a `try/except ValueError` block |
 | All instances share one list | A mutable **class** attribute | Put per-instance data in `__init__` via `self` |
 | Parent setup didn't happen | Subclass `__init__` skipped the parent | Call `super().__init__(...)` |
 
@@ -189,6 +348,17 @@ from dataclasses import dataclass
 class Point:
     x: int
     y: int
+
+from enum import Enum, IntEnum, StrEnum, auto
+class Role(StrEnum):
+    ADMIN = "admin"
+    USER = "user"
+
+role is Role.ADMIN                  # identity comparison (fastest & safest)
+role.name                           # 'ADMIN' (identifier string)
+role.value                          # 'admin' (underlying value)
+Role("admin")                       # lookup by value -> Role.ADMIN
+Role["ADMIN"]                       # lookup by name  -> Role.ADMIN
 ```
 
 ## 🛑 STOP — Self-Check

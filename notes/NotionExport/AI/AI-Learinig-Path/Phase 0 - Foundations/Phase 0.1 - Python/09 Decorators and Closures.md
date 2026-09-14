@@ -14,6 +14,7 @@ slowly.
 
 - **First-class function** — a function you can store, pass, or return like any value.
 - **Closure** — an inner function that remembers variables from its outer function.
+- **`nonlocal`** — keyword used inside an inner function to rebind a variable belonging to an outer enclosing function.
 - **Decorator** — a function that wraps another to add behaviour, applied with `@name`.
 - **Wrapper** — the inner function a decorator returns.
 - **`functools.wraps`** — keeps the original function's name and docstring on the wrapper.
@@ -63,6 +64,28 @@ print(triple(10))                  # 30
 
 `double` "remembers" `factor=2` even though `make_multiplier` has already finished. That memory is
 the closure — and it's the machinery decorators are built on.
+
+#### Modifying Enclosing State with `nonlocal`
+If an inner function needs to **update or increment** an enclosing variable, use the **`nonlocal`** keyword:
+
+```python
+def make_call_counter():
+    total_calls = 0                     # Enclosing state
+
+    def record_call():
+        nonlocal total_calls            # Informs Python to mutate the enclosing 'total_calls'
+        total_calls += 1
+        return total_calls
+
+    return record_call
+
+counter = make_call_counter()
+print(counter())                        # 1
+print(counter())                        # 2
+print(counter())                        # 3
+```
+
+> ⚠️ Without `nonlocal total_calls`, Python treats `total_calls += 1` as a local assignment, crashing with `UnboundLocalError`.
 
 ### 9.3 A decorator, built up
 
