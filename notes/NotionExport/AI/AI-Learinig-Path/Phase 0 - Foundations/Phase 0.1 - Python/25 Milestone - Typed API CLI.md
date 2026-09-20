@@ -1,6 +1,6 @@
-# 16 — Milestone: Typed API CLI Tool
+# 25 — Milestone: Typed API CLI Tool
 
-> Phase 0 · Module 0.1 · Milestone (capstone for the Python module)
+> Phase 0 · Module 0.1 · Lesson 25 of 25 (capstone for the Python module)
 
 ## 🎯 Goal
 
@@ -11,8 +11,8 @@ clean result. If you can build and explain this, you're ready for the AI-specifi
 ## 🧩 What it exercises
 - Setup & running scripts (01) · variables/types (02) · strings (03)
 - collections (04, 05) · control flow (06) · functions (07)
-- error handling (10) · modules/files (11) · type hints & Pydantic (13)
-- async + HTTP (14, 15)
+- error handling (10) · modules/files (11) · built-in functions (13)
+- type hints & Pydantic (22) · async + HTTP (23, 24)
 
 ## 🛠️ Setup
 
@@ -23,8 +23,8 @@ pip install httpx pydantic tenacity
 pip freeze > requirements.txt
 ```
 
-- **`httpx`** — async HTTP client (Lesson 15).
-- **`pydantic`** — validation (Lesson 13).
+- **`httpx`** — async HTTP client (Lesson 24).
+- **`pydantic`** — validation (Lesson 22).
 - **`tenacity`** — retry-on-failure via a decorator (Lesson 09 decorators + Lesson 10 errors).
 
 ## 📄 `main.py` (fully commented)
@@ -58,7 +58,7 @@ async def fetch_todo(todo_id: int) -> Todo:
 
 async def main() -> None:
     try:
-        # asyncio.gather (Lesson 14) fetches several todos concurrently.
+        # asyncio.gather (Lesson 23) fetches several todos concurrently.
         todos = await asyncio.gather(*(fetch_todo(i) for i in range(1, 4)))
     except Exception as error:                            # last-resort guard
         raise TodoError(f"Failed to fetch todos: {error}") from error

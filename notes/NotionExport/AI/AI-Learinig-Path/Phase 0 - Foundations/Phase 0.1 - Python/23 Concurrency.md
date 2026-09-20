@@ -1,6 +1,6 @@
-# 14 — Concurrency: Async, Threads & Processes
+# 23 — Concurrency: Async, Threads & Processes
 
-> Phase 0 · Module 0.1 · Lesson 14 of 16
+> Phase 0 · Module 0.1 · Lesson 23 of 25
 
 ## 🗺️ Stage 0 — Concept Map
 

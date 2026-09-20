@@ -1,6 +1,6 @@
-# 15 — AI Essentials: NumPy & HTTP
+# 24 — AI Essentials: NumPy & HTTP
 
-> Phase 0 · Module 0.1 · Lesson 15 of 16
+> Phase 0 · Module 0.1 · Lesson 24 of 25
 
 ## 🗺️ Stage 0 — Concept Map
 
@@ -113,7 +113,7 @@ print(resp.json()["json"])     # {'name': 'Ada'}
 
 ### 15.4 Calling an API — asynchronous (`httpx`)
 
-Install: `pip install httpx`. Same shape, but `await`-able so you can overlap many calls (Lesson 14).
+Install: `pip install httpx`. Same shape, but `await`-able so you can overlap many calls (Lesson 23).
 
 ```python
 import asyncio

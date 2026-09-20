@@ -1,6 +1,6 @@
-# 13 — Type Hints & Pydantic
+# 22 — Type Hints & Pydantic
 
-> Phase 0 · Module 0.1 · Lesson 13 of 16
+> Phase 0 · Module 0.1 · Lesson 22 of 25
 
 ## 🗺️ Stage 0 — Concept Map
 
