@@ -51,5 +51,5 @@ python notion_official_uploader.py
 ---
 
 ### Other Scripts
-- `scan_tags.py`: Helper to find code block languages.
-- `notion_teamspace_cleanup.py`: Helper to empty Notion pages.
+- `scan_tags.py` : Helper to find code block languages.
+- `notion_teamspace_cleanup.py` : Helper to empty Notion pages.
