@@ -1,0 +1,192 @@
+# React 19+ Ultimate Enterprise & Service-Company Roadmap
+
+## Part 1: Pure Frontend Track (Core + Native Fallbacks)
+
+### 1. Setup, Tooling & TypeScript
+- **Vite React App**
+  - **Project Scaffolding**
+    - Initialize with `npm create vite@latest` (`react-ts` template)
+    - Understand `index.html`, `main.tsx`, and `createRoot` entry point
+  - **Configuration**
+    - Path aliases (`@/` mapped to `./src` in `vite.config.ts` & `tsconfig.json`)
+    - Environment variables (`import.meta.env` & `VITE_` prefix)
+- **Code Quality & DevTools**
+  - **Runtime & Linting**
+    - `<StrictMode>` wrapper for catching impure renders and missing effect cleanups
+    - ESLint / Biome for React Hook rules & Prettier for formatting
+  - **Debugging & Profiling**
+    - React Developer Tools browser extension (Components tree inspection)
+    - `[Optional: Advanced / On-Demand]` `<Profiler>` API & DevTools Profiler flamegraphs for bottleneck hunting
+- **TypeScript for React**
+  - **Component Typing**
+    - Props typing with `interface` and `type` aliases
+    - Optional props (`?`), union types (`'sm' | 'md' | 'lg'`), and tuples
+    - Typing children with `React.ReactNode`
+  - **Event & Native Element Typing**
+    - DOM Events (`React.ChangeEvent<HTMLInputElement>`, `React.MouseEvent<HTMLButtonElement>`, `React.FormEvent`)
+    - Extending native HTML attributes (`React.ComponentProps<'button'>`)
+  - **Hook & Utility Typing**
+    - Explicit generics (`useState<User | null>(null)`, `useRef<HTMLInputElement>(null)`)
+    - Utility Types (`Partial<T>`, `Pick<T, K>`, `Omit<T, K>`, `Record<K, V>`)
+
+### 2. React Core Fundamentals
+- **Components & JSX**
+  - **Function Components**
+    - Pure UI functions & ES Modules (Named exports vs Default exports)
+  - **JSX Rules & Fragments**
+    - Embedding JavaScript expressions inside `{}`
+    - Attribute conventions (`className`, `htmlFor`, camelCase attributes)
+    - React Fragments (`<>...</>` shorthand vs `<Fragment key={id}>` inside loops)
+- **Props & Component Composition**
+  - **One-Way Data Flow**
+    - Passing read-only data from parent to child & default parameter values
+  - **Composition Patterns**
+    - Wrapper components using the `children` prop (Cards, Modals, Layouts)
+    - Slot pattern (Passing JSX elements as named props like `header={<Header />}`)
+- **Conditional Rendering**
+  - **Inline & Guard Patterns**
+    - Ternary expressions (`? :`) and Logical AND (`&&` — avoiding falsy `0` pitfalls)
+    - Early `return` guard clauses (`if (isLoading) return <Spinner />`)
+- **Lists & Keys**
+  - **Array Rendering**
+    - Transforming arrays with `.map()` and pre-filtering with `.filter()`
+    - Stable, unique database IDs for the `key` prop (Why index keys break state)
+- **Event Handling & Native Forms**
+  - **Synthetic Events**
+    - Handling `onClick`, `onChange`, `onSubmit`, `onKeyDown`, and `onBlur`
+    - Preventing default browser behavior (`e.preventDefault()`, `e.stopPropagation()`)
+  - **Native Form Patterns**
+    - Controlled inputs (Input `value` bound to `useState`)
+    - Uncontrolled inputs (Reading native `new FormData(e.currentTarget)` on submit)
+  - **Document Metadata (React 19+)**
+    - Native `<title>`, `<meta>`, and `<link>` tags rendered directly inside components
+
+### 3. State Architecture & Native Fallbacks
+- **Local State (`useState`)**
+  - **Core Mechanics**
+    - State triggers re-renders; state as a snapshot per render
+    - Functional state updates (`setCount(prev => prev + 1)`) for batched updates
+    - Lazy initial state (`useState(() => computeExpensiveInitialValue())`)
+  - **Immutable State Updates**
+    - Updating objects with shallow spread (`setUser(prev => ({ ...prev, name: 'Alex' }))`)
+    - Updating arrays immutably (Add: `[...arr, item]`, Remove: `.filter()`, Edit: `.map()`)
+- **Multi-Component State Patterns**
+  - **Lifting State Up**
+    - Moving shared state to the closest common parent and passing callbacks down
+  - **Derived / Computed State**
+    - Calculating filtered lists, totals, and flags directly during render (Never sync via `useEffect`)
+- **Complex Local State (`useReducer`)**
+  - **`[Optional: Native Fallback]` State Machines & Reducers**
+    - Essential when building complex multi-step forms or global state with Context when Zustand/Redux are prohibited
+    - Writing pure reducer functions `(state, action) => nextState` with typed `dispatch` actions
+
+### 4. Refs, Side Effects & Core Built-In APIs
+- **Refs & DOM Manipulation**
+  - **The `useRef` Hook**
+    - Accessing DOM nodes directly (Focusing inputs, scrolling, measuring dimensions)
+    - Storing mutable values across renders without re-rendering (Timer IDs, previous values)
+  - **Passing Refs to Components**
+    - Passing `ref` directly as a standard prop in React 19+
+    - `[Optional: Service Co. Legacy / Interview]` `forwardRef` wrapper (Used heavily in React 18 client codebases)
+    - `[Optional: Advanced / On-Demand]` `useImperativeHandle` (Exposing custom ref methods like `.reset()` to parent components)
+- **Synchronizing with External Systems (`useEffect`)**
+  - **Effect Lifecycle & Cleanup**
+    - Syncing with timers, `window` listeners, and WebSockets (`[]` mount vs `[dep]` updates)
+    - Returning cleanup functions (Clearing intervals, removing listeners, `AbortController.abort()`)
+  - **Effect Discipline & Helpers**
+    - Knowing when NOT to use `useEffect` (Never for derived render data or user click/submit events)
+    - `useEffectEvent` (React 19.2+ — reading latest props/state inside an Effect without re-triggering it)
+    - `[Optional: Native Fallback]` `useLayoutEffect` (Synchronous DOM measurement before browser paint to prevent tooltip/popover flicker when building custom UI)
+- **Reusable Logic (Custom Hooks)**
+  - **Hook Extraction**
+    - Composing built-in hooks into reusable functions (`useDebounce`, `useLocalStorage`, `useMediaQuery`, `useOnClickOutside`)
+- **Built-In Global Context**
+  - **Context API**
+    - Creating providers with `createContext` and reading values with React 19 `use(Context)` or `useContext`
+    - Best for low-frequency data (Theme, Locale, Auth User) or `[Optional: Native Fallback]` pairing with `useReducer` when 3rd-party state libraries aren't allowed
+- **Native UI Primitives, Resilience & Accessibility**
+  - **Error Boundaries**
+    - Isolating component crashes with `react-error-boundary` (or `[Optional: Service Co. Legacy / Interview]` Class-based `componentDidCatch` / `getDerivedStateFromError`)
+  - **`[Optional: Native Fallback]` Portals (`createPortal`)**
+    - Rendering custom Modals, Drawers, and Tooltips outside parent `overflow: hidden` DOM hierarchies when not using Shadcn/Radix
+  - **`[Optional: Native Fallback]` Accessibility IDs (`useId`)**
+    - Generating unique, deterministic IDs for custom form `<label>` and `aria-describedby` bindings
+- **Performance, Memoization & Concurrent UI**
+  - **Code Splitting & Lazy Loading**
+    - Route & component lazy loading with `React.lazy(() => import('./Page'))` and `<Suspense fallback={<Spinner />}>`
+  - **Memoization Strategy**
+    - React Compiler (Automatic build-time memoization in modern React 19 setups)
+    - `[Optional: Service Co. Legacy / Interview]` Manual `useMemo` (caching expensive calculations), `useCallback` (stabilizing function references), and `React.memo` (skipping child re-renders) — Mandatory for interviews & non-Compiler projects
+  - **`[Optional: Advanced / On-Demand]` Concurrent Rendering Hooks**
+    - `useTransition` & `startTransition` (Marking expensive state updates or async transitions as non-blocking)
+    - `useDeferredValue` (Deferring heavy UI list re-renders while keeping search inputs snappy)
+  - **`[Optional: Advanced / On-Demand]` Library Author Hooks**
+    - `useSyncExternalStore` (Subscribing to external non-React browser/state stores) & `useDebugValue`
+
+### 5. Enterprise Frontend Ecosystem (Primary + Service-Company Alternatives)
+- **Styling & UI Component Systems**
+  - **Primary Standard: Tailwind CSS + shadcn/ui**
+    - Tailwind utility classes, responsive design, dark mode, and `cn()` (`clsx` + `tailwind-merge`)
+    - shadcn/ui accessible primitives (Dialogs, Dropdowns, Data Tables, Toast/Sonner)
+  - **`[Optional: Native Fallback]` CSS Modules**
+    - Scoped `.module.css` files when utility CSS libraries are restricted
+  - **`[Optional: Service Co. Legacy / Interview]` Material UI (MUI) / Ant Design**
+    - Commonly used in enterprise banking, healthcare, and internal service-company dashboards
+- **Client-Side Routing**
+  - **Primary Standard: React Router v7**
+    - Nested Layouts, `<Outlet />`, `<Link>`, `<NavLink>`, and `useNavigate`
+    - Dynamic URL segments (`useParams`) and URL query state (`useSearchParams` for shareable filters/pagination)
+    - Protected Route wrappers for authentication and Role-Based Access Control (RBAC)
+  - **`[Optional: Advanced / On-Demand]` TanStack Router**
+    - 100% type-safe URL search params and routing (Growing in new TypeScript-strict projects)
+- **Server State & API Integration**
+  - **HTTP Client Layer**
+    - Native `fetch` wrapper or Axios instance with Auth Bearer Token & `401 Unauthorized` interceptors
+  - **Primary Standard: TanStack Query v5 (React Query)**
+    - Fetching & caching GET requests with `useQuery` (`queryKey`, `staleTime`, `isLoading`, `isError`)
+    - Server writes (POST/PUT/PATCH/DELETE) with `useMutation` and `queryClient.invalidateQueries()`
+    - `[Optional: Advanced / On-Demand]` Optimistic UI updates and infinite scroll (`useInfiniteQuery`)
+  - **`[Optional: Native Fallback]` `useEffect` + `AbortController` Fetch**
+    - Fetching data natively with race-condition cleanup when TanStack Query is not installed
+- **Global Client State Management**
+  - **Primary Standard: Zustand**
+    - Creating typed stores with `create()`, atomic selectors, `persist` middleware, and store slices
+  - **`[Optional: Service Co. Legacy / Interview]` Redux Toolkit (RTK & RTK Query)**
+    - Heavily used in large service-company enterprise accounts (`configureStore`, `createSlice`, `useSelector`, `useDispatch`, `createAsyncThunk`)
+- **Production Forms & Validation**
+  - **Primary Standard: React Hook Form + Zod**
+    - Schema validation with `z.object()`, automatic TypeScript inference (`z.infer`), and `zodResolver`
+    - Form management (`useForm`, `register`, `handleSubmit`, `formState.errors`)
+    - `<Controller />` for custom/3rd-party UI inputs and `useFieldArray` for dynamic repeatable rows
+- **Automated Testing & Enterprise Polish**
+  - **Primary Unit/Component Testing: Vitest + React Testing Library**
+    - Querying by accessible roles (`screen.getByRole`), simulating user actions (`userEvent`), and testing hooks
+  - **`[Optional: Service Co. Legacy / Interview]` Jest**
+    - Legacy test runner syntax (95% identical API to Vitest, widely used in older enterprise repos)
+  - **`[Optional: Advanced / On-Demand]` E2E & Network Mocking**
+    - Playwright or Cypress for browser End-to-End testing & Mock Service Worker (`MSW`) for API mocking
+  - **`[Optional: Advanced / On-Demand]` Enterprise Extras**
+    - Internationalization (`react-i18next`) and isolated UI documentation (`Storybook`)
+
+---
+
+## Part 2: Optional Full-Stack & Backend React Track
+
+### 6. React 19+ Server Primitives & Next.js
+- **React Server Components (RSC)**
+  - **Server vs Client Boundaries**
+    - Server Components by default (Zero client JS bundle, direct DB/API access) vs `"use client"` interactive components
+  - **Streaming & Server Caching**
+    - Progressive UI streaming with `<Suspense>`, request deduplication with `React.cache()`, and unwrapping promises on the client with `use(promise)`
+- **Server Actions & React 19 Form Hooks**
+  - **Server Mutations (`"use server"`)**
+    - Async server functions invoked via `<form action={fn}>` and cache invalidation (`revalidatePath`)
+  - **Native Action Hooks (Also usable with client-side Actions)**
+    - `useActionState` (Replaces deprecated `useFormState` — tracks `[state, action, isPending]`)
+    - `useFormStatus` (Reads parent `<form>` pending state inside child submit buttons)
+    - `useOptimistic` (Renders instant optimistic UI state while an async action settles)
+- **Next.js (App Router) & BaaS**
+  - **App Router Core**
+    - File-system routing (`page.tsx`, `layout.tsx`, `loading.tsx`, `error.tsx`), SSR, Route Handlers (`route.ts`), and Auth `middleware.ts`
+  - **`[Optional: Advanced / On-Demand]` Managed BaaS (Supabase / Firebase)**
+    - Instant PostgreSQL database, Row-Level Security, and Auth for personal full-stack portfolio apps

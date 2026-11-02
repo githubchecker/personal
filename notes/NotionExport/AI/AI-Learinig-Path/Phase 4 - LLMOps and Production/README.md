@@ -29,7 +29,7 @@
 | 4.4.01 | Semantic Caching | 🔴 MUST | high |
 | 4.4.02 | Circuit Breakers & Model Fallbacks | 🔴 MUST | high |
 | 4.4.03 | Prompt & Token Optimisation | 🟢 OPTIONAL | awareness |
-| 4.4.04 | Fine-Tuning Overview | 🟢 OPTIONAL | awareness |
+| 4.4.04 | [Fine-Tuning & Model Adaptation (SFT, LoRA & QLoRA)](Module%204.4%20-%20Economics%20and%20Resiliency/04%20Fine-Tuning%20Overview.md) | 🔴 MUST | high |
 | 4.4.05 | 🏁 Milestone — Full Production AI System | 🔴 MUST | — |
 
 **Legend:** 🔴 MUST · 🟡 SHOULD · 🟢 OPTIONAL (read, labelled — never skipped).

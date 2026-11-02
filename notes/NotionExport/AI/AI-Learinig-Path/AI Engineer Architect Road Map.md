@@ -510,37 +510,35 @@ Before moving to Phase 0.1, answer these without notes:
 
 ---
 
-### Module 0.2 — PyTorch Basics for AI Engineers
+### Module 0.2 — PyTorch Basics for AI Engineers `[JD VERIFIED]`
 
-*Gap filled — appears in 78% of JDs. You need enough to read model cards and not go blank in architecture discussions.*
+*Gap filled — appears in 78% of AI Engineer JDs. Focuses on practical production inference, tensor operations, memory management, and Hugging Face integration (not academic research or training from scratch).*
 
 **Topics:**
 
-- **Tensor fundamentals** `[JD VERIFIED]`
-    - `torch.Tensor` — shape, dtype, device (CPU/CUDA/MPS)
-    - Tensor operations: `matmul`, `einsum`, broadcasting rules
-    - Moving tensors: `.to("cuda")`, `.to("cpu")`, `device` management
-    - Why tensors matter: embedding vectors ARE tensors
-- **Neural network intuition** `[OPTIONAL]`
-    
-    > ⚠️ **Optional:** Read one good explainer (3Blue1Brown “Neural Networks” series — 3 videos, 1 hour total), understand forward pass and gradient descent conceptually, skip the coding exercises. Watch this before fine-tuning awareness in Phase 4.
-    > 
-    - `torch.nn.Module` — what a model class looks like
-    - Forward pass, loss functions (`CrossEntropyLoss`, `MSELoss`)
-    - Gradient descent intuition: what `loss.backward()` actually does
-- **Hugging Face Transformers integration** `[JD VERIFIED]`
-    - `from transformers import AutoModel, AutoTokenizer, pipeline`
-    - Loading pre-trained models from Hugging Face Hub
-    - Running inference with embedding models (`sentence-transformers`)
-    - Understanding `model.eval()` vs `model.train()` mode
-    - PEFT library awareness: what LoRA adapters look like in code
-- **Practical PyTorch for AI engineering (not research)** `[JD VERIFIED]`
-    - Loading quantized models (`bitsandbytes`, `GGUF` format awareness)
-    - Model size estimation: parameters × dtype bytes
-    - `torch.inference_mode()` and memory optimization
-    - When NOT to use PyTorch: when a managed API is the right answer
+- **Tensor fundamentals & vector math** `[JD VERIFIED]`
+    - `torch.Tensor` — shape, dimensions, stride, dtype (`float32`, `float16`, `bfloat16`, `int8`)
+    - Key tensor operations for AI: `matmul`, dot product, broadcasting, slicing, `squeeze`, `unsqueeze`, `view`
+    - Mean pooling over attention masks (how sentence embeddings are extracted from raw transformer token outputs)
+    - Vector normalization: `torch.nn.functional.normalize()` for fast cosine similarity calculations
+    - Why tensors matter: embeddings, hidden states, logits, and attention matrices ARE tensors
+- **Hardware & device management (CUDA / MPS / CPU)** `[JD VERIFIED]`
+    - Dynamic device selection: `device = torch.device("cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu")`
+    - Moving models and tensors: `.to(device)`
+    - VRAM budgeting formula: `VRAM required ≈ (Parameters × Bytes_per_dtype) × 1.25` (e.g., 8B params in 16-bit = 16GB + overhead ≈ 20GB VRAM)
+    - Diagnosing & preventing CUDA Out-of-Memory (OOM): `torch.cuda.empty_cache()`, memory pinning, gradient checkpointing awareness
+- **Production inference optimization** `[JD VERIFIED]`
+    - `torch.inference_mode()` vs `torch.no_grad()` (speed & memory benefits during serving)
+    - Setting model to evaluation mode: `model.eval()` (disables dropout and batch norm update)
+    - Dynamic batching: processing queries in parallel batches on GPU to maximize throughput
+    - CPU inference acceleration: ONNX Runtime export and TorchScript basics
+- **Hugging Face Transformers + PyTorch integration** `[JD VERIFIED]`
+    - Model & Tokenizer loading: `AutoModel`, `AutoTokenizer`, `AutoModelForCausalLM`
+    - Running local open-weight models (Llama 3.2, Mistral 7B, Phi-4) via `pipeline` and `accelerate`
+    - Low-bit quantization at inference: `bitsandbytes` 4-bit (`load_in_4bit=True`) and 8-bit (`load_in_8bit=True`)
+    - Managing multi-GPU inference with `device_map="auto"`
 
-**Milestone:** Load a sentence-transformer embedding model, generate embeddings for 100 text chunks, compute cosine similarity between pairs — understand every line.
+**Milestone Project:** Build a high-throughput, batch-inference embedding engine in PyTorch. Load a Hugging Face transformer model, extract pooled token embeddings, normalize them, handle GPU/CPU fallback gracefully, and benchmark cosine similarity search against 10,000 vectors.
 
 ---
 
@@ -1164,17 +1162,23 @@ Before moving to Phase 0.1, answer these without notes:
     - Batch inference: OpenAI Batch API, Anthropic Message Batches API — 50% cost reduction
     - LLMLingua-2: compress retrieved context 3–5× at minimal quality loss
     - Model right-sizing: benchmark task accuracy across model sizes before choosing
-- **Fine-Tuning Overview** `[OPTIONAL]`
-    
-    > ⚠️ **Optional:** Conceptual awareness is mandatory (know when to fine-tune vs prompt engineer, know what SFT/DPO/LoRA mean, discuss tradeoffs). Hands-on is optional for Lead/Architect roles unless your specific role involves model customisation. Fine-tuning before having a production RAG system is the wrong order of operations.
-    > 
-    - **When to fine-tune vs prompt engineer:** fine-tuning is rarely the right first answer
-    - Supervised Fine-Tuning (SFT): `{prompt, completion}` pairs, JSONL format
-    - DPO (Direct Preference Optimisation): preference pairs, no reward model needed
-    - LoRA / QLoRA: parameter-efficient fine-tuning — only train adapter weights
-    - OpenAI fine-tuning API: `client.fine_tuning.jobs.create()`
-    - Fine-tuning on Azure ML: `az ml job create --file finetune_job.yml`
-    - Evaluation post-fine-tuning: measuring regression on base capabilities
+- **Fine-Tuning & Model Adaptation (SFT, LoRA & QLoRA)** `[JD VERIFIED]`
+    - **Architect Decision Matrix:** Prompting vs RAG vs Fine-Tuning (Rule: prompt engineering for zero-shot testing; RAG for factual grounding & live enterprise data; Fine-Tuning for *syntax enforcement, JSON output consistency, tone/style, and distilling 70B reasoning into a fast 8B model*).
+    - **Dataset Preparation & Engineering:**
+        - Formatting JSONL datasets: Multi-turn ChatML format (`{"messages": [{"role": "system", ...}, {"role": "user", ...}, {"role": "assistant", ...}]}`).
+        - Quality over quantity: 500–1,000 pristine domain examples outperform 50,000 noisy samples.
+        - Token masking: computing loss strictly on assistant completions, not on the prompt tokens.
+    - **PEFT (Parameter-Efficient Fine-Tuning) & LoRA / QLoRA:**
+        - Why full fine-tuning is obsolete for 95% of enterprise use cases (catastrophic forgetting and massive GPU costs).
+        - **LoRA (Low-Rank Adaptation):** Freezing base weights $W_0$ and training small rank decomposition matrices ($A \times B$). Choosing rank ($r=8, 16$) and alpha ($\alpha=16, 32$).
+        - **QLoRA:** 4-bit `NF4` quantization with `bitsandbytes`, double quantization, and paged optimizers — fine-tuning an 8B model (Llama 3.1, Mistral) on a single 16GB–24GB VRAM GPU.
+    - **Hands-On Training Pipelines:**
+        - Hugging Face `TRL` (`SFTTrainer`): loading base model with `BitsAndBytesConfig`, configuring `LoraConfig`, executing training runs with gradient accumulation.
+        - Cloud Managed Fine-Tuning: OpenAI Fine-Tuning API (`client.fine_tuning.jobs.create`) and Azure AI Foundry managed fine-tuning.
+    - **Evaluation, Merge & Deployment Lifecycle:**
+        - Post-training evaluation: Testing domain accuracy and verifying base capability retention (benchmarking against catastrophic forgetting with LLM-as-a-judge).
+        - Adapter merging: `model.merge_and_unload()` for zero-latency standalone deployment.
+        - Exporting adapters to GGUF format for local Ollama serving or packaging into vLLM containers.
 - **Polars for data engineering** `[OPTIONAL]`
     
     > ⚠️ **Optional:** Only reaches the interview bar in roles explicitly mentioning data engineering alongside AI. Add only if your portfolio involves processing embedding batches at millions-of-rows scale.
@@ -1397,7 +1401,7 @@ By completing Phases 0–4 first, you arrive at AI-102 having already built ever
 | Presidio DLP / PII scrubbing | 52% | Phase 4 | ✅ Mandatory |
 | Semantic caching (Redis) | 55% | Phase 4 | ✅ Mandatory |
 | LiteLLM model fallback router | 60% | Phase 4 | ✅ Mandatory |
-| Fine-tuning (SFT/DPO/LoRA) — awareness | 45% | Phase 4 | ⚪ Optional (concept mandatory, hands-on optional) |
+| Fine-tuning (SFT/LoRA/QLoRA) — hands-on | 55% | Phase 4 | ✅ Mandatory |
 | Polars data processing | 35% | Phase 4 | ⚪ Optional (data-heavy roles only) |
 | Azure AI Foundry / AI Studio | 65% | Phase 5 | ✅ Mandatory |
 | Azure AI Search (deep) | 70% | Phase 5 | ✅ Mandatory |
