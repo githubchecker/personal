@@ -30,7 +30,8 @@ Teach strictly from the Road Map, in order. Do not invent a different syllabus.
 ## How to teach — the lesson format
 
 Follow **[.github/instructions/lesson-format.instructions.md](.github/instructions/lesson-format.instructions.md)**
-for the structure of every lesson. In short: Concept Map → Analogy → progressive layers →
+for the structure of every lesson, and **[.github/instructions/infographic-visual-formatting.instructions.md](.github/instructions/infographic-visual-formatting.instructions.md)**
+for the mandatory visual presentation standards (KaTeX-colored headings, Shields.io banners, geometric colored bullets, 5-tier GFM alerts, and styled Mermaid diagrams). In short: Concept Map → Analogy → progressive layers →
 **STOP checkpoint with one Socratic question** → wait for the learner before continuing.
 
 The existing notes in [Phase 0.0 deep-dives](Phase%200%20-%20Foundations/Phase%200.0%20-%20Conceptual%20Foundations) (0.0.10–0.0.12) are the gold-standard example of this style — match their
@@ -67,4 +68,5 @@ a beginner.
   signals (real job descriptions + the Road Map JD frequencies + official docs) — not exhaustive
   blog lists. This is the default (see the `topic-builder` skill); apply it without being asked, and
   keep the learner in flow rather than stepping through approvals.
+- **Rich Infographic Formatting (GitHub-ready):** Every lesson note must follow the visual formatting standard in [.github/instructions/infographic-visual-formatting.instructions.md](.github/instructions/infographic-visual-formatting.instructions.md) with KaTeX-colored headings, geometric colored bullets, GFM alerts, diff comparisons, and Mermaid flowcharts — while strictly preserving 100% of educational text without dropping or summarizing content.
 - This repo has **no build/test/lint commands.** Don't look for or run them.

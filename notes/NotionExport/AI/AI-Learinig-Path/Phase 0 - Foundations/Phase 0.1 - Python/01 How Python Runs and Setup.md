@@ -1,4 +1,4 @@
-# $\Huge\color{#0D47A1}{\textsf{01 — How Python Runs \& Setup}}$
+# $\Huge\color{#0D47A1}{\textsf{01 — How Python Runs and Setup}}$
 
 [![Python 3.12+](https://img.shields.io/badge/Python-3.12+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![Curriculum](https://img.shields.io/badge/Roadmap-Phase%200.1-0288D1?style=for-the-badge&logo=compass&logoColor=white)](README.md)
@@ -174,7 +174,7 @@ python main.py
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1.4 Virtual Environments (venv): Isolation \& Setup}}$
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1.4 Virtual Environments (venv): Isolation and Setup}}$
 
 #### $\color{#C2185B}\blacktriangleright\space\color{#880E4F}{\textsf{The Problem: Global Package Pollution}}$
 
@@ -416,7 +416,7 @@ check_status(True)
 
 In production AI development, virtual environment hygiene is the difference between reliable systems and untraceable bugs:
 
-* $\color{#0288D1}\blacktriangleright$ **$\color{#01579B}{\textsf{1. CUDA \& PyTorch Matching:}}$** PyTorch builds must match your specific CUDA GPU driver versions. Keeping projects in isolated venvs prevents driver/binary mismatches.
+* $\color{#0288D1}\blacktriangleright$ **$\color{#01579B}{\textsf{1. CUDA and PyTorch Matching:}}$** PyTorch builds must match your specific CUDA GPU driver versions. Keeping projects in isolated venvs prevents driver/binary mismatches.
 * $\color{#00897B}\blacktriangleright$ **$\color{#004D40}{\textsf{2. Reproducible Docker Containers:}}$** Docker images for deploying FastAPI inference endpoints copy `requirements.txt` into the container and run `pip install` in a clean environment, mirroring your local venv.
 * $\color{#7B1FA2}\blacktriangleright$ **$\color{#4A148C}{\textsf{3. Multi-Model Pipelines:}}$** A data preparation script might use older scientific packages (`scipy`), while your LLM agent uses bleeding-edge orchestration libraries (`langchain`, `llamaindex`). Isolating them prevents version lock.
 
@@ -424,11 +424,11 @@ In production AI development, virtual environment hygiene is the difference betw
 
 ![Variations](https://img.shields.io/badge/COMPARISON-VARIATIONS%20%26%20WHEN%20TO%20USE-00838F?style=for-the-badge&logo=scales&logoColor=white)
 
-## ⚖️ $\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations \& When to Use}}$
+## ⚖️ $\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use}}$
 
 | $\color{#0D47A1}\textsf{\textbf{Tool}}$ | $\color{#00695C}\textsf{\textbf{What It Is}}$ | $\color{#2E7D32}\textsf{\textbf{✅ When to Use It}}$ | $\color{#D32F2F}\textsf{\textbf{🚫 When to Avoid It}}$ |
 | :--- | :--- | :--- | :--- |
-| **`venv`** | Python built-in standard library tool | **$\color{#2E7D32}{\textsf{Default for 95\% of projects.}}$** Zero installation required, standard in all tutorials and production pipelines. | When you need to manage multiple different Python engine versions (e.g., Python 3.10 vs 3.12). |
+| **`venv`** | Python built-in standard library tool | **$\color{#2E7D32}{\textsf{Default for 95 percent of projects.}}$** Zero installation required, standard in all tutorials and production pipelines. | When you need to manage multiple different Python engine versions (e.g., Python 3.10 vs 3.12). |
 | **`uv`** | Modern ultra-fast package manager written in Rust | Large projects with complex dependencies where `pip install` is slow. Installs packages in milliseconds. | When keeping your environment minimal with zero external tool dependencies. |
 | **`conda`** | Multi-language environment & package manager | Heavy data science projects requiring complex non-Python C/Fortran/CUDA system libraries outside Python. | Standard web APIs, microservices, and general Python development (it is heavy and slow). |
 
@@ -436,7 +436,7 @@ In production AI development, virtual environment hygiene is the difference betw
 
 ![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
 
-## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors \& Fixes}}$
+## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
 | $\color{#C2185B}\textsf{\textbf{What You See}}$ | $\color{#E65100}\textsf{\textbf{Cause}}$ | $\color{#2E7D32}\textsf{\textbf{Fix}}$ |
 | :--- | :--- | :--- |
@@ -490,7 +490,7 @@ ModuleNotFoundError: No module named 'openai'
 **What two mistakes happened on your machine, and what is the proper sequence to prevent this?**
 
 <details>
-<summary><b>🔍 $\color{#0D47A1}{\textsf{Click to Reveal the Answer \& Architectural Fix}}$</b></summary>
+<summary><b>🔍 $\color{#0D47A1}{\textsf{Click to Reveal the Answer and Architectural Fix}}$</b></summary>
 
 <br/>
 

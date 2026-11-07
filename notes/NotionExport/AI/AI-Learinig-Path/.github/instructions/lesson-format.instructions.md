@@ -166,11 +166,13 @@ The notes across this workspace (such as in the Phase 0.1 Python series) represe
 This format fuses **four core pillars**:
 1. **System Deep-Dive Rigor:** Deep runtime or under-the-hood disclosures (e.g., memory allocation, scoping rules, network lifecycles, or internal data structures), explained so nothing feels like black magic.
 2. **The 10-Part Lesson Template:** The predictable, beginner-first sequence (Concept Map $\rightarrow$ Terms $\rightarrow$ Analogy $\rightarrow$ Mechanism $\rightarrow$ Practice $\rightarrow$ Variations $\rightarrow$ Errors $\rightarrow$ Quick Reference $\rightarrow$ STOP).
-3. **High-Impact Visual Engineering:**
-   - **ASCII Flowcharts & Decision Trees:** Visualizing dispatch mechanisms, fallback chains (e.g., authentication flow, error resolution, variable lookup), and architecture.
-   - **GitHub Flavored Markdown Alerts:** Strategic use of `> [!NOTE]`, `> [!IMPORTANT]`, `> [!WARNING]`, and `> [!TIP]`.
-   - **Color-Coded Badges & Emoji Tags:** Distinguishing call sites, access tiers, or environments directly in code comments (e.g., `🔵 Client Request` vs `🟢 Server Response`; `🟢 Public` vs `🔴 Private`).
-   - **Dedicated Trap Callouts:** Prominently boxed warnings for critical gotchas (e.g., `> ⚠️ THE MUTABILITY TRAP:`).
+3. **High-Impact Visual Engineering (Infographic Standard):**
+   - **Visual Formatting Guide:** Strictly follow **[infographic-visual-formatting.instructions.md](infographic-visual-formatting.instructions.md)** for the complete semantic color palette, KaTeX headings, Shields.io banners, and colored bullets.
+   - **Colored Mermaid SVG Diagrams:** Visualizing dispatch mechanisms, memory allocations, interpreter pipelines, and architecture with themed node colors (`fill:#...`, `stroke:#...`).
+   - **GitHub Flavored Markdown Alerts (5-Tier):** Strategic use of `> [!NOTE]`, `> [!IMPORTANT]`, `> [!WARNING]`, `> [!TIP]`, and `> [!CAUTION]`.
+   - **Diff Syntax Highlighting:** Demonstrating anti-pattern vs idiomatic solution contrasts with red `-` and green `+` syntax coloring.
+   - **Color-Coded Badges & Geometric Bullets:** Using `$\color{#Hex}\blacktriangleright$` and `$\color{#Hex}\bullet$` for list items; colored bold keywords in text and tables.
+   - **Dedicated Trap Callouts:** Prominently boxed warnings using `> [!WARNING]` or `> [!CAUTION]`.
 4. **AI-Domain Anchored Production Scenarios:**
    - **Zero generic "foo/bar" toys:** Every single code snippet uses realistic constructs from modern AI systems (e.g., LLM response payloads, embedding vectors, configuration objects, RAG document deduplication, tool calling contracts).
    - **In-Code Approach Contrasts:** Demonstrating competing idiomatic approaches directly side-by-side with commented trade-offs.
@@ -182,11 +184,16 @@ This format fuses **four core pillars**:
 When authoring or updating notes in this flagship format, follow these specific section implementations:
 
 #### 1. Header & Navigation Breadcrumbs
-Every sub-module or lesson begins with a clear navigation breadcrumb bar linking backwards, forwards, and to the master index:
+Every sub-module or lesson begins with a KaTeX-colored H1, a 4-badge metadata row, and a breadcrumb navigation bar:
 ```markdown
-# 2.3 — Vector Databases
+# $\Huge\color{#0D47A1}{\textsf{01 — How Python Runs and Setup}}
 
-> Phase 2 · Module 2.0 · Sub-module 3 of 6 · [← Prev: 2.2 Embeddings](2.2%20Embeddings.md) · [RAG Index](README.md) · [Next: 2.4 Hybrid Search →](2.4%20Hybrid%20Search.md)
+[![Python 3.12+](https://img.shields.io/badge/Python-3.12+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Curriculum](https://img.shields.io/badge/Roadmap-Phase%200.1-0288D1?style=for-the-badge&logo=compass&logoColor=white)](README.md)
+[![Priority](https://img.shields.io/badge/Priority-MUST%20KNOW-D32F2F?style=for-the-badge&logo=target&logoColor=white)](../../AI%20Engineer%20Architect%20Road%20Map.md)
+[![Status](https://img.shields.io/badge/Status-Foundational-2E7D32?style=for-the-badge&logo=checkmarx&logoColor=white)](#)
+
+> $\color{#546E7A}\mathbf{Navigation:}$ **Phase 0** · **Module 0.1** · **Lesson 1 of 16** · [Phase 0.1 — Python Index](README.md) · [Next: 02 Variables, Types & Operators →](02%20Variables%20Types%20and%20Operators.md)
 
 ---
 ```

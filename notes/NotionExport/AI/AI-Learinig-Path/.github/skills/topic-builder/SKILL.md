@@ -107,7 +107,8 @@ or the user asked to review first.
 ## Phase 2 — GENERATE (author the lessons)
 
 Author the notes in the workspace lesson format
-(`.github/instructions/lesson-format.instructions.md`) and any always-on guide (e.g. `AGENTS.md`):
+(`.github/instructions/lesson-format.instructions.md`), applying the mandatory visual styling in
+(`.github/instructions/infographic-visual-formatting.instructions.md`), and any always-on guide (e.g. `AGENTS.md`):
 
 - **Beginner-first, non-shallow.** Every `MUST`/`SHOULD` subtopic gets a real lesson: Concept Map
   (name **the problem** first) → 🔑 New Terms → analogy → How it works (fully-commented examples) →
@@ -133,6 +134,7 @@ Author the notes in the workspace lesson format
 
 ## Quality gates (check before finishing)
 - [ ] **Fresh JD scan done** — importance comes from *current* postings, not just stale curriculum data.
+- [ ] **Infographic visual formatting applied** — 4-badge header, Shields.io banners, KaTeX colored headings, geometric bullets, 5-tier GFM alerts, styled Mermaid flowcharts, diff comparisons, and zero text dropped (per `infographic-visual-formatting.instructions.md`).
 - [ ] **Depth gate (MUST topics) — NON-NEGOTIABLE.** Each `MUST`/high-JD lesson reads like a standalone
   reference, *not* a summary: problem-first old→new contrast, **every variation a mini-reference** (Key
   Features + real Syntax + ✅ use / 🚫 avoid→sibling / ⚠️ gotcha), a runnable commented example, under-the-
