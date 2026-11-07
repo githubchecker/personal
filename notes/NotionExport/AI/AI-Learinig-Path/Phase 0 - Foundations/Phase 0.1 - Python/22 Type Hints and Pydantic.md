@@ -40,6 +40,22 @@ something looks wrong. **Type hints are those labels.** **Pydantic** is the stri
 **The "Aha!":** type hints alone are **documentation** (Python won't enforce them at runtime).
 Pydantic uses the same hints to **enforce** correctness on real data.
 
+```mermaid
+flowchart LR
+    classDef static fill:#E1F5FE,stroke:#0288D1,stroke-width:2px,color:#01579B;
+    classDef runtime fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
+
+    subgraph Static["Static Type Hints (PEP 484)"]
+        H1["def call(p: str) -> dict:"]:::static
+        H1 --> Editor["VS Code / Mypy / Pyright<br/>Advisory checks only (Ignored at runtime)"]:::static
+    end
+
+    subgraph Runtime["Pydantic Runtime Validation"]
+        P1["class ToolCall(BaseModel):"]:::runtime
+        P1 --> Gate["Strict Runtime Gate<br/>Coerces valid types, rejects malformed payloads, raises ValidationError"]:::runtime
+    end
+```
+
 ![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
 
 ## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
@@ -82,6 +98,15 @@ def find_user(uid: int) -> dict | None:   # returns a dict, or None if not found
 
 ### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{13.3 A couple of handy typing tools}}$
 
+| Annotation Pattern | Syntax (Python 3.10+) | Production Priority | Real-World AI Application |
+| :--- | :--- | :--- | :--- |
+| **Primitives** | `str`, `int`, `float`, `bool` | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | Model temperature (`float`), max tokens (`int`), flag (`bool`) |
+| **Generic Collections** | `list[str]`, `dict[str, Any]` | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | Chunks list, JSON response dictionaries, embeddings `list[float]` |
+| **Optional / Nullable** | `str | None` | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | Optional system prompt, nullable API error response |
+| **Allowed Literals** | `Literal["gpt-4o", "claude-3-5"]` | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | Restricting model options, API modes, agent tool actions |
+| **Callable Signatures** | `Callable[[str], list[float]]` | $\color{#FFB300}\blacksquare\ \textbf{Occasional}$ | Passing custom embedding functions or tool callbacks |
+| **Wildcard Fallback** | `Any` | $\color{#FFB300}\blacksquare\ \textbf{Occasional}$ | Unstructured arbitrary JSON payloads (use sparingly!) |
+
 ```python
 from typing import Literal
 
@@ -93,6 +118,24 @@ set_mode("fast")        # ok
 ```
 
 ### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{13.4 Pydantic — validation at runtime}}$
+
+```diff
+# Parsing external JSON from LLM or Web API
+- ❌ Brittle manual dict verification:
+- data = json.loads(response_text)
+- if "name" not in data or not isinstance(data["name"], str):
+-     raise ValueError("Missing name")
+- if "age" not in data or int(data["age"]) < 0:
+-     raise ValueError("Invalid age")
+- user = {"name": data["name"], "age": int(data["age"])}
+
++ ✅ Production Pydantic model parsing:
++ class User(BaseModel):
++     name: str = Field(min_length=1)
++     age: int = Field(ge=0, le=150)
++ user = User.model_validate_json(response_text)
+# Coerces types ("25" -> 25), verifies bounds, provides IDE auto-complete!
+```
 
 Install: `pip install pydantic`. A **model** is a class describing the shape of your data;
 Pydantic validates and (where sensible) converts incoming values.
@@ -162,7 +205,7 @@ data inside" is the habit that keeps AI systems robust.
    does. Use Pydantic for anything coming from outside your program.
 4. **Hardcoding secrets** — load them via `BaseSettings`/environment variables instead.
 
-### Try it yourself
+### $\color{#0D47A1}\blacktriangleright\space\color{#1565C0}{\textsf{Try It Yourself}}$
 Define a Pydantic `Product` model with `name: str`, `price: float` (must be `> 0`), and
 `tags: list[str] = []`. Try creating one with `price=-5` and read the error message.
 

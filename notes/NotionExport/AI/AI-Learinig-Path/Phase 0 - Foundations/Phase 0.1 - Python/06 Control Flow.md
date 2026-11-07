@@ -44,6 +44,25 @@ A recipe sometimes says *"if the dough is too dry, add water"* (a decision) and 
 * $\color{#0288D1}\blacktriangleright$ **Branching:** Choose which steps to run based on a condition.
 * $\color{#00897B}\blacktriangleright$ **Looping:** Run a block again and again until something changes.
 
+```mermaid
+flowchart TD
+    classDef branch fill:#E3F2FD,stroke:#1565C0,stroke-width:2px,color:#0D47A1;
+    classDef loop fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
+    classDef decision fill:#FFF8E1,stroke:#F57F17,stroke-width:2px,color:#E65100;
+    classDef terminal fill:#ECEFF1,stroke:#455A64,stroke-width:2px,color:#263238;
+
+    Start(["Program Starts"]):::terminal --> Cond{"Evaluate Condition"}:::decision
+    Cond -- "True" --> ActionA["Execute Branch Block A"]:::branch
+    Cond -- "False" --> ActionB["Execute Branch Block B"]:::branch
+    ActionA --> Join(["Continue Execution"]):::terminal
+    ActionB --> Join
+    
+    Join --> LoopCond{"Loop Condition Met?"}:::decision
+    LoopCond -- "Yes" --> LoopBody["Execute Repeated Body"]:::loop
+    LoopBody --> LoopCond
+    LoopCond -- "No (Exit)" --> Done(["Program Complete"]):::terminal
+```
+
 > [!IMPORTANT]
 > ### $\color{#512DA8}{\textsf{The "Aha!" Insight}}$
 > The **indented block** under an `if`/`for`/`while` is the body that those statements control. Indentation *is* the grouping structure — there are no curly braces `{}` or begin/end tokens.
@@ -105,15 +124,38 @@ if user_input:                  # Automatically evaluates the truthiness of user
     process(user_input)
 ```
 
-#### Under the Hood: How Python Evaluates Truthiness
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{Under the Hood: How Python Evaluates Truthiness}}$
+
 When Python evaluates `if obj:`, it internally invokes `bool(obj)` following a strict two-step protocol:
 1. **`__bool__()` Check:** If the object's class defines a `__bool__()` method, Python calls it. The return value must be `True` or `False`.
 2. **`__len__()` Fallback:** If `__bool__()` is not defined, Python checks for `__len__()`. If `len(obj) == 0`, the object evaluates to **`False`** (falsy); if `len(obj) > 0`, it evaluates to **`True`** (truthy).
 3. **Default:** If neither method is defined, the object is considered **`True` by default**.
 
+```mermaid
+flowchart TD
+    classDef check fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#BF360C;
+    classDef action fill:#E1F5FE,stroke:#0288D1,stroke-width:2px,color:#01579B;
+    classDef outcome fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
+    classDef falsy fill:#FFEBEE,stroke:#C62828,stroke-width:2px,color:#B71C1C;
+
+    Obj["Evaluate: if obj:"]:::check --> BoolCheck{"Does class define<br/>__bool__()?"}:::check
+    BoolCheck -- "Yes" --> CallBool["Call obj.__bool__()"]:::action
+    CallBool --> BoolRes{"Returns True/False?"}:::check
+    BoolRes -- "True" --> TruthyNode["Evaluates to Truthy ✅"]:::outcome
+    BoolRes -- "False" --> FalsyNode["Evaluates to Falsy ❌"]:::falsy
+
+    BoolCheck -- "No" --> LenCheck{"Does class define<br/>__len__()?"}:::check
+    LenCheck -- "Yes" --> CallLen["Call len(obj)"]:::action
+    CallLen --> LenRes{"len(obj) == 0?"}:::check
+    LenRes -- "len == 0" --> FalsyNode
+    LenRes -- "len > 0" --> TruthyNode
+
+    LenCheck -- "No" --> DefNode["Default: Truthy ✅"]:::outcome
+```
+
 ---
 
-#### The Master Falsy vs. Truthy Matrix (Every Built-in Python Type)
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{The Master Falsy vs. Truthy Matrix (Every Built-in Python Type)}}$
 
 Every object in Python is either **Falsy** or **Truthy**:
 
@@ -136,9 +178,9 @@ Every object in Python is either **Falsy** or **Truthy**:
 
 ---
 
-#### ⚠️ The 5 Infamous "Truthy Traps" (Where Production Bugs Happen)
+#### $\color{#C62828}\blacktriangleright\space\color{#B71C1C}{\textsf{⚠️ The 5 Infamous \"Truthy Traps\" (Where Production Bugs Happen)}}$
 
-##### 1. Strings `"0"` and `"False"` are TRUTHY!
+##### $\color{#C62828}\blacktriangleright\space\color{#B71C1C}{\textsf{1. Strings \"0\" and \"False\" are TRUTHY!}}$
 A string is only falsy if its length is 0 (`""`). Any string containing characters — even `"0"` or `"False"` — has a length $> 0$ and is **Truthy**:
 ```python
 user_input = "0"
@@ -154,7 +196,7 @@ if user_input != "0":
     ...
 ```
 
-##### 2. Whitespace Strings `" "` are TRUTHY!
+##### $\color{#C62828}\blacktriangleright\space\color{#B71C1C}{\textsf{2. Whitespace Strings \" \" are TRUTHY!}}$
 ```python
 raw_query = "   "                       # User pressed the spacebar
 if raw_query:
@@ -165,7 +207,7 @@ if raw_query.strip():
     print("Only runs if non-whitespace characters exist")
 ```
 
-##### 3. Collections Containing `0`, `False`, or `None` are TRUTHY!
+##### $\color{#C62828}\blacktriangleright\space\color{#B71C1C}{\textsf{3. Collections Containing 0, False, or None are TRUTHY!}}$
 A collection's truthiness depends **strictly on whether it is empty**, NOT on what items it contains:
 ```python
 empty_list = []
@@ -183,7 +225,7 @@ config = {"verbose": False}
 print(bool(config))                     # True! (len == 1 key)
 ```
 
-##### 4. Negative Numbers are TRUTHY!
+##### $\color{#C62828}\blacktriangleright\space\color{#B71C1C}{\textsf{4. Negative Numbers are TRUTHY!}}$
 Only zero (`0`, `0.0`) is falsy. Negative numbers evaluate to `True`:
 ```python
 exit_code = -1
@@ -191,7 +233,7 @@ if exit_code:
     print("True!")                      # Runs! bool(-1) is True
 ```
 
-##### 5. The Dangerous AI Parameter Fallback Bug (`if x:` vs `if x is not None:`)
+##### $\color{#C62828}\blacktriangleright\space\color{#B71C1C}{\textsf{5. The Dangerous AI Parameter Fallback Bug (if x: vs if x is not None:)}}$
 This is one of the most common production bugs in Python SDKs and agent code:
 ```python
 # ❌ BUGGY: Fails when user intentionally specifies temperature=0.0 (deterministic mode):
@@ -212,15 +254,34 @@ print(generate_safe("Hi", temperature=0.0))  # Output: 'Sampling with temp=0.0' 
 
 ---
 
-#### Idiomatic Truthiness: PEP 8 Best Practices
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{Idiomatic Truthiness: PEP 8 Best Practices}}$
+
+```diff
+# Comparing unpythonic checking against idiomatic truthiness
+- ❌ Clumsy / Verbose checks:
+- if len(chat_history) == 0:
+-     print("No messages yet")
+- if is_active == True:
+-     stream_tokens()
+- if query != "":
+-     process(query)
+
++ ✅ Clean, idiomatic Python:
++ if not chat_history:
++     print("No messages yet")
++ if is_active:
++     stream_tokens()
++ if query:
++     process(query)
+```
 
 * **Checking for empty sequences / collections:**
   ```python
-  # ✅ Pythonic (concise, idiomatic):
+  # [CORE - DAILY] Idiomatic check:
   if not chat_history:
       print("No messages yet")
 
-  # 🚫 Verbose / unpythonic:
+  # [AVOID] Clumsy length check:
   if len(chat_history) == 0:
       print("No messages yet")
   ```
@@ -288,7 +349,20 @@ while True:                     # an intentional "loop forever" — exit with br
 
 A `for` loop in Python is a "for-each" loop. It iterates directly over the items of any sequence or iterable (lists, strings, tuples, dictionaries, or ranges).
 
-#### 1. Iterating over collections & strings
+```mermaid
+flowchart LR
+    classDef iter fill:#E0F2F1,stroke:#00695C,stroke-width:2px,color:#004D40;
+    classDef comp fill:#FFF8E1,stroke:#F57F17,stroke-width:2px,color:#E65100;
+    classDef exit fill:#FFEBEE,stroke:#C62828,stroke-width:2px,color:#B71C1C;
+
+    Source["Iterable: ['doc1', 'doc2']"]:::iter --> GetIter["iter(source) -> Iterator"]:::iter
+    GetIter --> Fetch["next(it)"]:::iter
+    Fetch --> Check{"Has Next?"}:::comp
+    Check -- "Yield Item" --> Exec["Execute loop body"]:::iter --> Fetch
+    Check -- "StopIteration" --> LoopExit(["Loop Terminates"]):::exit
+```
+
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Iterating over collections and strings}}$
 
 ```python
 # Lists & tuples:
@@ -304,7 +378,7 @@ for key, value in {"model": "gpt-4o", "temp": 0.7}.items():
     print(f"{key} = {value}")
 ```
 
-#### 2. The `range()` function & shorthand repeat loops
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. The range() function and shorthand repeat loops}}$
 
 `range()` generates numbers on demand without allocating an entire list in memory:
 
@@ -331,7 +405,27 @@ for _ in range(3):
     print("Retrying API request...")   # prints 3 times
 ```
 
-#### 3. Loop variations: `enumerate()`, `zip()`, `reversed()`
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{3. Loop variations: enumerate(), zip(), reversed()}}$
+
+| Loop Helper | Production Priority | Return Value | Memory Overhead | Real-World AI Application |
+| :--- | :--- | :--- | :--- | :--- |
+| **`enumerate(seq, start=0)`** | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | `(index, item)` tuple | $O(1)$ lazy streaming | Numbering retrieved citations, chat message ordering |
+| **`zip(*iterables)`** | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | Tuples of paired items | $O(1)$ lazy streaming | Pairing prompt templates with user variables, input/target alignment |
+| **`range(start, stop, step)`** | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | Integer range generator | $O(1)$ memory generator | API retry loops (`for _ in range(3):`), batch slice index stepping |
+| **`reversed(seq)`** | $\color{#FFB300}\blacksquare\ \textbf{Occasional}$ | Reverse iterator | $O(1)$ zero-copy | Inspecting token stream in reverse, recent message stack traversal |
+| **`sorted(seq)`** | $\color{#FFB300}\blacksquare\ \textbf{Occasional}$ | New sorted list | $O(N)$ new allocation | Ordering RAG retrieval results by similarity score descending |
+
+```diff
+# Accessing both index and element
+- ❌ Clumsy indexing anti-pattern:
+- for i in range(len(tools)):
+-     tool = tools[i]
+-     print(f"{i + 1}. {tool}")
+
++ ✅ Idiomatic enumerate:
++ for idx, tool in enumerate(tools, start=1):
++     print(f"{idx}. {tool}")
+```
 
 - **`enumerate(seq)`**: yields `(index, item)` pairs so you don't need manual index counters.
 - **`zip(seq1, seq2)`**: walks through two or more collections in lockstep.
@@ -355,7 +449,7 @@ for tool in reversed(tools):
     print(tool)                        # browser, calculator, search
 ```
 
-#### 4. Shorthand: Guarding against `None` or empty before a loop
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4. Shorthand: Guarding against None or empty before a loop}}$
 
 If a function or API returns `None` instead of a list, a normal loop crashes with `TypeError: 'NoneType' object is not iterable`. Python has clean patterns to handle this:
 
@@ -382,7 +476,7 @@ if response_docs is not None:
     for doc in response_docs: ...
 ```
 
-#### 5. Loop `else` clause (`for ... else` & `while ... else`)
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5. Loop else clause (for ... else and while ... else)}}$
 
 Python loops can have an optional `else` block. The `else` runs **only if the loop completes all iterations without hitting `break`**. If `break` terminates the loop early, the `else` block is skipped.
 
@@ -414,12 +508,25 @@ else:
 
 ### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{6.4 Loop Control: continue vs break vs pass}}$
 
+```mermaid
+flowchart TD
+    classDef breakNode fill:#FFCDD2,stroke:#B71C1C,stroke-width:2px,color:#B71C1C;
+    classDef contNode fill:#FFE082,stroke:#F57F17,stroke-width:2px,color:#E65100;
+    classDef passNode fill:#C8E6C9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
+    classDef stateNode fill:#E1F5FE,stroke:#0288D1,stroke-width:2px,color:#01579B;
+
+    Step["Current Loop Iteration"]:::stateNode --> Condition{"Condition Hit"}
+    Condition -- "break" --> BreakAction["Terminates loop immediately"]:::breakNode --> OutOfLoop(["Resume After Loop Block"]):::stateNode
+    Condition -- "continue" --> ContAction["Skips remainder of current round"]:::contNode --> NextIter(["Jump to Next Iteration"]):::stateNode
+    Condition -- "pass" --> PassAction["Does nothing (no-op)"]:::passNode --> NextLine["Executes Next Line in Block"]:::stateNode
+```
+
 Engineers frequently ask about the exact mechanical differences between these three keywords:
 - **`continue`**: Skips the remainder of the *current iteration* and jumps straight to the next iteration.
 - **`break`**: Terminates the *entire loop* immediately and jumps out to the code after the loop.
 - **`pass`**: A "do-nothing" statement. Execution proceeds immediately to the *very next line in the current block*.
 
-#### 1. The 3-way direct comparison on identical data
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. The 3-way direct comparison on identical data}}$
 
 ```python
 numbers = [1, 2, 3]
@@ -450,7 +557,7 @@ for n in numbers:
 # Output: 1
 ```
 
-#### 2. Where `pass` is practically used
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. Where pass is practically used}}$
 
 Because Python uses indentation instead of curly braces (`{}`), you cannot leave a code block empty without raising an `IndentationError`. Use `pass` as a syntactical placeholder:
 
@@ -473,6 +580,20 @@ class ToolExecutionError(Exception):
 
 ### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{6.5 match — Clean Multi-Way Branching (Modern Python)}}$
 
+```mermaid
+flowchart TD
+    classDef action fill:#EDE7F6,stroke:#512DA8,stroke-width:2px,color:#311B92;
+    classDef branch fill:#E8EAF6,stroke:#303F9F,stroke-width:2px,color:#1A237E;
+    classDef fallback fill:#ECEFF1,stroke:#455A64,stroke-width:2px,color:#263238;
+
+    InputCmd["match command:"]:::action --> C1{"case 'start':"}:::branch
+    C1 -- Match --> Act1["Start Execution Pipeline"]:::action
+    C1 -- No Match --> C2{"case 'stop':"}:::branch
+    C2 -- Match --> Act2["Halt Engine and Flush Buffer"]:::action
+    C2 -- No Match --> CWild{"case _: (Wildcard)"}:::fallback
+    CWild --> ActWild["Handle Unknown / Unhandled Command"]:::fallback
+```
+
 ```python
 command = "start"
 
@@ -485,7 +606,7 @@ match command:                  # compares the value against each "case"
         print("unknown command")
 ```
 
-#### Pattern Matching with Enums (`match` + `Enum`)
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{Pattern Matching with Enums (match + Enum)}}$
 In production AI engineering, `match / case` is most commonly paired with **`Enum`** types to build type-safe state machines and tool dispatchers without fragile magic strings:
 
 ```python
@@ -537,7 +658,7 @@ API calls, or drive an agent's "think → act → observe" cycle. Comfort with `
    over a copy (`for x in items[:]:`) or build a new list instead.
 4. **Off-by-one with `range`** — `range(5)` is `0..4`, not `1..5`; the stop is excluded.
 
-### Try it yourself
+### $\color{#0D47A1}\blacktriangleright\space\color{#1565C0}{\textsf{Try It Yourself}}$
 Use a `for` loop and `range` to print only the even numbers from 1 to 20, then rewrite it using
 `continue` to skip odds.
 
@@ -545,7 +666,7 @@ Use a `for` loop and `range` to print only the even numbers from 1 to 20, then r
 
 ## ⚖️ $\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use (Control Flow Decision Guide)}}$
 
-### Branching Decisions
+### $\color{#00695C}\blacktriangleright\space\color{#00838F}{\textsf{Branching Decisions}}$
 
 | Technique | Syntax | ✅ When to Use | 🚫 Avoid When | AI / Pipeline Use Case |
 | :--- | :--- | :--- | :--- | :--- |
@@ -553,7 +674,7 @@ Use a `for` loop and `range` to print only the even numbers from 1 to 20, then r
 | **Shorthand `if-else` (Ternary)** | `val = x if cond else y` | Single inline value selection, f-string formatting, defaults | Complex multi-line bodies or nested conditions | Choosing model tier (`"gpt-4o"` vs `"mini"`) |
 | **`match / case`** | `match val: case "a": ...` | Clean branching against known literal commands or structural shapes | Simple binary True/False checks | Agent tool/action dispatcher |
 
-### Looping Decisions
+### $\color{#00695C}\blacktriangleright\space\color{#00838F}{\textsf{Looping Decisions}}$
 
 | Technique | Syntax | ✅ When to Use | 🚫 Avoid When | AI / Pipeline Use Case |
 | :--- | :--- | :--- | :--- | :--- |

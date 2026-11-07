@@ -46,6 +46,29 @@ A **set** is a bag of marbles where duplicates are impossible — toss in two id
 
 A **`frozenset`** is that same bag of marbles sealed tight in clear epoxy resin — you can inspect the contents and check if a marble is inside, but you can never add or remove anything. Because it is fixed and immutable, it can safely serve as a dictionary key or sit inside another set.
 
+```mermaid
+flowchart LR
+    subgraph DictModel ["🔑 Python Dictionary (Hash Map)"]
+        direction LR
+        K1["Key: 'model'"] -->|Hash Lookup O(1)| V1["Value: 'gpt-4o'"]
+        K2["Key: 'tokens'"] -->|Hash Lookup O(1)| V2["Value: 1500"]
+    end
+
+    subgraph SetModel ["🔵 Python Set (Deduplication Bag)"]
+        direction LR
+        S_IN["Input: ['doc1', 'doc2', 'doc1']"] -->|Auto-collapse| S_OUT["Unique Set: {'doc1', 'doc2'}"]
+    end
+
+    style DictModel fill:#E1F5FE,stroke:#0288D1,color:#01579B
+    style SetModel fill:#E8F5E9,stroke:#388E3C,color:#1B5E20
+    style K1 fill:#BBDEFB,stroke:#1976D2
+    style K2 fill:#BBDEFB,stroke:#1976D2
+    style V1 fill:#FFF3E0,stroke:#F57C00
+    style V2 fill:#FFF3E0,stroke:#F57C00
+    style S_IN fill:#FFF9C4,stroke:#FBC02D
+    style S_OUT fill:#C8E6C9,stroke:#2E7D32
+```
+
 > [!IMPORTANT]
 > ### $\color{#512DA8}{\textsf{The "Aha!" Insight and Structural Symmetry}}$
 > **dict** = "look up a value by its key"  
@@ -78,6 +101,17 @@ print(person["name"])      # 'Ada'  — look up by key with square brackets
 # .get() is the SAFE lookup: returns None (or a default) instead of crashing.
 print(person.get("email"))            # None
 print(person.get("email", "n/a"))     # 'n/a'  — supply a fallback
+```
+
+```diff
+- # ❌ FRAGILE: Direct indexing crashes on optional API fields
+- user_email = payload["email"]  # 💥 KeyError: 'email' if key is omitted!
+
++ # ✅ ROBUST: Safe .get() returns fallback default instead of crashing
++ user_email = payload.get("email", "support@company.com")  # ✅ Safe fallback!
+```
+
+```python
 ```
 
 ### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5.2 Adding, Updating, Deleting}}$

@@ -71,6 +71,19 @@ Now, imagine entering a **Formula 1 Racing Workshop**:
 
 Advanced Python is not about writing obscure, clever code. It is about **taking off the passenger seats and installing racing suspension** so your AI services run with minimum RAM, zero resource leaks, and lightning-fast data routing.
 
+```mermaid
+flowchart TD
+    classDef opt fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
+    classDef syn fill:#E1F5FE,stroke:#0288D1,stroke-width:2px,color:#01579B;
+    classDef sys fill:#FFF8E1,stroke:#F57F17,stroke-width:2px,color:#E65100;
+
+    subgraph Workshop["🏎️ The High-Performance AI Engineering Workshop"]
+        W1["⚡ Memory & Profiling<br/>__slots__ (60% RAM cut) · weakref · time.perf_counter() · cProfile"]:::opt
+        W2["🎯 Expressive Flow & Stream<br/>Walrus Operator (:=) · yield from · itertools.batched · match/case"]:::syn
+        W3["🛡️ Robust Architecture<br/>@contextmanager · ExitStack · @lru_cache · __init_subclass__"]:::sys
+    end
+```
+
 ---
 
 ![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
@@ -89,11 +102,26 @@ Advanced Python is not about writing obscure, clever code. It is about **taking 
 
 Introduced in Python 3.8, the **walrus operator (`:=`)** assigns a value to a variable *inside an expression* while simultaneously returning that value.
 
-#### 1. The Analogy: The Supermarket Cashier Scanning & Bagging
+#### $\color{#512DA8}\blacktriangleright\space\color{#311B92}{\textsf{1. The Analogy: The Supermarket Cashier Scanning and Bagging}}$
 - **Old Way (Two Steps):** The cashier scans an item, puts it down on the counter, and then picks it up again to put it in the bag.
 - **Walrus Way (One Motion):** The cashier scans the item with their right hand and drops it directly into the grocery bag in the exact same physical movement: `(item := scan())`.
 
-#### 2. The Problem-First Contrast: Stream Reading & Comprehensions
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. The Problem-First Contrast: Stream Reading and Comprehensions}}$
+
+```diff
+# Reading token streams from APIs
+- ❌ Clunky boilerplate (infinite while True + manual break):
+- while True:
+-     token = client.read_next_token()
+-     if not token:
+-         break
+-     process(token)
+
++ ✅ Clean Walrus expression (read, bind, and condition in one step):
++ while (token := client.read_next_token()):
++     process(token)
+```
+
 When reading streaming tokens from an LLM API or network socket, the old way requires awkward boilerplate or infinite `while True` loops:
 
 ```python
@@ -112,7 +140,7 @@ def read_llm_stream_walrus(client):
         print(f"Token: {token}")
 ```
 
-#### 3. Real-World AI Scenario: Expensive Embedding Filtering in Comprehensions
+#### $\color{#512DA8}\blacktriangleright\space\color{#311B92}{\textsf{3. Real-World AI Scenario: Expensive Embedding Filtering in Comprehensions}}$
 Without the walrus operator, filtering items in a list comprehension based on an expensive calculation forces you to either **run the calculation twice** or write an awkward nested loop:
 
 ```python
@@ -151,7 +179,7 @@ print("Filtered Chunks:", relevant_scores)
 
 *(Cross-reference: [08 Comprehensions & Generators](08%20Comprehensions%20and%20Generators.md) covered basic `yield`).*
 
-#### 1. Generator Delegation: `yield from`
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Generator Delegation: yield from}}$
 When an AI pipeline aggregates documents from multiple heterogeneous sources (e.g. PDFs, Notion databases, Slack channels), you often write multiple generator functions. 
 
 Instead of writing tedious nested loops (`for chunk in sub_generator: yield chunk`), **`yield from`** delegates directly to the sub-generator at C-speed:
@@ -180,7 +208,7 @@ for doc in unified_rag_corpus():
     print(f"Ingested: {doc}")
 ```
 
-#### 2. High-Throughput Streaming with `itertools`
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. High-Throughput Streaming with itertools}}$
 The standard library `itertools` module provides C-level building blocks for streaming without memory duplication:
 
 ```python
@@ -211,7 +239,21 @@ print("First three IDs:", first_three)  # ['ID_1', 'ID_2', 'ID_3']
 
 ### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.3 Memory Management, del, and Slotted Optimization}}$
 
-#### 1. Slashing RAM Overhead with `__slots__`
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Slashing RAM Overhead with __slots__}}$
+
+```mermaid
+flowchart TD
+    classDef dictMem fill:#FFEBEE,stroke:#C62828,stroke-width:2px,color:#B71C1C;
+    classDef slotMem fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
+
+    subgraph Standard["Standard Class Instance (Heavy Overhead)"]
+        Obj1["Instance Object"] --> DictNode["Dynamic __dict__ (Hash Table)<br/>~152 bytes per instance<br/>10M Chunks = ~1.5 GB RAM"]:::dictMem
+    end
+
+    subgraph Slotted["Slotted Class Instance (__slots__ = ('id', 'vector'))"]
+        Obj2["Instance Object"] --> FixedNode["Fixed C-Level Pointer Array<br/>~56 bytes per instance (60% RAM cut)<br/>10M Chunks = ~560 MB RAM"]:::slotMem
+    end
+```
 By default, Python objects are dynamic. To allow you to add new attributes at any time (`obj.new_field = 10`), Python equips **every single instance** with a hidden dictionary called `__dict__`.
 - A single Python dictionary consumes ~104 to 152 bytes of memory overhead *per object*, even before storing any data!
 - If your RAG pipeline stores 1,000,000 document chunk objects in RAM, you waste **~150 Megabytes of RAM solely on empty dictionary overhead**!
@@ -247,7 +289,7 @@ except AttributeError as e:
     print("Memory Guard:", e)  # 'SlottedChunk' object has no attribute 'dynamic_tag'
 ```
 
-#### 2. What `del` Actually Does in Python
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. What del Actually Does in Python}}$
 A common misconception is that `del x` immediately frees an object from memory. **It does not.**
 - `del x` only deletes the **name binding `x`** from the current namespace and **decrements the object's reference count by 1**.
 - If other variables point to the same object, the object stays alive in memory!
@@ -272,7 +314,7 @@ large_embeddings = [0.0] * 10_000_000
 del large_embeddings  # Refcount hits 0 -> Python frees the 80MB buffer immediately
 ```
 
-#### 3. Memory-Safe Caching with Weak References (`weakref`)
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{3. Memory-Safe Caching with Weak References (weakref)}}$
 If you store heavy model tensors or parsed document trees in a standard cache dictionary (`cache[doc_id] = heavy_doc`), the cache holds a **strong reference**, preventing Python's GC from ever cleaning it up!
 
 **The Solution:** Use `weakref.WeakValueDictionary()`. It holds values *weakly*. When your application finishes using the document elsewhere, the cache **automatically evicts the item**:
@@ -305,7 +347,7 @@ print("In Cache after deletion:", "report" in doc_cache)  # False
 
 In AI engineering, measuring token latency, time-to-first-token (TTFT), and embedding throughput is a core architectural responsibility.
 
-#### 1. Why `time.perf_counter()` Over `time.time()`
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Why time.perf_counter() Over time.time()}}$
 - **`time.time()` (Wall-Clock):** Reflects the system clock. If your server runs NTP time synchronization or changes daylight saving time, `time.time()` can jump backwards or freeze!
 - **`time.perf_counter()` (Monotonic Benchmark Clock):** Never goes backwards, has nanosecond resolution, and is specifically designed for benchmarking code blocks.
 
@@ -324,7 +366,7 @@ def measure_token_latency():
 measure_token_latency()  # ~45.00 ms
 ```
 
-#### 2. Micro-Benchmarking with `timeit`
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. Micro-Benchmarking with timeit}}$
 When comparing competing Python implementations (e.g., list comprehension vs `map`), standard `time` measurements are contaminated by OS noise and CPU warmup. The built-in `timeit` module runs the snippet thousands of times to compute an accurate average:
 
 ```python
@@ -339,7 +381,7 @@ print(f"Map + Lambda Time:  {map_time:.4f}s")
 # Output demonstrates comprehension is consistently 20-30% faster!
 ```
 
-#### 3. Macro-Profiling with `cProfile`
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{3. Macro-Profiling with cProfile}}$
 When an entire RAG pipeline or data ingestion service is slow, don't guess where the bottleneck is. Use `cProfile` to inspect call counts and cumulative execution times:
 
 ```python
@@ -369,7 +411,7 @@ stats.print_stats(3)
 
 *(Cross-reference: [09 Decorators & Closures](09%20Decorators%20and%20Closures.md) introduced basic decorators).*
 
-#### 1. Memoization with `@functools.lru_cache`
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Memoization with @functools.lru_cache}}$
 **Memoization** caches the return values of a function based on its input arguments.
 In AI systems, prompt compilation and embedding lookups for common terms are frequently repeated. `@lru_cache(maxsize=...)` caches the latest $N$ results using a Least-Recently-Used eviction policy.
 
@@ -395,7 +437,7 @@ print(compile_system_prompt.cache_info())
 
 > **⚠️ Gotcha on `@lru_cache`:** All arguments to a memoized function **must be hashable** (immutable). If you pass a mutable list or dictionary (`compile_prompt(tags=["ai", "fast"])`), Python raises `TypeError: unhashable type: 'list'`. Pass tuples instead: `tags=("ai", "fast")`.
 
-#### 2. Building a Parametrized `@retry` Decorator for AI APIs
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. Building a Parametrized @retry Decorator for AI APIs}}$
 Model APIs intermittently fail with `429 Too Many Requests` or `503 Server Overloaded`. A **parametrized decorator** takes arguments (e.g. `max_retries=3`) and wraps your API calls in resilient backoff logic:
 
 ```python
@@ -444,7 +486,7 @@ print(fetch_openai_completion("Explain attention"))
 
 Context managers manage the life cycle of resources using the `with` statement. They ensure that **setup** and **teardown** logic executes with 100% reliability.
 
-#### 1. Creating Clean Context Managers with `@contextmanager`
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Creating Clean Context Managers with @contextmanager}}$
 Writing a class with `__enter__` and `__exit__` can be verbose. The standard library provides `@contextlib.contextmanager`, turning any generator function containing a single `yield` into a context manager:
 
 ```python
@@ -465,7 +507,7 @@ with gpu_memory_guard(0) as device:
     print(f"Running transformer forward pass on {device}...")
 ```
 
-#### 2. `contextlib.ExitStack` (Dynamic Multi-Resource Management)
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. contextlib.ExitStack (Dynamic Multi-Resource Management)}}$
 If you need to open a dynamic, unpredictable number of files or sockets simultaneously, `ExitStack` registers cleanup callbacks programmatically:
 
 ```python
@@ -524,7 +566,7 @@ dispatch_ai_payload({"error": "Gateway Timeout", "code": 504})
 
 The `assert` statement tests an internal condition: `assert condition, "optional error message"`. If the condition is `False`, Python immediately raises `AssertionError`.
 
-#### 1. Validating Tensor Dimensions & Pipeline Invariants
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Validating Tensor Dimensions and Pipeline Invariants}}$
 In machine learning, mathematical operations crash cryptically if tensor dimensions don't match. `assert` validates internal developer invariants early:
 
 ```python
@@ -536,7 +578,7 @@ def compute_attention_scores(query_dim: int, key_dim: int):
 print(compute_attention_scores(768, 768))
 ```
 
-#### 2. ⚠️ The #1 Production Trap: The `-O` Flag Disables Assertions!
+#### $\color{#C62828}\blacktriangleright\space\color{#B71C1C}{\textsf{2. ⚠️ The #1 Production Trap: The -O Flag Disables Assertions!}}$
 When Python is executed in **optimized mode** via the command-line flag `python -O script.py`, Python **completely removes and ignores all `assert` statements** at compile time!
 
 ```python
@@ -557,7 +599,7 @@ def charge_customer_safe(user_balance: float, cost: float):
 
 ### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.9 Dynamic Metaprogramming and Monkey Patching}}$
 
-#### 1. Dynamic Attribute Fallback: `__getattr__`
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Dynamic Attribute Fallback: __getattr__}}$
 `__getattr__` is called **only when an attribute does NOT exist** on an object. This allows you to build transparent fallback wrappers and dynamic proxies:
 
 ```python
@@ -578,7 +620,7 @@ print(proxy.generate("Hi"))       # [OpenAI] Generated: Hi
 print(proxy.transcribe_audio())   # Dynamic fallback executed for 'transcribe_audio'
 ```
 
-#### 2. Automatic Class Registration with `__init_subclass__`
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. Automatic Class Registration with __init_subclass__}}$
 In agent architectures, you want developers to add custom tools that **automatically register themselves** into an agent registry the moment their class is defined, with zero boilerplate:
 
 ```python
@@ -599,7 +641,7 @@ print("Active Tools:", list(AGENT_TOOL_REGISTRY.keys()))
 # Output: Active Tools: ['web_search', 'calc']
 ```
 
-#### 3. Monkey Patching (Hot-Swapping Code at Runtime)
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{3. Monkey Patching (Hot-Swapping Code at Runtime)}}$
 **Monkey patching** is the runtime replacement of a module or class attribute without modifying its original source file.
 In AI engineering, its primary production use is **mocking expensive LLM APIs during unit tests**:
 

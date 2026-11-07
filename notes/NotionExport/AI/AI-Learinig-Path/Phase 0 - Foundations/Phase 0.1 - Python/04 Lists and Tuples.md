@@ -43,9 +43,31 @@
 
 A **list** is like an egg carton: an ordered row of slots you can refill — take an egg out, put a new one in, add more slots. A **tuple** is like a sealed gift box: an ordered set of items fixed at packing time; you can look inside but not change the contents.
 
+```mermaid
+flowchart TD
+    subgraph ListModel ["📦 Mutable Python List (Dynamic Egg Carton)"]
+        direction LR
+        L0["Slot 0: 'apple'"] --- L1["Slot 1: 'banana'"] --- L2["Slot 2: 'cherry'"]
+        L_ADD["➕ <code>.append('date')</code><br/>Expands in place!"] -.-> L2
+    end
+
+    subgraph TupleModel ["🔒 Immutable Python Tuple (Sealed Gift Box)"]
+        direction LR
+        T0["Fixed 0: 3"] --- T1["Fixed 1: 4"]
+        T_LOCK["⛔ Read-Only<br/>Cannot add, delete, or swap!"]
+    end
+
+    style ListModel fill:#E8F5E9,stroke:#388E3C,color:#1B5E20
+    style TupleModel fill:#EDE7F6,stroke:#512DA8,color:#311B92
+    style L_ADD fill:#C8E6C9,stroke:#2E7D32,color:#1B5E20
+    style T_LOCK fill:#FFCDD2,stroke:#C62828,color:#B71C1C
+```
+
 > [!IMPORTANT]
-> ### $\color{#512DA8}{\textsf{The "Aha!" Insight}}$
-> Lists are **mutable** (changeable in place), tuples are **immutable** (fixed). You pick based on whether the data should be allowed to change.
+> ### $\color{#512DA8}{\textsf{The "Aha!" Insight: Mutability vs Immutability}}$
+> Lists are **mutable** (changeable in place), tuples are **immutable** (fixed). You pick based on whether the data should be allowed to change:
+> * $\color{#00C853}\blacktriangleright$ **Use a List** when collecting data that grows, shrinks, or reorders (tokens, chat history, search hits).
+> * $\color{#512DA8}\blacktriangleright$ **Use a Tuple** for fixed-dimension records, function return pairs, coordinate points, and tensor shapes `(batch_size, seq_len, dim)`. Because tuples are immutable, they are **hashable** and can serve as dictionary keys.
 
 ![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
 
@@ -269,7 +291,19 @@ last = fruits.pop()            # pop() defaults to -1: removes & RETURNS last it
 first_item = fruits.pop(0)     # pop(index): removes & RETURNS item at that index ('avocado')
 del fruits[0]                  # del: removes by index ('blueberry') without returning
 print(fruits)                  # ['date']
+```
 
+```diff
+- # ❌ UNINTENTIONAL NESTING: .append() adds the collection as ONE item
+- a = [1, 2]
+- a.append([3, 4])  # a is now [1, 2, [3, 4]] (len is 3)
+
++ ✅ FLAT EXTENSION: .extend() unrolls items into the list
++ b = [1, 2]
++ b.extend([3, 4])  # b is now [1, 2, 3, 4] (len is 4)
+```
+
+```python
 # append() vs extend() with multiple items:
 a = [1, 2]
 a.append([3, 4])               # append treats [3, 4] as ONE single item
@@ -331,6 +365,25 @@ Notice the exact same rule applies:
 
 A list variable holds a **reference** to the list, not a private copy. Assigning it to another
 name makes a second label for the **same** list in memory:
+
+```mermaid
+flowchart TD
+    subgraph MemorySpace ["Heap Memory Address Space"]
+        SharedList["📦 <b>Shared List Object: [1, 2, 3]</b><br/><code>Address: 0x501</code>"]
+        CopiedList["📦 <b>Independent Copy: [1, 2, 3]</b><br/><code>Address: 0x902</code>"]
+    end
+
+    VarA["Variable <b>a</b>"] --> SharedList
+    VarB["Variable <b>b = a</b> (Alias)"] --> SharedList
+    VarC["Variable <b>c = a.copy()</b>"] --> CopiedList
+
+    style MemorySpace fill:#F5F5F5,stroke:#9E9E9E,color:#212121
+    style SharedList fill:#FFCDD2,stroke:#C62828,color:#B71C1C
+    style CopiedList fill:#C8E6C9,stroke:#2E7D32,color:#1B5E20
+    style VarA fill:#E1F5FE,stroke:#0288D1,color:#01579B
+    style VarB fill:#FFEBEE,stroke:#D32F2F,color:#B71C1C
+    style VarC fill:#E8F5E9,stroke:#388E3C,color:#1B5E20
+```
 
 ```python
 a = [1, 2, 3]

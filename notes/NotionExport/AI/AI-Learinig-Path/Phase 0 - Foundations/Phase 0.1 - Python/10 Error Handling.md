@@ -42,14 +42,20 @@ When a trapeze artist might fall, you string a **safety net** under the risky pa
 
 **The "Aha!":** An exception does not have to be a crash. It is simply an **alternate return path** that bubbles up the call stack until an `except` block catches it. If nothing catches it, the program halts with a traceback.
 
-```
-       [ try: Risky Operation ]
-             /          \
-    (Exception)        (Success)
-           /              \
-    [ except: Handle ]    [ else: Proceed ]
-           \              /
-        [ finally: Guaranteed Cleanup ]
+```mermaid
+flowchart TD
+    classDef tryBlock fill:#E1F5FE,stroke:#0288D1,stroke-width:2px,color:#01579B;
+    classDef excBlock fill:#FFEBEE,stroke:#C62828,stroke-width:2px,color:#B71C1C;
+    classDef elseBlock fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
+    classDef finBlock fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#BF360C;
+
+    Start(["Enter try Block"]):::tryBlock --> Exec["Execute Risky Operations"]:::tryBlock
+    Exec --> Cond{"Exception Raised?"}
+    Cond -- "Yes (Matches except)" --> Handle["except Block: Catch and Recover"]:::excBlock
+    Cond -- "No (Zero Exceptions)" --> Else["else Block: Run Success Logic"]:::elseBlock
+    Handle --> Finally["finally Block: Guaranteed Cleanup (ALWAYS Runs)"]:::finBlock
+    Else --> Finally
+    Finally --> Out(["Resume Normal Program Flow"])
 ```
 
 ![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
@@ -72,25 +78,30 @@ When an unhandled error occurs, Python prints a **traceback** and stops:
 # ZeroDivisionError: division by zero   <-- Error Type: description
 ```
 
-#### Python's Exception Hierarchy
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{Python's Exception Hierarchy}}$
 Exceptions in Python are regular classes that inherit from `BaseException`:
 
-```
-BaseException
- ├── KeyboardInterrupt          # Ctrl+C pressed by user (DO NOT CATCH)
- ├── SystemExit                 # sys.exit() called (DO NOT CATCH)
- └── Exception                  # Standard base class for all application errors
-      ├── ArithmeticError
-      │    └── ZeroDivisionError
-      ├── LookupError
-      │    ├── IndexError       # list index out of range
-      │    └── KeyError         # dictionary key missing
-      ├── ValueError            # correct type, bad value (e.g. int("abc"))
-      ├── TypeError             # wrong type (e.g. "2" + 2)
-      ├── OSError
-      │    ├── FileNotFoundError
-      │    └── TimeoutError
-      └── RuntimeError
+```mermaid
+flowchart TD
+    classDef base fill:#ECEFF1,stroke:#455A64,stroke-width:2px,color:#263238;
+    classDef fatal fill:#FFCDD2,stroke:#B71C1C,stroke-width:2px,color:#B71C1C;
+    classDef app fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
+    classDef err fill:#FFF8E1,stroke:#F57F17,stroke-width:2px,color:#E65100;
+
+    Base["BaseException (Root)"]:::base
+    Base --> Sys["SystemExit (sys.exit) - DO NOT CATCH"]:::fatal
+    Base --> Keyb["KeyboardInterrupt (Ctrl+C) - DO NOT CATCH"]:::fatal
+    Base --> App["Exception (Safe Application Base)"]:::app
+
+    App --> Val["ValueError (Bad value)"]:::err
+    App --> Typ["TypeError (Wrong type)"]:::err
+    App --> Look["LookupError"]:::err
+    Look --> Key["KeyError (Dict key missing)"]:::err
+    Look --> Idx["IndexError (List index out of range)"]:::err
+    App --> OS["OSError"]:::err
+    OS --> FNF["FileNotFoundError"]:::err
+    OS --> Time["TimeoutError (Network timeout)"]:::err
+    App --> Custom["Custom Domain Exceptions (LLM/Agent)"]:::app
 ```
 
 > ⚠️ **Critical Rule: Never catch `BaseException` (and never use a bare `except:`)!**
@@ -131,7 +142,24 @@ def load_prompt_template(file_path: str) -> str:
 # Case B: File missing -> runs try -> except -> finally
 ```
 
-#### Why use `else` instead of putting code inside `try`?
+```diff
+# Comparing exception handling specificity
+- ❌ Dangerous Anti-Pattern: Bare except (catches Ctrl+C and masks crashes):
+- try:
+-     response = call_llm(prompt)
+- except:
+-     print("Failed")
+
++ ✅ Production Pattern: Catch specific domain exceptions:
++ try:
++     response = call_llm(prompt)
++ except (TimeoutError, ConnectionError) as err:
++     logger.warning(f"Network glitch, retrying: {err}")
++ except ValueError as err:
++     logger.error(f"Malformed prompt payload: {err}")
+```
+
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{Why use else instead of putting code inside try?}}$
 ```python
 # 🚫 BAD: puts too much inside 'try':
 try:
@@ -154,7 +182,7 @@ else:
     process(parsed)
 ```
 
-#### Why `finally` is non-negotiable for cleanup:
+#### $\color{#00695C}\blacktriangleright\space\color{#004D40}{\textsf{Why finally is non-negotiable for cleanup}}$
 Even if your `try` or `except` block contains a `return` statement, Python **still executes the `finally` block** before returning control to the caller!
 
 ```python
@@ -225,7 +253,7 @@ def load_agent_config(raw_json: str) -> dict:
 
 A **custom exception** is simply a class that inherits from `Exception` (or a subclass of `Exception`).
 
-#### 1. Basic Custom Exception
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Basic Custom Exception}}$
 ```python
 class ToolExecutionError(Exception):
     """Raised when an agent tool fails to execute."""
@@ -237,7 +265,7 @@ def run_calculator(expression: str) -> float:
     return eval(expression)
 ```
 
-#### 2. Custom Exceptions with Rich Metadata
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. Custom Exceptions with Rich Metadata}}$
 You can store attributes (like HTTP status codes, model names, or retry delays) directly on your exception object:
 
 ```python
@@ -258,7 +286,20 @@ except LLMRateLimitError as err:
     # Action: Pause requests to OpenAI for 30s
 ```
 
-#### 3. Designing a Production Exception Hierarchy for AI Systems
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{3. Designing a Production Exception Hierarchy for AI Systems}}$
+
+```mermaid
+flowchart TD
+    classDef base fill:#EDE7F6,stroke:#512DA8,stroke-width:2px,color:#311B92;
+    classDef child fill:#E1F5FE,stroke:#0288D1,stroke-width:2px,color:#01579B;
+
+    AgentError["AgentError (Base Domain Exception)"]:::base
+    AgentError --> ModelTimeout["ModelTimeoutError"]:::child
+    AgentError --> CtxExceeded["ContextWindowExceededError"]:::child
+    AgentError --> Guardrail["GuardrailViolationError"]:::child
+    AgentError --> ToolExec["ToolExecutionError"]:::child
+```
+
 In large AI systems, create a base domain error so callers can catch **all** errors from your module, or selectively handle specific sub-errors:
 
 ```python
@@ -294,10 +335,10 @@ except AgentError as err:
 
 ### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{10.6 The Pythonic Mindset: EAFP vs LBYL}}$
 
-| Style | Name | Philosophy | Code Example |
-| :--- | :--- | :--- | :--- |
-| **EAFP** | Easier to Ask Forgiveness than Permission | Assume success; catch the exception if it fails | `try: val = d[k] except KeyError: val = default` |
-| **LBYL** | Look Before You Leap | Check conditions with `if` before executing | `if k in d: val = d[k] else: val = default` |
+| Style | Full Name | Core Philosophy | Production Priority | Code Example | Production AI Application |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **EAFP** | Easier to Ask Forgiveness than Permission | Assume success; catch exception on rare failure | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | `try: val = d[k]`<br/>`except KeyError: val = default` | Reading cache dictionaries, opening prompt files without race conditions |
+| **LBYL** | Look Before You Leap | Check preconditions with `if` before executing | $\color{#FFB300}\blacksquare\ \textbf{Occasional}$ | `if k in d: val = d[k]`<br/>`else: val = default` | Checking user inputs where failure is expected 50%+ of the time |
 
 In Python, **EAFP is idiomatic and often faster** when failures are rare. It also avoids race conditions (e.g. checking `os.path.exists()` before opening a file is vulnerable to another process deleting the file between the check and the open; EAFP handles it safely in `try/except`).
 
@@ -316,7 +357,7 @@ In modern AI engineering:
 3. **Overly broad `try` blocks** — wrapping 50 lines in a single `try` block makes it impossible to know which operation raised `ValueError`. *Reason:* Wrap only the specific line capable of failing.
 4. **Confusing `else` with `finally`** — putting cleanup code in `else` means cleanup will **not** run if an error occurred. *Reason:* `else` is for success-only code; `finally` is for guaranteed cleanup.
 
-### Try it yourself
+### $\color{#0D47A1}\blacktriangleright\space\color{#1565C0}{\textsf{Try It Yourself}}$
 Write a custom exception `TokenLimitExceededError` that stores `current_tokens` and `max_tokens`. Write a function `validate_prompt(text: str, max_tokens: int = 100)` that splits `text` into words; if word count exceeds `max_tokens`, raise your custom exception. Catch it and print a helpful alert.
 
 ![Variations](https://img.shields.io/badge/COMPARISON-VARIATIONS%20%26%20WHEN%20TO%20USE-00838F?style=for-the-badge&logo=scales&logoColor=white)

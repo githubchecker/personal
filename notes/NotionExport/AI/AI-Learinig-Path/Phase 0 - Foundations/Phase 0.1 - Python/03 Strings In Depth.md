@@ -44,8 +44,26 @@
 
 A **string** is an ordered sequence of characters — like beads on a string, each bead a letter, digit, space, or symbol, in a fixed order. Because the order is fixed, every bead has a **position (index)**, and you can grab one bead or a run of beads.
 
+```mermaid
+flowchart LR
+    subgraph OriginalNecklace ["Original String in Memory (Immutable)"]
+        direction LR
+        B0["🔵 'P'<br/><code>idx 0</code>"] --- B1["🔵 'Y'<br/><code>idx 1</code>"] --- B2["🔵 'T'<br/><code>idx 2</code>"] --- B3["🔵 'H'<br/><code>idx 3</code>"] --- B4["🔵 'O'<br/><code>idx 4</code>"] --- B5["🔵 'N'<br/><code>idx 5</code>"]
+    end
+
+    subgraph NewNecklace ["Result of s.replace('P', 'J') (New Object)"]
+        direction LR
+        NB0["🟢 'J'<br/><code>idx 0</code>"] --- NB1["🟢 'Y'<br/><code>idx 1</code>"] --- NB2["🟢 'T'<br/><code>idx 2</code>"] --- NB3["🟢 'H'<br/><code>idx 3</code>"] --- NB4["🟢 'O'<br/><code>idx 4</code>"] --- NB5["🟢 'N'<br/><code>idx 5</code>"]
+    end
+
+    OriginalNecklace -.->|Creates Fresh String| NewNecklace
+
+    style OriginalNecklace fill:#E1F5FE,stroke:#0288D1,color:#01579B
+    style NewNecklace fill:#E8F5E9,stroke:#388E3C,color:#1B5E20
+```
+
 > [!IMPORTANT]
-> ### $\color{#512DA8}{\textsf{The "Aha!" Insight}}$
+> ### $\color{#512DA8}{\textsf{The "Aha!" Insight: Strings Are Immutable}}$
 > Strings are **immutable** — once made, you cannot change a bead in place. Every "edit" actually builds a **new** string in memory. (This sounds limiting but prevents whole classes of concurrency and state-corruption bugs).
 
 ---
@@ -60,7 +78,18 @@ A **string** is an ordered sequence of characters — like beads on a string, ea
 > * $\color{#FFB300}\blacktriangleright$ **Occasional (Specialized Parsing):** `.find()` / `.index()`, `.count()`, `.encode("utf-8")` / `.decode("utf-8")` (network byte streams).
 > * $\color{#757575}\blacktriangleright$ **Reference Only (Exhaustive Lookups):** `.isalnum()`, `.capitalize()`, `.center()`, `.zfill()`, `.partition()`.
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{3.1 Making Strings}}$
+---
+
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{3.1 Making Strings: Quotes and Escaping}}$
+
+Python offers four ways to define string literals depending on formatting needs:
+
+| $\color{#4A148C}\textsf{\textbf{Literal Syntax}}$ | $\color{#00C853}\textsf{\textbf{Production Priority}}$ | $\color{#0D47A1}\textsf{\textbf{Example}}$ | $\color{#2E7D32}\textsf{\textbf{When to Use}}$ |
+| :--- | :---: | :--- | :--- |
+| **Double / Single Quotes** | `🟢 Core (Daily)` | `"hello"`, `'hello'` | Standard short strings, dictionary keys, variable values |
+| **Triple Quotes** | `🟢 Core (Daily)` | `"""Prompt text..."""` | Multi-line system prompts, documentation docstrings |
+| **Raw String (`r"..."`)** | `🟢 Core (Daily)` | `r"C:\Users\docs\data"` | Windows file paths, Regular Expressions (backslashes literal) |
+| **Escaped Quotes** | `🟡 Occasional` | `"He said \"hi\""` | Embedding quotation marks within matching string delimiters |
 
 ```python
 a = "double quotes"
@@ -111,7 +140,8 @@ print(s[::2])   # 'PTO'  every 2nd char (s[start:stop:step])
 print(s[::-1])  # 'NOHTYP' a reversed copy (handy trick)
 ```
 
-The "up to but not including stop" rule is consistent across all Python sequences — learn it once.
+> **$\color{#00C853}\blacksquare\ \textsf{The Universal Slicing Formula:}$** **`s[start : stop : step]`**  
+> In Python, `start` is **INCLUSIVE** and `stop` is **EXCLUSIVE** (the half-open interval `[start, stop)`). This rule is universal across strings, lists, tuples, NumPy arrays, and PyTorch tensors.
 
 ```diff
 - # ❌ IN-PLACE MUTATION BUG: Strings are immutable!
@@ -133,11 +163,28 @@ print("th" in "python")    # True   — substring check
 print("z" not in "python") # True
 ```
 
+> **$\color{#00C853}\blacksquare\ \textsf{Production Tip:}$** The `in` keyword on strings performs a rapid substring search. It is case-sensitive: `"error" in response` won't match `"Error"`. Always normalize first: `"error" in response.lower()`.
+
 ---
 
 ### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{3.4 Essential String Methods}}$
 
-Methods return a **new** string (remember: immutable). A tour of the ones you'll actually use:
+Methods return a **new** string (remember: immutable).
+
+| $\color{#4A148C}\textsf{\textbf{Method}}$ | $\color{#00C853}\textsf{\textbf{Production Priority}}$ | $\color{#0D47A1}\textsf{\textbf{What It Does}}$ | $\color{#2E7D32}\textsf{\textbf{Real-World AI Engineering Role}}$ |
+| :--- | :---: | :--- | :--- |
+| **`.strip()`** | `🟢 Core (Daily)` | Removes leading/trailing whitespace | Sanitizing user prompts, cleaning raw LLM completions |
+| **`.split(sep)`** | `🟢 Core (Daily)` | Breaks string into a list of chunks | Tokenization, parsing CSV/TSV, document chunking |
+| **`sep.join(list)`** | `🟢 Core (Daily)` | Glues list of strings into one text | Assembling prompt context, combining retrieved docs |
+| **`.replace(old, new)`** | `🟢 Core (Daily)` | Replaces occurrences of a substring | Injecting template variables (`{input}`), text masking |
+| **`.lower()` / `.upper()`** | `🟢 Core (Daily)` | Converts character case | Case-insensitive intent matching and command routing |
+| **`.startswith(prefix)`** | `🟢 Core (Daily)` | Checks beginning of string | Routing CLI commands (`--flag`), protocol validation (`http://`) |
+| **`.endswith(suffix)`** | `🟢 Core (Daily)` | Checks end of string | Validating file extensions (`.json`, `.pdf`, `.parquet`) |
+| **`.find(sub)`** | `🟡 Occasional` | Returns index of match, or `-1` | Finding specific markers when regex is overkill |
+| **`.count(sub)`** | `🟡 Occasional` | Counts occurrences of substring | Counting token occurrences or newline delimiters |
+| **`.encode()` / `.decode()`** | `🟡 Occasional` | Converts between `str` and `bytes` | Handling binary network payloads and API streaming chunks |
+| **`.capitalize()` / `.title()`** | `⚪ Reference` | Capitalizes words | UI formatting (rarely needed in backend AI logic) |
+| **`.isalnum()` / `.isalpha()`** | `⚪ Reference` | Validates alphanumeric characters | Input format validation |
 
 ```python
 text = "  Hello, World  "
@@ -161,7 +208,20 @@ print("hello".capitalize())    # 'Hello'
 print("a1b2".isalnum())        # True — only letters/digits?
 ```
 
-`split()` and `join()` are a pair you'll use a lot: `split` breaks text apart, `join` glues a list back into text.
+`split()` and `join()` are a pair you'll use constantly: `split` breaks text apart, `join` glues a list back into text.
+
+```diff
+- ❌ FRAGILE & SLOW: Accumulating strings with '+' in loops (O(N^2) memory copying)
+- prompt = ""
+- for chunk in document_chunks:
+-     prompt += chunk + "\n"  # Allocates a brand new string on every iteration!
+
++ ✅ SCALABLE & FAST: Collect in a list, then join once (O(N) linear time)
++ parts = []
++ for chunk in document_chunks:
++     parts.append(chunk)
++ prompt = "\n".join(parts)  # Single allocation in memory!
+```
 
 > [!TIP]
 > ### $\color{#1B5E20}{\textsf{Performance Pro-Tip: Building Strings in Loops}}$
@@ -173,6 +233,14 @@ print("a1b2".isalnum())        # True — only letters/digits?
 ### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{3.5 f-strings (The Modern Way to Build Text)}}$
 
 Prefix a string with `f` and put expressions inside `{ }`:
+
+| $\color{#4A148C}\textsf{\textbf{Format Specifier}}$ | $\color{#0D47A1}\textsf{\textbf{Example Expression}}$ | $\color{#2E7D32}\textsf{\textbf{Rendered Output}}$ | $\color{#E65100}\textsf{\textbf{Use Case in AI}}$ |
+| :--- | :--- | :--- | :--- |
+| `:.2f` | `f"{0.87654:.2f}"` | `'0.88'` | Formatting confidence scores and model loss |
+| `:.1%` | `f"{0.876:.1%}"` | `'87.6%'` | Displaying accuracy and hit rates |
+| `:,` | `f"{1500000:,}"` | `'1,500,000'` | Formatting large token budgets and dataset sizes |
+| `= ` | `f"{tokens=}"` | `'tokens=1500'` | Rapid inline debugging without typing variable names |
+| `:>10` / `:<10` | `f"{'doc':>10}"` | `'       doc'` | CLI tables and fixed-width log formatting |
 
 ```python
 name = "Ada"
@@ -187,6 +255,10 @@ print(f"{pi:.2f}")     # '3.14'   — 2 decimal places
 print(f"{42:5d}")      # '   42'  — width 5, right-aligned
 print(f"{42:<5}|")     # '42   |' — left-aligned in width 5
 print(f"{1000000:,}")  # '1,000,000' — thousands separator
+
+# Debugging shorthand (Python 3.8+):
+tokens = 1500
+print(f"{tokens=}")    # 'tokens=1500' — prints both the variable name and value!
 ```
 
 ---
@@ -195,7 +267,12 @@ print(f"{1000000:,}")  # '1,000,000' — thousands separator
 
 ## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
-You'll build prompts with f-strings (`f"Answer using: {context}"`), clean model output with `.strip()`, split documents on delimiters, and check `"error" in response.lower()`. The token splitter you'll write later leans entirely on `split()` and `join()`.
+Text is the universal interface of modern Generative AI:
+
+* $\color{#0288D1}\blacktriangleright$ **$\color{#01579B}{\textsf{Dynamic Prompt Templating:}}$** You'll construct zero-shot and few-shot prompts using f-strings and multi-line strings (`f"Context: {retrieved_doc}\nQuestion: {query}"`).
+* $\color{#00897B}\blacktriangleright$ **$\color{#004D40}{\textsf{Output Sanitization:}}$** LLMs often wrap outputs in whitespace or markdown fences. You'll use `.strip()` and `.replace("```json", "")` to sanitize raw completions before parsing.
+* $\color{#E65100}\blacktriangleright$ **$\color{#BF360C}{\textsf{RAG Document Chunking:}}$** In Retrieval-Augmented Generation, you split long documents on delimiters (`text.split("\n\n")`) and merge small chunks with `" ".join(chunk_parts)`.
+* $\color{#7B1FA2}\blacktriangleright$ **$\color{#4A148C}{\textsf{Error Guardrails:}}$** Check model failure modes quickly using substring membership (`if "apology" in response.lower():`).
 
 ### $\color{#00838F}\blacktriangleright\space\color{#00695C}{\textsf{Common Beginner Mistakes (The Reasoning)}}$
 

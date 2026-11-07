@@ -92,7 +92,7 @@ print(greet("Bo"))                  # reuse immediately with another argument ->
 - **parameter** = the variable name in the definition (`name`).
 - **argument** = the concrete value passed during the call (`"Ada"`).
 
-#### 1. Returning Any Data Type (Primitives vs Collections)
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Returning Any Data Type (Primitives vs Collections)}}$
 
 Because Python is dynamically typed, a function can return any Python data type: numbers, strings, booleans, lists, dictionaries, or custom objects:
 
@@ -119,7 +119,7 @@ def split_chunks(text: str) -> list[str]:
 print(split_chunks("Sentence one. Sentence two."))  # ['Sentence one', 'Sentence two.']
 ```
 
-#### 2. Returning Multiple Values (Automatic Tuple Packing & Unpacking)
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. Returning Multiple Values (Automatic Tuple Packing and Unpacking)}}$
 
 Python allows you to return **multiple comma-separated values** in a single `return` statement. Under the hood, Python automatically **packs** them into a single `tuple`:
 
@@ -139,7 +139,7 @@ speed, cost = calculate_metrics(500, 2.5)
 print(f"Speed: {speed} tps | Cost: ${cost}") # Speed: 200.0 tps | Cost: $0.01
 ```
 
-#### 3. Early Return (Guard Clauses)
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{3. Early Return (Guard Clauses)}}$
 
 The `return` statement terminates execution immediately and exits the function. Use **guard clauses** at the top of a function to handle invalid or missing inputs early, avoiding deeply nested `if/else` ladders:
 
@@ -156,7 +156,7 @@ print(retrieve_documents(None))             # [] (exited early, no crash)
 print(retrieve_documents("AI agents"))      # ['Chunk 1 matching...', 'Chunk 2 matching...']
 ```
 
-#### 4. The Implicit `return None` (Side Effects vs Values)
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4. The Implicit return None (Side Effects vs Values)}}$
 
 If a function does not contain a `return` statement, or if `return` is written without an expression, Python **automatically returns `None`**:
 
@@ -201,7 +201,7 @@ print(connect_db("localhost", db_name="vector_store", port=5432))
 # 'Connected to vector_store at localhost:5432'
 ```
 
-#### The Golden Rules of Passing Arguments:
+#### $\color{#00695C}\blacktriangleright\space\color{#004D40}{\textsf{The Golden Rules of Passing Arguments}}$
 
 - **Rule 1: Positional arguments MUST come before keyword arguments.**
   Once you supply a keyword argument, every argument after it must also be a keyword argument:
@@ -229,7 +229,7 @@ print(power(5, 3))                  # 125 — exponent overridden positionally t
 print(power(5, exponent=4))         # 625 — exponent overridden by keyword to 4
 ```
 
-#### The "Defaults at the End" Rule:
+#### $\color{#00695C}\blacktriangleright\space\color{#004D40}{\textsf{The Defaults at the End Rule}}$
 **Parameters with default values MUST follow all parameters without default values.**
 
 ```python
@@ -290,7 +290,42 @@ print(generate_completion("Explain RAG", stream=True, temperature=0.0))
 
 This is one of the most famous traps in Python. **Never use a mutable object (like a list `[]`, dictionary `{}`, or set) as a default parameter value.**
 
-#### The Problem: Default values are evaluated ONCE at definition time
+#### $\color{#C62828}\blacktriangleright\space\color{#B71C1C}{\textsf{The Problem: Default values are evaluated ONCE at definition time}}$
+
+```mermaid
+flowchart TD
+    classDef defScope fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#BF360C;
+    classDef memObj fill:#FFCDD2,stroke:#B71C1C,stroke-width:2px,color:#B71C1C;
+    classDef safeObj fill:#C8E6C9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
+
+    subgraph Trap["❌ Mutable Default Heap Binding (One Shared Instance)"]
+        DefTime["def add_document(doc, document_store=[])"]:::defScope
+        FuncDefaults["func.__defaults__[0]"]:::defScope --> SharedList["Shared list in Heap: 0x10A<br/>['doc_01', 'doc_02', 'doc_03']"]:::memObj
+        Call1["Call 1: add_document('doc_01')"] --> SharedList
+        Call2["Call 2: add_document('doc_02')"] --> SharedList
+    end
+
+    subgraph Safe["✅ Sentinel None Pattern (Independent Heap Instances)"]
+        SafeDef["def add_document(doc, document_store=None)"]:::defScope
+        CallSafe1["Call 1: creates fresh []"] --> Fresh1["New Heap list: 0x20A<br/>['doc_01']"]:::safeObj
+        CallSafe2["Call 2: creates fresh []"] --> Fresh2["New Heap list: 0x30B<br/>['doc_02']"]:::safeObj
+    end
+```
+
+```diff
+# Comparing mutable default anti-pattern against Sentinel None
+- ❌ Dangerous mutable default argument (shared across all calls):
+- def add_document(doc: str, document_store: list = []) -> list:
+-     document_store.append(doc)
+-     return document_store
+
++ ✅ Production Sentinel None pattern (fresh list per call):
++ def add_document(doc: str, document_store: list | None = None) -> list:
++     if document_store is None:
++         document_store = []
++     document_store.append(doc)
++     return document_store
+```
 
 ```python
 # ⚠️ BUGGY CODE:
@@ -307,7 +342,7 @@ print(add_document("doc_03"))       # ['doc_01', 'doc_02', 'doc_03']
 > In Python, a `def` statement is an executable statement that runs when the file is first imported or loaded. Python creates the default list `[]` **once** and binds it to the function object's `__defaults__` attribute.
 > Every subsequent call that omits the argument shares the **exact same memory address** (`id(document_store)`). Any mutation persists forever!
 
-#### The Fix: The Sentinel `None` Pattern
+#### $\color{#2E7D32}\blacktriangleright\space\color{#1B5E20}{\textsf{The Fix: The Sentinel None Pattern}}$
 
 Use `None` as the default value, and instantiate a fresh list inside the function body:
 
@@ -326,7 +361,7 @@ print(add_document("doc_02"))       # ['doc_02']  <-- ✅ Clean and isolated!
 
 Modern Python allows you to strictly control whether callers must use positional or keyword arguments.
 
-#### 1. Keyword-Only Parameters (`*`)
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Keyword-Only Parameters (*)}}$
 Any parameter listed **after a bare `*`** CANNOT be passed positionally. The caller is forced to pass it by name:
 
 ```python
@@ -343,7 +378,7 @@ print(search_vector_db("transformer architecture", top_k=10, score_threshold=0.8
 > **Why AI SDKs use `*` everywhere:**
 > In AI and machine learning libraries (such as OpenAI, Anthropic, and LangChain), functions often take 10+ hyperparameters and boolean flags (e.g. `stream=True`, `temperature=0.7`, `top_p=0.9`). If callers passed numbers positionally, swapping `0.7` and `0.9` would cause silent, catastrophic model behavior. Bare `*` prevents positional confusion and makes client code completely self-documenting.
 
-#### 2. Positional-Only Parameters (`/`)
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. Positional-Only Parameters (/)}}$
 Any parameter listed **before a `/`** CANNOT be passed by keyword. It must be passed positionally:
 
 ```python
@@ -356,7 +391,7 @@ print(calculate_tokens("Hello world"))  # ✅ 2
 # calculate_tokens(text="Hello world")
 ```
 
-#### 3. Combining `/`, Standard Parameters, and `*` in One Single Function (The 3-Zone Architecture)
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{3. Combining /, Standard Parameters, and * in One Single Function (The 3-Zone Architecture)}}$
 
 Python allows you to use **both `/` and `*` in the same function definition**. This establishes **three distinct calling zones**:
 
@@ -366,6 +401,15 @@ def func( pos_only, / , standard , * , kw_only ):
           Zone 1        Zone 2         Zone 3
        Positional-Only  Either Way   Keyword-Only
 ```
+
+| Parameter Kind | Syntax | Calling Rule | Production Priority | Real-World AI Application |
+| :--- | :--- | :--- | :--- | :--- |
+| **Standard (Positional / Keyword)** | `def f(x, model="gpt-4o")` | Can be passed by position or by keyword | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | General inputs, prompt text, model names |
+| **Default / Optional** | `def f(temperature=0.7)` | Uses default value if omitted by caller | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | Hyperparameters (`temperature=0.7`, `top_p=1.0`) |
+| **Excess Positional (`*args`)** | `def f(*args)` | Packs extra positional args into a tuple | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | Universal middleware wrappers, batch string chunks |
+| **Keyword-Only (`*`)** | `def f(*, stream=True)` | Forces caller to explicitly name the argument | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | AI SDK safety (`stream=True`, `max_retries=3`) |
+| **Excess Keyword (`**kwargs`)** | `def f(**kwargs)` | Packs extra keyword args into a dict | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | Forwarding arbitrary kwargs to OpenAI / Anthropic APIs |
+| **Positional-Only (`/`)** | `def f(text, /)` | Must be passed positionally, never by keyword | $\color{#757575}\blacksquare\ \textbf{Reference Only}$ | Fast C-extensions, math wrappers (`math.sin(x)`) |
 
 | Zone | Position | Allowed Calling Style | If Violated |
 | :--- | :--- | :--- | :--- |
@@ -424,7 +468,7 @@ When writing flexible APIs, decorators, middleware, or AI agent tool wrappers, y
 - **`*args`**: collects any number of excess **positional** arguments into an immutable **`tuple`**.
 - **`**kwargs`**: collects any number of excess **keyword** arguments into a **`dict`**.
 
-#### 1. How `*args` Works (Packing Excess Positional Arguments into a Tuple)
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. How *args Works (Packing Excess Positional Arguments into a Tuple)}}$
 
 When you prefix a parameter name with a single asterisk `*`, Python gathers all leftover positional arguments into a `tuple`:
 
@@ -447,7 +491,7 @@ print(f"Empty total: {empty_total}")           # 0
 > **Why a Tuple?**
 > A tuple is an immutable sequence. Python packs positional arguments into a tuple rather than a list to guarantee that the arguments passed by the caller cannot be accidentally mutated inside the function before processing.
 
-#### 2. How `**kwargs` Works (Packing Excess Keyword Arguments into a Dictionary)
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. How **kwargs Works (Packing Excess Keyword Arguments into a Dictionary)}}$
 
 When you prefix a parameter name with a double asterisk `**`, Python gathers all leftover `key=value` keyword arguments into a standard `dict`:
 
@@ -473,7 +517,7 @@ build_agent_config("SimpleBot")
 # kwargs type: <class 'dict'> | content: {}
 ```
 
-#### 3. Parameter Co-existence & The Strict Ordering Hierarchy
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{3. Parameter Co-existence and The Strict Ordering Hierarchy}}$
 
 In Python, you can combine standard parameters, default parameters, `*args`, keyword-only parameters, and `**kwargs` in the **same function**, but they **MUST follow this exact strict order**:
 
@@ -512,7 +556,7 @@ execute_pipeline(
 )
 ```
 
-#### The Golden Rules of Parameter Order & Co-existence:
+#### $\color{#00695C}\blacktriangleright\space\color{#004D40}{\textsf{The Golden Rules of Parameter Order and Co-existence}}$
 
 - **Rule 1: `**kwargs` MUST be the absolute LAST parameter.**
   Nothing can come after `**kwargs`. Placing any parameter after `**kwargs` is an immediate `SyntaxError`:
@@ -530,7 +574,7 @@ execute_pipeline(
 - **Rule 3: Only ONE `*args` and ONE `**kwargs` are allowed.**
   You cannot define multiple `*args` or multiple `**kwargs` in the same function signature.
 
-#### 4. Using BOTH `*args` and `**kwargs` (The Universal Wrapper Pattern)
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4. Using BOTH *args and **kwargs (The Universal Wrapper Pattern)}}$
 
 Combining `*args` and `**kwargs` allows a function to accept **any possible argument signature**. This is the standard pattern for **decorators**, **logging middleware**, and **AI agent tool routers**:
 
@@ -559,7 +603,7 @@ timer_middleware(compute_loss, 0.85, 0.90)
 timer_middleware(fetch_embeddings, "AI safety", model="text-embedding-3-small")
 ```
 
-#### 5. Unpacking at Call Time (`*` for iterables, `**` for dictionaries)
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5. Unpacking at Call Time (* for iterables, ** for dictionaries)}}$
 
 While `*` and `**` in a `def` **pack** values into a tuple or dict, using them in a function **call** does the exact opposite: it **unpacks (explodes)** a collection into individual arguments:
 
@@ -593,7 +637,7 @@ print(call_api(**request_payload))
 
 In Python, type hints provide clear contracts for what a function expects to receive and what it promises to return.
 
-#### 1. Parameter Type Hint Syntax
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Parameter Type Hint Syntax}}$
 
 - **Basic parameter type**: `param: type`
 - **Parameter with default value**: `param: type = default`
@@ -609,7 +653,7 @@ def generate_prompt(
     return f"Write about {topic} in {max_words} words."
 ```
 
-#### 2. Return Type Annotation Syntax (`-> ReturnType`)
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. Return Type Annotation Syntax (-> ReturnType)}}$
 
 The return type annotation is placed after the parameter closing parenthesis `)` and before the colon `:` using `->`:
 
@@ -637,7 +681,7 @@ def find_tool(tool_name: str) -> str | None:
     return available_tools.get(tool_name)  # returns str if found, None if missing
 ```
 
-#### 3. The Runtime Non-Enforcement Rule
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{3. The Runtime Non-Enforcement Rule}}$
 
 Python is dynamically typed: **type annotations are not enforced at runtime by Python itself**.
 
@@ -655,7 +699,7 @@ print(result)                           # 'helloworld'
 > 2. **AI Tool Calling (Phase 3)**: When defining tools for LLMs (OpenAI, LangChain), frameworks inspect `__annotations__` on your functions to automatically build the JSON Schema that guides the model on how to call the tool!
 > 3. **Pydantic Validation (Lesson 13)**: Production frameworks like FastAPI and Pydantic use these exact annotations to validate and cast data at runtime.
 
-#### 4. Docstrings (Documenting Args & Returns)
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4. Docstrings (Documenting Args and Returns)}}$
 
 ```python
 def calculate_chunk_overlap(
@@ -683,24 +727,27 @@ def calculate_chunk_overlap(
 
 **Scope** defines where a variable can be seen and accessed in computer memory. Python resolves variable names using the strict **LEGB Rule** (Local $\rightarrow$ Enclosing $\rightarrow$ Global $\rightarrow$ Built-in).
 
-```
-+-------------------------------------------------------------------------+
-| B - BUILT-IN SCOPE (len, range, print, type, Exception, ...)            |
-|   +-----------------------------------------------------------------+   |
-|   | G - GLOBAL SCOPE (Module-level variables, functions, classes)   |   |
-|   |   +---------------------------------------------------------+   |   |
-|   |   | E - ENCLOSING SCOPE (Outer/parent nested function)      |   |   |
-|   |   |   +-------------------------------------------------+   |   |   |
-|   |   |   | L - LOCAL SCOPE (Inner function variables)      |   |   |   |
-|   |   |   +-------------------------------------------------+   |   |   |
-|   |   +---------------------------------------------------------+   |   |
-|   +-----------------------------------------------------------------+   |
-+-------------------------------------------------------------------------+
+```mermaid
+flowchart TD
+    classDef lScope fill:#E1F5FE,stroke:#0288D1,stroke-width:2px,color:#01579B;
+    classDef eScope fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
+    classDef gScope fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#BF360C;
+    classDef bScope fill:#EDE7F6,stroke:#512DA8,stroke-width:2px,color:#311B92;
+
+    Query["Variable Reference: lookup name 'x'"] --> L["1. Local Scope (Current function body)"]:::lScope
+    L -- "Found" --> Done1(["Use Local x"]):::lScope
+    L -- "Not Found" --> E["2. Enclosing Scope (Outer enclosing def)"]:::eScope
+    E -- "Found" --> Done2(["Use Enclosing x"]):::eScope
+    E -- "Not Found" --> G["3. Global Scope (Module level variables)"]:::gScope
+    G -- "Found" --> Done3(["Use Global x"]):::gScope
+    G -- "Not Found" --> B["4. Built-in Scope (len, print, range)"]:::bScope
+    B -- "Found" --> Done4(["Use Built-in x"]):::bScope
+    B -- "Not Found" --> Err(["💥 NameError: name 'x' is not defined"]):::bScope
 ```
 
 ---
 
-#### 1. Local vs. Global Variables
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Local vs. Global Variables}}$
 
 * **Local Variable**: Defined inside a function. Created when the function is called; completely destroyed when the function returns.
 * **Global Variable**: Defined at the top level of a module (file) outside all functions. Accessible by any function in that file.
@@ -721,11 +768,11 @@ print(process_batch(["chunk_1", "chunk_2"]))  # 2
 
 ---
 
-#### 2. Modifying vs. Declaring Globals with `global`
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. Modifying vs. Declaring Globals with global}}$
 
 In Python, you can **read** any global variable inside a function without declaring anything. However, the moment you attempt to **reassign** (`=`) or modify (`+=`) a global variable inside a function, Python treats that variable as a **new local variable** unless you explicitly declare it with `global`:
 
-##### (a) Modifying an Existing Global Variable:
+##### $\color{#512DA8}\blacktriangleright\space\color{#311B92}{\textsf{(a) Modifying an Existing Global Variable}}$
 ```python
 total_tokens_used = 0                  # Global tracker
 
@@ -738,7 +785,7 @@ track_tokens(250)
 print(total_tokens_used)               # 400
 ```
 
-##### (b) Declaring a BRAND NEW Global from Inside a Local Function:
+##### $\color{#512DA8}\blacktriangleright\space\color{#311B92}{\textsf{(b) Declaring a BRAND NEW Global from Inside a Local Function}}$
 You can also create a brand-new global variable from inside a function using `global`, even if it never existed at the module level:
 
 ```python
@@ -759,7 +806,7 @@ print(DB_CONNECTION_URL)               # 'postgresql://localhost:5432/ai_db' (Ac
 
 ---
 
-#### 3. 💥 The Infamous `UnboundLocalError` Trap
+#### $\color{#C62828}\blacktriangleright\space\color{#B71C1C}{\textsf{3. 💥 The Infamous UnboundLocalError Trap}}$
 
 One of the most common beginner traps in Python occurs when attempting to read and rebind a variable without declaring `global`:
 
@@ -773,14 +820,14 @@ def increment():
 # increment()
 ```
 
-##### Why Does This Happen?
+##### $\color{#C62828}\blacktriangleright\space\color{#B71C1C}{\textsf{Why Does This Happen?}}$
 Python parses the **entire function body at compile time**. Because `counter += 1` contains an assignment (`counter = counter + 1`), Python marks `counter` as a **local variable for the entire function**.
 When line 1 tries to read `counter + 1`, the local `counter` has not been assigned a value yet!
 * **Fix:** Add `global counter` at the top of the function if you truly intended to mutate the module global.
 
 ---
 
-#### 4. Nested Functions & The `nonlocal` Keyword (Enclosing Scope)
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4. Nested Functions and The nonlocal Keyword (Enclosing Scope)}}$
 
 When you nest a function inside another function (the foundation of closures and decorators), Python introduces the **Enclosing Scope** (the outer function's body).
 
@@ -808,13 +855,13 @@ print(limiter())                       # 'Request 2/2 approved'
 # print(limiter())                     # 💥 RuntimeError: Rate limit exceeded!
 ```
 
-##### What Happens If You Omit `nonlocal`?
+##### $\color{#C62828}\blacktriangleright\space\color{#B71C1C}{\textsf{What Happens If You Omit nonlocal?}}$
 If you remove `nonlocal call_count` and write `call_count += 1`, Python assumes `call_count` is a brand-new **local variable** of `record_call()`, crashing immediately with:
 `UnboundLocalError: cannot access local variable 'call_count' where it is not associated with a value`.
 
 ---
 
-#### 5. Comparison: `local` vs. `nonlocal` vs. `global`
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5. Comparison: local vs. nonlocal vs. global}}$
 
 | Keyword / Scope | Target Scope Modified | Where Variable Lives | When to Use |
 | :--- | :--- | :--- | :--- |
@@ -825,6 +872,19 @@ If you remove `nonlocal call_count` and write `call_count += 1`, Python assumes 
 ### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.10 lambda — Tiny Anonymous Functions}}$
 
 A `lambda` is a small, one-line anonymous function defined without a name:
+
+```diff
+# Comparing inline lambda with named functions
+- ❌ Anti-pattern: Assigning lambda to a variable (PEP 8 violation):
+- compute_similarity = lambda v1, v2: sum(a * b for a, b in zip(v1, v2))
+
++ ✅ Idiomatic Python: Use def for named functions:
++ def compute_similarity(v1: list[float], v2: list[float]) -> float:
++     return sum(a * b for a, b in zip(v1, v2))
+
++ ✅ Best use of lambda: Throwaway key in sort/filter:
++ documents.sort(key=lambda d: d["score"], reverse=True)
+```
 
 ```python
 # Syntax: lambda parameter1, parameter2: expression
@@ -861,7 +921,7 @@ In modern AI engineering:
 3. **Putting positional arguments after keyword arguments** — `f(x=1, 2)` crashes with `SyntaxError`. *Reason:* Once you switch to keyword mapping, positional order can no longer be guaranteed.
 4. **Forgetting `return`** — a function that only calls `print()` hands back `None` to the caller. *Reason:* `print` produces output on the console screen; `return` hands data back to your program logic.
 
-### Try it yourself
+### $\color{#0D47A1}\blacktriangleright\space\color{#1565C0}{\textsf{Try It Yourself}}$
 Write a function `build_prompt(template: str, *, system_role: str = "Assistant", **variables)` that formats `template` with `variables`, ensuring `system_role` cannot be passed positionally. Test skipping `system_role` while passing custom variables.
 
 ![Variations](https://img.shields.io/badge/COMPARISON-VARIATIONS%20%26%20WHEN%20TO%20USE-00838F?style=for-the-badge&logo=scales&logoColor=white)

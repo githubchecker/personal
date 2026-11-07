@@ -42,6 +42,18 @@ gift-wrapping a box. The present inside is unchanged; the wrapping adds somethin
 them as arguments, and return them from other functions. A decorator is just *a function that takes
 a function and returns a new, wrapped function.*
 
+```mermaid
+flowchart LR
+    classDef client fill:#E3F2FD,stroke:#1565C0,stroke-width:2px,color:#0D47A1;
+    classDef wrap fill:#FFF8E1,stroke:#F57F17,stroke-width:2px,color:#E65100;
+    classDef core fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
+
+    Caller(["Caller: add(2, 3)"]):::client --> Pre["Decorator Pre-execution<br/>(e.g., log call, start timer)"]:::wrap
+    Pre --> Target["Target Function Body<br/>result = func(*args, **kwargs)"]:::core
+    Target --> Post["Decorator Post-execution<br/>(e.g., stop timer, log outcome)"]:::wrap
+    Post --> ReturnVal(["Return result to caller"]):::client
+```
+
 ![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
 
 ## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
@@ -86,7 +98,21 @@ print(triple(10))                  # 30
 `double` "remembers" `factor=2` even though `make_multiplier` has already finished. That memory is
 the closure — and it's the machinery decorators are built on.
 
-#### Modifying Enclosing State with `nonlocal`
+```mermaid
+flowchart TD
+    classDef outer fill:#EDE7F6,stroke:#512DA8,stroke-width:2px,color:#311B92;
+    classDef cell fill:#FFE082,stroke:#F57F17,stroke-width:2px,color:#E65100;
+    classDef inner fill:#E1F5FE,stroke:#0288D1,stroke-width:2px,color:#01579B;
+
+    Outer["make_multiplier(factor=2)<br/>(Stack frame exits and disappears)"]:::outer
+    Cell["Closure Heap Cell: factor = 2<br/>(Kept alive in multiply.__closure__)"]:::cell
+    Inner["double(number)<br/>(Callable referencing Closure Cell)"]:::inner
+
+    Outer --> Cell
+    Inner --> Cell
+```
+
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{Modifying Enclosing State with nonlocal}}$
 If an inner function needs to **update or increment** an enclosing variable, use the **`nonlocal`** keyword:
 
 ```python
@@ -138,6 +164,33 @@ replacing `add` with `wrapper`. Now every call to `add` is logged — without to
 parameters, and `@functools.wraps(func)` preserves the original's identity (without it, `add.__name__`
 would wrongly say `"wrapper"`).
 
+```diff
+# Comparing naive decorator vs production pattern
+- ❌ Naive Decorator (Destroys metadata, breaks FastAPI and LLM Tool Calling):
+- def logged(func):
+-     def wrapper(*args, **kwargs):
+-         return func(*args, **kwargs)
+-     return wrapper
+# add.__name__ becomes 'wrapper', add.__doc__ is completely lost!
+
++ ✅ Production Decorator (Preserves metadata with @functools.wraps):
++ import functools
++ def logged(func):
++     @functools.wraps(func)
++     def wrapper(*args, **kwargs):
++         return func(*args, **kwargs)
++     return wrapper
+# add.__name__ is preserved as 'add', docstring retained for tool calling schema!
+```
+
+| Decorator Pattern | Syntax | Execution Phase | Production Priority | Real-World AI Application |
+| :--- | :--- | :--- | :--- | :--- |
+| **Standard Wrapper** | `@decorator` | Intercepts function execution | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | Latency timing (`@timing`), call auditing (`@log_call`) |
+| **Signature Forwarder** | `*args, **kwargs` | Dynamic argument dispatch | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | Universal middleware across arbitrary function signatures |
+| **Metadata Preservation** | `@functools.wraps(func)` | Definition time reflection | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | Preserving docstrings for LLM tool discovery and FastAPI endpoints |
+| **Parametrized Decorator** | `@retry(max_retries=3)` | Factory returning decorator | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | Exponential backoff retry loops on LLM API rate limits (`429`) |
+| **Caching / Memoization** | `@functools.lru_cache` | In-memory lookup table | $\color{#FFB300}\blacksquare\ \textbf{Occasional}$ | Caching expensive embedding computations or static prompt templates |
+
 ![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
 
 ## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
@@ -161,7 +214,7 @@ real-world code.
 4. **Expecting the decorator to run on every call** — the *decorator* runs once (at definition);
    the *wrapper* runs on every call. Put per-call logic inside `wrapper`.
 
-### Try it yourself
+### $\color{#0D47A1}\blacktriangleright\space\color{#1565C0}{\textsf{Try It Yourself}}$
 Write a `timed` decorator that prints how long the wrapped function took (use
 `import time; start = time.perf_counter()` before the call and the difference after).
 

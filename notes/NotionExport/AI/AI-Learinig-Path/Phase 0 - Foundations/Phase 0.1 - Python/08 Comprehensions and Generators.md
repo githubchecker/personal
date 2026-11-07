@@ -41,6 +41,26 @@ come out the other. A **comprehension** is that line written compactly: *"give m
 A **generator** is the same line, but it makes each finished part **only when you ask for the next
 one** — nothing is built ahead of time, so it uses almost no memory.
 
+```mermaid
+flowchart TD
+    classDef eager fill:#FFEBEE,stroke:#C62828,stroke-width:2px,color:#B71C1C;
+    classDef lazy fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
+    classDef ram fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#BF360C;
+
+    subgraph EagerList["[x * 2 for x in data] (List Comprehension)"]
+        E1["Process Item 0"] --> EBuf["Allocates Full List in RAM<br/>O(N) Memory: All Items Stored at Once"]:::eager
+        E2["Process Item 1"] --> EBuf
+        EN["Process Item N"] --> EBuf
+    end
+
+    subgraph LazyGen["(x * 2 for x in data) (Generator Stream)"]
+        L1["yield item 0"]:::lazy --> LConsumer["Consumer takes item"]
+        LConsumer --> Pause["Execution Paused (0 RAM retained)"]:::lazy
+        Pause --> L2["yield item 1 on next()"]:::lazy
+        L2 --> LRAM["O(1) Memory: Only 1 Item in RAM at a time"]:::ram
+    end
+```
+
 **The "Aha!":** comprehension = build the whole new list now; generator = produce items
 on-demand, one at a time.
 
@@ -60,7 +80,7 @@ A **list comprehension** provides a concise, expressive, and optimized way to tr
 
 ---
 
-#### 1. Anatomy & Mechanical Execution Order
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Anatomy and Mechanical Execution Order}}$
 
 The general anatomy of a list comprehension is:
 `[ <transform_expression> for <item> in <iterable> if <filter_condition> ]`
@@ -73,7 +93,7 @@ passing_grades = [s + 5 for s in raw_scores if s >= 60]
 print(passing_grades)           # [87, 96, 81]
 ```
 
-##### What is the Exact Execution Order Behind the Scenes?
+##### $\color{#512DA8}\blacktriangleright\space\color{#311B92}{\textsf{What is the Exact Execution Order Behind the Scenes?}}$
 Although written in a single line, Python evaluates the components in a strict, counter-intuitive sequence:
 
 ```
@@ -94,7 +114,7 @@ Step 3:      s + 5              (3. Apply dynamic transform expression & append 
 
 ---
 
-#### 2. Dynamic Function Application on the Loop Variable
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. Dynamic Function Application on the Loop Variable}}$
 
 **Can you call functions inside a list comprehension? YES, ANY FUNCTION!**
 The left-hand expression slot can dynamically invoke built-in functions, object methods, custom helper functions, mathematical formulas, or external libraries:
@@ -129,11 +149,23 @@ print(parsed_models)            # ['gpt-4o', 'claude-3-5']
 
 ---
 
-#### 3. The Two Faces of `if`: Filtering vs. Ternary Transformation
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{3. The Two Faces of if: Filtering vs. Ternary Transformation}}$
 
 One of the most frequent syntax errors in Python is confusing where `if` goes.
 
-##### Case A: Filtering Items (`if` placed at the END)
+```diff
+# The Two Faces of 'if' in Comprehensions
+- ❌ Common Syntax Error: Putting filter 'if' before 'for' without else:
+- [x * 2 if x > 0 for x in items]  # SyntaxError: expected 'else' after 'if' expression
+
++ ✅ Case A: Filtering (if placed at the END without else):
++ [x * 2 for x in items if x > 0]
+
++ ✅ Case B: Conditional Transformation (if-else ternary placed at FRONT):
++ [x * 2 if x > 0 else 0 for x in items]
+```
+
+##### $\color{#00897B}\blacktriangleright\space\color{#004D40}{\textsf{Case A: Filtering Items (if placed at the END)}}$
 * **Goal**: Reduce the number of elements in the list (drop items that don't match).
 * **Rule**: NEVER use `else` here! Adding `else` at the end raises `SyntaxError`.
 ```python
@@ -144,7 +176,7 @@ positives = [n for n in numbers if n > 0]
 print(positives)                # [5, 8] — Length changed from 5 to 2!
 ```
 
-##### Case B: Transforming Values Conditionally (`if-else` placed at the FRONT)
+##### $\color{#00897B}\blacktriangleright\space\color{#004D40}{\textsf{Case B: Transforming Values Conditionally (if-else placed at the FRONT)}}$
 * **Goal**: Transform values conditionally using a ternary expression (`val if cond else fallback`).
 * **Rule**: MUST include `else`! Every element in the input is preserved (length remains identical).
 ```python
@@ -153,7 +185,7 @@ relu_activated = [n if n > 0 else 0 for n in numbers]
 print(relu_activated)           # [0, 5, 0, 8, 0] — Length remains 5!
 ```
 
-##### Case C: Combining BOTH (Transform + Filter in one comprehension)
+##### $\color{#00897B}\blacktriangleright\space\color{#004D40}{\textsf{Case C: Combining BOTH (Transform + Filter in one comprehension)}}$
 You can use a ternary expression at the front AND a filter at the end simultaneously:
 ```python
 raw_entries = ["user", None, "admin", "guest", ""]
@@ -167,7 +199,7 @@ print(sanitized)                # ['USER', 'ADMIN', 'ANONYMOUS']
 
 ---
 
-#### 4. Nested Loops: Flattening Multi-Dimensional Data
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4. Nested Loops: Flattening Multi-Dimensional Data}}$
 Comprehensions support multiple `for` clauses. The clauses execute in the exact order they are written (outer loop first, inner loop second):
 
 ```python
@@ -195,11 +227,11 @@ print(flattened)
 
 ---
 
-#### 5. Real-World AI Application Scenarios
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5. Real-World AI Application Scenarios}}$
 
 Here is how list comprehensions are applied in production AI pipelines:
 
-##### Scenario 1: LLM Tool-Calling Argument Extraction
+##### $\color{#512DA8}\blacktriangleright\space\color{#311B92}{\textsf{Scenario 1: LLM Tool-Calling Argument Extraction}}$
 When an LLM returns multiple tool calls, extract just the function names and parsed arguments:
 ```python
 tool_call_payload = [
@@ -217,7 +249,7 @@ active_tools = [
 print(active_tools)             # ['web_search', 'calculator']
 ```
 
-##### Scenario 2: Token Length Filtering & Chunk Validation
+##### $\color{#512DA8}\blacktriangleright\space\color{#311B92}{\textsf{Scenario 2: Token Length Filtering and Chunk Validation}}$
 Prevent context window overflows by filtering chunks that exceed token limits:
 ```python
 document_chunks = [
@@ -232,7 +264,7 @@ valid_chunks = [c.strip() for c in document_chunks if len(c) <= MAX_CHARS]
 print(valid_chunks)             # ['Short sentence.', 'Valid medium chunk.']
 ```
 
-##### Scenario 3: Mathematical Normalization (Softmax / Probability Scaling)
+##### $\color{#512DA8}\blacktriangleright\space\color{#311B92}{\textsf{Scenario 3: Mathematical Normalization (Softmax / Probability Scaling)}}$
 ```python
 import math
 
@@ -246,6 +278,13 @@ print([round(p, 4) for p in probabilities])  # [0.659, 0.2424, 0.0986]
 ```
 
 ### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{8.2 Dict and set comprehensions}}$
+
+| Comprehension Form | Syntax | Output Data Type | Memory Complexity | Production Priority | Real-World AI Application |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **List Comprehension** | `[x for x in seq]` | `list` | $O(N)$ RAM | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | Parsing LLM tool arguments, transforming prompt tokens |
+| **Dict Comprehension** | `{k: v for k, v in seq}` | `dict` | $O(N)$ RAM | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | Inverting ID-to-name lookup tables, mapping chunk IDs to embeddings |
+| **Set Comprehension** | `{x for x in seq}` | `set` | $O(N)$ RAM | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | Deduplicating stop-words, extracting unique retrieved citation URLs |
+| **Generator Expression** | `(x for x in seq)` | `generator` | $O(1)$ RAM | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | Streaming 10M dataset rows from disk, continuous token pipelining |
 
 ```python
 # Dict comprehension: { key_expr: value_expr for ... }
@@ -273,6 +312,17 @@ for value in gen:                # continue consuming the rest
 
 Write your own generator with a function that uses **`yield`** instead of `return`. `yield` hands
 out a value and *pauses*, resuming where it left off on the next request:
+
+```mermaid
+flowchart LR
+    classDef model fill:#EDE7F6,stroke:#512DA8,stroke-width:2px,color:#311B92;
+    classDef gen fill:#E1F5FE,stroke:#0288D1,stroke-width:2px,color:#01579B;
+    classDef client fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
+
+    LLM["LLM Response Stream"]:::model --> GenFunc["def stream_tokens():<br/>yield token"]:::gen
+    GenFunc --> Loop["for token in stream_tokens():"]:::client
+    Loop --> Print["print(token, end='', flush=True)"]:::client
+```
 
 ```python
 def count_up_to(limit):
@@ -318,7 +368,7 @@ build in Phase 1.
 4. **Forgetting the `if` goes at the end** — `[x for x in items if cond]`, not before the `for`
    (that's the different "conditional expression" form).
 
-### Try it yourself
+### $\color{#0D47A1}\blacktriangleright\space\color{#1565C0}{\textsf{Try It Yourself}}$
 From `words = ["  Ada ", "", "Bo  ", "   "]`, use one comprehension to produce a clean list of
 non-empty, stripped names: `["Ada", "Bo"]`.
 

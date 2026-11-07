@@ -43,6 +43,31 @@ crucially, *when to use each*. It's the capstone of the language module.
 **The "Aha!":** match the tool to the bottleneck. **Waiting on I/O → async (or threads). Heavy
 computation → processes.**
 
+```mermaid
+flowchart TD
+    classDef asyncStyle fill:#E1F5FE,stroke:#0288D1,stroke-width:2px,color:#01579B;
+    classDef threadStyle fill:#FFF8E1,stroke:#F57F17,stroke-width:2px,color:#E65100;
+    classDef procStyle fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
+
+    subgraph Async["⚡ Async (asyncio)"]
+        A1["Single Thread + Event Loop"]:::asyncStyle
+        A2["Cooperative Multitasking ('await')"]:::asyncStyle
+        A3["Best for: 10,000 concurrent LLM API calls"]:::asyncStyle
+    end
+
+    subgraph Threads["🧵 Threads (ThreadPoolExecutor)"]
+        T1["Multiple OS Threads in 1 Process"]:::threadStyle
+        T2["Shared Memory, GIL-Restricted"]:::threadStyle
+        T3["Best for: Legacy blocking I/O (SQL, disk)"]:::threadStyle
+    end
+
+    subgraph Processes["⚙️ Processes (ProcessPoolExecutor)"]
+        P1["Multiple Independent OS Processes"]:::procStyle
+        P2["Separate Memory, Bypasses GIL completely"]:::procStyle
+        P3["Best for: CPU Math, heavy tokenization, local embeddings"]:::procStyle
+    end
+```
+
 ![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
 
 ## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
@@ -61,6 +86,33 @@ Python *computation*. But while a thread **waits** on I/O, it drops the micropho
 proceeds — which is why waiting-heavy work *can* still benefit.
 
 ### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.2 Async — async / await (the main one for AI)}}$
+
+```mermaid
+flowchart LR
+    classDef loop fill:#EDE7F6,stroke:#512DA8,stroke-width:2px,color:#311B92;
+    classDef task fill:#E1F5FE,stroke:#0288D1,stroke-width:2px,color:#01579B;
+    classDef pause fill:#FFF8E1,stroke:#F57F17,stroke-width:2px,color:#E65100;
+
+    Loop["Event Loop (Single Thread)"]:::loop --> Task1["Run Task 1 until 'await'"]:::task
+    Task1 --> Suspend1["Task 1 paused on Network I/O"]:::pause
+    Suspend1 --> Switch["Switch CPU to Task 2"]:::loop
+    Switch --> Task2["Run Task 2 until 'await'"]:::task
+    Task2 --> Suspend2["Task 2 paused on Network I/O"]:::pause
+    Suspend2 --> Resume1["Network response 1 arrives -> Resume Task 1"]:::task
+```
+
+```diff
+# Running multiple LLM API calls concurrently
+- ❌ Sequential blocking loop (Takes 10 * 2s = 20 seconds total):
+- results = []
+- for prompt in prompts:
+-     results.append(sync_client.chat.completions.create(prompt=prompt))
+
++ ✅ Asynchronous concurrent gather (Takes ~2 seconds total!):
++ async def fetch_all(prompts):
++     tasks = [async_client.chat.completions.create(prompt=p) for p in prompts]
++     return await asyncio.gather(*tasks)
+```
 
 ```python
 import asyncio
@@ -128,6 +180,12 @@ cores — the right tool for number-crunching that isn't already handled by a li
 
 ### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.5 Choosing — the decision rule}}$
 
+| Concurrency Model | Primary Mechanism | Production Priority | Memory Footprint | Bottleneck Target | Real-World AI Application |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **`asyncio`** | Single-thread cooperative event loop | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | Minimal ($O(1)$ stack overhead) | Network I/O wait | Concurrent LLM API calls, streaming token SSE feeds |
+| **`ThreadPoolExecutor`** | OS threads with GIL time-slicing | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | Moderate (shared process memory) | Blocking I/O | Legacy sync database drivers, reading prompt files from disk |
+| **`ProcessPoolExecutor`** | Multi-process separate Python instances | $\color{#FFB300}\blacksquare\ \textbf{Occasional}$ | Heavy (duplicated RAM per process) | CPU Compute | Heavy dataset tokenization, batch local embeddings |
+
 | Bottleneck | Best tool | Example |
 |---|---|---|
 | Waiting on network/disk (I/O-bound) | **async** (or threads) | calling 100 LLM endpoints |
@@ -151,7 +209,7 @@ to fan out many model/tool calls in Phase 1 and Phase 3, collapsing total latenc
    `asyncio.gather(a(), b())` to overlap.
 4. **Forgetting `asyncio.run(main())`** — coroutines do nothing until driven by an event loop.
 
-### Try it yourself
+### $\color{#0D47A1}\blacktriangleright\space\color{#1565C0}{\textsf{Try It Yourself}}$
 Rewrite three sequential `await asyncio.sleep(1)` calls so they run concurrently and finish in ~1
 second instead of ~3.
 

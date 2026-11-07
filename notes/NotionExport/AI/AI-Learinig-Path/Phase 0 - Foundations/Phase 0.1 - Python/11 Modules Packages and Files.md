@@ -43,18 +43,19 @@ You don't forge a screwdriver every time you need to tighten a screw — you rea
 
 **The "Aha!":** A Python file is just a script when run directly, but it instantly becomes an **importable module** when another file references it. Python uses namespaces so code written by thousands of different authors can live together in your project without naming conflicts.
 
-```
-+------------------------------------------------------------------+
-| External Libraries / Standard Library / Your Modules            |
-+------------------------------------------------------------------+
-                              │
-                    import / from ... import
-                              ▼
-+------------------------------------------------------------------+
-| Your Application Namespace (Organized, Collision-Free)           |
-|                                                                  |
-|   math.sqrt()      np.array()      openai.OpenAI()               |
-+------------------------------------------------------------------+
+```mermaid
+flowchart TD
+    classDef pkg fill:#EDE7F6,stroke:#512DA8,stroke-width:2px,color:#311B92;
+    classDef mod fill:#E1F5FE,stroke:#0288D1,stroke-width:2px,color:#01579B;
+    classDef init fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
+
+    Package["📁 my_ai_agent/ (Package Directory)"]:::pkg
+    Package --> Init["📄 __init__.py (Package initialization & public API façade)"]:::init
+    Package --> Mod1["📄 planner.py (Module: Agent DAG planner)"]:::mod
+    Package --> Mod2["📄 memory.py (Module: Vector buffer cache)"]:::mod
+    Package --> SubDir["📁 tools/ (Sub-package)"]:::pkg
+    SubDir --> Tool1["📄 web_search.py"]:::mod
+    SubDir --> Tool2["📄 calculator.py"]:::mod
 ```
 
 ![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
@@ -71,7 +72,7 @@ You don't forge a screwdriver every time you need to tighten a screw — you rea
 
 Python gives you four distinct ways to import code:
 
-#### 1. Importing the Entire Module (`import module_name`)
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Importing the Entire Module (import module_name)}}$
 This imports the module object and binds it to its original name. You access items using the dot (`.`) prefix:
 
 ```python
@@ -83,7 +84,7 @@ print(math.pi)                      # 3.141592653589793
 - ✅ **Pros:** Completely prevents name collisions. Anyone reading your code immediately knows where `math.sqrt` came from.
 - 🚫 **Cons:** Slightly more verbose for frequently repeated names.
 
-#### 2. Importing Specific Items (`from module_name import item1, item2`)
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. Importing Specific Items (from module_name import item1, item2)}}$
 This extracts specific functions, classes, or constants directly into your current local namespace:
 
 ```python
@@ -95,7 +96,7 @@ print(ceil(4.2))                    # 5
 - ✅ **Pros:** Clean, concise call sites.
 - 🚫 **Cons:** Can cause collisions if a local variable or another import shares the same name.
 
-#### 3. Aliasing on Import (`as` Keyword)
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{3. Aliasing on Import (as Keyword)}}$
 Use `as` to assign a local alias (nickname) to an imported module or specific symbol:
 
 ```python
@@ -111,7 +112,7 @@ from datetime import datetime as DateTime
 from typing import List as PyList
 ```
 
-#### 4. The Wildcard Import (`from module_name import *`) — Why It Is Harmful
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4. The Wildcard Import (from module_name import *) — Why It Is Harmful}}$
 A wildcard import pulls **every public name** from a module directly into your local namespace:
 
 ```python
@@ -134,7 +135,7 @@ print(sin(0))                       # 0.0 — works, BUT dangerous!
 
 When working in complex AI pipelines, it is very common for two libraries (or your own code) to define identically named symbols. Python provides clean mechanisms to handle these collisions.
 
-#### Scenario 1: Two Modules with the Same Function Name
+#### $\color{#512DA8}\blacktriangleright\space\color{#311B92}{\textsf{Scenario 1: Two Modules with the Same Function Name}}$
 Suppose you need to parse both JSON and YAML configurations, both of which provide a `.loads()` function:
 
 ```python
@@ -157,7 +158,7 @@ config_a = json_loads('{"model": "gpt-4o"}')
 config_b = yaml_loads('model: gpt-4o')
 ```
 
-#### Scenario 2: Resolving Conflicts with Popular Vision / Image Libraries
+#### $\color{#512DA8}\blacktriangleright\space\color{#311B92}{\textsf{Scenario 2: Resolving Conflicts with Popular Vision / Image Libraries}}$
 A classic collision in multimodal AI: Pillow and OpenCV both have image representations:
 
 ```python
@@ -169,7 +170,7 @@ img = PILImage.new("RGB", (100, 100))
 sheet_img = ExcelImage("chart.png")
 ```
 
-#### Scenario 3: Local Variable Shadowing Trap
+#### $\color{#512DA8}\blacktriangleright\space\color{#311B92}{\textsf{Scenario 3: Local Variable Shadowing Trap}}$
 Never name a variable after an imported module or class:
 
 ```python
@@ -194,7 +195,29 @@ for path in sys.path:
     print(path)
 ```
 
-#### Python's Search Hierarchy:
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{Python's Search Hierarchy}}$
+
+```mermaid
+flowchart TD
+    classDef start fill:#E3F2FD,stroke:#1565C0,stroke-width:2px,color:#0D47A1;
+    classDef step fill:#FFF8E1,stroke:#F57F17,stroke-width:2px,color:#E65100;
+    classDef found fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
+    classDef err fill:#FFEBEE,stroke:#C62828,stroke-width:2px,color:#B71C1C;
+
+    ImportNode["import my_module"]:::start --> CheckCache{"Already in sys.modules?"}
+    CheckCache -- "Yes" --> CachedNode["Return Cached Module Reference"]:::found
+    CheckCache -- "No" --> Step1{"1. Current Script Directory"}:::step
+
+    Step1 -- "Found" --> Load1["Load from Local Folder"]:::found
+    Step1 -- "Not Found" --> Step2{"2. Standard Library (Python runtime)"}:::step
+
+    Step2 -- "Found" --> Load2["Load Standard Library Module"]:::found
+    Step2 -- "Not Found" --> Step3{"3. Virtual Env (.venv/site-packages)"}:::step
+
+    Step3 -- "Found" --> Load3["Load Installed Package (pip)"]:::found
+    Step3 -- "Not Found" --> Fail["💥 ModuleNotFoundError: No module named 'my_module'"]:::err
+```
+
 1. **Current Directory**: The folder containing the script you are running.
 2. **Standard Library**: Built-in Python library folders.
 3. **Site-Packages**: The `site-packages` directory inside your active virtual environment (`.venv`).
@@ -209,7 +232,7 @@ for path in sys.path:
 
 ### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{11.4 Packages, Submodules and The __init__.py Mechanism}}$
 
-#### 1. Module vs. Package vs. Library (The Architecture Hierarchy)
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Module vs. Package vs. Library (The Architecture Hierarchy)}}$
 
 Software engineers often use these terms interchangeably, but in Python they have precise technical definitions:
 
@@ -232,7 +255,7 @@ my_ai_agent/                   # Package name: 'my_ai_agent'
       └── calculator.py        # Submodule: my_ai_agent.tools.calculator
 ```
 
-#### 2. How to Import 1 or Many Modules from a Package
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. How to Import 1 or Many Modules from a Package}}$
 You can import modules individually or batch-import multiple modules in a single line:
 
 ```python
@@ -256,7 +279,7 @@ from my_ai_agent import planner as plan_mod
 import my_ai_agent.tools.web_search as search_tool
 ```
 
-#### 3. The Package Import Trap: Does `import my_ai_agent` Load All Submodules?
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{3. The Package Import Trap: Does import my_ai_agent Load All Submodules?}}$
 > 💥 **NO! By default, `import my_ai_agent` does NOT load submodules!**
 
 When you write `import my_ai_agent`, Python only reads and executes `my_ai_agent/__init__.py`. It does **not** recursively inspect the directory or import `planner.py` or `memory.py`.
@@ -280,7 +303,7 @@ from my_ai_agent import planner
 planner.create_plan()
 ```
 
-#### 4. Installed Packages vs. Custom Packages: Why Does `requests.get()` Just Work?
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4. Installed Packages vs. Custom Packages: Why Does requests.get() Just Work?}}$
 Developers often ask: *"Why can I do `import requests; requests.get(...)` without typing `import requests.api`, but my custom package throws an `AttributeError`?"*
 
 The secret is **how the package author configured `__init__.py`**:
@@ -320,18 +343,18 @@ The secret is **how the package author configured `__init__.py`**:
    agent = my_ai_agent.AgentPlanner()            # Works immediately without importing .planner!
    ```
 
-#### 5. The `__init__.py` Initialization Lifecycle & Practical Scenarios
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5. The __init__.py Initialization Lifecycle and Practical Scenarios}}$
 
 Understanding **when** and **how** `__init__.py` runs is essential for designing clean packages:
 
-##### The Initialization Lifecycle:
+##### $\color{#512DA8}\blacktriangleright\space\color{#311B92}{\textsf{The Initialization Lifecycle}}$
 1. **Triggered on First Import:** The code inside `my_ai_agent/__init__.py` executes the very first time *any* part of the package is imported (whether someone writes `import my_ai_agent` or `from my_ai_agent.planner import plan`).
 2. **Executed Once (Idempotent):** Python caches imported packages and modules in `sys.modules`. If 20 different files in your application import `my_ai_agent`, **`__init__.py` executes exactly once per process**. Subsequent imports simply retrieve the cached object.
 3. **Execution Scope:** Code runs top-to-bottom in the package's local namespace. Any functions, variables, or imports defined in `__init__.py` become attributes of the package itself (`my_ai_agent.attribute`).
 
 ---
 
-##### 5 Real-World Practical Scenarios for `__init__.py`:
+##### $\color{#512DA8}\blacktriangleright\space\color{#311B92}{\textsf{5 Real-World Practical Scenarios for __init__.py}}$
 
 ```python
 # ==============================================================================
@@ -388,7 +411,7 @@ __all__ = [
 
 ---
 
-#### 6. Absolute vs. Relative Imports inside a Package
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{6. Absolute vs. Relative Imports inside a Package}}$
 When files *inside* the same package need to talk to each other:
 
 ```python
@@ -443,9 +466,25 @@ print(f"Agent event logged at: {now_utc}")
 
 ### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{11.6 File I/O and The with Context Manager (Under the Hood)}}$
 
-#### 1. Explicit `open()` / `close()` vs. `try...finally` vs. `with`
+```diff
+# Modern Path Manipulation
+- ❌ Legacy clumsy string manipulation with os.path:
+- import os
+- prompt_path = os.path.join(os.path.dirname(__file__), "prompts", "agent.txt")
+- if os.path.exists(prompt_path):
+-     with open(prompt_path, "r", encoding="utf-8") as f:
+-         system_prompt = f.read()
 
-##### The Dangerous Manual Way (Never do this in production):
++ ✅ Modern object-oriented pathlib.Path:
++ from pathlib import Path
++ prompt_path = Path(__file__).parent / "prompts" / "agent.txt"
++ if prompt_path.exists():
++     system_prompt = prompt_path.read_text(encoding="utf-8")
+```
+
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Explicit open() / close() vs. try...finally vs. with}}$
+
+##### $\color{#C62828}\blacktriangleright\space\color{#B71C1C}{\textsf{The Dangerous Manual Way (Never do this in production)}}$
 ```python
 f = open("agent_log.txt", "w", encoding="utf-8")
 f.write("Task 1 completed\n")
@@ -454,7 +493,7 @@ f.write("Task 1 completed\n")
 f.close()
 ```
 
-##### The Verbose Safe Way (`try ... finally`):
+##### $\color{#00897B}\blacktriangleright\space\color{#004D40}{\textsf{The Verbose Safe Way (try ... finally)}}$
 ```python
 f = open("agent_log.txt", "w", encoding="utf-8")
 try:
@@ -463,7 +502,7 @@ finally:
     f.close()                           # Guarantees cleanup, but noisy and easy to forget
 ```
 
-##### The Modern Pythonic Way (`with open(...) as f:`):
+##### $\color{#2E7D32}\blacktriangleright\space\color{#1B5E20}{\textsf{The Modern Pythonic Way (with open(...) as f:)}}$
 ```python
 with open("agent_log.txt", "w", encoding="utf-8") as f:
     f.write("Task 1 completed\n")       # Clean, readable, and 100% deterministic!
@@ -471,7 +510,22 @@ with open("agent_log.txt", "w", encoding="utf-8") as f:
 
 ---
 
-#### 2. How `with` Actually Works Internally: The Context Manager Protocol
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. How with Actually Works Internally: The Context Manager Protocol}}$
+
+```mermaid
+flowchart TD
+    classDef proto fill:#E1F5FE,stroke:#0288D1,stroke-width:2px,color:#01579B;
+    classDef body fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
+    classDef exit fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#BF360C;
+
+    EnterStep["1. with manager as var:<br/>Calls manager.__enter__()"]:::proto --> Bind["Yields resource and binds to var"]:::proto
+    Bind --> Body["2. Execute Indented Code Block"]:::body
+    Body --> Status{"Exception Raised in Block?"}
+    Status -- "No" --> ExitClean["Calls manager.__exit__(None, None, None)"]:::exit
+    Status -- "Yes" --> ExitExc["Calls manager.__exit__(exc_type, exc_val, tb)"]:::exit
+    ExitClean --> Done(["Guaranteed Clean Termination"]):::proto
+    ExitExc --> Done
+```
 
 The `with` keyword is not magic; it is syntactic sugar for Python's **Context Manager Protocol**, powered by two special dunder methods: **`__enter__()`** and **`__exit__()`**.
 
@@ -508,12 +562,12 @@ Inside Python's built-in file object:
 
 ---
 
-#### 3. Who Closes the Handler? And Why Can't We Rely on Garbage Collection?
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{3. Who Closes the Handler? And Why Can't We Rely on Garbage Collection?}}$
 
 Engineers coming to Python often ask:
 > *"Python has a Garbage Collector (GC). When the variable `f` goes out of scope, won't GC clean it up and close the file automatically?"*
 
-##### The Answer:
+##### $\color{#512DA8}\blacktriangleright\space\color{#311B92}{\textsf{The Answer}}$
 In CPython, a file object's destructor (`__del__`) does attempt to close the file descriptor when the object's reference count reaches zero. **However, relying on Garbage Collection for file cleanup is a catastrophic anti-pattern in production systems:**
 
 1. **Non-Deterministic Timing:**
@@ -533,7 +587,7 @@ In CPython, a file object's destructor (`__del__`) does attempt to close the fil
 
 ---
 
-#### 4. Custom Context Managers: Building Your Own with `__enter__` and `__exit__`
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4. Custom Context Managers: Building Your Own with __enter__ and __exit__}}$
 
 Any Python class can become a context manager by implementing `__enter__` and `__exit__`. This pattern is widely used in AI engineering for timing inference, managing database connections, or acquiring distributed locks:
 
@@ -564,7 +618,7 @@ print(f"Total calculated: {total}")
 
 ---
 
-#### 5. Practical File Operations (Writing, Appending, Reading, and Streaming)
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5. Practical File Operations (Writing, Appending, Reading, and Streaming)}}$
 
 ```python
 # 1. WRITE ('w' creates a new file or completely overwrites an existing one):
@@ -596,12 +650,12 @@ with open("agent_log.txt", "r", encoding="utf-8") as f:
 
 Web APIs, vector databases, and LLM tool calling all speak **JSON**. The standard library `json` module provides 4 primary functions:
 
-| Function | Input / Output Target | Use Case |
-| :--- | :--- | :--- |
-| **`json.dumps(obj)`** | Python object $\rightarrow$ JSON **string** | Formatting prompts, sending API request bodies |
-| **`json.dump(obj, f)`** | Python object $\rightarrow$ **File** object | Saving configs, checkpoints, or chat logs to disk |
-| **`json.loads(str)`** | JSON **string** $\rightarrow$ Python object | Parsing LLM output, parsing API response text |
-| **`json.load(f)`** | **File** object $\rightarrow$ Python object | Loading configuration files from disk |
+| Function | Input / Output Target | Production Priority | Use Case |
+| :--- | :--- | :--- | :--- |
+| **`json.dumps(obj)`** | Python object $\rightarrow$ JSON **string** | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | Formatting prompts, sending API request bodies |
+| **`json.dump(obj, f)`** | Python object $\rightarrow$ **File** object | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | Saving configs, checkpoints, or chat logs to disk |
+| **`json.loads(str)`** | JSON **string** $\rightarrow$ Python object | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | Parsing LLM output, parsing API response text |
+| **`json.load(f)`** | **File** object $\rightarrow$ Python object | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | Loading configuration files from disk |
 
 > **Mnemonic:** The **`s`** stands for **String** (`dumps` / `loads`). No **`s`** means **File Stream** (`dump` / `load`).
 
@@ -646,7 +700,21 @@ To understand how Python tells the two apart, you need to understand the built-i
 
 ---
 
-#### 1. What is `__name__` and What Does It Contain?
+```mermaid
+flowchart TD
+    classDef direct fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
+    classDef imp fill:#E1F5FE,stroke:#0288D1,stroke-width:2px,color:#01579B;
+    classDef guard fill:#FFF8E1,stroke:#F57F17,stroke-width:2px,color:#E65100;
+
+    Run["Execution Invocation"] --> Check{"How was the script invoked?"}:::guard
+    Check -- "python file.py (CLI / Terminal)" --> Direct["__name__ is '__main__'"]:::direct
+    Direct --> RunGuard["Execute guarded if __name__ == '__main__': block<br/>(Starts CLI, runs tests, triggers agent)"]:::direct
+
+    Check -- "import file (Imported by another module)" --> Imported["__name__ is 'file' (Module name)"]:::imp
+    Imported --> SkipGuard["Skips guarded block!<br/>Only defines functions and classes safely"]:::imp
+```
+
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. What is __name__ and What Does It Contain?}}$
 Whenever Python loads a file, it automatically creates a built-in string variable in that file's global namespace called **`__name__`**:
 
 * **Case 1: When the file is RUN DIRECTLY (`python data_loader.py`)**
@@ -668,16 +736,16 @@ print(f"Inside demo.py, __name__ is: '{__name__}'")
 
 ---
 
-#### 2. What is `"__main__"`?
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. What is \"__main__\"?}}$
 `"__main__"` is Python's reserved top-level environment name. It tells your code: *"I am the primary entry-point script launched by the user or operating system, not a helper being imported."*
 
 ---
 
-#### 3. What Happens If You DON'T Use It? (The Unwanted Side-Effect Disaster)
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{3. What Happens If You DON'T Use It? (The Unwanted Side-Effect Disaster)}}$
 
 In Python, **`import` is an executable statement** — Python executes the imported file line-by-line from top to bottom.
 
-##### The Buggy Code (No Execution Guard):
+##### $\color{#C62828}\blacktriangleright\space\color{#B71C1C}{\textsf{The Buggy Code (No Execution Guard)}}$
 ```python
 # ==============================================================================
 # File: data_loader.py (Written by a teammate)
@@ -713,7 +781,7 @@ Because `data_loader.py` lacked an execution guard, simply importing `fetch_embe
 
 ---
 
-#### 4. The Fix: Adding the Execution Guard
+#### $\color{#2E7D32}\blacktriangleright\space\color{#1B5E20}{\textsf{4. The Fix: Adding the Execution Guard}}$
 
 ```python
 # ==============================================================================
@@ -735,7 +803,7 @@ if __name__ == "__main__":
     test_harness()
 ```
 
-##### Result:
+##### $\color{#512DA8}\blacktriangleright\space\color{#311B92}{\textsf{Result}}$
 * When you run `python data_loader.py`:
   * `__name__` is `"__main__"` $\rightarrow$ The guard evaluates to `True` $\rightarrow$ `test_harness()` runs!
 * When another file does `from data_loader import fetch_embeddings`:
@@ -743,7 +811,7 @@ if __name__ == "__main__":
 
 ---
 
-#### 5. When is `if __name__ == "__main__":` Required?
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5. When is if __name__ == \"__main__\": Required?}}$
 
 1. **Dual-Purpose Modules (Utilities with CLI / Tests):**
    When a file defines reusable functions, classes, or prompt templates for your team, but also includes a demo, benchmark, or CLI runner at the bottom.
@@ -777,7 +845,7 @@ In real-world AI pipelines:
 4. **Confusing `dumps` (string) with `dump` (file)** — calling `json.dump(data)` without a file object raises `TypeError: dump() missing 1 required positional argument: 'fp'`. *Reason:* `s` indicates string output.
 5. **Placing heavy logic or network calls inside `__init__.py`** — freezes every script, test, or CLI command that imports even a single function from your package. *Reason:* `__init__.py` runs immediately on the first import. Keep package initialization fast, lean, and focused on exports.
 
-### Try it yourself
+### $\color{#0D47A1}\blacktriangleright\space\color{#1565C0}{\textsf{Try It Yourself}}$
 Create a dictionary representing an AI agent's configuration (`model`, `temperature`, `max_tokens`). Serialize it to a file `agent_config.json` with an indent of 2. Then write a function with a `try/except` block that reads the file back, parses it using `json.load`, and prints the model name.
 
 ![Variations](https://img.shields.io/badge/COMPARISON-VARIATIONS%20%26%20WHEN%20TO%20USE-00838F?style=for-the-badge&logo=scales&logoColor=white)

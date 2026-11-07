@@ -18,6 +18,35 @@ Two libraries appear in almost every AI program and bridge "plain Python" to "AI
 client** (`httpx`/`requests` — how you call model APIs). This lesson gives you working comfort with
 both, completing the language groundwork before the milestone.
 
+```mermaid
+flowchart TD
+    subgraph AI_App ["🤖 Modern AI Application Core"]
+        direction TB
+        AppLogic["Application Logic and Agent Orchestrator"]
+    end
+
+    subgraph Pillar1 ["📐 Pillar 1: High-Performance Numerical Engine (NumPy)"]
+        direction TB
+        PyList["Python Lists [0.12, 0.85, ...]"] -->|Vectorize| NPArray["Contiguous C Memory Array<br/>np.ndarray (dtype: float32)"]
+        NPArray --> LinearAlg["High-Speed Vector Math<br/>Dot Products, Norms, Matrix Ops"]
+        LinearAlg --> SemanticSearch["Cosine Similarity Search<br/>Vector DB Embeddings (RAG)"]
+    end
+
+    subgraph Pillar2 ["🌐 Pillar 2: Asynchronous HTTP Gateway (httpx / requests)"]
+        direction TB
+        PromptState["Prompt and Message State"] -->|JSON Serialize| HTTPClient["HTTP Client (httpx.AsyncClient)<br/>Connection Pool and TLS Session"]
+        HTTPClient -->|Bearer Auth + POST| RemoteAPI["Remote LLM Endpoint<br/>/v1/chat/completions"]
+        RemoteAPI -->|Response Streaming / SSE| TokenStream["Token Parsing and JSON Hydration"]
+    end
+
+    AppLogic ==>|Compute Embeddings and Distances| Pillar1
+    AppLogic ==>|Invoke Inference API| Pillar2
+
+    style AI_App fill:#E3F2FD,stroke:#1565C0,stroke-width:2px,color:#0D47A1
+    style Pillar1 fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20
+    style Pillar2 fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#BF360C
+```
+
 ![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
 
 ## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea }}$
@@ -49,7 +78,7 @@ web request. These two tools are how those ideas become code.
 > * $\color{#FFB300}\blacktriangleright$ **Occasional (Data Shaping and Streams):** NumPy broadcasting rules, `.reshape()`, `np.zeros()`, `np.ones()`, HTTP streaming responses (`httpx.stream()`) for SSE token streaming.
 > * $\color{#757575}\blacktriangleright$ **Reference Only (Exhaustive):** Advanced multidimensional slicing, NumPy memory strides, custom HTTP connection adapters and proxies.
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{15.1 NumPy basics}}$
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{24.1 NumPy basics}}$
 
 Install: `pip install numpy`.
 
@@ -69,7 +98,23 @@ print(a + a)                       # [2 4 6]
 print(a.mean(), a.sum(), a.max())  # 2.0 6 3
 ```
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{15.2 Why NumPy matters: cosine similarity by hand}}$
+```diff
+# Vector Math: Pure Python Loop vs NumPy Vectorized SIMD
+- # ❌ Slow: Pure Python list iteration (Pointer chasing, dynamic boxing, 50-100x slower)
+- def python_dot_product(vec_a, vec_b):
+-     total = 0.0
+-     for i in range(len(vec_a)):
+-         total += vec_a[i] * vec_b[i]
+-     return total
+
++ # ✅ Fast: NumPy Vectorized C BLAS Execution (Contiguous memory, zero loop overhead)
++ def numpy_dot_product(vec_a: np.ndarray, vec_b: np.ndarray) -> float:
++     return float(np.dot(vec_a, vec_b))  # or vec_a @ vec_b
+```
+
+
+
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{24.2 Why NumPy matters: cosine similarity by hand}}$
 
 Three plain-English ideas this builds on (also in the
 [glossary](../../AI%20Terms%20-%20Plain%20English%20Glossary.md)):
@@ -83,6 +128,31 @@ Why *direction*? Picture each vector as an arrow from the origin. Two arrows poi
 way** describe the same "topic" (score near `1`); at a **right angle** they're unrelated (near `0`);
 pointing **opposite** they're contrary (near `-1`). Length is ignored, so a short sentence and a
 long sentence about the same thing still match. Here it is from first principles:
+
+```mermaid
+flowchart LR
+    subgraph AngleSpace ["🧭 Vector Orientation and Semantic Meaning"]
+        direction TB
+        subgraph Identical ["θ = 0° → Cosine = +1.0"]
+            V1["Vector A: 'dog' [0.9, 0.1, 0.0]"] --- V2["Vector B: 'puppy' [0.8, 0.2, 0.0]"]
+            M1["Identical Direction: Parallel Meaning"]
+        end
+        subgraph Unrelated ["θ = 90° → Cosine = 0.0"]
+            V3["Vector A: 'dog' [0.9, 0.1, 0.0]"] --- V4["Vector C: 'market' [0.0, 0.1, 0.9]"]
+            M2["Orthogonal: Completely Unrelated"]
+        end
+        subgraph Opposite ["θ = 180° → Cosine = -1.0"]
+            V5["Vector A: 'love' [1.0, 0.0]"] --- V6["Vector D: 'hate' [-1.0, 0.0]"]
+            M3["Opposite Direction: Polar Opposite Meaning"]
+        end
+    end
+
+    style Identical fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20
+    style Unrelated fill:#FFFDE7,stroke:#F57F17,stroke-width:2px,color:#E65100
+    style Opposite fill:#FFEBEE,stroke:#C62828,stroke-width:2px,color:#B71C1C
+```
+
+
 
 ```python
 import numpy as np
@@ -109,7 +179,7 @@ keywords. Two more terms this unlocks:
 
 That retrieve-then-answer loop is the backbone of Phase 2 — and you've just hand-built its engine.
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{15.3 Calling an API — synchronous (requests)}}$
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{24.3 Calling an API — synchronous (requests)}}$
 
 Install: `pip install requests`.
 
@@ -132,7 +202,7 @@ resp = requests.post(
 print(resp.json()["json"])     # {'name': 'Ada'}
 ```
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{15.4 Calling an API — asynchronous (httpx)}}$
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{24.4 Calling an API — asynchronous (httpx)}}$
 
 Install: `pip install httpx`. Same shape, but `await`-able so you can overlap many calls (Lesson 23).
 
@@ -153,7 +223,34 @@ async def main():
 asyncio.run(main())
 ```
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{15.5 Secrets via environment variables (never hardcode)}}$
+```diff
+# HTTP API Invocation: Fragile Request vs Resilient Production Client
+- # ❌ Fragile: No timeout (can hang forever), no status validation, hardcoded secret
+- import requests
+- response = requests.post("https://api.openai.com/v1/chat/completions",
+-                          headers={"Authorization": "Bearer sk-proj-12345"},
+-                          json={"model": "gpt-4o", "messages": []})
+- data = response.json()  # May crash or parse HTTP 500 error HTML as JSON!
+
++ # ✅ Resilient: Async client with connection pool, explicit timeout, env secrets, and status check
++ import os, httpx
++ api_key = os.environ.get("OPENAI_API_KEY")
++ if not api_key:
++     raise RuntimeError("Missing OPENAI_API_KEY environment variable")
++ 
++ async with httpx.AsyncClient(timeout=10.0) as client:
++     response = await client.post(
++         "https://api.openai.com/v1/chat/completions",
++         headers={"Authorization": f"Bearer {api_key}"},
++         json={"model": "gpt-4o", "messages": []}
++     )
++     response.raise_for_status()  # Traps 4xx/5xx HTTP errors immediately
++     data = response.json()
+```
+
+
+
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{24.5 Secrets via environment variables (never hardcode)}}$
 
 ```python
 import os
@@ -162,6 +259,24 @@ if not api_key:
     raise RuntimeError("Set OPENAI_API_KEY first")
 # headers = {"Authorization": f"Bearer {api_key}"}
 ```
+
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{AI Essentials: NumPy and HTTP Production Matrix}}$
+
+| Capability / API | Canonical Syntax | Mechanism / Execution | AI Production Role | Production Priority |
+| :--- | :--- | :--- | :--- | :--- |
+| **NumPy Array Creation** | `np.array([x, y, z], dtype=np.float32)` | Contiguous C buffer allocation | Storing embeddings & model weights | $\color{#00C853}\blacksquare\space\textsf{\textbf{Core (Daily)}}$ |
+| **Array Shape Inspection** | `arr.shape`, `arr.dtype` | Metadata tuple inspection | Verifying tensor dimensions before forward pass | $\color{#00C853}\blacksquare\space\textsf{\textbf{Core (Daily)}}$ |
+| **Vector Dot Product** | `np.dot(u, v)` or `u @ v` | Optimized BLAS SIMD matrix math | Core mathematical operator for cosine similarity | $\color{#00C853}\blacksquare\space\textsf{\textbf{Core (Daily)}}$ |
+| **Vector Norm (Magnitude)** | `np.linalg.norm(u)` | Euclidean vector length calculation | Normalizing embedding vectors to unit length | $\color{#00C853}\blacksquare\space\textsf{\textbf{Core (Daily)}}$ |
+| **Vector Broadcasting** | `matrix + bias_vector` | Dimension stretching without memory copies | Applying biases across batches of embeddings | $\color{#FFB300}\blacksquare\space\textsf{\textbf{Occasional}}$ |
+| **Array Reshaping** | `arr.reshape(-1, embedding_dim)` | View re-indexing on same memory buffer | Aligning batch dimensions for tensor libraries | $\color{#FFB300}\blacksquare\space\textsf{\textbf{Occasional}}$ |
+| **Synchronous HTTP GET** | `requests.get(url, timeout=10)` | Blocking socket I/O | Quick one-off scripts and test harnesses | $\color{#FFB300}\blacksquare\space\textsf{\textbf{Occasional}}$ |
+| **Async HTTP Client Pool** | `async with httpx.AsyncClient() as c:` | Async I/O connection reuse | High-throughput concurrent LLM calls | $\color{#00C853}\blacksquare\space\textsf{\textbf{Core (Daily)}}$ |
+| **HTTP Status Validation** | `resp.raise_for_status()` | Raises `HTTPStatusError` on 4xx/5xx | Preventing corrupted error HTML from reaching parsers | $\color{#00C853}\blacksquare\space\textsf{\textbf{Core (Daily)}}$ |
+| **JSON Response Extraction**| `resp.json()` | Parses UTF-8 JSON payload to dict | Extracting completions, function calls, usage metrics | $\color{#00C853}\blacksquare\space\textsf{\textbf{Core (Daily)}}$ |
+| **HTTP Token Streaming** | `async with client.stream(...) as resp:` | Server-Sent Events (SSE) chunk streaming | Streaming token-by-token LLM output to UI | $\color{#FFB300}\blacksquare\space\textsf{\textbf{Occasional}}$ |
+| **Env Var Secret Access** | `os.environ.get("API_KEY")` | Reads process environment table | Secure zero-leak credential provisioning | $\color{#00C853}\blacksquare\space\textsf{\textbf{Core (Daily)}}$ |
+
 
 ![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
 
@@ -179,7 +294,7 @@ compare are NumPy arrays; the cosine-similarity function above is the literal he
    magnitude slower. Let NumPy operate on the whole array.
 4. **Hardcoding API keys** — leak risk. Read from `os.environ` / a `.env` file.
 
-### Try it yourself
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{Try it yourself}}$
 Use `requests.get` to fetch `https://jsonplaceholder.typicode.com/todos/2`, check the status is
 `200`, and print the `title`. Then compute the cosine similarity between `[1,0,1]` and `[1,1,1]`.
 

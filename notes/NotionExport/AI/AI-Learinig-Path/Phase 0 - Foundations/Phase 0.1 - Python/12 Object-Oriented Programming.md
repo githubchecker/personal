@@ -17,7 +17,19 @@ So far you've used data (lists, dicts) and behaviour (functions) separately. **O
 
 ---
 
-## 📚 What's in This Lesson — Module Map
+## 📚 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{What's in This Lesson — Sub-Module Architecture}}$
+
+```mermaid
+flowchart LR
+    classDef core fill:#E3F2FD,stroke:#1565C0,stroke-width:2px,color:#0D47A1;
+    classDef adv fill:#EDE7F6,stroke:#512DA8,stroke-width:2px,color:#311B92;
+
+    M1["12.1 Lifecycle<br/>(__new__, __init__)"]:::core --> M2["12.2 Inheritance<br/>(super(), attributes)"]:::core
+    M2 --> M3["12.3 Dunders<br/>(__repr__, __eq__)"]:::core
+    M3 --> M4["12.4 Access Control<br/>(@property, mangling)"]:::core
+    M4 --> M5["12.5 Method Types<br/>(@classmethod, @staticmethod)"]:::core
+    M5 --> M6["12.6 Advanced Types<br/>(dataclass, Enum, ABC, Protocol)"]:::adv
+```
 
 This lesson is split into **6 focused sub-modules**. Work through them in order — each one builds on the last.
 
@@ -32,12 +44,12 @@ This lesson is split into **6 focused sub-modules**. Work through them in order 
 
 ---
 
-## 🔑 Full Vocabulary
+## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{Full Vocabulary}}$
 
 <details>
 <summary>Click to expand — all 19 terms defined</summary>
 
-### 🧱 Core Objects & Lifecycle
+### $\color{#512DA8}\blacktriangleright\space\color{#311B92}{\textsf{Core Objects and Lifecycle}}$
 - **Class** — a blueprint for making objects.
 - **Object / instance** — a specific thing built from a class.
 - **`__new__`** — the allocator method; runs *before* `__init__` to allocate raw heap memory. Receives `cls` and returns the new instance.
@@ -45,7 +57,7 @@ This lesson is split into **6 focused sub-modules**. Work through them in order 
 - **`self`** — the current instance, inside a method (a strict convention, not a reserved keyword).
 - **Singleton** — a design pattern ensuring only one instance of a class exists in memory.
 
-### 🛡️ Encapsulation & Polymorphism
+### $\color{#512DA8}\blacktriangleright\space\color{#311B92}{\textsf{Encapsulation and Polymorphism}}$
 - **Class attribute** — data shared by all instances of a class (acts like a shared static variable; trap if mutable!).
 - **`_variable` (Protected by convention)** — single leading underscore signals internal use (accessible, but hands-off by convention).
 - **`__variable` (Private / name mangling)** — double leading underscores trigger Python name mangling (`_Class__var`) to prevent subclass collisions.
@@ -56,7 +68,7 @@ This lesson is split into **6 focused sub-modules**. Work through them in order 
 - **`self.__dict__`** — internal dictionary mapping attribute names to their values for an instance.
 - **`__eq__`** — dunder method defining equality (`==`); defaults to identity (`is`) unless overridden.
 
-### 📜 Contracts & Advanced Types
+### $\color{#512DA8}\blacktriangleright\space\color{#311B92}{\textsf{Contracts and Advanced Types}}$
 - **`ABC` & `@abstractmethod`** — Abstract Base Class; defines an interface contract that cannot be instantiated until subclasses implement all required methods and properties.
 - **`Enum` (Enumeration)** — a symbolic set of named constant values; prevents invalid string bugs and provides type-safe options.
 - **`Protocol` (`typing.Protocol`)** — structural subtyping (static duck typing); defines an interface contract satisfied by any class with matching methods/attributes without inheritance.
@@ -72,6 +84,18 @@ This lesson is split into **6 focused sub-modules**. Work through them in order 
 
 A **class** is a cookie cutter — a blueprint that defines a shape. An **object** (or **instance**) is an actual cookie stamped from it. One cutter, many cookies, each with its own decorations. The class says *what every dog has* (a name, a `bark()` ability); each dog object fills in its own details.
 
+```mermaid
+flowchart TD
+    classDef blueprint fill:#EDE7F6,stroke:#512DA8,stroke-width:2px,color:#311B92;
+    classDef obj fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20;
+
+    ClassDef["🍪 Class: Dog (The Blueprint)<br/>• species = 'canine'<br/>• def speak(): return 'woof'"]:::blueprint
+
+    ClassDef --> Inst1["Instance: dog1 (Heap: 0x1A)<br/>name = 'Rex'<br/>age = 3"]:::obj
+    ClassDef --> Inst2["Instance: dog2 (Heap: 0x2B)<br/>name = 'Bella'<br/>age = 5"]:::obj
+    ClassDef --> Inst3["Instance: dog3 (Heap: 0x3C)<br/>name = 'Luna'<br/>age = 2"]:::obj
+```
+
 > **The "Aha!":** a class defines a new **type** that carries both **state** (its data, called attributes) and **behaviour** (its functions, called methods) together.
 
 ---
@@ -84,7 +108,7 @@ A **class** is a cookie cutter — a blueprint that defines a shape. An **object
 
 ---
 
-## 📌 Master Quick Reference
+## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Master Quick Reference}}$
 
 ```python
 class Dog(Animal):
