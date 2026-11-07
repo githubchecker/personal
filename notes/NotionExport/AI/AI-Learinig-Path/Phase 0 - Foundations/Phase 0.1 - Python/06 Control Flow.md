@@ -1,37 +1,64 @@
-# 06 — Control Flow
+# $\Huge\color{#0D47A1}{\textsf{06 — Control Flow}}$
 
-> Phase 0 · Module 0.1 · Lesson 6 of 16
+[![Python 3.12+](https://img.shields.io/badge/Python-3.12+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Curriculum](https://img.shields.io/badge/Roadmap-Phase%200.1-0288D1?style=for-the-badge&logo=compass&logoColor=white)](README.md)
+[![Priority](https://img.shields.io/badge/Priority-MUST%20KNOW-D32F2F?style=for-the-badge&logo=target&logoColor=white)](../../AI%20Engineer%20Architect%20Road%20Map.md)
+[![Status](https://img.shields.io/badge/Status-Foundational-2E7D32?style=for-the-badge&logo=checkmarx&logoColor=white)](#)
 
-## 🗺️ Stage 0 — Concept Map
+> $\color{#546E7A}\mathbf{Navigation:}$ **Phase 0** · **Module 0.1** · **Lesson 6 of 16** · [← Prev: 05 Dictionaries and Sets](05%20Dictionaries%20and%20Sets.md) · [Phase 0.1 — Python Index](README.md) · [Next: 07 Functions →](07%20Functions.md)
 
-So far code runs top to bottom, once. **Control flow** lets a program **make decisions** (`if`)
-and **repeat work** (loops). This is where programs start to feel alive — and where indentation
-(Lesson 01) becomes load-bearing. Every algorithm, every data pipeline, every agent loop is built
-from these. *(Note: Exceptional control flow via `try` / `except` / `else` / `finally` has its own dedicated deep-dive in [10 — Error Handling](10%20Error%20Handling.md)).*
+---
 
-## 🔑 New Terms (plain English)
+![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
 
-- **Condition** — an expression that evaluates to True or False.
-- **Branch** — choosing which code runs (`if` / `elif` / `else`).
-- **Loop** — repeating a block (`while`, `for`).
-- **`break` / `continue`** — exit a loop early / skip to the next round.
-- **`pass`** — a syntax placeholder that does nothing; satisfies Python's indentation requirement when no action is needed.
-- **Loop `else`** — an optional block after `for` or `while` that runs only if the loop completed without encountering `break`.
-- **`range`** — generates a sequence of numbers to loop over.
+## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
-## 🎈 Stage 1 — The Simple Idea (analogy: a recipe with choices and repeats)
+> [!IMPORTANT]
+> ### $\color{#512DA8}{\textsf{The Core Premise}}$
+> So far code runs top to bottom, once. **Control flow** lets a program **make decisions** (`if`) and **repeat work** (loops). This is where programs start to feel alive — and where indentation (Lesson 01) becomes load-bearing. Every algorithm, every data pipeline, every agent loop is built from these. *(Note: Exceptional control flow via `try` / `except` / `else` / `finally` has its own dedicated deep-dive in [10 — Error Handling](10%20Error%20Handling.md)).*
 
-A recipe sometimes says *"if the dough is too dry, add water"* (a decision) and *"stir until
-smooth"* (a repeat). Control flow gives your code those two powers:
-- **Branching** — choose which steps to run based on a condition.
-- **Looping** — run a block again and again until something changes.
+### $\color{#00838F}\blacktriangleright\space\color{#00695C}{\textsf{Where It Fits}}$
 
-**The "Aha!":** the **indented block** under an `if`/`for`/`while` is the body that those
-statements control. Indentation *is* the grouping — there are no braces.
+* $\color{#0288D1}\blacktriangleright$ **$\color{#01579B}{\textsf{Builds on:}}$** [02 Variables, Types and Operators](02%20Variables%20Types%20and%20Operators.md) and [05 Dictionaries and Sets](05%20Dictionaries%20and%20Sets.md) — boolean logic, comparisons, and iterating collections.
+* $\color{#00897B}\blacktriangleright$ **$\color{#004D40}{\textsf{Unlocks:}}$** [07 Functions](07%20Functions.md), [08 Comprehensions and Generators](08%20Comprehensions%20and%20Generators.md), and iterative AI Agent loops (ReAct pattern).
 
-## ⚙️ Stage 2 — How It Actually Works
+![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
 
-### 6.1 `if` / `elif` / `else`
+## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
+
+| $\color{#4A148C}\textsf{\textbf{Term}}$ | $\color{#00695C}\textsf{\textbf{One-Line Meaning}}$ |
+| :--- | :--- |
+| $\color{#0D47A1}\mathbf{Condition}$ | An expression that evaluates to `True` or `False`. |
+| $\color{#0D47A1}\mathbf{Branch}$ | Choosing which code pathway runs (`if` / `elif` / `else`). |
+| $\color{#00695C}\mathbf{Loop}$ | Repeating a block of code multiple times (`while`, `for`). |
+| $\color{#D32F2F}\mathbf{break\space /\space continue}$ | `break` exits a loop early; `continue` skips to the next iteration. |
+| $\color{#E65100}\mathbf{pass}$ | A syntax placeholder that does nothing; satisfies indentation rules. |
+| $\color{#2E7D32}\mathbf{Loop\space else}$ | Block running after `for`/`while` only if the loop finishes without `break`. |
+| $\color{#00838F}\mathbf{range}$ | Built-in sequence generator for iterating over number intervals. |
+
+![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
+
+## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (Analogy: Recipe with Choices and Repeats)}}$
+
+A recipe sometimes says *"if the dough is too dry, add water"* (a decision) and *"stir until smooth"* (a repeat). Control flow gives your code those two powers:
+* $\color{#0288D1}\blacktriangleright$ **Branching:** Choose which steps to run based on a condition.
+* $\color{#00897B}\blacktriangleright$ **Looping:** Run a block again and again until something changes.
+
+> [!IMPORTANT]
+> ### $\color{#512DA8}{\textsf{The "Aha!" Insight}}$
+> The **indented block** under an `if`/`for`/`while` is the body that those statements control. Indentation *is* the grouping structure — there are no curly braces `{}` or begin/end tokens.
+
+![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
+
+## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
+
+> [!IMPORTANT]
+> ### $\color{#00C853}{\textsf{🔥 The 80/20 Core Rule: What Matters in Production}}$
+> * $\color{#00C853}\blacktriangleright$ **Daily Core (90% of Real AI Work):** `if / elif / else` branching, `for item in iterable:` loops, `enumerate()` (when you need both index and item), `zip()` (iterating two lists in lockstep), `break` and `continue`, and idiomatic truthy/falsy checks (`if not results:` instead of `if len(results) == 0:`).
+> * $\color{#FFB300}\blacktriangleright$ **Occasional (Tool Dispatch and Polling):** `match / case` (structural pattern matching for routing LLM function/tool calls), `while condition:` with a safety counter for polling API status.
+> * $\color{#757575}\blacktriangleright$ **Reference Only (Exhaustive and Confusing):** `for ... else` and `while ... else` clauses (obscure syntax prone to misunderstandings).
+
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{6.1 if / elif / else}}$
 
 ```python
 score = 72
@@ -69,7 +96,7 @@ if math.isclose(threshold, 0.3):  # Or: if abs(threshold - 0.3) < 1e-9:
     print("Scores match within acceptable tolerance!")
 ```
 
-### 6.1.1 Truth Value Testing: Falsy vs. Truthy Across All Python Types
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{6.1.1 Truth Value Testing: Falsy vs. Truthy Across All Python Types}}$
 
 In Python, **any object can be tested directly in an `if` condition** without needing explicit comparisons like `if len(x) == 0` or `if x == True`.
 
@@ -234,7 +261,7 @@ print(f"Sampling mode: {'Creative' if temp > 0.5 else 'Deterministic'}")
 # Output: 'Sampling mode: Creative'
 ```
 
-### 6.2 `while` loops — repeat until a condition fails
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{6.2 while Loops — Repeat Until a Condition Fails}}$
 
 ```python
 count = 3
@@ -257,7 +284,7 @@ while True:                     # an intentional "loop forever" — exit with br
     print(n)                    # 1 2 4 5
 ```
 
-### 6.3 `for` loops — walk through a collection
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{6.3 for Loops — Walk Through a Collection}}$
 
 A `for` loop in Python is a "for-each" loop. It iterates directly over the items of any sequence or iterable (lists, strings, tuples, dictionaries, or ranges).
 
@@ -385,7 +412,7 @@ else:
     print("Failed to connect after 3 attempts.")  # runs because break was never hit
 ```
 
-### 6.4 Loop control: `continue` vs `break` vs `pass`
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{6.4 Loop Control: continue vs break vs pass}}$
 
 Engineers frequently ask about the exact mechanical differences between these three keywords:
 - **`continue`**: Skips the remainder of the *current iteration* and jumps straight to the next iteration.
@@ -444,7 +471,7 @@ class ToolExecutionError(Exception):
     pass                               # Empty class definition
 ```
 
-### 6.5 `match` — clean multi-way branching (modern Python)
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{6.5 match — Clean Multi-Way Branching (Modern Python)}}$
 
 ```python
 command = "start"
@@ -493,7 +520,9 @@ if current_state is AgentState.PLANNING:
 
 Use `match` when you'd otherwise write a long `if/elif` chain comparing one value to many options.
 
-## 🚀 Stage 3 — In Practice / Why It Matters
+![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
+
+## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 Branching decides which model or tool to call; loops process every document chunk, retry failed
 API calls, or drive an agent's "think → act → observe" cycle. Comfort with `for`, `range`,
@@ -512,7 +541,9 @@ API calls, or drive an agent's "think → act → observe" cycle. Comfort with `
 Use a `for` loop and `range` to print only the even numbers from 1 to 20, then rewrite it using
 `continue` to skip odds.
 
-## ⚖️ Variations & When to Use (Control Flow Decision Guide)
+![Variations](https://img.shields.io/badge/COMPARISON-VARIATIONS%20%26%20WHEN%20TO%20USE-00838F?style=for-the-badge&logo=scales&logoColor=white)
+
+## ⚖️ $\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use (Control Flow Decision Guide)}}$
 
 ### Branching Decisions
 
@@ -537,7 +568,9 @@ Use a `for` loop and `range` to print only the even numbers from 1 to 20, then r
 | **Loop `else`** | `for/while ... break else:` | Running a fallback when search or retry loop completes without break | Loops without a `break` statement (`else` will always run) | Document lookup or API retry exhaustion |
 | **Safe guard `(items or [])`** | `for x in items or []:` | Fast inline guard against `None` or empty iterables | You need to log an explicit warning when input is `None` | Streaming token chunks from optional API fields |
 
-## 🐛 Common Errors & Fixes
+![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
+
+## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
 | What you see | Cause | Fix |
 | --- | --- | --- |
@@ -550,7 +583,9 @@ Use a `for` loop and `range` to print only the even numbers from 1 to 20, then r
 | Program hangs forever | A `while` condition never becomes False | Make the loop variable move toward the exit |
 | `range(5)` gives `0..4`, not `1..5` | The `stop` value is excluded | Use `range(1, 6)` for 1–5 |
 
-## 📌 Quick Reference
+![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
+
+## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
 ```python
 if c: ...        elif c2: ...        else: ...
@@ -573,7 +608,9 @@ match value:
     case _: ...                # catch-all (like else)
 ```
 
-## 🛑 STOP — Self-Check
+![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
+
+## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 
 What does this print, and why does it stop where it does?
 
@@ -586,9 +623,17 @@ for n in range(1, 100):
 print(n, total)
 ```
 
-<details><summary>Answer</summary>
+<details>
+<summary><b>🔍 Click to Reveal the Answer</b></summary>
+
+<br/>
 
 It prints **`5 15`**. The loop adds 1+2+3+4+5 = 15; after adding 5, `total` (15) exceeds 10, so
 `break` fires immediately, leaving `n` at **5**. `range(1, 100)` starts at 1, and `break` stops the
 loop the first time the condition is met — so it never reaches 6.
+
+---
+
+🎉 **Lesson Complete!** Continue to the next lesson: [07 Functions →](07%20Functions.md)
+
 </details>

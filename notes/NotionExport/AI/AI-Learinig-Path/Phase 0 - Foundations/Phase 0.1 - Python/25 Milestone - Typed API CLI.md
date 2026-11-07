@@ -1,6 +1,13 @@
-# 25 — Milestone: Typed API CLI Tool
+# $\Huge\color{#0D47A1}{\textsf{25 — Milestone: Typed API CLI Tool}}$
 
-> Phase 0 · Module 0.1 · Lesson 25 of 25 (capstone for the Python module)
+[![Python 3.12+](https://img.shields.io/badge/Python-3.12+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Curriculum](https://img.shields.io/badge/Roadmap-Phase%200.1-0288D1?style=for-the-badge&logo=compass&logoColor=white)](README.md)
+[![Priority](https://img.shields.io/badge/Priority-MUST%20KNOW-D32F2F?style=for-the-badge&logo=target&logoColor=white)](../../AI%20Engineer%20Architect%20Road%20Map.md)
+[![Status](https://img.shields.io/badge/Status-Foundational-2E7D32?style=for-the-badge&logo=checkmarx&logoColor=white)](#)
+
+> $\color{#546E7A}\mathbf{Navigation:}$ **Phase 0** · **Module 0.1** · **Lesson 25 of 25** · [← Prev: 24 AI Essentials - NumPy and HTTP](24%20AI%20Essentials%20-%20NumPy%20and%20HTTP.md) · [Phase 0.1 — Python Index](README.md) · [Next: Phase 0.2 — PyTorch Index →](../Phase%200.2%20-%20PyTorch/README.md)
+
+---
 
 ## 🎯 Goal
 
@@ -13,6 +20,14 @@ clean result. If you can build and explain this, you're ready for the AI-specifi
 - collections (04, 05) · control flow (06) · functions (07)
 - error handling (10) · modules/files (11) · built-in functions (13)
 - type hints & Pydantic (22) · async + HTTP (23, 24)
+
+> [!IMPORTANT]
+> ### $\color{#00C853}{\textsf{🔥 The 80/20 Core Rule: What Matters in Production}}$
+> * $\color{#00C853}\blacktriangleright$ **Daily Core (90% of Real AI Work):** End-to-end integration of the core Python stack: CLI flags, type-safe request/response validation with Pydantic, robust error handling with specific exception traps, and structured terminal reporting.
+> * $\color{#FFB300}\blacktriangleright$ **Occasional (Production Tuning):** Exponential backoff retries (`tenacity`), streaming HTTP responses, environment variable loading.
+> * $\color{#757575}\blacktriangleright$ **Reference Only (CLI Polish):** Advanced subcommands, shell auto-completion.
+
+---
 
 ## 🛠️ Setup
 
@@ -86,7 +101,9 @@ python main.py
 - Break the URL (typo the host) and watch `tenacity` retry 3 times, then raise a `TodoError`.
 - Change a `Todo` field type (e.g. `id: bool`) and see a Pydantic `ValidationError` at the boundary.
 
-## 🐛 Common Errors & Fixes (running this milestone)
+![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
+
+## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$ (running this milestone)
 
 | What you see | Cause | Fix |
 | --- | --- | --- |
@@ -99,7 +116,10 @@ python main.py
 Name the three "boundaries" in this program where things could go wrong, and which tool guards
 each.
 
-<details><summary>Answer</summary>
+<details>
+<summary><b>🔍 Click to Reveal the Answer</b></summary>
+
+<br/>
 
 1. **The network call** — guarded by `timeout` + `response.raise_for_status()` and retried by
    `@retry` (tenacity). 2. **The data shape** — guarded by the Pydantic `Todo` model at

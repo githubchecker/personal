@@ -1,8 +1,17 @@
-# 09 — Decorators & Closures
+# $\Huge\color{#0D47A1}{\textsf{09 — Decorators and Closures}}$
 
-> Phase 0 · Module 0.1 · Lesson 9 of 16
+[![Python 3.12+](https://img.shields.io/badge/Python-3.12+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Curriculum](https://img.shields.io/badge/Roadmap-Phase%200.1-0288D1?style=for-the-badge&logo=compass&logoColor=white)](README.md)
+[![Priority](https://img.shields.io/badge/Priority-MUST%20KNOW-D32F2F?style=for-the-badge&logo=target&logoColor=white)](../../AI%20Engineer%20Architect%20Road%20Map.md)
+[![Status](https://img.shields.io/badge/Status-Foundational-2E7D32?style=for-the-badge&logo=checkmarx&logoColor=white)](#)
 
-## 🗺️ Stage 0 — Concept Map
+> $\color{#546E7A}\mathbf{Navigation:}$ **Phase 0** · **Module 0.1** · **Lesson 9 of 16** · [← Prev: 08 Comprehensions and Generators](08%20Comprehensions%20and%20Generators.md) · [Phase 0.1 — Python Index](README.md) · [Next: 10 Error Handling →](10%20Error%20Handling.md)
+
+---
+
+![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
+
+## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 This lesson explains the mysterious `@something` lines you'll see above functions in every AI
 framework (FastAPI routes, `@tool`, `tenacity` retries). To understand decorators you first need
@@ -10,7 +19,9 @@ two ideas: functions are **values** you can pass around, and a function can **re
 from where it was created (a **closure**). This is the most "advanced" core-Python topic — take it
 slowly.
 
-## 🔑 New Terms (plain English)
+![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
+
+## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
 
 - **First-class function** — a function you can store, pass, or return like any value.
 - **Closure** — an inner function that remembers variables from its outer function.
@@ -19,7 +30,9 @@ slowly.
 - **Wrapper** — the inner function a decorator returns.
 - **`functools.wraps`** — keeps the original function's name and docstring on the wrapper.
 
-## 🎈 Stage 1 — The Simple Idea (analogy: gift-wrapping)
+![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
+
+## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (analogy: gift-wrapping)}}$
 
 A **decorator** wraps a function in extra behaviour without changing the function's own code — like
 gift-wrapping a box. The present inside is unchanged; the wrapping adds something around it
@@ -29,9 +42,17 @@ gift-wrapping a box. The present inside is unchanged; the wrapping adds somethin
 them as arguments, and return them from other functions. A decorator is just *a function that takes
 a function and returns a new, wrapped function.*
 
-## ⚙️ Stage 2 — How It Actually Works
+![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
 
-### 9.1 Functions are first-class values
+## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
+
+> [!IMPORTANT]
+> ### $\color{#00C853}{\textsf{🔥 The 80/20 Core Rule: What Matters in Production}}$
+> * $\color{#00C853}\blacktriangleright$ **Daily Core (90% of Real AI Work):** Function decorators as reusable execution middleware, preserving metadata using `@functools.wraps(func)`, forwarding signatures with `*args, **kwargs`, and production patterns: `@timing`, `@retry` on API timeouts, and `@require_auth`.
+> * $\color{#FFB300}\blacktriangleright$ **Occasional (Configurable Middleware):** Decorators accepting custom parameters (`@retry(max_retries=3)`), memoization with `@functools.lru_cache(maxsize=128)`.
+> * $\color{#757575}\blacktriangleright$ **Reference Only (Exhaustive Variations):** Class-based decorators (implementing `__call__`), deep decorator stacks (4+ wrappers), wrapping generator/streaming functions.
+
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{9.1 Functions are first-class values}}$
 
 ```python
 def shout(text):
@@ -45,7 +66,7 @@ def apply(func, value):   # a function can take ANOTHER function as an argument
 print(apply(shout, "hello"))   # 'HELLO'
 ```
 
-### 9.2 Closures — a function that remembers
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{9.2 Closures — a function that remembers}}$
 
 A function defined **inside** another can capture the outer function's variables, and keeps them
 even after the outer function has returned. That captured bundle is a **closure**.
@@ -87,7 +108,7 @@ print(counter())                        # 3
 
 > ⚠️ Without `nonlocal total_calls`, Python treats `total_calls += 1` as a local assignment, crashing with `UnboundLocalError`.
 
-### 9.3 A decorator, built up
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{9.3 A decorator, built up}}$
 
 ```python
 import functools
@@ -117,7 +138,9 @@ replacing `add` with `wrapper`. Now every call to `add` is logged — without to
 parameters, and `@functools.wraps(func)` preserves the original's identity (without it, `add.__name__`
 would wrongly say `"wrapper"`).
 
-## 🚀 Stage 3 — In Practice / Why It Matters
+![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
+
+## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 You won't write many decorators, but you'll **use** them constantly:
 - `@app.get("/items")` (FastAPI) registers a function as a web endpoint — Phase 1.
@@ -142,7 +165,9 @@ real-world code.
 Write a `timed` decorator that prints how long the wrapped function took (use
 `import time; start = time.perf_counter()` before the call and the difference after).
 
-## 🐛 Common Errors & Fixes
+![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
+
+## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
 | What you see | Cause | Fix |
 | --- | --- | --- |
@@ -151,7 +176,9 @@ Write a `timed` decorator that prints how long the wrapped function took (use
 | `func.__name__` shows `'wrapper'` | Missing `@functools.wraps` | Add `@functools.wraps(func)` to the wrapper |
 | Your logic runs once, not per call | Code placed outside `wrapper` | Put per-call logic **inside** `wrapper` |
 
-## 📌 Quick Reference
+![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
+
+## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
 ```python
 import functools
@@ -168,15 +195,25 @@ def logged(func):
 def add(a, b): return a + b
 ```
 
-## 🛑 STOP — Self-Check
+![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
+
+## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 
 What is a **closure**, and how does it make the `@logged` decorator above possible?
 
-<details><summary>Answer</summary>
+<details>
+<summary><b>🔍 Click to Reveal the Answer</b></summary>
+
+<br/>
 
 A **closure** is an inner function that **remembers variables from the enclosing function** even
 after that outer function has returned. In `@logged`, the inner `wrapper` closes over `func` (the
 original function it was given), so each time `wrapper` runs it still has access to the specific
 function it's meant to wrap. Without closures, `wrapper` would have no way to "remember" which
 function to call.
+
+---
+
+🎉 **Lesson Complete!** Continue to the next lesson: [10 Error Handling →](10%20Error%20Handling.md)
+
 </details>

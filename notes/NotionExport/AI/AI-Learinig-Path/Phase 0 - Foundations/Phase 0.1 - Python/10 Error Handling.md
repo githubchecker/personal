@@ -1,12 +1,23 @@
-# 10 — Error Handling
+# $\Huge\color{#0D47A1}{\textsf{10 — Error Handling}}$
 
-> Phase 0 · Module 0.1 · Lesson 10 of 16
+[![Python 3.12+](https://img.shields.io/badge/Python-3.12+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Curriculum](https://img.shields.io/badge/Roadmap-Phase%200.1-0288D1?style=for-the-badge&logo=compass&logoColor=white)](README.md)
+[![Priority](https://img.shields.io/badge/Priority-MUST%20KNOW-D32F2F?style=for-the-badge&logo=target&logoColor=white)](../../AI%20Engineer%20Architect%20Road%20Map.md)
+[![Status](https://img.shields.io/badge/Status-Foundational-2E7D32?style=for-the-badge&logo=checkmarx&logoColor=white)](#)
 
-## 🗺️ Stage 0 — Concept Map
+> $\color{#546E7A}\mathbf{Navigation:}$ **Phase 0** · **Module 0.1** · **Lesson 10 of 16** · [← Prev: 09 Decorators and Closures](09%20Decorators%20and%20Closures.md) · [Phase 0.1 — Python Index](README.md) · [Next: 11 Modules, Packages and Files →](11%20Modules%20Packages%20and%20Files.md)
+
+---
+
+![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
+
+## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 Real programs hit problems: an external API rate-limits your request, a network socket drops, a database times out, or an LLM returns malformed JSON instead of valid tool arguments. **Error handling** is how you anticipate failures and respond gracefully instead of letting the entire application crash. In AI engineering, where models, vector stores, and external APIs are inherently non-deterministic, robust error handling is the difference between a brittle prototype and a resilient production agent.
 
-## 🔑 New Terms (plain English)
+![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
+
+## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
 
 - **Exception** — an object Python creates to signal that an error or unexpected condition occurred.
 - **Traceback** — the chronological report showing the stack of function calls that led up to the error.
@@ -19,7 +30,9 @@ Real programs hit problems: an external API rate-limits your request, a network 
 - **EAFP** — "Easier to Ask Forgiveness than Permission": the Pythonic philosophy of trying an action and catching errors rather than running defensive checks beforehand.
 - **LBYL** — "Look Before You Leap": checking preconditions with `if` statements before attempting an operation.
 
-## 🎈 Stage 1 — The Simple Idea (analogy: a circuit breaker & safety net)
+![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
+
+## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (analogy: a circuit breaker and safety net)}}$
 
 When a trapeze artist might fall, you string a **safety net** under the risky part of the act — not under the whole circus. In Python:
 1. You wrap only the risky operation in a **`try`** block.
@@ -39,9 +52,17 @@ When a trapeze artist might fall, you string a **safety net** under the risky pa
         [ finally: Guaranteed Cleanup ]
 ```
 
-## ⚙️ Stage 2 — How It Actually Works
+![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
 
-### 10.1 The Anatomy of an Exception & Built-in Hierarchy
+## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
+
+> [!IMPORTANT]
+> ### $\color{#00C853}{\textsf{🔥 The 80/20 Core Rule: What Matters in Production}}$
+> * $\color{#00C853}\blacktriangleright$ **Daily Core (90% of Real AI Work):** Specific exception handling with `try / except SpecificException as e:` (never swallow errors with bare `except:`), guaranteed resource cleanup in `finally:`, raising exceptions `raise ValueError(...)`, and handling real AI runtime errors: HTTP timeouts, rate limits (`429 Too Many Requests`), and JSON parsing errors (`json.JSONDecodeError`).
+> * $\color{#FFB300}\blacktriangleright$ **Occasional (Domain Errors):** Custom domain exception classes (`class LLMProviderError(Exception): pass`), explicit exception chaining (`raise LLMTimeoutError from e`).
+> * $\color{#757575}\blacktriangleright$ **Reference Only (Exhaustive and Anti-Patterns):** The optional `else:` clause in `try / except / else / finally`, `assert` statements for business logic (disabled in Python production `-O` mode).
+
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{10.1 The Anatomy of an Exception and Built-in Hierarchy}}$
 
 When an unhandled error occurs, Python prints a **traceback** and stops:
 
@@ -75,7 +96,7 @@ BaseException
 > ⚠️ **Critical Rule: Never catch `BaseException` (and never use a bare `except:`)!**
 > Catching `BaseException` or writing `except:` intercepts `KeyboardInterrupt` (preventing you from stopping a runaway program with `Ctrl+C`) and `SystemExit`. Always catch `Exception` or, even better, specific subclasses!
 
-### 10.2 The Complete 4-Part Structure: `try` / `except` / `else` / `finally`
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{10.2 The Complete 4-Part Structure: try / except / else / finally}}$
 
 Python provides a complete 4-part control flow for handling risky operations:
 
@@ -149,7 +170,7 @@ print(check_status())
 # SUCCESS
 ```
 
-### 10.3 Raising Exceptions & Re-raising
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{10.3 Raising Exceptions and Re-raising}}$
 
 Use the **`raise`** keyword to signal an error deliberately when input validation or state invariants fail:
 
@@ -172,7 +193,7 @@ def call_model_with_logging(prompt: str):
         raise  # A bare 'raise' re-raises the active exception up to the caller!
 ```
 
-### 10.4 Exception Chaining (`raise ... from original_error`)
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{10.4 Exception Chaining (raise ... from original_error)}}$
 
 In modern Python, when low-level library errors happen, you often want to wrap them in a meaningful domain exception. Using **`raise ... from err`** preserves the entire causal chain in the traceback:
 
@@ -200,7 +221,7 @@ def load_agent_config(raw_json: str) -> dict:
 > **Why Exception Chaining Matters for AI Pipelines:**
 > If an OpenAI or Anthropic API call fails with a raw `httpx.ConnectTimeout`, re-raising it as `raise LLMServiceUnavailableError("Model API timed out") from err` gives your monitoring system clean high-level alerts while keeping the exact socket-level network traceback attached for debugging.
 
-### 10.5 Custom Exceptions (Domain Hierarchies & Metadata)
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{10.5 Custom Exceptions (Domain Hierarchies and Metadata)}}$
 
 A **custom exception** is simply a class that inherits from `Exception` (or a subclass of `Exception`).
 
@@ -271,7 +292,7 @@ except AgentError as err:
     pass
 ```
 
-### 10.6 The Pythonic Mindset: EAFP vs LBYL
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{10.6 The Pythonic Mindset: EAFP vs LBYL}}$
 
 | Style | Name | Philosophy | Code Example |
 | :--- | :--- | :--- | :--- |
@@ -280,7 +301,9 @@ except AgentError as err:
 
 In Python, **EAFP is idiomatic and often faster** when failures are rare. It also avoids race conditions (e.g. checking `os.path.exists()` before opening a file is vulnerable to another process deleting the file between the check and the open; EAFP handles it safely in `try/except`).
 
-## 🚀 Stage 3 — In Practice / Why It Matters
+![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
+
+## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 In modern AI engineering:
 1. **Resilient Agent Loops**: LLMs are external network services that produce unstructured text. When an LLM generates invalid JSON for a function call, a production agent catches `json.JSONDecodeError`, feeds the error message back into the conversation context, and asks the model to self-correct.
@@ -296,7 +319,9 @@ In modern AI engineering:
 ### Try it yourself
 Write a custom exception `TokenLimitExceededError` that stores `current_tokens` and `max_tokens`. Write a function `validate_prompt(text: str, max_tokens: int = 100)` that splits `text` into words; if word count exceeds `max_tokens`, raise your custom exception. Catch it and print a helpful alert.
 
-## ⚖️ Variations & When to Use (Error Handling Decision Guide)
+![Variations](https://img.shields.io/badge/COMPARISON-VARIATIONS%20%26%20WHEN%20TO%20USE-00838F?style=for-the-badge&logo=scales&logoColor=white)
+
+## ⚖️ $\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use}}$
 
 | Technique | Syntax | ✅ When to Use | 🚫 Avoid When | Production AI Example |
 | :--- | :--- | :--- | :--- | :--- |
@@ -308,7 +333,9 @@ Write a custom exception `TokenLimitExceededError` that stores `current_tokens` 
 | **Chained `raise ... from`**| `raise DomainErr from err`| Translating low-level library errors into clear application exceptions | Internal code where original exception is already self-explanatory | Wrapping `requests.HTTPError` in `LLMProviderError` |
 | **Custom Exception** | `class MyErr(Exception):` | Defining domain-specific errors with rich metadata (`status_code`, `model`)| A built-in exception (`ValueError`, `KeyError`) fits perfectly | `ContextWindowExceededError(limit=8192)` |
 
-## 🐛 Common Errors & Fixes
+![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
+
+## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
 | What you see | Cause | Fix |
 | --- | --- | --- |
@@ -319,7 +346,9 @@ Write a custom exception `TokenLimitExceededError` that stores `current_tokens` 
 | `NameError` inside `finally` block | Variable initialized inside `try` failed before assignment | Initialize the variable to `None` before the `try` block |
 | Original error cause lost in logs | Re-raised a new error without `from` | Use `raise CustomError("msg") from err` |
 
-## 📌 Quick Reference
+![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
+
+## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
 ```python
 # 1. Complete 4-part structure:
@@ -356,7 +385,9 @@ except Exception as err:
     raise                              # re-raises original error upward
 ```
 
-## 🛑 STOP — Self-Check
+![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
+
+## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 
 Consider this code:
 
@@ -375,10 +406,18 @@ def parse_payload(raw_text: str) -> dict:
 2. If `raw_text = 'malformed_json'`, what gets printed, and what does the function return?
 3. Where does the `print("Audit logged")` execute relative to the `return` statement?
 
-<details><summary>Answer</summary>
+<details>
+<summary><b>🔍 Click to Reveal the Answer</b></summary>
+
+<br/>
 
 1. It prints `"Audit logged"` and returns `{"status": "ok"}`.
 2. It prints `"Audit logged"` and returns `{}`.
 3. In both cases, the **`finally` block executes immediately before the function returns**. Even though `return` appears in both the `try` and `except` blocks, Python guarantees that `finally` runs before control is handed back to the caller.
+
+---
+
+🎉 **Lesson Complete!** Continue to the next lesson: [11 Modules, Packages and Files →](11%20Modules%20Packages%20and%20Files.md)
+
 </details>
 

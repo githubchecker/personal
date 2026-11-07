@@ -1,45 +1,72 @@
-# 05 — Dictionaries & Sets
+# $\Huge\color{#0D47A1}{\textsf{05 — Dictionaries and Sets}}$
 
-> Phase 0 · Module 0.1 · Lesson 5 of 16
+[![Python 3.12+](https://img.shields.io/badge/Python-3.12+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Curriculum](https://img.shields.io/badge/Roadmap-Phase%200.1-0288D1?style=for-the-badge&logo=compass&logoColor=white)](README.md)
+[![Priority](https://img.shields.io/badge/Priority-MUST%20KNOW-D32F2F?style=for-the-badge&logo=target&logoColor=white)](../../AI%20Engineer%20Architect%20Road%20Map.md)
+[![Status](https://img.shields.io/badge/Status-Foundational-2E7D32?style=for-the-badge&logo=checkmarx&logoColor=white)](#)
 
-## 🗺️ Stage 0 — Concept Map
+> $\color{#546E7A}\mathbf{Navigation:}$ **Phase 0** · **Module 0.1** · **Lesson 5 of 16** · [← Prev: 04 Lists and Tuples](04%20Lists%20and%20Tuples.md) · [Phase 0.1 — Python Index](README.md) · [Next: 06 Control Flow →](06%20Control%20Flow.md)
 
-Lists store items by **position**. But often you want to look something up by **name** — a price
-by product, a score by user. That's a **dictionary**, the most-used data structure in real Python.
-A **set** is its cousin: an unordered bag of **unique** items. And just as lists have immutable
-tuples, sets have an immutable counterpart: **`frozenset`**. Both build on what you know and
-power configuration, JSON data, and the `messages`/metadata you'll send to AI models.
+---
 
-## 🔑 New Terms (plain English)
+![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
 
-- **Dictionary (dict)** — stores **key → value** pairs; you look things up by key.
-- **Key** — the unique label you look up (must be immutable: str/int/tuple/frozenset).
-- **Value** — the data stored under a key (can be anything).
-- **Set** — an unordered collection of **unique** items.
-- **`frozenset`** — an immutable (unchangeable), hashable version of a set.
-- **Hashable** — an object whose value never changes, producing a fixed hash code (required for dict keys and set elements).
-- **Membership** — testing whether something is present: `x in collection`.
+## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
-## 🎈 Stage 1 — The Simple Idea (analogy: a real dictionary, and a bag of unique marbles)
+> [!IMPORTANT]
+> ### $\color{#512DA8}{\textsf{The Core Premise}}$
+> Lists store items by **position**. But often you want to look something up by **name** — a price by product, a score by user. That's a **dictionary**, the most-used data structure in real Python. A **set** is its cousin: an unordered bag of **unique** items. And just as lists have immutable tuples, sets have an immutable counterpart: **`frozenset`**. Both build on what you know and power configuration, JSON data, and the `messages`/metadata you'll send to AI models.
 
-A **dictionary (dict)** is like a word dictionary: you look up a **key** (the word) to get its
-**value** (the definition). Lookups are by key, not position, and they're instant.
+### $\color{#00838F}\blacktriangleright\space\color{#00695C}{\textsf{Where It Fits}}$
 
-A **set** is a bag of marbles where duplicates are impossible — toss in two identical marbles and
-only one remains. Order isn't tracked; membership is.
+* $\color{#0288D1}\blacktriangleright$ **$\color{#01579B}{\textsf{Builds on:}}$** [04 Lists and Tuples](04%20Lists%20and%20Tuples.md) — collections, mutability, and immutability.
+* $\color{#00897B}\blacktriangleright$ **$\color{#004D40}{\textsf{Unlocks:}}$** [06 Control Flow](06%20Control%20Flow.md), JSON API serialization, Pydantic schemas, and document chunk deduplication.
 
-A **`frozenset`** is that same bag of marbles sealed tight in clear epoxy resin — you can inspect the
-contents and check if a marble is inside, but you can never add or remove anything. Because it is
-fixed and immutable, it can safely serve as a dictionary key or sit inside another set.
+![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
 
-**The "Aha!":** dict = "look up a value by its key"; set = "a collection that automatically removes
-duplicates and answers 'is this in here?' very fast." Notice the symmetry:
-`list` (mutable) ──► `tuple` (immutable)
-`set`  (mutable) ──► `frozenset` (immutable)
+## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
 
-## ⚙️ Stage 2 — How It Actually Works
+| $\color{#4A148C}\textsf{\textbf{Term}}$ | $\color{#00695C}\textsf{\textbf{One-Line Meaning}}$ |
+| :--- | :--- |
+| $\color{#0D47A1}\mathbf{Dictionary\space (dict)}$ | Stores **key $\rightarrow$ value** pairs; items are retrieved instantly by key. |
+| $\color{#0D47A1}\mathbf{Key}$ | The unique lookup label (must be immutable: `str`, `int`, `tuple`, `frozenset`). |
+| $\color{#00695C}\mathbf{Value}$ | The data stored under a specific key (can be any type, mutable or immutable). |
+| $\color{#2E7D32}\mathbf{Set}$ | An unordered collection of **unique** items with zero duplicate values. |
+| $\color{#E65100}\mathbf{frozenset}$ | An immutable, hashable version of a set that cannot be altered after creation. |
+| $\color{#4A148C}\mathbf{Hashable}$ | An object with a fixed hash code that never changes over its lifetime. |
+| $\color{#00838F}\mathbf{Membership}$ | Instant $O(1)$ test checking whether an item exists: `x in collection`. |
 
-### 5.1 Creating and reading dicts
+![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
+
+## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (Analogy: Real Dictionary and Marble Bag)}}$
+
+A **dictionary (dict)** is like a word dictionary: you look up a **key** (the word) to get its **value** (the definition). Lookups are by key, not position, and they're instant.
+
+A **set** is a bag of marbles where duplicates are impossible — toss in two identical marbles and only one remains. Order isn't tracked; membership is.
+
+A **`frozenset`** is that same bag of marbles sealed tight in clear epoxy resin — you can inspect the contents and check if a marble is inside, but you can never add or remove anything. Because it is fixed and immutable, it can safely serve as a dictionary key or sit inside another set.
+
+> [!IMPORTANT]
+> ### $\color{#512DA8}{\textsf{The "Aha!" Insight and Structural Symmetry}}$
+> **dict** = "look up a value by its key"  
+> **set** = "a collection that automatically removes duplicates and answers 'is this in here?' in $O(1)$ constant time"
+> 
+> ```
+> 🟢 Mutable:   list  ──►  set
+> 🟣 Immutable: tuple ──►  frozenset
+> ```
+
+![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
+
+## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
+
+> [!IMPORTANT]
+> ### $\color{#00C853}{\textsf{🔥 The 80/20 Core Rule: What Matters in Production}}$
+> * $\color{#00C853}\blacktriangleright$ **Daily Core (90% of Real AI Work):** Dicts as standard JSON data containers, safe lookups with `d.get(key, default)` (avoids crashes on optional LLM fields), iterating with `for k, v in d.items():`, checking key presence with `k in d` ($O(1)$), and Sets for instant deduplication `set(chunk_ids)` and lightning-fast membership testing `id in seen_ids` ($O(1)$).
+> * $\color{#FFB300}\blacktriangleright$ **Occasional (Batch Updates and Set Algebra):** `d.update()`, `d.pop(key, default)`, set union `|`, intersection `&`, and difference `-` (comparing tool lists or token vocabularies).
+> * $\color{#757575}\blacktriangleright$ **Reference Only (Exhaustive Variations):** `d.setdefault()`, `d.popitem()`, `frozenset`, `symmetric_difference`.
+
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5.1 Creating and Reading Dicts}}$
 
 ```python
 # keys -> values, in curly braces. Keys are usually strings; values can be anything.
@@ -53,7 +80,7 @@ print(person.get("email"))            # None
 print(person.get("email", "n/a"))     # 'n/a'  — supply a fallback
 ```
 
-### 5.2 Adding, updating, deleting
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5.2 Adding, Updating, Deleting}}$
 
 ```python
 person["email"] = "ada@example.com"   # add a new key (or overwrite if it exists)
@@ -65,7 +92,7 @@ removed = person.pop("city")           # remove AND return the value
 print("name" in person)                # True — membership tests the KEYS
 ```
 
-### 5.3 Looping over a dict
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5.3 Looping Over a Dict}}$
 
 ```python
 scores = {"math": 90, "art": 75}
@@ -80,7 +107,7 @@ print(list(scores.keys()))         # ['math', 'art']
 print(list(scores.values()))       # [90, 75]
 ```
 
-### 5.4 Nested Dictionaries & Real-Life Patterns (JSON, APIs, and setdefault)
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5.4 Nested Dictionaries and Real-Life Patterns (JSON, APIs, and setdefault)}}$
 
 Real-world Python and AI code rarely deals with flat dictionaries. API responses, database records, and LLM payloads are **nested dictionaries** containing lists and other dicts.
 
@@ -253,7 +280,7 @@ call_counts[tool_obj] += 1
 print(call_counts[tool_obj])               # 1
 ```
 
-### 5.5 Sets — unique, fast membership
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5.5 Sets — Unique, Fast Membership}}$
 
 A set is an unordered collection of unique, hashable items. Duplicates collapse automatically, and membership checks (`in`) run in $O(1)$ constant time.
 
@@ -491,7 +518,7 @@ print(frozen_doc_set)                      # {FrozenDoc(doc_id=101, text='Intro 
 
 **Why sets are fast:** checking `x in big_list` scans every item ($O(n)$); `x in big_set` jumps almost instantly ($O(1)$) regardless of size. For "have I seen this already?" checks, sets win.
 
-### 5.6 frozenset — the immutable set
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5.6 frozenset — The Immutable Set}}$
 
 Because a normal `set` is mutable (you can `.add()` or `.discard()` items), Python considers it
 **unhashable**. That means you **cannot** use a standard set as a dictionary key, nor can you put a
@@ -532,7 +559,9 @@ print(role_permissions[user_claims])       # 'Editor'
 groups = {frozenset([1, 2]), frozenset([3, 4])}
 ```
 
-## 🚀 Stage 3 — In Practice / Why It Matters
+![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
+
+## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 Dicts are the backbone of AI code: an LLM message is `{"role": "user", "content": "..."}`, API
 responses are nested dicts, configuration is a dict. Sets are perfect for deduplicating retrieved
@@ -554,7 +583,7 @@ function results where the lookup key is an unordered set of tags, filters, or p
 9. **Chaining `[]` on nested dictionaries** — `user["profile"]["theme"]` crashes with `KeyError` if `"profile"` is missing. Use safe chained navigation: `(user.get("profile") or {}).get("theme", "light")`.
 10. **Confusing `.get()` with `.setdefault()`** — `d.get("k", [])` only reads and returns `[]` without altering the dictionary; `d.setdefault("k", [])` actively inserts `"k": []` into `d`.
 
-### 🤖 Sneak Peek: How Sets Power AI Agents & LangGraph (Phase 3)
+### 🤖 $\color{#00838F}\blacktriangleright\space\color{#00695C}{\textsf{Sneak Peek: How Sets Power AI Agents and LangGraph (Phase 3)}}$
 
 1. **Cycle Detection & Visited State Tracking (`s.add()` / `in`):**
    In LangGraph workflows with conditional loops, agents can get caught in infinite reasoning loops.
@@ -571,7 +600,9 @@ Build a dict `inventory = {"apples": 3, "pears": 5}`. Safely print the count of 
 if absent, then add 2 bananas, then print all item→count pairs.
 Then create a `frozenset` of your favorite AI tools and test if `"python"` is inside.
 
-## ⚖️ Variations & When to Use (Dictionary & Set Efficiency Guide)
+![Variations](https://img.shields.io/badge/COMPARISON-VARIATIONS%20%26%20WHEN%20TO%20USE-00838F?style=for-the-badge&logo=scales&logoColor=white)
+
+## ⚖️ $\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use (Dictionary and Set Efficiency Guide)}}$
 
 ### Dictionary Operations
 
@@ -601,7 +632,9 @@ Then create a `frozenset` of your favorite AI tools and test if `"python"` is in
 | **Symmetric Diff** | `s1 ^ s2` | `s1.symmetric_difference(iter)` | ❌ New set | $O(n+m)$ | Items in either set, but **not in both** (exclusive items) | Detecting configuration drift between two agent versions |
 | **Membership** | `x in s` | — | ❌ Read-only | $O(1)$ | Checking presence in constant time | Fast duplicate check before invoking an expensive LLM |
 
-## 🐛 Common Errors & Fixes
+![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
+
+## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
 | What you see | Cause | Fix |
 | --- | --- | --- |
@@ -618,7 +651,9 @@ Then create a `frozenset` of your favorite AI tools and test if `"python"` is in
 | `TypeError: unsupported operand type(s) for &: 'set' and 'list'` | Operator used with non-set | Convert non-set to set (`s & set(lst)`) or use method `s.intersection(lst)` |
 | Loop gives keys, not values | `for x in d:` yields **keys** | Use `d.items()` (pairs) or `d.values()` |
 
-## 📌 Quick Reference
+![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
+
+## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
 ```python
 # Dicts — Lookup, Mutation & Merging
@@ -656,14 +691,24 @@ fs = frozenset([1, 2])             # valid dict key or set item
 # @dataclass(frozen=True) collapses duplicates in sets by value (default class hashes by id)
 ```
 
-## 🛑 STOP — Self-Check
+![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
+
+## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 
 Why might you choose `.get("age")` over `["age"]`, and what does each do when the key is missing?
 
-<details><summary>Answer</summary>
+<details>
+<summary><b>🔍 Click to Reveal the Answer</b></summary>
+
+<br/>
 
 Both read a value by key when it exists. The difference is the **missing-key behaviour**:
 `person["age"]` raises a **`KeyError`** (crashes) if `"age"` isn't there, while
 `person.get("age")` returns **`None`** (or a default you pass, e.g. `.get("age", 0)`). Use `.get`
 when a key is optional and you'd rather handle absence gracefully than crash.
+
+---
+
+🎉 **Lesson Complete!** Continue to the next lesson: [06 Control Flow →](06%20Control%20Flow.md)
+
 </details>

@@ -1,15 +1,26 @@
-# 08 — Comprehensions & Generators
+# $\Huge\color{#0D47A1}{\textsf{08 — Comprehensions and Generators}}$
 
-> Phase 0 · Module 0.1 · Lesson 8 of 16
+[![Python 3.12+](https://img.shields.io/badge/Python-3.12+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Curriculum](https://img.shields.io/badge/Roadmap-Phase%200.1-0288D1?style=for-the-badge&logo=compass&logoColor=white)](README.md)
+[![Priority](https://img.shields.io/badge/Priority-MUST%20KNOW-D32F2F?style=for-the-badge&logo=target&logoColor=white)](../../AI%20Engineer%20Architect%20Road%20Map.md)
+[![Status](https://img.shields.io/badge/Status-Foundational-2E7D32?style=for-the-badge&logo=checkmarx&logoColor=white)](#)
 
-## 🗺️ Stage 0 — Concept Map
+> $\color{#546E7A}\mathbf{Navigation:}$ **Phase 0** · **Module 0.1** · **Lesson 8 of 16** · [← Prev: 07 Functions](07%20Functions.md) · [Phase 0.1 — Python Index](README.md) · [Next: 09 Decorators and Closures →](09%20Decorators%20and%20Closures.md)
+
+---
+
+![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
+
+## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 You constantly need to **transform** one collection into another ("uppercase every word", "keep
 only the long sentences"). **Comprehensions** are Python's concise, idiomatic way to do this in one
 line. **Generators** do the same lazily — one item at a time — which is how you handle huge or
 streaming data (like tokens arriving from an LLM) without running out of memory.
 
-## 🔑 New Terms (plain English)
+![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
+
+## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
 
 - **Comprehension** — a concise, optimized syntactic construct to transform and filter iterables into lists, dicts, or sets in a single line.
 - **Execution order** — the internal evaluation sequence of a comprehension: `for` clause $\rightarrow$ `if` filter $\rightarrow$ left-most dynamic expression.
@@ -19,7 +30,9 @@ streaming data (like tokens arriving from an LLM) without running out of memory.
 - **Iterator** — anything you can step through with a `for` loop / `next()`.
 - **Lazy** — computed only when needed, not all upfront.
 
-## 🎈 Stage 1 — The Simple Idea (analogy: an assembly line)
+![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
+
+## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (analogy: an assembly line)}}$
 
 Imagine an assembly line: raw parts go in one end, each gets the same operation, finished parts
 come out the other. A **comprehension** is that line written compactly: *"give me `f(x)` for every
@@ -31,9 +44,17 @@ one** — nothing is built ahead of time, so it uses almost no memory.
 **The "Aha!":** comprehension = build the whole new list now; generator = produce items
 on-demand, one at a time.
 
-## ⚙️ Stage 2 — How It Actually Works
+![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
 
-### 8.1 List Comprehensions: Syntax, Execution Order & Advanced Patterns
+## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
+
+> [!IMPORTANT]
+> ### $\color{#00C853}{\textsf{🔥 The 80/20 Core Rule: What Matters in Production}}$
+> * $\color{#00C853}\blacktriangleright$ **Daily Core (90% of Real AI Work):** List comprehensions `[clean(x) for x in raw if is_valid(x)]` (concise, high-speed C-level data filtering), Dict comprehensions `{doc.id: doc for doc in docs}` (instant lookup index), and Generator expressions / `yield` functions for streaming LLM tokens and processing massive datasets with **$O(1)$ constant memory**.
+> * $\color{#FFB300}\blacktriangleright$ **Occasional (Set Filtering):** Set comprehensions `{chunk.source for chunk in chunks}`.
+> * $\color{#757575}\blacktriangleright$ **Reference Only (Exhaustive and Hard to Read):** Nested multi-for comprehensions (prefer standard nested loops for maintainability), generator coroutine methods (`.send()`, `.throw()`, `.close()`).
+
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{8.1 List Comprehensions: Syntax, Execution Order and Advanced Patterns}}$
 
 A **list comprehension** provides a concise, expressive, and optimized way to transform and filter one iterable into a new `list`. In CPython, list comprehensions are implemented in optimized C-bytecode (`LIST_APPEND`), making them noticeably faster than manual `for` loops with `.append()`.
 
@@ -224,7 +245,7 @@ probabilities = [score / total_sum for score in exp_scores]
 print([round(p, 4) for p in probabilities])  # [0.659, 0.2424, 0.0986]
 ```
 
-### 8.2 Dict and set comprehensions
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{8.2 Dict and set comprehensions}}$
 
 ```python
 # Dict comprehension: { key_expr: value_expr for ... }
@@ -235,7 +256,7 @@ doubled = {name: price * 2 for name, price in prices.items()}   # {'apple': 6, '
 lengths = {len(w) for w in ["hi", "hey", "yo"]}   # {2, 3}
 ```
 
-### 8.3 Generators — lazy sequences
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{8.3 Generators — lazy sequences}}$
 
 A **generator expression** looks like a list comprehension but with **parentheses**, and it
 produces values one at a time instead of building a list:
@@ -264,7 +285,7 @@ for x in count_up_to(3):
     print(x)             # 1, 2, 3
 ```
 
-### 8.4 Why lazy matters: memory
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{8.4 Why lazy matters: memory}}$
 
 ```python
 # A list of a billion squares would try to build ALL of them in memory (gigabytes) -> crash risk.
@@ -278,7 +299,9 @@ total = sum(squares)     # streams through them; constant memory
 **iterator** — anything you can step through with `next()` / a `for` loop. Generators are
 iterators you create easily; `for` loops quietly call `next()` until the items run out.
 
-## 🚀 Stage 3 — In Practice / Why It Matters
+![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
+
+## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 Comprehensions are the everyday way to clean and reshape data: `[chunk.strip() for chunk in chunks
 if chunk]`. Generators are how you process a 10 GB file line by line, or stream an LLM's response
@@ -299,7 +322,9 @@ build in Phase 1.
 From `words = ["  Ada ", "", "Bo  ", "   "]`, use one comprehension to produce a clean list of
 non-empty, stripped names: `["Ada", "Bo"]`.
 
-## ⚖️ Variations & When to Use
+![Variations](https://img.shields.io/badge/COMPARISON-VARIATIONS%20%26%20WHEN%20TO%20USE-00838F?style=for-the-badge&logo=scales&logoColor=white)
+
+## ⚖️ $\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use}}$
 
 | Construct | Syntax | ✅ When to Use | 🚫 Avoid When | Production AI Example |
 | :--- | :--- | :--- | :--- | :--- |
@@ -308,7 +333,9 @@ non-empty, stripped names: `["Ada", "Bo"]`.
 | **Traditional `for` Loop** | `for x in data: ...` | Complex multi-step mutations, early `break`/`continue`, error handling | Simple 1-line mapping or filtering (unnecessarily verbose) | Agent step-by-step reasoning cycle |
 | **`map()` / `filter()`** | `map(func, data)` | Passing pre-existing functions without writing a lambda | Writing inline expressions (comprehensions are cleaner) | Functional pipelines |
 
-## 🐛 Common Errors & Fixes
+![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
+
+## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
 | What you see | Cause | Fix |
 | --- | --- | --- |
@@ -319,7 +346,9 @@ non-empty, stripped names: `["Ada", "Bo"]`.
 | Pipeline hangs / slow latency | Called synchronous network/LLM API inside a comprehension | Comprehensions are sequential; use `asyncio.gather` for concurrent API calls |
 | Comprehension is unreadable | Crammed too much logic into one line | Refactor into a helper function or write a standard `for` loop |
 
-## 📌 Quick Reference
+![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
+
+## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
 ```python
 [x * x for x in nums]                 # list comprehension
@@ -331,15 +360,25 @@ def gen():
     yield 2                           # generator function
 ```
 
-## 🛑 STOP — Self-Check
+![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
+
+## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 
 What's the key difference between `squares = [n*n for n in range(5)]` and
 `squares = (n*n for n in range(5))`, and when would you prefer the second?
 
-<details><summary>Answer</summary>
+<details>
+<summary><b>🔍 Click to Reveal the Answer</b></summary>
+
+<br/>
 
 `[ ... ]` builds a **list** — all 5 values computed and stored immediately. `( ... )` builds a
 **generator** — values are produced **lazily**, one at a time, only as you consume them. Prefer the
 generator when the sequence is **large or streaming** (to save memory) or when you'll consume items
 one-by-one and don't need them all stored at once — e.g. streaming tokens or reading a huge file.
+
+---
+
+🎉 **Lesson Complete!** Continue to the next lesson: [09 Decorators and Closures →](09%20Decorators%20and%20Closures.md)
+
 </details>

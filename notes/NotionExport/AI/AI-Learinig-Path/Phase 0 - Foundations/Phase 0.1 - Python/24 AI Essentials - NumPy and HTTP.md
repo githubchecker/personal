@@ -1,15 +1,26 @@
-# 24 — AI Essentials: NumPy & HTTP
+# $\Huge\color{#0D47A1}{\textsf{24 — AI Essentials: NumPy and HTTP}}$
 
-> Phase 0 · Module 0.1 · Lesson 24 of 25
+[![Python 3.12+](https://img.shields.io/badge/Python-3.12+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Curriculum](https://img.shields.io/badge/Roadmap-Phase%200.1-0288D1?style=for-the-badge&logo=compass&logoColor=white)](README.md)
+[![Priority](https://img.shields.io/badge/Priority-MUST%20KNOW-D32F2F?style=for-the-badge&logo=target&logoColor=white)](../../AI%20Engineer%20Architect%20Road%20Map.md)
+[![Status](https://img.shields.io/badge/Status-Foundational-2E7D32?style=for-the-badge&logo=checkmarx&logoColor=white)](#)
 
-## 🗺️ Stage 0 — Concept Map
+> $\color{#546E7A}\mathbf{Navigation:}$ **Phase 0** · **Module 0.1** · **Lesson 24 of 25** · [← Prev: 23 Concurrency](23%20Concurrency.md) · [Phase 0.1 — Python Index](README.md) · [Next: 25 Milestone - Typed API CLI →](25%20Milestone%20-%20Typed%20API%20CLI.md)
+
+---
+
+![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
+
+## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 Two libraries appear in almost every AI program and bridge "plain Python" to "AI work":
 **NumPy** (fast numerical arrays — the foundation under embeddings and tensors) and an **HTTP
 client** (`httpx`/`requests` — how you call model APIs). This lesson gives you working comfort with
 both, completing the language groundwork before the milestone.
 
-## 🎈 Stage 1 — The Simple Idea
+![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
+
+## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea }}$
 
 - **NumPy** turns lists of numbers into a high-speed **array** that does math on the *whole array at
   once* (called **vectorization**) — like applying an operation to every cell of a spreadsheet in a
@@ -26,9 +37,19 @@ web request. These two tools are how those ideas become code.
 > [AI Terms glossary](../../AI%20Terms%20-%20Plain%20English%20Glossary.md); each term below is also
 > defined the first time it appears.
 
-## ⚙️ Stage 2 — How It Actually Works
+![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
 
-### 15.1 NumPy basics
+## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
+
+> [!IMPORTANT]
+> ### $\color{#00C853}{\textsf{🔥 The 80/20 Core Rule: What Matters in Production}}$
+> * $\color{#00C853}\blacktriangleright$ **Daily Core (90% of Real AI Work):**
+>   - **NumPy:** `np.array()`, checking `.shape`, matrix multiplication / dot product `@` or `np.dot()` for vector cosine similarity in RAG embeddings.
+>   - **HTTP:** `httpx.post()` / `requests.post()` with headers (`Authorization: Bearer <key>`) and JSON payloads (`{"model": ..., "messages": [...]}`), checking status with `resp.raise_for_status()`, and parsing response JSON (`resp.json()`).
+> * $\color{#FFB300}\blacktriangleright$ **Occasional (Data Shaping and Streams):** NumPy broadcasting rules, `.reshape()`, `np.zeros()`, `np.ones()`, HTTP streaming responses (`httpx.stream()`) for SSE token streaming.
+> * $\color{#757575}\blacktriangleright$ **Reference Only (Exhaustive):** Advanced multidimensional slicing, NumPy memory strides, custom HTTP connection adapters and proxies.
+
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{15.1 NumPy basics}}$
 
 Install: `pip install numpy`.
 
@@ -48,7 +69,7 @@ print(a + a)                       # [2 4 6]
 print(a.mean(), a.sum(), a.max())  # 2.0 6 3
 ```
 
-### 15.2 Why NumPy matters: cosine similarity by hand
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{15.2 Why NumPy matters: cosine similarity by hand}}$
 
 Three plain-English ideas this builds on (also in the
 [glossary](../../AI%20Terms%20-%20Plain%20English%20Glossary.md)):
@@ -88,7 +109,7 @@ keywords. Two more terms this unlocks:
 
 That retrieve-then-answer loop is the backbone of Phase 2 — and you've just hand-built its engine.
 
-### 15.3 Calling an API — synchronous (`requests`)
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{15.3 Calling an API — synchronous (requests)}}$
 
 Install: `pip install requests`.
 
@@ -111,7 +132,7 @@ resp = requests.post(
 print(resp.json()["json"])     # {'name': 'Ada'}
 ```
 
-### 15.4 Calling an API — asynchronous (`httpx`)
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{15.4 Calling an API — asynchronous (httpx)}}$
 
 Install: `pip install httpx`. Same shape, but `await`-able so you can overlap many calls (Lesson 23).
 
@@ -132,7 +153,7 @@ async def main():
 asyncio.run(main())
 ```
 
-### 15.5 Secrets via environment variables (never hardcode)
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{15.5 Secrets via environment variables (never hardcode)}}$
 
 ```python
 import os
@@ -142,7 +163,9 @@ if not api_key:
 # headers = {"Authorization": f"Bearer {api_key}"}
 ```
 
-## 🚀 Stage 3 — In Practice / Why It Matters
+![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
+
+## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 The OpenAI SDK is a polished wrapper around exactly these HTTP calls; embeddings you'll store and
 compare are NumPy arrays; the cosine-similarity function above is the literal heart of RAG (Phase
@@ -160,7 +183,9 @@ compare are NumPy arrays; the cosine-similarity function above is the literal he
 Use `requests.get` to fetch `https://jsonplaceholder.typicode.com/todos/2`, check the status is
 `200`, and print the `title`. Then compute the cosine similarity between `[1,0,1]` and `[1,1,1]`.
 
-## 🐛 Common Errors & Fixes
+![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
+
+## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
 | What you see | Cause | Fix |
 | --- | --- | --- |
@@ -170,7 +195,9 @@ Use `requests.get` to fetch `https://jsonplaceholder.typicode.com/todos/2`, chec
 | Array maths is very slow | Looping in pure Python | Vectorize — operate on the whole NumPy array |
 | `JSONDecodeError` on `.json()` | Response wasn't the JSON you expected | Inspect the body; handle the error |
 
-## 📌 Quick Reference
+![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
+
+## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
 ```python
 import numpy as np
@@ -182,12 +209,17 @@ import httpx                                   # async version
 # async with httpx.AsyncClient() as c: await c.get(url)
 ```
 
-## 🛑 STOP — Self-Check
+![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
+
+## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 
 Why do AI libraries represent embeddings as **NumPy arrays** rather than plain Python lists, and
 why should every API call include a `timeout`?
 
-<details><summary>Answer</summary>
+<details>
+<summary><b>🔍 Click to Reveal the Answer</b></summary>
+
+<br/>
 
 **NumPy arrays** support **vectorized** math — operating on the entire array of numbers at once in
 fast, optimised code — which is essential for the large numeric workloads (dot products, norms,

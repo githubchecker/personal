@@ -83,6 +83,12 @@ A **$\color{#2E7D32}{\textsf{virtual environment}}$** is a dedicated, self-conta
 
 ## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
 
+> [!IMPORTANT]
+> ### $\color{#00C853}{\textsf{🔥 The 80/20 Core Rule: What Matters in Production}}$
+> * $\color{#00C853}\blacktriangleright$ **Daily Core (90% of Real AI Work):** Always isolate projects with a virtual environment (`python -m venv .venv`), activate it (`.venv/Scripts/Activate.ps1`), install dependencies (`pip install <package>`), and run via your environment's interpreter (`.venv/Scripts/python.exe main.py`).
+> * $\color{#FFB300}\blacktriangleright$ **Occasional (Setup and CI/CD Pipelines):** Managing multiple Python versions via `pyenv-win`, freezing dependencies with `pip freeze > requirements.txt`, selecting interpreter in VS Code (<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>).
+> * $\color{#757575}\blacktriangleright$ **Reference Only (Under the Hood):** Bytecode `.pyc` cache mechanics, manual PATH registry editing, compiling C-extensions from source.
+
 ### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1.1 What Happens When You Run a Program}}$
 
 ```mermaid
@@ -426,11 +432,11 @@ In production AI development, virtual environment hygiene is the difference betw
 
 ## ⚖️ $\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use}}$
 
-| $\color{#0D47A1}\textsf{\textbf{Tool}}$ | $\color{#00695C}\textsf{\textbf{What It Is}}$ | $\color{#2E7D32}\textsf{\textbf{✅ When to Use It}}$ | $\color{#D32F2F}\textsf{\textbf{🚫 When to Avoid It}}$ |
-| :--- | :--- | :--- | :--- |
-| **`venv`** | Python built-in standard library tool | **$\color{#2E7D32}{\textsf{Default for 95 percent of projects.}}$** Zero installation required, standard in all tutorials and production pipelines. | When you need to manage multiple different Python engine versions (e.g., Python 3.10 vs 3.12). |
-| **`uv`** | Modern ultra-fast package manager written in Rust | Large projects with complex dependencies where `pip install` is slow. Installs packages in milliseconds. | When keeping your environment minimal with zero external tool dependencies. |
-| **`conda`** | Multi-language environment & package manager | Heavy data science projects requiring complex non-Python C/Fortran/CUDA system libraries outside Python. | Standard web APIs, microservices, and general Python development (it is heavy and slow). |
+| $\color{#0D47A1}\textsf{\textbf{Tool}}$ | $\color{#00C853}\textsf{\textbf{Production Priority}}$ | $\color{#00695C}\textsf{\textbf{What It Is}}$ | $\color{#2E7D32}\textsf{\textbf{✅ When to Use It}}$ | $\color{#D32F2F}\textsf{\textbf{🚫 When to Avoid It}}$ |
+| :--- | :---: | :--- | :--- | :--- |
+| **`venv`** | `🟢 Core (Daily Default)` | Python built-in standard library tool | **$\color{#2E7D32}{\textsf{Default for 95 percent of projects.}}$** Zero installation required, standard in all tutorials and production pipelines. | When you need to manage multiple different Python engine versions (e.g., Python 3.10 vs 3.12). |
+| **`uv`** | `🟡 Occasional (Modern Speed)` | Modern ultra-fast package manager written in Rust | Large projects with complex dependencies where `pip install` is slow. Installs packages in milliseconds. | When keeping your environment minimal with zero external tool dependencies. |
+| **`conda`** | `⚪ Reference (Legacy / C-Heavy)` | Multi-language environment and package manager | Heavy data science projects requiring complex non-Python C/Fortran/CUDA system libraries outside Python. | Standard web APIs, microservices, and general Python development (it is heavy and slow). |
 
 ---
 

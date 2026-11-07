@@ -1,10 +1,17 @@
-# 12 — Object-Oriented Programming (OOP)
+# $\Huge\color{#0D47A1}{\textsf{12 — Object-Oriented Programming (OOP)}}$
 
-> Phase 0 · Module 0.1 · Lesson 12 of 16
+[![Python 3.12+](https://img.shields.io/badge/Python-3.12+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Curriculum](https://img.shields.io/badge/Roadmap-Phase%200.1-0288D1?style=for-the-badge&logo=compass&logoColor=white)](README.md)
+[![Priority](https://img.shields.io/badge/Priority-MUST%20KNOW-D32F2F?style=for-the-badge&logo=target&logoColor=white)](../../AI%20Engineer%20Architect%20Road%20Map.md)
+[![Status](https://img.shields.io/badge/Status-Foundational-2E7D32?style=for-the-badge&logo=checkmarx&logoColor=white)](#)
+
+> $\color{#546E7A}\mathbf{Navigation:}$ **Phase 0** · **Module 0.1** · **Lesson 12 of 16** · [← Prev: 11 Modules, Packages and Files](11%20Modules%20Packages%20and%20Files.md) · [Phase 0.1 — Python Index](README.md) · [Next: 12.1 Classes and Object Lifecycle →](12.1%20Classes%20and%20Object%20Lifecycle.md)
 
 ---
 
-## 🗺️ Stage 0 — Concept Map
+![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
+
+## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 So far you've used data (lists, dicts) and behaviour (functions) separately. **OOP** bundles them together: a **class** packages related data *and* the functions that work on it into one reusable type. You'll mostly *use* classes that libraries provide (a `SentenceTransformer`, an `OpenAI` client, a Pydantic `BaseModel`), so understanding how they work makes every library click.
 
@@ -59,11 +66,21 @@ This lesson is split into **6 focused sub-modules**. Work through them in order 
 
 ---
 
-## 🎈 Stage 1 — The Simple Idea
+![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
+
+## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea }}$
 
 A **class** is a cookie cutter — a blueprint that defines a shape. An **object** (or **instance**) is an actual cookie stamped from it. One cutter, many cookies, each with its own decorations. The class says *what every dog has* (a name, a `bark()` ability); each dog object fills in its own details.
 
 > **The "Aha!":** a class defines a new **type** that carries both **state** (its data, called attributes) and **behaviour** (its functions, called methods) together.
+
+---
+
+> [!IMPORTANT]
+> ### $\color{#00C853}{\textsf{🔥 The 80/20 Core Rule: What Matters in Production}}$
+> * $\color{#00C853}\blacktriangleright$ **Daily Core (90% of Real AI Work):** Encapsulating state in classes (`class DocumentChunker:`), `__init__`, `self`, `@property` for clean computed attributes, `@classmethod` for factory constructors (`LLMClient.from_env()`), Pydantic models for structured schema validation, and essential dunders (`__repr__`, `__call__`).
+> * $\color{#FFB300}\blacktriangleright$ **Occasional (Framework Integration):** Subclassing base classes (`class CustomEmbedding(BaseEmbedding):`), `__enter__` and `__exit__` for custom context managers, `@abstractmethod`.
+> * $\color{#757575}\blacktriangleright$ **Reference Only (Exhaustive and Metaprogramming):** Metaclasses (`type`), `__slots__`, multiple inheritance diamond resolution (MRO C3 linearization), arithmetic operator overloading (`__add__`, `__matmul__`).
 
 ---
 
@@ -144,11 +161,16 @@ class Embedder(Protocol):
 
 ---
 
-## 🛑 STOP — Self-Check
+![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
+
+## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 
 In `rex = Dog("Rex", 3)`, what does `__init__` do, and what is `self` inside it?
 
-<details><summary>Answer</summary>
+<details>
+<summary><b>🔍 Click to Reveal the Answer</b></summary>
+
+<br/>
 
 `__init__` is the **initializer** — it runs automatically when the instance is created, setting up the object's initial data (here, storing `name="Rex"` and `age=3`). Inside it, **`self` is the specific new object being created** (the one that will be called `rex`); assigning `self.name = name` attaches that data to *this* instance, separate from any other `Dog`.
 

@@ -1,10 +1,17 @@
-# 14 — Advanced Python
+# $\Huge\color{#0D47A1}{\textsf{14 — Advanced Python}}$
 
-> Phase 0 · Module 0.1 · Lesson 14 of 25
+[![Python 3.12+](https://img.shields.io/badge/Python-3.12+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Curriculum](https://img.shields.io/badge/Roadmap-Phase%200.1-0288D1?style=for-the-badge&logo=compass&logoColor=white)](README.md)
+[![Priority](https://img.shields.io/badge/Priority-MUST%20KNOW-D32F2F?style=for-the-badge&logo=target&logoColor=white)](../../AI%20Engineer%20Architect%20Road%20Map.md)
+[![Status](https://img.shields.io/badge/Status-Foundational-2E7D32?style=for-the-badge&logo=checkmarx&logoColor=white)](#)
+
+> $\color{#546E7A}\mathbf{Navigation:}$ **Phase 0** · **Module 0.1** · **Lesson 14 of 25** · [← Prev: 13 Built-in Functions in Depth](13%20Built-in%20Functions%20in%20Depth.md) · [Phase 0.1 — Python Index](README.md) · [Next: 22 Type Hints and Pydantic →](22%20Type%20Hints%20and%20Pydantic.md)
 
 ---
 
-## 🗺️ Stage 0 — Concept Map
+![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
+
+## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 Basic Python gives you functions, loops, dictionaries, and classes. With those, you can write working scripts. But when you build **production AI pipelines, high-throughput retrieval systems (RAG), and autonomous agent networks**, standard patterns quickly hit hard engineering ceilings:
 
@@ -26,7 +33,9 @@ Basic Python gives you functions, loops, dictionaries, and classes. With those, 
 
 ---
 
-## 🔑 New Terms (plain English)
+![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
+
+## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
 
 - **Walrus Operator (`:=`)** — Assignment expression syntax that assigns a value to a variable *inside* an expression (e.g. inside an `if` or `while` condition) and evaluates it simultaneously.
 - **Generator Delegation (`yield from`)** — Passing control transparently from one generator to an inner sub-generator, streaming items without writing nested loops.
@@ -44,7 +53,9 @@ Basic Python gives you functions, loops, dictionaries, and classes. With those, 
 
 ---
 
-## 🎈 Stage 1 — The Simple Idea (Analogy: The High-Performance Racing Workshop)
+![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
+
+## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (Analogy: The High-Performance Racing Workshop)}}$
 
 Imagine you own a standard family sedan:
 - It has cup holders, glove compartments, power seats, and a plush carpet. It is comfortable and forgiving.
@@ -62,11 +73,19 @@ Advanced Python is not about writing obscure, clever code. It is about **taking 
 
 ---
 
-## ⚙️ Stage 2 — How It Actually Works
+![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
+
+## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
+
+> [!IMPORTANT]
+> ### $\color{#00C853}{\textsf{🔥 The 80/20 Core Rule: What Matters in Production}}$
+> * $\color{#00C853}\blacktriangleright$ **Daily Core (90% of Real AI Work):** Custom context managers (`with` statements via `@contextlib.contextmanager` for socket/database/GPU cleanup), `collections.defaultdict` (grouping tokens/documents), `collections.Counter` (word/token frequency counts), and modern type hints.
+> * $\color{#FFB300}\blacktriangleright$ **Occasional (Optimization and Utilities):** `itertools.chain` (combining large iterables without memory copy), `itertools.islice`, `@functools.lru_cache(maxsize=128)` (caching expensive embedding or tokenizer calls), and `@dataclass`.
+> * $\color{#757575}\blacktriangleright$ **Reference Only (Metaprogramming and Low-Level):** Custom descriptors (`__get__`, `__set__`), class creation metaprogramming via `__init_subclass__`, and AST tree parsing.
 
 ---
 
-### 14.1 Assignment Expressions: The Walrus Operator (`:=`)
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.1 Assignment Expressions: The Walrus Operator (:=)}}$
 
 Introduced in Python 3.8, the **walrus operator (`:=`)** assigns a value to a variable *inside an expression* while simultaneously returning that value.
 
@@ -128,7 +147,7 @@ print("Filtered Chunks:", relevant_scores)
 
 ---
 
-### 14.2 Advanced Iteration & Generators (`yield from` & `itertools`)
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.2 Advanced Iteration and Generators (yield from and itertools)}}$
 
 *(Cross-reference: [08 Comprehensions & Generators](08%20Comprehensions%20and%20Generators.md) covered basic `yield`).*
 
@@ -190,7 +209,7 @@ print("First three IDs:", first_three)  # ['ID_1', 'ID_2', 'ID_3']
 
 ---
 
-### 14.3 Memory Management, `del`, and Slotted Optimization
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.3 Memory Management, del, and Slotted Optimization}}$
 
 #### 1. Slashing RAM Overhead with `__slots__`
 By default, Python objects are dynamic. To allow you to add new attributes at any time (`obj.new_field = 10`), Python equips **every single instance** with a hidden dictionary called `__dict__`.
@@ -282,7 +301,7 @@ print("In Cache after deletion:", "report" in doc_cache)  # False
 
 ---
 
-### 14.4 Performance Timing & Profiling (`time.perf_counter`, `timeit`, `cProfile`)
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.4 Performance Timing and Profiling (time.perf_counter, timeit, cProfile)}}$
 
 In AI engineering, measuring token latency, time-to-first-token (TTFT), and embedding throughput is a core architectural responsibility.
 
@@ -346,7 +365,7 @@ stats.print_stats(3)
 
 ---
 
-### 14.5 Memoization & Advanced Decorators (`@lru_cache`, Parametrized `@retry`)
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.5 Memoization and Advanced Decorators (@lru_cache, Parametrized @retry)}}$
 
 *(Cross-reference: [09 Decorators & Closures](09%20Decorators%20and%20Closures.md) introduced basic decorators).*
 
@@ -421,7 +440,7 @@ print(fetch_openai_completion("Explain attention"))
 
 ---
 
-### 14.6 Advanced Context Managers (`contextlib`)
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.6 Advanced Context Managers (contextlib)}}$
 
 Context managers manage the life cycle of resources using the `with` statement. They ensure that **setup** and **teardown** logic executes with 100% reliability.
 
@@ -470,7 +489,7 @@ with ExitStack() as stack:
 
 ---
 
-### 14.7 Structural Pattern Matching (`match / case` — Python 3.10+)
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.7 Structural Pattern Matching (match / case — Python 3.10+)}}$
 
 In Python 3.10+, `match/case` is a full **destructuring pattern engine**. It matches the *structure*, *types*, and *values* of complex objects simultaneously.
 
@@ -501,7 +520,7 @@ dispatch_ai_payload({"error": "Gateway Timeout", "code": 504})
 
 ---
 
-### 14.8 Defensive Assertions (`assert`) & Production Guardrails
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.8 Defensive Assertions (assert) and Production Guardrails}}$
 
 The `assert` statement tests an internal condition: `assert condition, "optional error message"`. If the condition is `False`, Python immediately raises `AssertionError`.
 
@@ -536,7 +555,7 @@ def charge_customer_safe(user_balance: float, cost: float):
 
 ---
 
-### 14.9 Dynamic Metaprogramming & Monkey Patching
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.9 Dynamic Metaprogramming and Monkey Patching}}$
 
 #### 1. Dynamic Attribute Fallback: `__getattr__`
 `__getattr__` is called **only when an attribute does NOT exist** on an object. This allows you to build transparent fallback wrappers and dynamic proxies:
@@ -609,7 +628,7 @@ OpenAIClient.get_completion = original_method
 
 ---
 
-### 14.10 Enterprise Custom Exception Hierarchies for AI Platforms
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.10 Enterprise Custom Exception Hierarchies for AI Platforms}}$
 
 *(Cross-reference: [10 Error Handling](10%20Error%20Handling.md) introduced custom exceptions).*
 
@@ -656,7 +675,9 @@ except AIPlatformError as e:
 
 ---
 
-## 🚀 Stage 3 — In Practice / Why It Matters
+![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
+
+## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 In modern AI engineering, these advanced patterns combine to form the architecture of high-throughput RAG and Agent services:
 
@@ -695,7 +716,9 @@ In modern AI engineering, these advanced patterns combine to form the architectu
 
 ---
 
-## ⚖️ Variations & When to Use
+![Variations](https://img.shields.io/badge/COMPARISON-VARIATIONS%20%26%20WHEN%20TO%20USE-00838F?style=for-the-badge&logo=scales&logoColor=white)
+
+## ⚖️ $\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use}}$
 
 | Technique | Syntax | ✅ When to Use | 🚫 Avoid When | AI Architectural Trade-off |
 | :--- | :--- | :--- | :--- | :--- |
@@ -711,7 +734,9 @@ In modern AI engineering, these advanced patterns combine to form the architectu
 
 ---
 
-## 🐛 Common Errors & Fixes
+![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
+
+## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
 | What you see | Cause | Fix |
 | :--- | :--- | :--- |
@@ -723,7 +748,9 @@ In modern AI engineering, these advanced patterns combine to form the architectu
 
 ---
 
-## 📌 Quick Reference
+![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
+
+## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
 ```python
 # 1. Walrus Operator & Streaming
@@ -757,7 +784,9 @@ assert tensor.shape == (32, 768), "Shape mismatch"  # Internal invariant only!
 
 ---
 
-## 🛑 STOP — Self-Check
+![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
+
+## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 
 Look at the following snippet. What happens when this code is executed with `python -O script.py`?
 
@@ -769,7 +798,10 @@ def validate_and_stream(api_key: str, prompt: str):
         print(token, end="")
 ```
 
-<details><summary>Answer</summary>
+<details>
+<summary><b>🔍 Click to Reveal the Answer</b></summary>
+
+<br/>
 
 1. **The `assert` check is completely stripped and skipped:**
    When running Python with the `-O` (optimized) flag, Python's bytecode compiler removes all `assert` statements. If a caller passes an empty `api_key=""`, the assertion will **never fire**, exposing your service to unauthenticated requests!

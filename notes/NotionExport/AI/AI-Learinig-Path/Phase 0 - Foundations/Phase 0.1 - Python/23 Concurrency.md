@@ -1,15 +1,26 @@
-# 23 — Concurrency: Async, Threads & Processes
+# $\Huge\color{#0D47A1}{\textsf{23 — Concurrency: Async, Threads and Processes}}$
 
-> Phase 0 · Module 0.1 · Lesson 23 of 25
+[![Python 3.12+](https://img.shields.io/badge/Python-3.12+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Curriculum](https://img.shields.io/badge/Roadmap-Phase%200.1-0288D1?style=for-the-badge&logo=compass&logoColor=white)](README.md)
+[![Priority](https://img.shields.io/badge/Priority-MUST%20KNOW-D32F2F?style=for-the-badge&logo=target&logoColor=white)](../../AI%20Engineer%20Architect%20Road%20Map.md)
+[![Status](https://img.shields.io/badge/Status-Foundational-2E7D32?style=for-the-badge&logo=checkmarx&logoColor=white)](#)
 
-## 🗺️ Stage 0 — Concept Map
+> $\color{#546E7A}\mathbf{Navigation:}$ **Phase 0** · **Module 0.1** · **Lesson 23 of 25** · [← Prev: 22 Type Hints and Pydantic](22%20Type%20Hints%20and%20Pydantic.md) · [Phase 0.1 — Python Index](README.md) · [Next: 24 AI Essentials - NumPy and HTTP →](24%20AI%20Essentials%20-%20NumPy%20and%20HTTP.md)
+
+---
+
+![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
+
+## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 AI programs spend most of their time **waiting** on networks (LLM APIs, databases). Doing one slow
 call at a time wastes that waiting. **Concurrency** lets a program make progress on many things at
 once. This lesson covers Python's three approaches — **async**, **threads**, **processes** — and,
 crucially, *when to use each*. It's the capstone of the language module.
 
-## 🔑 New Terms (plain English)
+![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
+
+## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
 
 - **Concurrency** — making progress on many tasks by overlapping their waiting.
 - **Coroutine** — an `async def` function that can pause at `await`.
@@ -17,7 +28,9 @@ crucially, *when to use each*. It's the capstone of the language module.
 - **GIL** — the rule that only one thread runs Python code at a time.
 - **I/O-bound vs CPU-bound** — waiting on network/disk vs heavy computation.
 
-## 🎈 Stage 1 — The Simple Idea (analogy: one smart waiter vs. many cooks)
+![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
+
+## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (analogy: one smart waiter vs. many cooks)}}$
 
 - **Async (one smart waiter):** a single worker who, while one table's food cooks, goes and serves
   other tables instead of standing idle. Perfect when the work is mostly **waiting**.
@@ -30,16 +43,24 @@ crucially, *when to use each*. It's the capstone of the language module.
 **The "Aha!":** match the tool to the bottleneck. **Waiting on I/O → async (or threads). Heavy
 computation → processes.**
 
-## ⚙️ Stage 2 — How It Actually Works
+![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
 
-### 14.1 The GIL (one microphone)
+## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
+
+> [!IMPORTANT]
+> ### $\color{#00C853}{\textsf{🔥 The 80/20 Core Rule: What Matters in Production}}$
+> * $\color{#00C853}\blacktriangleright$ **Daily Core (90% of Real AI Work):** `asyncio` for I/O-bound tasks (concurrent LLM API calls, embedding fetches, web scraping), `async def`, `await`, `asyncio.gather(*tasks)` for parallel execution, and `ThreadPoolExecutor` for running legacy blocking calls without stalling the async event loop.
+> * $\color{#FFB300}\blacktriangleright$ **Occasional (CPU Heavy and Rate Limiting):** `multiprocessing` for CPU-bound tasks (tokenization, local vector embeddings), `asyncio.Semaphore(max_concurrent)` for preventing 429 rate limit errors from API providers.
+> * $\color{#757575}\blacktriangleright$ **Reference Only (Exhaustive and Low-Level):** `asyncio.Queue`, `asyncio.Lock`, manual `threading.Thread` lifecycle management, process IPC pipes.
+
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.1 The GIL (one microphone)}}$
 
 The **GIL (Global Interpreter Lock)** is a rule in standard Python: only **one thread runs Python
 code at a time** — like a room with a single microphone. This means threads don't speed up pure
 Python *computation*. But while a thread **waits** on I/O, it drops the microphone, so other work
 proceeds — which is why waiting-heavy work *can* still benefit.
 
-### 14.2 Async — `async` / `await` (the main one for AI)
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.2 Async — async / await (the main one for AI)}}$
 
 ```python
 import asyncio
@@ -74,7 +95,7 @@ The waits **overlap**, so three 2-second calls finish in ~2 seconds. Key pieces:
 # async for chunk in stream: ...   # e.g. consuming a streamed LLM response
 ```
 
-### 14.3 Threads — for blocking I/O you can't await
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.3 Threads — for blocking I/O you can't await}}$
 
 ```python
 from concurrent.futures import ThreadPoolExecutor
@@ -90,7 +111,7 @@ with ThreadPoolExecutor(max_workers=3) as pool:   # run several at once
 
 Use threads when a library is **blocking** (no `async` version) but the work is I/O-bound.
 
-### 14.4 Processes — for CPU-bound work
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.4 Processes — for CPU-bound work}}$
 
 ```python
 from concurrent.futures import ProcessPoolExecutor
@@ -105,7 +126,7 @@ with ProcessPoolExecutor() as pool:   # separate processes -> real parallel CPU 
 Each process has its **own** Python interpreter and GIL, so they truly run in parallel across CPU
 cores — the right tool for number-crunching that isn't already handled by a library like NumPy.
 
-### 14.5 Choosing — the decision rule
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.5 Choosing — the decision rule}}$
 
 | Bottleneck | Best tool | Example |
 |---|---|---|
@@ -113,7 +134,9 @@ cores — the right tool for number-crunching that isn't already handled by a li
 | Heavy pure-Python computation (CPU-bound) | **processes** | parsing/processing millions of rows |
 | Heavy math on arrays | a library (NumPy/PyTorch) | embeddings, tensors (Lesson 15 / Module 0.2) |
 
-## 🚀 Stage 3 — In Practice / Why It Matters
+![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
+
+## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 AI servers are overwhelmingly I/O-bound — they wait on model APIs — so **async is the default** in
 the AI Python world (the OpenAI SDK, `httpx`, FastAPI all offer `async`). You'll use `asyncio.gather`
@@ -132,7 +155,9 @@ to fan out many model/tool calls in Phase 1 and Phase 3, collapsing total latenc
 Rewrite three sequential `await asyncio.sleep(1)` calls so they run concurrently and finish in ~1
 second instead of ~3.
 
-## 🐛 Common Errors & Fixes
+![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
+
+## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
 | What you see | Cause | Fix |
 | --- | --- | --- |
@@ -141,7 +166,9 @@ second instead of ~3.
 | Threads don't speed up the maths | The GIL serialises CPU work | Use `multiprocessing` for CPU-bound work |
 | `RuntimeWarning: coroutine '...' was never awaited` | Called a coroutine without `await` | `await` it, or run via `asyncio.run(...)` |
 
-## 📌 Quick Reference
+![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
+
+## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
 ```python
 import asyncio
@@ -153,12 +180,17 @@ asyncio.run(main())
 # heavy math -> a library (NumPy / PyTorch)
 ```
 
-## 🛑 STOP — Self-Check
+![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
+
+## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 
 You must call 50 LLM API endpoints (each ~1s of waiting). Which concurrency tool fits best, and why
 *not* the others?
 
-<details><summary>Answer</summary>
+<details>
+<summary><b>🔍 Click to Reveal the Answer</b></summary>
+
+<br/>
 
 **Async** (`asyncio.gather`) fits best: the work is **I/O-bound** (waiting on the network), so a
 single event loop can overlap all 50 waits and finish in roughly the time of the slowest call. The
