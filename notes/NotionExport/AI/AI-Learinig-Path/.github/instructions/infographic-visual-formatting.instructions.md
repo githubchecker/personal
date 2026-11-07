@@ -80,14 +80,16 @@ Use KaTeX math formulas within Markdown headers. Always wrap title text in `\tex
 ```
 
 > [!CAUTION]
-> ### 🛑 GitHub KaTeX Sanitizer Rules (CRITICAL GOTCHA)
+> ### 🛑 GitHub KaTeX Sanitizer Rules (CRITICAL GOTCHAS)
 > 1. **NEVER use `&` or `\&` inside math blocks (`$...$` or `$$...$$`):**  
 >    GitHub's markdown pre-processor converts `&` into `&amp;` *before* KaTeX runs. KaTeX chokes on the `&` in `&amp;` and displays a fatal red error box: `'&' can not be used here`. **Always use the plain English word `and` instead of `&` inside all KaTeX blocks.**
-> 2. **Avoid `%` and `_` inside math text:**  
+> 2. **NEVER use math inside HTML tags (like `<summary>...</summary>`):**  
+>    GitHub treats raw HTML elements literally and does NOT parse math inside `<summary>`, `<details>`, `<div>`, or `<span>`. Putting `$\color{...}$` inside `<summary>` prints the raw unrendered LaTeX string. Keep `<summary>` in clean bold Markdown (e.g., `<summary><b>🔍 Click to Reveal...</b></summary>`), and place KaTeX inside the dropdown body after a blank line.
+> 3. **Avoid `%` and `_` inside math text:**  
 >    LaTeX treats `%` as comments and Markdown treats `_` as italics. Use plain words (e.g., `percent`) or keep them outside `$ ... $`.
-> 3. **Always wrap words in `\textsf{...}`:**  
+> 4. **Always wrap words in `\textsf{...}`:**  
 >    To prevent math mode from rendering text as italicized algebra variables, wrap readable labels in `\textsf{...}`.
-> 4. **Use `\space` for spaces:**  
+> 5. **Use `\space` for spaces:**  
 >    Math mode collapses whitespace by default; insert `\space` between words outside `\text{...}`.
 
 ---
@@ -209,7 +211,7 @@ When demonstrating "The Fragile / Anti-Pattern Way" versus "The Robust / Pythoni
 * **Collapsible Self-Check Cards:**
   ```markdown
   <details>
-  <summary><b>🔍 $\color{#0D47A1}{\textsf{Click to Reveal the Answer and Architectural Fix}}$</b></summary>
+  <summary><b>🔍 Click to Reveal the Answer and Architectural Fix</b></summary>
   
   <br/>
   

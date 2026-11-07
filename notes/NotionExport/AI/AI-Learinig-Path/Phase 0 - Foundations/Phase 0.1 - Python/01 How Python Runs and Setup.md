@@ -490,7 +490,7 @@ ModuleNotFoundError: No module named 'openai'
 **What two mistakes happened on your machine, and what is the proper sequence to prevent this?**
 
 <details>
-<summary><b>🔍 $\color{#0D47A1}{\textsf{Click to Reveal the Answer and Architectural Fix}}$</b></summary>
+<summary><b>🔍 Click to Reveal the Answer and Architectural Fix</b></summary>
 
 <br/>
 
