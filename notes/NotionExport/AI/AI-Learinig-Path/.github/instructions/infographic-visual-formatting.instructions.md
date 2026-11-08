@@ -124,6 +124,8 @@ Use KaTeX math formulas within Markdown headers. Always wrap title text in `\tex
 >    To prevent math mode from rendering text as italicized algebra variables, wrap readable labels in `\textsf{...}`.
 > 7. **Use `\space` for spaces:**  
 >    Math mode collapses whitespace by default; insert `\space` between words outside `\text{...}`.
+> 8. **NEVER use raw asterisks (`*` or `**`) in headings or code callouts inside KaTeX:**  
+>    CommonMark interprets `*` and `**` as Markdown emphasis (italic/bold) delimiters across headings and blocks, mutating them into underscores (`_`) before KaTeX executes, causing fatal `'_' allowed only in math mode` errors. Keep `*`, `**`, `*args`, and `**kwargs` OUTSIDE KaTeX using native Markdown backticks (e.g. `#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{Unpacking at Call Time}}$ (`*` for iterables)`). Inside syntax breakdown KaTeX formulas, always use `\ast` or `\ast\ast` instead of ASCII `*`.
 
 ---
 

@@ -85,12 +85,8 @@ $$
 \underbrace{\color{#7B1FA2}\texttt{->\ str:}}_{\color{#4A148C}\textsf{4.\ Return\ Type\ Contract}}
 $$
 
-$$
-\textsf{\textbf{Definition Time:}}\quad \color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{greet}\texttt{(}\color{#00897B}\texttt{name}\texttt{):}\quad \longleftarrow\space \color{#00897B}\textbf{\textsf{Parameter}}\space\textsf{(The variable placeholder slot)}
-$$
-$$
-\textsf{\textbf{Call Time:}}\quad\quad\quad\space \color{#0D47A1}\texttt{greet}\texttt{(}\color{#D84315}\texttt{"Ada"}\texttt{)}\quad\quad \longleftarrow\space \color{#D84315}\textbf{\textsf{Argument}}\space\textsf{(The concrete value passed into slot)}
-$$
+> 🏷️ **Definition Time:** `def greet(name):` $\longleftarrow$ **Parameter** *(The variable placeholder slot)*  
+> 📞 **Call Time:** `greet("Ada")` $\longleftarrow$ **Argument** *(The concrete value passed into slot)*
 
 ```python
 def greet(name: str) -> str:
@@ -349,11 +345,11 @@ print(add_document("doc_01"))       # ['doc_01']
 print(add_document("doc_02"))       # ['doc_02']  <-- Clean and isolated!
 ```
 
-### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.6 Keyword-Only (*) and Positional-Only (/) Parameters}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.6 Keyword-Only}}$ (`*`) $\color{#BF360C}{\textsf{and Positional-Only}}$ (`/`) $\color{#BF360C}{\textsf{Parameters}}$
 
 Modern Python allows you to strictly control whether callers must use positional or keyword arguments.
 
-#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Keyword-Only Parameters (*)}}$
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Keyword-Only Parameters}}$ (`*`)
 Any parameter listed **after a bare `*`** CANNOT be passed positionally. The caller is forced to pass it by name:
 
 ```python
@@ -370,7 +366,7 @@ print(search_vector_db("transformer architecture", top_k=10, score_threshold=0.8
 > **Why AI SDKs use `*` everywhere:**
 > In AI and machine learning libraries (such as OpenAI, Anthropic, and LangChain), functions often take 10+ hyperparameters and boolean flags (e.g. `stream=True`, `temperature=0.7`, `top_p=0.9`). If callers passed numbers positionally, swapping `0.7` and `0.9` would cause silent, catastrophic model behavior. Bare `*` prevents positional confusion and makes client code completely self-documenting.
 
-#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. Positional-Only Parameters (/)}}$
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. Positional-Only Parameters}}$ (`/`)
 Any parameter listed **before a `/`** CANNOT be passed by keyword. It must be passed positionally:
 
 ```python
@@ -383,7 +379,7 @@ print(calculate_tokens("Hello world"))  # 2
 # calculate_tokens(text="Hello world")
 ```
 
-#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{3. Combining /, Standard Parameters, and * in One Single Function (The 3-Zone Architecture)}}$
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{3. Combining}}$ `/`, $\color{#BF360C}{\textsf{Standard Parameters, and}}$ `*` $\color{#BF360C}{\textsf{in One Single Function (The 3-Zone Architecture)}}$
 
 Python allows you to use **both `/` and `*` in the same function definition**. This establishes **three distinct calling zones**:
 
@@ -392,7 +388,7 @@ $$
 \overbrace{\color{#B71C1C}\texttt{text:\ str}}^{\color{#B71C1C}\textsf{Zone\ 1:\ Positional-Only}}\space\texttt{,}\space
 \color{#D84315}\texttt{/}\space\texttt{,}\space
 \underbrace{\color{#1565C0}\texttt{model:\ str\ =\ "text-embedding-3"}}_{\color{#0D47A1}\textsf{Zone\ 2:\ Standard\ (Either\ Way)}}\space\texttt{,}\space
-\color{#D84315}\texttt{*}\space\texttt{,}\space
+\color{#D84315}\ast\space\texttt{,}\space
 \overbrace{\color{#00897B}\texttt{normalize:\ bool\ =\ True}}^{\color{#004D40}\textsf{Zone\ 3:\ Keyword-Only}}\space
 \texttt{):}
 $$
@@ -456,14 +452,14 @@ print(process_embedding(
 > - **Zone 2 (Standard)**: Core parameters like `model` or `dimensions` can be passed positionally for brevity or by name for clarity.
 > - **Zone 3 (Keyword-only)**: Configuration flags (`normalize=True`, `batch_size=32`) are forced to be named explicitly to prevent accidental order bugs.
 
-### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.7 Flexible Arguments: *args, **kwargs, and Parameter Co-existence Rules}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.7 Flexible Arguments:}}$ `*args`, `**kwargs`, $\color{#BF360C}{\textsf{and Parameter Co-existence Rules}}$
 
 When writing flexible APIs, decorators, middleware, or AI agent tool wrappers, you often do not know in advance how many arguments a caller might pass. Python provides two packing operators:
 
 - **`*args`**: collects any number of excess **positional** arguments into an immutable **`tuple`**.
 - **`**kwargs`**: collects any number of excess **keyword** arguments into a **`dict`**.
 
-#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. How *args Works (Packing Excess Positional Arguments into a Tuple)}}$
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. How}}$ `*args` $\color{#BF360C}{\textsf{Works (Packing Excess Positional Arguments into a Tuple)}}$
 
 When you prefix a parameter name with a single asterisk `*`, Python gathers all leftover positional arguments into a `tuple`:
 
@@ -486,7 +482,7 @@ print(f"Empty total: {empty_total}")           # 0
 > **Why a Tuple?**
 > A tuple is an immutable sequence. Python packs positional arguments into a tuple rather than a list to guarantee that the arguments passed by the caller cannot be accidentally mutated inside the function before processing.
 
-#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. How **kwargs Works (Packing Excess Keyword Arguments into a Dictionary)}}$
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. How}}$ `**kwargs` $\color{#BF360C}{\textsf{Works (Packing Excess Keyword Arguments into a Dictionary)}}$
 
 When you prefix a parameter name with a double asterisk `**`, Python gathers all leftover `key=value` keyword arguments into a standard `dict`:
 
@@ -520,9 +516,9 @@ $$
 \color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{execute\rule{0.45em}{0.08ex}pipeline}\texttt{(}
 \overbrace{\color{#00897B}\texttt{stage:\ str}}^{\color{#004D40}\textsf{1.\ Positional\ Req}}\texttt{,}\space
 \underbrace{\color{#1565C0}\texttt{timeout:\ int\ =\ 60}}_{\color{#0D47A1}\textsf{2.\ Positional\ Default}}\texttt{,}\space
-\overbrace{\color{#D84315}\texttt{*extra\rule{0.45em}{0.08ex}steps:\ str}}^{\color{#BF360C}\textsf{3.\ *args\ (Tuple\ Pack)}}\texttt{,}\space
+\overbrace{\color{#D84315}\ast\texttt{extra\rule{0.45em}{0.08ex}steps:\ str}}^{\color{#BF360C}\textsf{3.\ *args\ (Tuple\ Pack)}}\texttt{,}\space
 \underbrace{\color{#7B1FA2}\texttt{verbose:\ bool\ =\ False}}_{\color{#4A148C}\textsf{4.\ Keyword-Only}}\texttt{,}\space
-\overbrace{\color{#C2185B}\texttt{**env\rule{0.45em}{0.08ex}metadata:\ str}}^{\color{#880E4F}\textsf{5.\ **kwargs\ (Dict\ Pack\ -\ MUST\ BE\ LAST)}}\space
+\overbrace{\color{#C2185B}\ast\ast\texttt{env\rule{0.45em}{0.08ex}metadata:\ str}}^{\color{#880E4F}\textsf{5.\ **kwargs\ (Dict\ Pack\ -\ MUST\ BE\ LAST)}}\space
 \texttt{):}
 $$
 
@@ -575,7 +571,7 @@ execute_pipeline(
 - **Rule 3: Only ONE `*args` and ONE `**kwargs` are allowed.**
   You cannot define multiple `*args` or multiple `**kwargs` in the same function signature.
 
-#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4. Using BOTH *args and **kwargs (The Universal Wrapper Pattern)}}$
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4. Using BOTH}}$ `*args` $\color{#BF360C}{\textsf{and}}$ `**kwargs` $\color{#BF360C}{\textsf{(The Universal Wrapper Pattern)}}$
 
 Combining `*args` and `**kwargs` allows a function to accept **any possible argument signature**. This is the standard pattern for **decorators**, **logging middleware**, and **AI agent tool routers**:
 
@@ -604,16 +600,12 @@ timer_middleware(compute_loss, 0.85, 0.90)
 timer_middleware(fetch_embeddings, "AI safety", model="text-embedding-3-small")
 ```
 
-#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5. Unpacking at Call Time (* for iterables, ** for dictionaries)}}$
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5. Unpacking at Call Time}}$ (`*` for iterables, `**` for dictionaries)
 
 While `*` and `**` in a `def` **pack** values into a tuple or dict, using them in a function **call** does the exact opposite: it **unpacks (explodes)** a collection into individual arguments:
 
-$$
-\textsf{\textbf{Positional Unpack (*):}}\quad \color{#0D47A1}\texttt{func}\texttt{(}\color{#D84315}\texttt{*}\color{#00897B}\texttt{[101,\ "text",\ 20]}\texttt{)}\quad \longrightarrow\quad \color{#0D47A1}\texttt{func}\texttt{(}\color{#00897B}\texttt{101,\ "text",\ 20}\texttt{)}
-$$
-$$
-\textsf{\textbf{Keyword Unpack (**):}}\quad \color{#0D47A1}\texttt{func}\texttt{(}\color{#C2185B}\texttt{**}\color{#7B1FA2}\texttt{\{"model":\ "gpt-4o"\}}\texttt{)}\quad \longrightarrow\quad \color{#0D47A1}\texttt{func}\texttt{(}\color{#7B1FA2}\texttt{model="gpt-4o"}\texttt{)}
-$$
+> 📦 **Positional Unpack (`*`):** `func(*[101, "text", 20])` $\longrightarrow$ `func(101, "text", 20)` *(Unpacks elements as positional arguments)*  
+> 🏷️ **Keyword Unpack (`**`):** `func(**{"model": "gpt-4o"})` $\longrightarrow$ `func(model="gpt-4o")` *(Unpacks key-value pairs as keyword arguments)*
 
 ```python
 # 1. Unpacking a list/tuple into positional arguments (*):
