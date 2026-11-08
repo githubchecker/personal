@@ -110,7 +110,7 @@ Use KaTeX math formulas within Markdown headers. Always wrap title text in `\tex
 > 1. **NEVER use `&` or `\&` inside math blocks (`$...$` or `$$...$$`):**  
 >    GitHub's markdown pre-processor converts `&` into `&amp;` *before* KaTeX runs. KaTeX chokes on the `&` in `&amp;` and displays a fatal red error box: `'&' can not be used here`. **Always use the plain English word `and` instead of `&` inside all KaTeX blocks.**
 > 2. **NEVER use math inside HTML tags (like `<summary>...</summary>`):**  
->    GitHub treats raw HTML elements literally and does NOT parse math inside `<summary>`, `<details>`, `<div>`, or `<span>`. Putting `$\color{...}$` inside `<summary>` prints the raw unrendered LaTeX string. Keep `<summary>` in clean bold Markdown (e.g., `<summary><b>🔍 Click to Reveal...</b></summary>`), and place KaTeX inside the dropdown body after a blank line.
+>    GitHub treats raw HTML elements literally and does NOT parse math inside `<summary>`, `<details>`, `<div>`, or `<span>`. Putting `\color{...}` inside `<summary>` prints the raw unrendered LaTeX string. Keep `<summary>` in clean bold Markdown (e.g., `<summary><b>🔍 Click to Reveal...</b></summary>`), and place KaTeX inside the dropdown body after a blank line.
 > 3. **NEVER wrap `\texttt` inside `\mathbf` or `\textbf`:**  
 >    Computer Modern Typewriter has no bold font metrics in KaTeX (`Font metrics not found for font: Typewriter-Bold`). To style code keywords or parameters, use `\color{#HEX}\texttt{...}` alone.
 > 4. **ALWAYS escape underscores inside `\textsf` and `\texttt`:**  
@@ -320,7 +320,7 @@ When authoring or re-formatting any lesson in this repository:
 2. [ ] **Header badges placed:** 4-badge row (Python, Curriculum, Priority, Status) present at the top.
 3. [ ] **Shields.io banners:** Every major section opens with its designated SVG banner.
 4. [ ] **Headings colored:** H1, H2, H3, H4 use KaTeX `\color` with proper geometric anchors and `\&` escaping.
-5. [ ] **Bullets enhanced:** List items use `$\color{#Hex}\blacktriangleright$` or `$\color{#Hex}\bullet$`.
+5. [ ] **Bullets enhanced:** List items use `\color{#HEX}\blacktriangleright` or `\color{#HEX}\bullet`.
 6. [ ] **Alert cards converted:** Generic notes and gotchas converted to official GFM alerts (`[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`, `[!CAUTION]`).
 7. [ ] **ASCII converted to Mermaid:** Text diagrams upgraded to colored Mermaid flowcharts.
 8. [ ] **Diff highlighting used:** Anti-pattern vs recommended contrasts formatted in ````diff ```` blocks.

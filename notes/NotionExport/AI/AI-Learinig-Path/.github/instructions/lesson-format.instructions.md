@@ -171,7 +171,7 @@ This format fuses **four core pillars**:
    - **Colored Mermaid SVG Diagrams:** Visualizing dispatch mechanisms, memory allocations, interpreter pipelines, and architecture with themed node colors (`fill:#...`, `stroke:#...`).
    - **GitHub Flavored Markdown Alerts (5-Tier):** Strategic use of `> [!NOTE]`, `> [!IMPORTANT]`, `> [!WARNING]`, `> [!TIP]`, and `> [!CAUTION]`.
    - **Diff Syntax Highlighting:** Demonstrating anti-pattern vs idiomatic solution contrasts with red `-` and green `+` syntax coloring.
-   - **Color-Coded Badges & Geometric Bullets:** Using `$\color{#Hex}\blacktriangleright$` and `$\color{#Hex}\bullet$` for list items; colored bold keywords in text and tables.
+   - **Color-Coded Badges & Geometric Bullets:** Using `\color{#HEX}\blacktriangleright` and `\color{#HEX}\bullet` for list items; colored bold keywords in text and tables.
    - **Dedicated Trap Callouts:** Prominently boxed warnings using `> [!WARNING]` or `> [!CAUTION]`.
 4. **AI-Domain Anchored Production Scenarios:**
    - **Zero generic "foo/bar" toys:** Every single code snippet uses realistic constructs from modern AI systems (e.g., LLM response payloads, embedding vectors, configuration objects, RAG document deduplication, tool calling contracts).
