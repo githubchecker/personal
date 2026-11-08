@@ -239,7 +239,7 @@ print("First three IDs:", first_three)  # ['ID_1', 'ID_2', 'ID_3']
 
 ### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.3 Memory Management, del, and Slotted Optimization}}$
 
-#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Slashing RAM Overhead with __slots__}}$
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Slashing RAM Overhead with \_\_slots\_\_}}$
 
 ```mermaid
 flowchart TD
@@ -343,11 +343,11 @@ print("In Cache after deletion:", "report" in doc_cache)  # False
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.4 Performance Timing and Profiling (time.perf_counter, timeit, cProfile)}}$
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.4 Performance Timing and Profiling (time.perf\_counter, timeit, cProfile)}}$
 
 In AI engineering, measuring token latency, time-to-first-token (TTFT), and embedding throughput is a core architectural responsibility.
 
-#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Why time.perf_counter() Over time.time()}}$
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Why time.perf\_counter() Over time.time()}}$
 - **`time.time()` (Wall-Clock):** Reflects the system clock. If your server runs NTP time synchronization or changes daylight saving time, `time.time()` can jump backwards or freeze!
 - **`time.perf_counter()` (Monotonic Benchmark Clock):** Never goes backwards, has nanosecond resolution, and is specifically designed for benchmarking code blocks.
 
@@ -407,11 +407,11 @@ stats.print_stats(3)
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.5 Memoization and Advanced Decorators (@lru_cache, Parametrized @retry)}}$
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.5 Memoization and Advanced Decorators (@lru\_cache, Parametrized @retry)}}$
 
 *(Cross-reference: [09 Decorators & Closures](09%20Decorators%20and%20Closures.md) introduced basic decorators).*
 
-#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Memoization with @functools.lru_cache}}$
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Memoization with @functools.lru\_cache}}$
 **Memoization** caches the return values of a function based on its input arguments.
 In AI systems, prompt compilation and embedding lookups for common terms are frequently repeated. `@lru_cache(maxsize=...)` caches the latest $N$ results using a Least-Recently-Used eviction policy.
 
@@ -599,7 +599,7 @@ def charge_customer_safe(user_balance: float, cost: float):
 
 ### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.9 Dynamic Metaprogramming and Monkey Patching}}$
 
-#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Dynamic Attribute Fallback: __getattr__}}$
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Dynamic Attribute Fallback: \_\_getattr\_\_}}$
 `__getattr__` is called **only when an attribute does NOT exist** on an object. This allows you to build transparent fallback wrappers and dynamic proxies:
 
 ```python
@@ -620,7 +620,7 @@ print(proxy.generate("Hi"))       # [OpenAI] Generated: Hi
 print(proxy.transcribe_audio())   # Dynamic fallback executed for 'transcribe_audio'
 ```
 
-#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. Automatic Class Registration with __init_subclass__}}$
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. Automatic Class Registration with \_\_init\_subclass\_\_}}$
 In agent architectures, you want developers to add custom tools that **automatically register themselves** into an agent registry the moment their class is defined, with zero boilerplate:
 
 ```python

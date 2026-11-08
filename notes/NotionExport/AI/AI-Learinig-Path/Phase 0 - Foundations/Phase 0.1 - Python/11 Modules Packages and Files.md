@@ -72,7 +72,7 @@ flowchart TD
 
 Python gives you four distinct ways to import code:
 
-#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Importing the Entire Module (import module_name)}}$
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Importing the Entire Module (import module\_name)}}$
 This imports the module object and binds it to its original name. You access items using the dot (`.`) prefix:
 
 ```python
@@ -84,7 +84,7 @@ print(math.pi)                      # 3.141592653589793
 - ✅ **Pros:** Completely prevents name collisions. Anyone reading your code immediately knows where `math.sqrt` came from.
 - 🚫 **Cons:** Slightly more verbose for frequently repeated names.
 
-#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. Importing Specific Items (from module_name import item1, item2)}}$
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. Importing Specific Items (from module\_name import item1, item2)}}$
 This extracts specific functions, classes, or constants directly into your current local namespace:
 
 ```python
@@ -112,7 +112,7 @@ from datetime import datetime as DateTime
 from typing import List as PyList
 ```
 
-#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4. The Wildcard Import (from module_name import *) — Why It Is Harmful}}$
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4. The Wildcard Import (from module\_name import *) — Why It Is Harmful}}$
 A wildcard import pulls **every public name** from a module directly into your local namespace:
 
 ```python
@@ -230,7 +230,7 @@ flowchart TD
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{11.4 Packages, Submodules and The __init__.py Mechanism}}$
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{11.4 Packages, Submodules and The \_\_init\_\_.py Mechanism}}$
 
 #### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Module vs. Package vs. Library (The Architecture Hierarchy)}}$
 
@@ -279,7 +279,7 @@ from my_ai_agent import planner as plan_mod
 import my_ai_agent.tools.web_search as search_tool
 ```
 
-#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{3. The Package Import Trap: Does import my_ai_agent Load All Submodules?}}$
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{3. The Package Import Trap: Does import my\_ai\_agent Load All Submodules?}}$
 > 💥 **NO! By default, `import my_ai_agent` does NOT load submodules!**
 
 When you write `import my_ai_agent`, Python only reads and executes `my_ai_agent/__init__.py`. It does **not** recursively inspect the directory or import `planner.py` or `memory.py`.
@@ -343,7 +343,7 @@ The secret is **how the package author configured `__init__.py`**:
    agent = my_ai_agent.AgentPlanner()            # Works immediately without importing .planner!
    ```
 
-#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5. The __init__.py Initialization Lifecycle and Practical Scenarios}}$
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5. The \_\_init\_\_.py Initialization Lifecycle and Practical Scenarios}}$
 
 Understanding **when** and **how** `__init__.py` runs is essential for designing clean packages:
 
@@ -354,7 +354,7 @@ Understanding **when** and **how** `__init__.py` runs is essential for designing
 
 ---
 
-##### $\color{#512DA8}\blacktriangleright\space\color{#311B92}{\textsf{5 Real-World Practical Scenarios for __init__.py}}$
+##### $\color{#512DA8}\blacktriangleright\space\color{#311B92}{\textsf{5 Real-World Practical Scenarios for \_\_init\_\_.py}}$
 
 ```python
 # ==============================================================================
@@ -587,7 +587,7 @@ In CPython, a file object's destructor (`__del__`) does attempt to close the fil
 
 ---
 
-#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4. Custom Context Managers: Building Your Own with __enter__ and __exit__}}$
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4. Custom Context Managers: Building Your Own with \_\_enter\_\_ and \_\_exit\_\_}}$
 
 Any Python class can become a context manager by implementing `__enter__` and `__exit__`. This pattern is widely used in AI engineering for timing inference, managing database connections, or acquiring distributed locks:
 
@@ -692,7 +692,7 @@ print(recovered_state["session_id"])            # 'sess_102'
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{11.8 The if __name__ == "__main__": Execution Guard (Entry Point vs. Import)}}$
+### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{11.8 The if \_\_name\_\_ == "\_\_main\_\_": Execution Guard (Entry Point vs. Import)}}$
 
 Every Python file is dual-purpose: it can be **executed directly** as a standalone script (e.g. `python my_file.py`), or it can be **imported** as a reusable module into another file (e.g. `import my_file`).
 
@@ -714,7 +714,7 @@ flowchart TD
     Imported --> SkipGuard["Skips guarded block!<br/>Only defines functions and classes safely"]:::imp
 ```
 
-#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. What is __name__ and What Does It Contain?}}$
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. What is \_\_name\_\_ and What Does It Contain?}}$
 Whenever Python loads a file, it automatically creates a built-in string variable in that file's global namespace called **`__name__`**:
 
 * **Case 1: When the file is RUN DIRECTLY (`python data_loader.py`)**
@@ -736,7 +736,7 @@ print(f"Inside demo.py, __name__ is: '{__name__}'")
 
 ---
 
-#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. What is \"__main__\"?}}$
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. What is \"\_\_main\_\_\"?}}$
 `"__main__"` is Python's reserved top-level environment name. It tells your code: *"I am the primary entry-point script launched by the user or operating system, not a helper being imported."*
 
 ---
@@ -811,7 +811,7 @@ if __name__ == "__main__":
 
 ---
 
-#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5. When is if __name__ == \"__main__\": Required?}}$
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5. When is if \_\_name\_\_ == \"\_\_main\_\_\": Required?}}$
 
 1. **Dual-Purpose Modules (Utilities with CLI / Tests):**
    When a file defines reusable functions, classes, or prompt templates for your team, but also includes a demo, benchmark, or CLI runner at the bottom.

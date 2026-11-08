@@ -79,17 +79,17 @@ flowchart LR
 ### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.1 Defining, Calling and Return Values (Data Types, Multiple Returns, Implicit None)}}$
 
 $$
-\overbrace{\color{#E53935}\mathbf{\texttt{def}}}^{\color{#B71C1C}\textsf{🔒\ 1.\ Keyword\ (Starts\ definition)}}\space\space
-\underbrace{\color{#0D47A1}\mathbf{\texttt{greet}}}_{\color{#1565C0}\textsf{🏷️\ 2.\ Function\ Name}}\space\space
-\overbrace{\color{#00897B}\mathbf{\texttt{(name:\ str)}}}^{\color{#004D40}\textsf{💻\ 3.\ Parameter\ (Input\ slot\ placeholder)}}\space\space
-\underbrace{\color{#7B1FA2}\mathbf{\texttt{->\ str:}}}_{\color{#4A148C}\textsf{🎯\ 4.\ Return\ Type\ Contract}}
+\overbrace{\color{#E53935}\texttt{def}}^{\color{#B71C1C}\textsf{🔒\ 1.\ Keyword\ (Starts\ definition)}}\space\space
+\underbrace{\color{#0D47A1}\texttt{greet}}_{\color{#1565C0}\textsf{🏷️\ 2.\ Function\ Name}}\space\space
+\overbrace{\color{#00897B}\texttt{(name:\ str)}}^{\color{#004D40}\textsf{💻\ 3.\ Parameter\ (Input\ slot\ placeholder)}}\space\space
+\underbrace{\color{#7B1FA2}\texttt{->\ str:}}_{\color{#4A148C}\textsf{🎯\ 4.\ Return\ Type\ Contract}}
 $$
 
 $$
-\begin{array}{rcccl}
-\textsf{\textbf{Definition Time:}} & \color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{greet}\texttt{(} & \color{#00897B}\mathbf{\texttt{name}} & \texttt{):} & \leftarrow\space \color{#00897B}\textbf{\textsf{Parameter}}\textsf{ (The variable placeholder slot)} \\
-\textsf{\textbf{Call Time:}} & \color{#0D47A1}\texttt{greet}\texttt{(} & \color{#D84315}\mathbf{\texttt{"Ada"}} & \texttt{)} & \leftarrow\space \color{#D84315}\textbf{\textsf{Argument}}\textsf{ (The concrete value passed into slot)}
-\end{array}
+\textsf{\textbf{Definition Time:}}\quad \color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{greet}\texttt{(}\color{#00897B}\texttt{name}\texttt{):}\quad \longleftarrow\space \color{#00897B}\textbf{\textsf{Parameter}}\space\textsf{(The variable placeholder slot)}
+$$
+$$
+\textsf{\textbf{Call Time:}}\quad\quad\quad\space \color{#0D47A1}\texttt{greet}\texttt{(}\color{#D84315}\texttt{"Ada"}\texttt{)}\quad\quad \longleftarrow\space \color{#D84315}\textbf{\textsf{Argument}}\space\textsf{(The concrete value passed into slot)}
 $$
 
 ```python
@@ -131,10 +131,10 @@ print(split_chunks("Sentence one. Sentence two."))  # ['Sentence one', 'Sentence
 #### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. Returning Multiple Values (Automatic Tuple Packing and Unpacking)}}$
 
 $$
-\textsf{\textbf{Return Packing:}}\space \color{#E53935}\texttt{return}\space \color{#00897B}\texttt{tokens\_per\_sec,\ cost\_estimate}\space \longrightarrow\space \color{#7B1FA2}\mathbf{\texttt{(200.0,\ 0.01)}}\space\textsf{(Packed into immutable Tuple)}
+\textsf{\textbf{Return Packing:}}\space \color{#E53935}\texttt{return}\space \color{#00897B}\texttt{tokens\_per\_sec,\ cost\_estimate}\space \longrightarrow\space \color{#7B1FA2}\texttt{(200.0,\ 0.01)}\space\textsf{(Packed into immutable Tuple)}
 $$
 $$
-\textsf{\textbf{Caller Unpacking:}}\space \color{#00897B}\mathbf{\texttt{speed,\ cost}}\space \color{#37474F}\texttt{=}\space \color{#0D47A1}\texttt{calculate\_metrics(500,\ 2.5)}\space \longrightarrow\space \color{#00897B}\texttt{speed=200.0},\space \color{#00897B}\texttt{cost=0.01}
+\textsf{\textbf{Caller Unpacking:}}\space \color{#00897B}\texttt{speed,\ cost}\space \color{#37474F}\texttt{=}\space \color{#0D47A1}\texttt{calculate\_metrics(500,\ 2.5)}\space \longrightarrow\space \color{#00897B}\texttt{speed=200.0},\space \color{#00897B}\texttt{cost=0.01}
 $$
 
 ```python
@@ -197,8 +197,8 @@ def send_alert(message: str) -> None:
 | **1. Pure Positional** | $\color{#0D47A1}\texttt{connect\_db}\color{#263238}\texttt{(}\color{#00897B}\texttt{"localhost"}\color{#263238}\texttt{,}\space\color{#00897B}\texttt{5432}\color{#263238}\texttt{,}\space\color{#00897B}\texttt{"vec"}\color{#263238}\texttt{)}$ | Left-to-right alignment: Order strictly matters | ✅ Valid |
 | **2. Pure Keyword** | $\color{#0D47A1}\texttt{connect\_db}\color{#263238}\texttt{(}\color{#D84315}\texttt{db\_name=}\color{#00897B}\texttt{"vec"}\color{#263238}\texttt{,}\space\color{#D84315}\texttt{host=}\color{#00897B}\texttt{"loc"}\color{#263238}\texttt{,}\space\color{#D84315}\texttt{port=}\color{#00897B}\texttt{5432}\color{#263238}\texttt{)}$ | Name-matched: Any order produces identical call | ✅ Valid |
 | **3. Mixed Call** | $\color{#0D47A1}\texttt{connect\_db}\color{#263238}\texttt{(}\color{#00897B}\texttt{"localhost"}\color{#263238}\texttt{,}\space\color{#D84315}\texttt{db\_name=}\color{#00897B}\texttt{"vec"}\color{#263238}\texttt{,}\space\color{#D84315}\texttt{port=}\color{#00897B}\texttt{5432}\color{#263238}\texttt{)}$ | Positional args FIRST, keywords AFTER | ✅ Valid |
-| **❌ Illegal Order** | $\color{#0D47A1}\texttt{connect\_db}\color{#263238}\texttt{(}\color{#D84315}\texttt{host=}\color{#00897B}\texttt{"loc"}\color{#263238}\texttt{,}\space\color{#C62828}\mathbf{\texttt{5432}}\color{#263238}\texttt{,}\space\color{#C62828}\mathbf{\texttt{"vec"}}\color{#263238}\texttt{)}$ | `SyntaxError`: Positional arg cannot follow keyword | ❌ SyntaxError |
-| **❌ Duplicate Slot** | $\color{#0D47A1}\texttt{connect\_db}\color{#263238}\texttt{(}\color{#00897B}\texttt{"loc"}\color{#263238}\texttt{,}\space\color{#00897B}\texttt{5432}\color{#263238}\texttt{,}\space\color{#00897B}\texttt{"vec"}\color{#263238}\texttt{,}\space\color{#C62828}\mathbf{\texttt{host=}}\color{#00897B}\texttt{"srv"}\color{#263238}\texttt{)}$ | `TypeError`: Multiple values assigned to `host` | ❌ TypeError |
+| **❌ Illegal Order** | $\color{#0D47A1}\texttt{connect\_db}\color{#263238}\texttt{(}\color{#D84315}\texttt{host=}\color{#00897B}\texttt{"loc"}\color{#263238}\texttt{,}\space\color{#C62828}\texttt{5432}\color{#263238}\texttt{,}\space\color{#C62828}\texttt{"vec"}\color{#263238}\texttt{)}$ | `SyntaxError`: Positional arg cannot follow keyword | ❌ SyntaxError |
+| **❌ Duplicate Slot** | $\color{#0D47A1}\texttt{connect\_db}\color{#263238}\texttt{(}\color{#00897B}\texttt{"loc"}\color{#263238}\texttt{,}\space\color{#00897B}\texttt{5432}\color{#263238}\texttt{,}\space\color{#00897B}\texttt{"vec"}\color{#263238}\texttt{,}\space\color{#C62828}\texttt{host=}\color{#00897B}\texttt{"srv"}\color{#263238}\texttt{)}$ | `TypeError`: Multiple values assigned to `host` | ❌ TypeError |
 
 ```python
 def connect_db(host: str, port: int, db_name: str):
@@ -208,12 +208,12 @@ def connect_db(host: str, port: int, db_name: str):
 ### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.3 Default Parameters and The "Defaults at the End" Rule}}$
 
 $$
-\overbrace{\color{#E53935}\mathbf{\texttt{def}}}^{\textsf{Keyword}}\space\space
-\color{#0D47A1}\mathbf{\texttt{power}}\texttt{(}\space
-\overbrace{\color{#00897B}\mathbf{\texttt{base:\ int}}}^{\color{#004D40}\textsf{1.\ Required\ Positional\ (No\ Default)}}\space\texttt{,}\space\space
-\overbrace{\color{#D84315}\mathbf{\texttt{exponent:\ int}}\space\color{#BF360C}\mathbf{\texttt{=\ 2}}}^{\color{#BF360C}\textsf{2.\ Optional\ Parameter\ (Fallback\ =\ 2)}}\space
+\overbrace{\color{#E53935}\texttt{def}}^{\textsf{Keyword}}\space\space
+\color{#0D47A1}\texttt{power}\texttt{(}\space
+\overbrace{\color{#00897B}\texttt{base:\ int}}^{\color{#004D40}\textsf{1.\ Required\ Positional\ (No\ Default)}}\space\texttt{,}\space\space
+\overbrace{\color{#D84315}\texttt{exponent:\ int}\space\color{#BF360C}\texttt{=\ 2}}^{\color{#BF360C}\textsf{2.\ Optional\ Parameter\ (Fallback\ =\ 2)}}\space
 \texttt{)}\space\space
-\overbrace{\color{#7B1FA2}\mathbf{\texttt{->\ int:}}}^{\textsf{Return\ Type}}
+\overbrace{\color{#7B1FA2}\texttt{->\ int:}}^{\textsf{Return\ Type}}
 $$
 
 ```python
@@ -392,12 +392,12 @@ print(calculate_tokens("Hello world"))  # ✅ 2
 Python allows you to use **both `/` and `*` in the same function definition**. This establishes **three distinct calling zones**:
 
 $$
-\color{#E53935}\textbf{\texttt{def}}\space\color{#0D47A1}\textbf{\texttt{process\_embedding}}\texttt{(}
-\overbrace{\color{#B71C1C}\mathbf{\texttt{text:\ str}}}^{\color{#B71C1C}\textsf{Zone\ 1:\ Positional-Only}}\space\texttt{,}\space
-\color{#D84315}\mathbf{\texttt{/}}\space\texttt{,}\space
-\underbrace{\color{#1565C0}\mathbf{\texttt{model:\ str\ =\ "text-embedding-3"}}}_{\color{#0D47A1}\textsf{Zone\ 2:\ Standard\ (Either\ Way)}}\space\texttt{,}\space
-\color{#D84315}\mathbf{\texttt{*}}\space\texttt{,}\space
-\overbrace{\color{#00897B}\mathbf{\texttt{normalize:\ bool\ =\ True}}}^{\color{#004D40}\textsf{Zone\ 3:\ Keyword-Only}}\space
+\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{process\_embedding}\texttt{(}
+\overbrace{\color{#B71C1C}\texttt{text:\ str}}^{\color{#B71C1C}\textsf{Zone\ 1:\ Positional-Only}}\space\texttt{,}\space
+\color{#D84315}\texttt{/}\space\texttt{,}\space
+\underbrace{\color{#1565C0}\texttt{model:\ str\ =\ "text-embedding-3"}}_{\color{#0D47A1}\textsf{Zone\ 2:\ Standard\ (Either\ Way)}}\space\texttt{,}\space
+\color{#D84315}\texttt{*}\space\texttt{,}\space
+\overbrace{\color{#00897B}\texttt{normalize:\ bool\ =\ True}}^{\color{#004D40}\textsf{Zone\ 3:\ Keyword-Only}}\space
 \texttt{):}
 $$
 
@@ -521,12 +521,12 @@ build_agent_config("SimpleBot")
 In Python, you can combine standard parameters, default parameters, `*args`, keyword-only parameters, and `**kwargs` in the **same function**, but they **MUST follow this exact strict order**:
 
 $$
-\color{#E53935}\textbf{\texttt{def}}\space\color{#0D47A1}\textbf{\texttt{execute\_pipeline}}\texttt{(}
-\overbrace{\color{#00897B}\mathbf{\texttt{stage:\ str}}}^{\color{#004D40}\textsf{1.\ Positional\ Req}}\texttt{,}\space
-\underbrace{\color{#1565C0}\mathbf{\texttt{timeout:\ int\ =\ 60}}}_{\color{#0D47A1}\textsf{2.\ Positional\ Default}}\texttt{,}\space
-\overbrace{\color{#D84315}\mathbf{\texttt{*extra\_steps:\ str}}}^{\color{#BF360C}\textsf{3.\ *args\ (Tuple\ Pack)}}\texttt{,}\space
-\underbrace{\color{#7B1FA2}\mathbf{\texttt{verbose:\ bool\ =\ False}}}_{\color{#4A148C}\textsf{4.\ Keyword-Only}}\texttt{,}\space
-\overbrace{\color{#C2185B}\mathbf{\texttt{**env\_metadata:\ str}}}^{\color{#880E4F}\textsf{5.\ **kwargs\ (Dict\ Pack\ -\ MUST\ BE\ LAST)}}\space
+\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{execute\_pipeline}\texttt{(}
+\overbrace{\color{#00897B}\texttt{stage:\ str}}^{\color{#004D40}\textsf{1.\ Positional\ Req}}\texttt{,}\space
+\underbrace{\color{#1565C0}\texttt{timeout:\ int\ =\ 60}}_{\color{#0D47A1}\textsf{2.\ Positional\ Default}}\texttt{,}\space
+\overbrace{\color{#D84315}\texttt{*extra\_steps:\ str}}^{\color{#BF360C}\textsf{3.\ *args\ (Tuple\ Pack)}}\texttt{,}\space
+\underbrace{\color{#7B1FA2}\texttt{verbose:\ bool\ =\ False}}_{\color{#4A148C}\textsf{4.\ Keyword-Only}}\texttt{,}\space
+\overbrace{\color{#C2185B}\texttt{**env\_metadata:\ str}}^{\color{#880E4F}\textsf{5.\ **kwargs\ (Dict\ Pack\ -\ MUST\ BE\ LAST)}}\space
 \texttt{):}
 $$
 
@@ -613,10 +613,10 @@ timer_middleware(fetch_embeddings, "AI safety", model="text-embedding-3-small")
 While `*` and `**` in a `def` **pack** values into a tuple or dict, using them in a function **call** does the exact opposite: it **unpacks (explodes)** a collection into individual arguments:
 
 $$
-\begin{array}{rcccl}
-\textsf{\textbf{Positional Unpack (*):}} & \color{#0D47A1}\texttt{func}\texttt{(} & \color{#D84315}\mathbf{\texttt{*}}\color{#00897B}\texttt{[101,\ "text",\ 20]} & \texttt{)} & \longrightarrow\space \color{#0D47A1}\texttt{func}\texttt{(}\color{#00897B}\texttt{101,\ "text",\ 20}\texttt{)} \\
-\textsf{\textbf{Keyword Unpack (**):}} & \color{#0D47A1}\texttt{func}\texttt{(} & \color{#C2185B}\mathbf{\texttt{**}}\color{#7B1FA2}\texttt{\{"model":\ "gpt-4o"\}} & \texttt{)} & \longrightarrow\space \color{#0D47A1}\texttt{func}\texttt{(}\color{#7B1FA2}\texttt{model="gpt-4o"}\texttt{)}
-\end{array}
+\textsf{\textbf{Positional Unpack (*):}}\quad \color{#0D47A1}\texttt{func}\texttt{(}\color{#D84315}\texttt{*}\color{#00897B}\texttt{[101,\ "text",\ 20]}\texttt{)}\quad \longrightarrow\quad \color{#0D47A1}\texttt{func}\texttt{(}\color{#00897B}\texttt{101,\ "text",\ 20}\texttt{)}
+$$
+$$
+\textsf{\textbf{Keyword Unpack (**):}}\quad \color{#0D47A1}\texttt{func}\texttt{(}\color{#C2185B}\texttt{**}\color{#7B1FA2}\texttt{\{"model":\ "gpt-4o"\}}\texttt{)}\quad \longrightarrow\quad \color{#0D47A1}\texttt{func}\texttt{(}\color{#7B1FA2}\texttt{model="gpt-4o"}\texttt{)}
 $$
 
 ```python
@@ -652,10 +652,10 @@ In Python, type hints provide clear contracts for what a function expects to rec
 #### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Parameter Type Hint Syntax}}$
 
 $$
-\overbrace{\color{#00897B}\mathbf{\texttt{topic:\ str}}}^{\color{#004D40}\textsf{Required\ Parameter\ Type}}\texttt{,}\space\space
-\overbrace{\color{#1565C0}\mathbf{\texttt{max\_words:\ int}}}^{\color{#0D47A1}\textsf{Type\ Hint\ Annotation}}\space\space
-\overbrace{\color{#D84315}\mathbf{\texttt{=\ 150}}}^{\color{#BF360C}\textsf{Default\ Fallback\ Value}}\space\space
-\overbrace{\color{#7B1FA2}\mathbf{\texttt{->\ str:}}}^{\color{#4A148C}\textsf{Return\ Type\ Contract}}
+\overbrace{\color{#00897B}\texttt{topic:\ str}}^{\color{#004D40}\textsf{Required\ Parameter\ Type}}\texttt{,}\space\space
+\overbrace{\color{#1565C0}\texttt{max\_words:\ int}}^{\color{#0D47A1}\textsf{Type\ Hint\ Annotation}}\space\space
+\overbrace{\color{#D84315}\texttt{=\ 150}}^{\color{#BF360C}\textsf{Default\ Fallback\ Value}}\space\space
+\overbrace{\color{#7B1FA2}\texttt{->\ str:}}^{\color{#4A148C}\textsf{Return\ Type\ Contract}}
 $$
 
 > ⚠️ **Syntax Rule:** The type annotation **must** come *before* the `=` sign (`temperature: float = 0.7`), never after!
@@ -674,11 +674,11 @@ def generate_prompt(
 
 | $\color{#546E7A}\textsf{\textbf{Pattern}}$ | $\color{#0D47A1}\textsf{\textbf{Return Annotation Syntax}}$ | $\color{#00695C}\textsf{\textbf{Real-World AI Application}}$ | $\color{#1B5E20}\textsf{\textbf{Example Output}}$ |
 | :--- | :--- | :--- | :--- |
-| **1. Side Effect Only** | $\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{save\_checkpoint}\texttt{()}\space\color{#7B1FA2}\mathbf{\texttt{->\ None:}}$ | Logging, disk checkpointing, weights saving | `None` |
-| **2. Homogeneous List** | $\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{get\_model\_tiers}\texttt{()}\space\color{#7B1FA2}\mathbf{\texttt{->\ list[str]:}}$ | Available LLM tier models, chunked sentences | `["gpt-4o", "o3-mini"]` |
-| **3. Structured Mapping** | $\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{get\_metadata}\texttt{()}\space\color{#7B1FA2}\mathbf{\texttt{->\ dict[str,\ str]:}}$ | System environment info, headers, configs | `{"region": "eastus"}` |
-| **4. Multi-Value Tuple** | $\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{calc\_tokens}\texttt{()}\space\color{#7B1FA2}\mathbf{\texttt{->\ tuple[int,\ float]:}}$ | Bundled return metrics (token count + dollar cost) | `(500, 0.01)` |
-| **5. Nullable / Optional** | $\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{find\_tool}\texttt{()}\space\color{#7B1FA2}\mathbf{\texttt{->\ str\ \|\ None:}}$ | Lookup operations that may return a missing record | `"Search"` or `None` |
+| **1. Side Effect Only** | $\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{save\_checkpoint}\texttt{()}\space\color{#7B1FA2}\texttt{->\ None:}$ | Logging, disk checkpointing, weights saving | `None` |
+| **2. Homogeneous List** | $\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{get\_model\_tiers}\texttt{()}\space\color{#7B1FA2}\texttt{->\ list[str]:}$ | Available LLM tier models, chunked sentences | `["gpt-4o", "o3-mini"]` |
+| **3. Structured Mapping** | $\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{get\_metadata}\texttt{()}\space\color{#7B1FA2}\texttt{->\ dict[str,\ str]:}$ | System environment info, headers, configs | `{"region": "eastus"}` |
+| **4. Multi-Value Tuple** | $\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{calc\_tokens}\texttt{()}\space\color{#7B1FA2}\texttt{->\ tuple[int,\ float]:}$ | Bundled return metrics (token count + dollar cost) | `(500, 0.01)` |
+| **5. Nullable / Optional** | $\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{find\_tool}\texttt{()}\space\color{#7B1FA2}\texttt{->\ str\ \|\ None:}$ | Lookup operations that may return a missing record | `"Search"` or `None` |
 
 ```python
 def save_checkpoint(step: int) -> None:
@@ -904,17 +904,17 @@ A `lambda` is a small, one-line anonymous function defined without a name:
 ```
 
 $$
-\overbrace{\color{#E53935}\mathbf{\texttt{lambda}}}^{\color{#B71C1C}\textsf{🔒\ 1.\ Anonymous\ Keyword}}\space\space
-\underbrace{\color{#00897B}\mathbf{\texttt{doc}}}_{\color{#004D40}\textsf{💻\ 2.\ Input\ Parameter}}\space
-\color{#37474F}\mathbf{\texttt{:}}\space\space
-\overbrace{\color{#7B1FA2}\mathbf{\texttt{doc["score"]}}}^{\color{#4A148C}\textsf{🎯\ 3.\ Single\ Expression\ (Implicitly\ Returned)}}
+\overbrace{\color{#E53935}\texttt{lambda}}^{\color{#B71C1C}\textsf{🔒\ 1.\ Anonymous\ Keyword}}\space\space
+\underbrace{\color{#00897B}\texttt{doc}}_{\color{#004D40}\textsf{💻\ 2.\ Input\ Parameter}}\space
+\color{#37474F}\texttt{:}\space\space
+\overbrace{\color{#7B1FA2}\texttt{doc["score"]}}^{\color{#4A148C}\textsf{🎯\ 3.\ Single\ Expression\ (Implicitly\ Returned)}}
 $$
 
 > 💡 *'Like a quick chai recipe: no teapot, no formal sit-down — just instant essence in a single line!'*
 
 | $\color{#546E7A}\textsf{\textbf{Sorting Operation}}$ | $\color{#0D47A1}\textsf{\textbf{Python Code Syntax}}$ | $\color{#00695C}\textsf{\textbf{How Lambda Operates as Key Extractor}}$ |
 | :--- | :--- | :--- |
-| **Descend by Relevance** | $\color{#0D47A1}\texttt{sorted(docs,\ key=}\color{#E53935}\mathbf{\texttt{lambda}}\space\color{#00897B}\texttt{d:\ }\color{#7B1FA2}\texttt{d["score"]}\color{#0D47A1}\texttt{,\ rev=True)}$ | Extracts `d["score"]` per item $\to$ compares values $\to$ yields `['doc_c', 'doc_a', 'doc_b']` |
+| **Descend by Relevance** | $\color{#0D47A1}\texttt{sorted(docs,\ key=}\color{#E53935}\texttt{lambda}\space\color{#00897B}\texttt{d:\ }\color{#7B1FA2}\texttt{d["score"]}\color{#0D47A1}\texttt{,\ rev=True)}$ | Extracts `d["score"]` per item $\to$ compares values $\to$ yields `['doc_c', 'doc_a', 'doc_b']` |
 
 ```python
 # Syntax: lambda parameter: expression
