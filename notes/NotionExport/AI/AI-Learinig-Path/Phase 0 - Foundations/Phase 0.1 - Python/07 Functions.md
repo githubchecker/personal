@@ -58,12 +58,12 @@ A function is like a blender: you put **ingredients in** (arguments), it does a 
 
 ```mermaid
 flowchart LR
-    A["🥕 <b>Arguments / Inputs</b><br/><code>Ingredients In</code>"] --> B["⚙️ <b>FUNCTION (The Blender)</b><br/><code>def execute_job()</code>"]
-    B --> C["🥤 <b>Return Value / Result</b><br/><code>Result Out</code>"]
+    A["🥕 Arguments / Inputs<br/>Ingredients In"] --> B["⚙️ FUNCTION (The Blender)<br/>def execute_job()"]
+    B --> C["🥤 Return Value / Result<br/>Result Out"]
 
-    style A fill:#E1F5FE,stroke:#0288D1,color:#01579B
-    style B fill:#FFF3E0,stroke:#F57C00,color:#E65100
-    style C fill:#E8F5E9,stroke:#388E3C,color:#1B5E20
+    style A fill:#E1F5FE,stroke:#0288D1,stroke-width:2px,color:#01579B
+    style B fill:#FFF3E0,stroke:#F57C00,stroke-width:2px,color:#E65100
+    style C fill:#E8F5E9,stroke:#388E3C,stroke-width:2px,color:#1B5E20
 ```
 
 ![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)

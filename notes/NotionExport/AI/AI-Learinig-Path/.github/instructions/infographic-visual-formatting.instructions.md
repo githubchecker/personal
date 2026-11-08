@@ -47,47 +47,60 @@ Every lesson must begin with a standardized 4-badge metadata row followed by the
 
 ---
 
-## 🏷️ 2. Section Headings (Zero Redundant Banners)
+## 🏷️ 2. Section Headings (Infographic Badges & Prominent Chapter Anchors)
 
-> [!IMPORTANT]
-> **No Redundant Section Badges Above Headings:**  
-> Never place duplicate Shields.io badges (such as `![Stage 1](...STAGE%201-THE%20SIMPLE%20IDEA...)`) immediately above section headings like `## 🎈 Stage 1 — The Simple Idea`. Having both repeats the title twice in a row, creates visual clutter, and causes unnecessary network requests.  
-> The colored KaTeX H2 header already serves as the definitive, high-contrast visual chapter anchor with its icon, colored square, and title.
-
-Every major section begins directly with its stylized KaTeX H2 header:
+Every major section begins with an executive Shields.io stage badge followed by its prominent `\Large` KaTeX H2 header:
 
 ```markdown
-## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
+![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
 
-## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
+## 🗺️ $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
-## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea}}$
+![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
 
-## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
+## 🔑 $\Large\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
 
-## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
+![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
 
-## ⚖️ $\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use}}$
+## 🎈 $\Large\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea}}$
 
-## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
+![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
 
-## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
+## ⚙️ $\Large\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
 
-## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
+![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
+
+## 🚀 $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
+
+![Variations](https://img.shields.io/badge/COMPARISON-VARIATIONS%20%26%20WHEN%20TO%20USE-00838F?style=for-the-badge&logo=scales&logoColor=white)
+
+## ⚖️ $\Large\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use}}$
+
+![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
+
+## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
+
+![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
+
+## 📌 $\Large\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
+
+![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
+
+## 🛑 $\Large\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 ```
 
 ---
 
-## 🔠 3. Colored Headings & Subheadings (KaTeX Typography)
+## 🔠 3. Colored Headings & Subheadings (KaTeX Typography & Sizing)
 
-Use KaTeX math formulas within Markdown headers. Always wrap title text in `\textsf{...}` to use a clean sans-serif font rather than italicized math variables:
+Use KaTeX math formulas within Markdown headers. Always wrap title text in `\textsf{...}` to use a clean sans-serif font rather than italicized math variables. Use `\Large` for H2 chapter anchors and `\large` for H3 subsections:
 
 ```markdown
 # $\Huge\color{#0D47A1}{\textsf{Master Title Here}}$
 
-## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
+## 🗺️ $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1.1 Subsection Title Here}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1.1 Subsection Title Here}}$
 
 #### $\color{#4527A0}\blacklozenge\space\color{#283593}{\textsf{(a) Detailed Step / Variation Here}}$
 ```
@@ -98,11 +111,15 @@ Use KaTeX math formulas within Markdown headers. Always wrap title text in `\tex
 >    GitHub's markdown pre-processor converts `&` into `&amp;` *before* KaTeX runs. KaTeX chokes on the `&` in `&amp;` and displays a fatal red error box: `'&' can not be used here`. **Always use the plain English word `and` instead of `&` inside all KaTeX blocks.**
 > 2. **NEVER use math inside HTML tags (like `<summary>...</summary>`):**  
 >    GitHub treats raw HTML elements literally and does NOT parse math inside `<summary>`, `<details>`, `<div>`, or `<span>`. Putting `$\color{...}$` inside `<summary>` prints the raw unrendered LaTeX string. Keep `<summary>` in clean bold Markdown (e.g., `<summary><b>🔍 Click to Reveal...</b></summary>`), and place KaTeX inside the dropdown body after a blank line.
-> 3. **Avoid `%` and `_` inside math text:**  
->    LaTeX treats `%` as comments and Markdown treats `_` as italics. Use plain words (e.g., `percent`) or keep them outside `$ ... $`.
-> 4. **Always wrap words in `\textsf{...}`:**  
+> 3. **NEVER wrap `\texttt` inside `\mathbf` or `\textbf`:**  
+>    Computer Modern Typewriter has no bold font metrics in KaTeX (`Font metrics not found for font: Typewriter-Bold`). To style code keywords or parameters, use `\color{#HEX}\texttt{...}` alone.
+> 4. **ALWAYS escape underscores inside `\textsf` and `\texttt`:**  
+>    In KaTeX math mode, unescaped underscores trigger `'_' allowed only in math mode`. Write `\_` instead (e.g. `\texttt{max\_words}`, `\textsf{\__init\__}`).
+> 5. **KEEP Emojis OUTSIDE math blocks:**  
+>    Unicode emojis do not exist in KaTeX font metrics and cause symbol metric warnings or rendering glitches. Place emojis in standard markdown outside `$...$` (e.g. `## 🎈 $\Large...$`).
+> 6. **Always wrap words in `\textsf{...}`:**  
 >    To prevent math mode from rendering text as italicized algebra variables, wrap readable labels in `\textsf{...}`.
-> 5. **Use `\space` for spaces:**  
+> 7. **Use `\space` for spaces:**  
 >    Math mode collapses whitespace by default; insert `\space` between words outside `\text{...}`.
 
 ---

@@ -93,10 +93,10 @@ A **$\color{#2E7D32}{\textsf{virtual environment}}$** is a dedicated, self-conta
 
 ```mermaid
 flowchart LR
-    A["📄 <b>your_script.py</b><br/><code>Source Code (Plain Text)</code>"] --> B["⚙️ <b>Python Interpreter</b><br/><code>Checks Syntax & Parses Tokens</code>"]
-    B --> C["📦 <b>Bytecode (.pyc)</b><br/><code>Internal Compact Instructions</code>"]
-    C --> D["🚀 <b>PVM (Virtual Machine)</b><br/><code>Executes against CPU & RAM</code>"]
-    D --> E["🖥️ <b>System Output</b><br/><code>Printed Results / Actions</code>"]
+    A["📄 your_script.py<br/>Source Code (Plain Text)"] --> B["⚙️ Python Interpreter<br/>Checks Syntax & Parses Tokens"]
+    B --> C["📦 Bytecode (.pyc)<br/>Internal Compact Instructions"]
+    C --> D["🚀 PVM (Virtual Machine)<br/>Executes against CPU & RAM"]
+    D --> E["🖥️ System Output<br/>Printed Results / Actions"]
 
     style A fill:#E1F5FE,stroke:#0288D1,stroke-width:2px,color:#01579B
     style B fill:#FFF3E0,stroke:#F57C00,stroke-width:2px,color:#E65100
@@ -212,8 +212,8 @@ flowchart TD
     end
 
     subgraph Robust ["Isolated Sandboxes (With venv)"]
-        PA2["Project Alpha"] --> VENV_A[".venv-alpha/site-packages<br/><b>pydantic 1.10.13</b>"]
-        PB2["Project Beta"] --> VENV_B[".venv-beta/site-packages<br/><b>pydantic 2.8.2</b>"]
+        PA2["Project Alpha"] --> VENV_A[".venv-alpha/site-packages<br/>pydantic 1.10.13"]
+        PB2["Project Beta"] --> VENV_B[".venv-beta/site-packages<br/>pydantic 2.8.2"]
     end
 
     style Fragile fill:#FFEBEE,stroke:#D32F2F,stroke-width:2px,color:#B71C1C

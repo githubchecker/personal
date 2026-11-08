@@ -48,12 +48,12 @@ A **string** is an ordered sequence of characters — like beads on a string, ea
 flowchart LR
     subgraph OriginalNecklace ["Original String in Memory (Immutable)"]
         direction LR
-        B0["🔵 'P'<br/><code>idx 0</code>"] --- B1["🔵 'Y'<br/><code>idx 1</code>"] --- B2["🔵 'T'<br/><code>idx 2</code>"] --- B3["🔵 'H'<br/><code>idx 3</code>"] --- B4["🔵 'O'<br/><code>idx 4</code>"] --- B5["🔵 'N'<br/><code>idx 5</code>"]
+        B0["🔵 'P'<br/>idx 0"] --- B1["🔵 'Y'<br/>idx 1"] --- B2["🔵 'T'<br/>idx 2"] --- B3["🔵 'H'<br/>idx 3"] --- B4["🔵 'O'<br/>idx 4"] --- B5["🔵 'N'<br/>idx 5"]
     end
 
     subgraph NewNecklace ["Result of s.replace('P', 'J') (New Object)"]
         direction LR
-        NB0["🟢 'J'<br/><code>idx 0</code>"] --- NB1["🟢 'Y'<br/><code>idx 1</code>"] --- NB2["🟢 'T'<br/><code>idx 2</code>"] --- NB3["🟢 'H'<br/><code>idx 3</code>"] --- NB4["🟢 'O'<br/><code>idx 4</code>"] --- NB5["🟢 'N'<br/><code>idx 5</code>"]
+        NB0["🟢 'J'<br/>idx 0"] --- NB1["🟢 'Y'<br/>idx 1"] --- NB2["🟢 'T'<br/>idx 2"] --- NB3["🟢 'H'<br/>idx 3"] --- NB4["🟢 'O'<br/>idx 4"] --- NB5["🟢 'N'<br/>idx 5"]
     end
 
     OriginalNecklace -.->|Creates Fresh String| NewNecklace
@@ -110,10 +110,10 @@ Positions start at **0**. Negative positions count from the end (`-1` is the las
 ```mermaid
 flowchart LR
     subgraph PosIndices ["Positive Forward Indices (0-based)"]
-        P0["<b>P</b><br/><code>0</code>"] --- P1["<b>Y</b><br/><code>1</code>"] --- P2["<b>T</b><br/><code>2</code>"] --- P3["<b>H</b><br/><code>3</code>"] --- P4["<b>O</b><br/><code>4</code>"] --- P5["<b>N</b><br/><code>5</code>"]
+        P0["P<br/>0"] --- P1["Y<br/>1"] --- P2["T<br/>2"] --- P3["H<br/>3"] --- P4["O<br/>4"] --- P5["N<br/>5"]
     end
     subgraph NegIndices ["Negative Reverse Indices (-1 from right)"]
-        N0["<b>P</b><br/><code>-6</code>"] --- N1["<b>Y</b><br/><code>-5</code>"] --- N2["<b>T</b><br/><code>-4</code>"] --- N3["<b>H</b><br/><code>-3</code>"] --- N4["<b>O</b><br/><code>-2</code>"] --- N5["<b>N</b><br/><code>-1</code>"]
+        N0["P<br/>-6"] --- N1["Y<br/>-5"] --- N2["T<br/>-4"] --- N3["H<br/>-3"] --- N4["O<br/>-2"] --- N5["N<br/>-1"]
     end
 
     style PosIndices fill:#E1F5FE,stroke:#0288D1,color:#01579B

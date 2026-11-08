@@ -48,7 +48,7 @@ flowchart TD
     subgraph ListModel ["📦 Mutable Python List (Dynamic Egg Carton)"]
         direction LR
         L0["Slot 0: 'apple'"] --- L1["Slot 1: 'banana'"] --- L2["Slot 2: 'cherry'"]
-        L_ADD["➕ <code>.append('date')</code><br/>Expands in place!"] -.-> L2
+        L_ADD["➕ .append('date')<br/>Expands in place!"] -.-> L2
     end
 
     subgraph TupleModel ["🔒 Immutable Python Tuple (Sealed Gift Box)"]
@@ -369,13 +369,13 @@ name makes a second label for the **same** list in memory:
 ```mermaid
 flowchart TD
     subgraph MemorySpace ["Heap Memory Address Space"]
-        SharedList["📦 <b>Shared List Object: [1, 2, 3]</b><br/><code>Address: 0x501</code>"]
-        CopiedList["📦 <b>Independent Copy: [1, 2, 3]</b><br/><code>Address: 0x902</code>"]
+        SharedList["📦 Shared List Object: [1, 2, 3]<br/>Address: 0x501"]
+        CopiedList["📦 Independent Copy: [1, 2, 3]<br/>Address: 0x902"]
     end
 
-    VarA["Variable <b>a</b>"] --> SharedList
-    VarB["Variable <b>b = a</b> (Alias)"] --> SharedList
-    VarC["Variable <b>c = a.copy()</b>"] --> CopiedList
+    VarA["Variable a"] --> SharedList
+    VarB["Variable b = a (Alias)"] --> SharedList
+    VarC["Variable c = a.copy()"] --> CopiedList
 
     style MemorySpace fill:#F5F5F5,stroke:#9E9E9E,color:#212121
     style SharedList fill:#FFCDD2,stroke:#C62828,color:#B71C1C

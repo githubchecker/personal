@@ -59,12 +59,12 @@ print(age)        # 37
 ```mermaid
 flowchart LR
     subgraph Step1 ["Step 1: age = 36"]
-        Label1["🏷️ Name Tag: <b>age</b>"] --> Obj1["📦 <b>int: 36</b><br/><code>Address: 0x10A</code>"]
+        Label1["🏷️ Name Tag: age"] --> Obj1["📦 int: 36<br/>Address: 0x10A"]
     end
 
     subgraph Step2 ["Step 2: age = age + 1 (Reassignment)"]
-        Label2["🏷️ Name Tag: <b>age</b>"] --> Obj2["📦 <b>int: 37</b><br/><code>Address: 0x10B</code>"]
-        OldObj["📦 <b>int: 36</b><br/><code>Address: 0x10A (Garbage Collected)</code>"]
+        Label2["🏷️ Name Tag: age"] --> Obj2["📦 int: 37<br/>Address: 0x10B"]
+        OldObj["📦 int: 36<br/>Address: 0x10A (Garbage Collected)"]
     end
 
     style Step1 fill:#E8F5E9,stroke:#388E3C,color:#1B5E20
@@ -187,11 +187,11 @@ User input, environment variables, and API network payloads almost universally a
 
 ```mermaid
 flowchart LR
-    RAW["📄 <b>External Data (str)</b><br/><code>'42', '19.99', 'True'</code>"]
-    INT_NODE["🔢 <b>int()</b><br/><code>42 (Integer)</code>"]
-    FLOAT_NODE["📐 <b>float()</b><br/><code>19.99 (Decimal)</code>"]
-    BOOL_NODE["⚖️ <b>bool()</b><br/><code>True (Boolean)</code>"]
-    STR_OUT["📝 <b>Prompt / Log (str)</b><br/><code>str(...)</code>"]
+    RAW["📄 External Data (str)<br/>'42', '19.99', 'True'"]
+    INT_NODE["🔢 int()<br/>42 (Integer)"]
+    FLOAT_NODE["📐 float()<br/>19.99 (Decimal)"]
+    BOOL_NODE["⚖️ bool()<br/>True (Boolean)"]
+    STR_OUT["📝 Prompt / Log (str)<br/>str(...)"]
 
     RAW -->|int('42')| INT_NODE
     RAW -->|float('19.99')| FLOAT_NODE
@@ -406,13 +406,13 @@ This brings up one of the most important concepts in Python: **equality** vs **i
 ```mermaid
 flowchart TD
     subgraph MemorySpace ["Heap Memory Addresses"]
-        Obj1["<b>[1, 2, 3]</b><br/>Address: <code>0x101</code>"]
-        Obj2["<b>[1, 2, 3]</b><br/>Address: <code>0x202</code>"]
+        Obj1["[1, 2, 3]<br/>Address: 0x101"]
+        Obj2["[1, 2, 3]<br/>Address: 0x202"]
     end
 
-    VarA["Variable <b>a</b>"] --> Obj1
-    VarB["Variable <b>b</b>"] --> Obj2
-    VarC["Variable <b>c = a</b>"] --> Obj1
+    VarA["Variable a"] --> Obj1
+    VarB["Variable b"] --> Obj2
+    VarC["Variable c = a"] --> Obj1
 
     style MemorySpace fill:#F5F5F5,stroke:#9E9E9E,color:#212121
     style Obj1 fill:#E8F5E9,stroke:#388E3C,color:#1B5E20
