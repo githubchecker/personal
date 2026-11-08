@@ -9,8 +9,6 @@
 
 ---
 
-![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
-
 ## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 So far you've used data (lists, dicts) and behaviour (functions) separately. **OOP** bundles them together: a **class** packages related data *and* the functions that work on it into one reusable type. You'll mostly *use* classes that libraries provide (a `SentenceTransformer`, an `OpenAI` client, a Pydantic `BaseModel`), so understanding how they work makes every library click.
@@ -77,8 +75,6 @@ This lesson is split into **6 focused sub-modules**. Work through them in order 
 </details>
 
 ---
-
-![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
 
 ## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea }}$
 
@@ -184,8 +180,6 @@ class Embedder(Protocol):
 ```
 
 ---
-
-![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
 
 ## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 

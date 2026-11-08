@@ -9,8 +9,6 @@
 
 ---
 
-![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
-
 ## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 Basic Python gives you functions, loops, dictionaries, and classes. With those, you can write working scripts. But when you build **production AI pipelines, high-throughput retrieval systems (RAG), and autonomous agent networks**, standard patterns quickly hit hard engineering ceilings:
@@ -33,8 +31,6 @@ Basic Python gives you functions, loops, dictionaries, and classes. With those, 
 
 ---
 
-![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
-
 ## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
 
 - **Walrus Operator (`:=`)** — Assignment expression syntax that assigns a value to a variable *inside* an expression (e.g. inside an `if` or `while` condition) and evaluates it simultaneously.
@@ -52,8 +48,6 @@ Basic Python gives you functions, loops, dictionaries, and classes. With those, 
 *(For general terms, reference the shared [AI Terms — Plain-English Glossary](../../AI%20Terms%20-%20Plain%20English%20Glossary.md).)*
 
 ---
-
-![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
 
 ## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (Analogy: The High-Performance Racing Workshop)}}$
 
@@ -85,8 +79,6 @@ flowchart TD
 ```
 
 ---
-
-![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
 
 ## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
 
@@ -717,8 +709,6 @@ except AIPlatformError as e:
 
 ---
 
-![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
-
 ## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 In modern AI engineering, these advanced patterns combine to form the architecture of high-throughput RAG and Agent services:
@@ -758,8 +748,6 @@ In modern AI engineering, these advanced patterns combine to form the architectu
 
 ---
 
-![Variations](https://img.shields.io/badge/COMPARISON-VARIATIONS%20%26%20WHEN%20TO%20USE-00838F?style=for-the-badge&logo=scales&logoColor=white)
-
 ## ⚖️ $\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use}}$
 
 | Technique | Syntax | ✅ When to Use | 🚫 Avoid When | AI Architectural Trade-off |
@@ -776,8 +764,6 @@ In modern AI engineering, these advanced patterns combine to form the architectu
 
 ---
 
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
-
 ## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
 | What you see | Cause | Fix |
@@ -789,8 +775,6 @@ In modern AI engineering, these advanced patterns combine to form the architectu
 | Weak cache entry disappears immediately | Assigned an object without saving a strong reference variable: `cache['k'] = Object()` | Keep a strong reference variable alive in active memory while needed. |
 
 ---
-
-![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
 
 ## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
@@ -825,8 +809,6 @@ assert tensor.shape == (32, 768), "Shape mismatch"  # Internal invariant only!
 ```
 
 ---
-
-![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
 
 ## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 

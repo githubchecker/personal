@@ -9,16 +9,12 @@
 
 ---
 
-![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
-
 ## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 You constantly need to **transform** one collection into another ("uppercase every word", "keep
 only the long sentences"). **Comprehensions** are Python's concise, idiomatic way to do this in one
 line. **Generators** do the same lazily — one item at a time — which is how you handle huge or
 streaming data (like tokens arriving from an LLM) without running out of memory.
-
-![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
 
 ## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
 
@@ -29,8 +25,6 @@ streaming data (like tokens arriving from an LLM) without running out of memory.
 - **`yield`** — hands out one value and pauses the function until the next request.
 - **Iterator** — anything you can step through with a `for` loop / `next()`.
 - **Lazy** — computed only when needed, not all upfront.
-
-![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
 
 ## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (analogy: an assembly line)}}$
 
@@ -63,8 +57,6 @@ flowchart TD
 
 **The "Aha!":** comprehension = build the whole new list now; generator = produce items
 on-demand, one at a time.
-
-![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
 
 ## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
 
@@ -349,8 +341,6 @@ total = sum(squares)     # streams through them; constant memory
 **iterator** — anything you can step through with `next()` / a `for` loop. Generators are
 iterators you create easily; `for` loops quietly call `next()` until the items run out.
 
-![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
-
 ## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 Comprehensions are the everyday way to clean and reshape data: `[chunk.strip() for chunk in chunks
@@ -372,8 +362,6 @@ build in Phase 1.
 From `words = ["  Ada ", "", "Bo  ", "   "]`, use one comprehension to produce a clean list of
 non-empty, stripped names: `["Ada", "Bo"]`.
 
-![Variations](https://img.shields.io/badge/COMPARISON-VARIATIONS%20%26%20WHEN%20TO%20USE-00838F?style=for-the-badge&logo=scales&logoColor=white)
-
 ## ⚖️ $\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use}}$
 
 | Construct | Syntax | ✅ When to Use | 🚫 Avoid When | Production AI Example |
@@ -382,8 +370,6 @@ non-empty, stripped names: `["Ada", "Bo"]`.
 | **Generator Expression** | `(f(x) for x in data)` | Massive collections, infinite streams, or 1-pass pipelines | You need indexing (`gen[0]`), length (`len(gen)`), or multiple passes | Streaming tokens, processing 10GB log files |
 | **Traditional `for` Loop** | `for x in data: ...` | Complex multi-step mutations, early `break`/`continue`, error handling | Simple 1-line mapping or filtering (unnecessarily verbose) | Agent step-by-step reasoning cycle |
 | **`map()` / `filter()`** | `map(func, data)` | Passing pre-existing functions without writing a lambda | Writing inline expressions (comprehensions are cleaner) | Functional pipelines |
-
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
 
 ## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
@@ -396,8 +382,6 @@ non-empty, stripped names: `["Ada", "Bo"]`.
 | Pipeline hangs / slow latency | Called synchronous network/LLM API inside a comprehension | Comprehensions are sequential; use `asyncio.gather` for concurrent API calls |
 | Comprehension is unreadable | Crammed too much logic into one line | Refactor into a helper function or write a standard `for` loop |
 
-![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
-
 ## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
 ```python
@@ -409,8 +393,6 @@ def gen():
     yield 1
     yield 2                           # generator function
 ```
-
-![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
 
 ## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 

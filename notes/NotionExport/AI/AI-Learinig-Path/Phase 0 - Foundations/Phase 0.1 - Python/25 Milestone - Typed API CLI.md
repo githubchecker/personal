@@ -193,8 +193,6 @@ python main.py
 - Break the URL (typo the host) and watch `tenacity` retry 3 times, then raise a `TodoError`.
 - Change a `Todo` field type (e.g. `id: bool`) and see a Pydantic `ValidationError` at the boundary.
 
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
-
 ## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$ (running this milestone)
 
 | What you see | Cause | Fix |

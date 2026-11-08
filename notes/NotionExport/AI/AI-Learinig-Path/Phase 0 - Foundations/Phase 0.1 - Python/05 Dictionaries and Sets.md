@@ -9,8 +9,6 @@
 
 ---
 
-![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
-
 ## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 > [!IMPORTANT]
@@ -21,8 +19,6 @@
 
 * $\color{#0288D1}\blacktriangleright$ **$\color{#01579B}{\textsf{Builds on:}}$** [04 Lists and Tuples](04%20Lists%20and%20Tuples.md) — collections, mutability, and immutability.
 * $\color{#00897B}\blacktriangleright$ **$\color{#004D40}{\textsf{Unlocks:}}$** [06 Control Flow](06%20Control%20Flow.md), JSON API serialization, Pydantic schemas, and document chunk deduplication.
-
-![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
 
 ## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
 
@@ -35,8 +31,6 @@
 | $\color{#E65100}\mathbf{frozenset}$ | An immutable, hashable version of a set that cannot be altered after creation. |
 | $\color{#4A148C}\mathbf{Hashable}$ | An object with a fixed hash code that never changes over its lifetime. |
 | $\color{#00838F}\mathbf{Membership}$ | Instant $O(1)$ test checking whether an item exists: `x in collection`. |
-
-![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
 
 ## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (Analogy: Real Dictionary and Marble Bag)}}$
 
@@ -78,8 +72,6 @@ flowchart LR
 > 🟢 Mutable:   list  ──►  set
 > 🟣 Immutable: tuple ──►  frozenset
 > ```
-
-![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
 
 ## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
 
@@ -593,8 +585,6 @@ print(role_permissions[user_claims])       # 'Editor'
 groups = {frozenset([1, 2]), frozenset([3, 4])}
 ```
 
-![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
-
 ## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 Dicts are the backbone of AI code: an LLM message is `{"role": "user", "content": "..."}`, API
@@ -634,8 +624,6 @@ Build a dict `inventory = {"apples": 3, "pears": 5}`. Safely print the count of 
 if absent, then add 2 bananas, then print all item→count pairs.
 Then create a `frozenset` of your favorite AI tools and test if `"python"` is inside.
 
-![Variations](https://img.shields.io/badge/COMPARISON-VARIATIONS%20%26%20WHEN%20TO%20USE-00838F?style=for-the-badge&logo=scales&logoColor=white)
-
 ## ⚖️ $\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use (Dictionary and Set Efficiency Guide)}}$
 
 ### Dictionary Operations
@@ -666,8 +654,6 @@ Then create a `frozenset` of your favorite AI tools and test if `"python"` is in
 | **Symmetric Diff** | `s1 ^ s2` | `s1.symmetric_difference(iter)` | ❌ New set | $O(n+m)$ | Items in either set, but **not in both** (exclusive items) | Detecting configuration drift between two agent versions |
 | **Membership** | `x in s` | — | ❌ Read-only | $O(1)$ | Checking presence in constant time | Fast duplicate check before invoking an expensive LLM |
 
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
-
 ## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
 | What you see | Cause | Fix |
@@ -684,8 +670,6 @@ Then create a `frozenset` of your favorite AI tools and test if `"python"` is in
 | `KeyError: 'pop from an empty set'` | Called `s.pop()` on an empty set | Check `if s:` before calling `.pop()` |
 | `TypeError: unsupported operand type(s) for &: 'set' and 'list'` | Operator used with non-set | Convert non-set to set (`s & set(lst)`) or use method `s.intersection(lst)` |
 | Loop gives keys, not values | `for x in d:` yields **keys** | Use `d.items()` (pairs) or `d.values()` |
-
-![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
 
 ## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
@@ -724,8 +708,6 @@ fs = frozenset([1, 2])             # valid dict key or set item
 # Dict values: any object; Dict keys & Sets: require hashable objects
 # @dataclass(frozen=True) collapses duplicates in sets by value (default class hashes by id)
 ```
-
-![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
 
 ## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 

@@ -9,8 +9,6 @@
 
 ---
 
-![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
-
 ## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 > [!IMPORTANT]
@@ -28,8 +26,6 @@
 
 ---
 
-![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
-
 ## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
 
 | $\color{#4A148C}\textsf{\textbf{Term}}$ | $\color{#00695C}\textsf{\textbf{One-Line Meaning}}$ |
@@ -45,8 +41,6 @@
 | $\color{#E65100}\mathbf{site-packages}$ | The specific folder inside Python (or inside a `venv`) where downloaded third-party libraries live. |
 
 ---
-
-![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
 
 ## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea}}$
 
@@ -78,8 +72,6 @@ A **$\color{#2E7D32}{\textsf{virtual environment}}$** is a dedicated, self-conta
 * $\color{#2E7D32}\bullet$ Neither knows the other exists. If you destroy Project B's toolbox, Project A is completely untouched.
 
 ---
-
-![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
 
 ## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
 
@@ -416,8 +408,6 @@ check_status(True)
 
 ---
 
-![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
-
 ## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 In production AI development, virtual environment hygiene is the difference between reliable systems and untraceable bugs:
@@ -428,8 +418,6 @@ In production AI development, virtual environment hygiene is the difference betw
 
 ---
 
-![Variations](https://img.shields.io/badge/COMPARISON-VARIATIONS%20%26%20WHEN%20TO%20USE-00838F?style=for-the-badge&logo=scales&logoColor=white)
-
 ## ⚖️ $\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use}}$
 
 | $\color{#0D47A1}\textsf{\textbf{Tool}}$ | $\color{#00C853}\textsf{\textbf{Production Priority}}$ | $\color{#00695C}\textsf{\textbf{What It Is}}$ | $\color{#2E7D32}\textsf{\textbf{✅ When to Use It}}$ | $\color{#D32F2F}\textsf{\textbf{🚫 When to Avoid It}}$ |
@@ -439,8 +427,6 @@ In production AI development, virtual environment hygiene is the difference betw
 | **`conda`** | `⚪ Reference (Legacy / C-Heavy)` | Multi-language environment and package manager | Heavy data science projects requiring complex non-Python C/Fortran/CUDA system libraries outside Python. | Standard web APIs, microservices, and general Python development (it is heavy and slow). |
 
 ---
-
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
 
 ## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
@@ -453,8 +439,6 @@ In production AI development, virtual environment hygiene is the difference betw
 | `python: can't open file 'main.py': No such file or directory` | Your terminal current working directory is not the project folder | Run `pwd` or `dir` to verify directory; `cd` to the directory containing `main.py`. |
 
 ---
-
-![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
 
 ## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
@@ -480,8 +464,6 @@ deactivate
 ```
 
 ---
-
-![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
 
 ## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 

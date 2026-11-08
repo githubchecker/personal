@@ -9,8 +9,6 @@
 
 ---
 
-![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
-
 ## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 This lesson explains the mysterious `@something` lines you'll see above functions in every AI
@@ -18,8 +16,6 @@ framework (FastAPI routes, `@tool`, `tenacity` retries). To understand decorator
 two ideas: functions are **values** you can pass around, and a function can **remember** variables
 from where it was created (a **closure**). This is the most "advanced" core-Python topic — take it
 slowly.
-
-![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
 
 ## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
 
@@ -29,8 +25,6 @@ slowly.
 - **Decorator** — a function that wraps another to add behaviour, applied with `@name`.
 - **Wrapper** — the inner function a decorator returns.
 - **`functools.wraps`** — keeps the original function's name and docstring on the wrapper.
-
-![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
 
 ## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (analogy: gift-wrapping)}}$
 
@@ -53,8 +47,6 @@ flowchart LR
     Target --> Post["Decorator Post-execution<br/>(e.g., stop timer, log outcome)"]:::wrap
     Post --> ReturnVal(["Return result to caller"]):::client
 ```
-
-![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
 
 ## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
 
@@ -191,8 +183,6 @@ would wrongly say `"wrapper"`).
 | **Parametrized Decorator** | `@retry(max_retries=3)` | Factory returning decorator | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | Exponential backoff retry loops on LLM API rate limits (`429`) |
 | **Caching / Memoization** | `@functools.lru_cache` | In-memory lookup table | $\color{#FFB300}\blacksquare\ \textbf{Occasional}$ | Caching expensive embedding computations or static prompt templates |
 
-![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
-
 ## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 You won't write many decorators, but you'll **use** them constantly:
@@ -218,8 +208,6 @@ real-world code.
 Write a `timed` decorator that prints how long the wrapped function took (use
 `import time; start = time.perf_counter()` before the call and the difference after).
 
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
-
 ## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
 | What you see | Cause | Fix |
@@ -228,8 +216,6 @@ Write a `timed` decorator that prints how long the wrapped function took (use
 | Decorated function breaks on some arguments | Wrapper didn't accept `*args, **kwargs` | Define `def wrapper(*args, **kwargs)` |
 | `func.__name__` shows `'wrapper'` | Missing `@functools.wraps` | Add `@functools.wraps(func)` to the wrapper |
 | Your logic runs once, not per call | Code placed outside `wrapper` | Put per-call logic **inside** `wrapper` |
-
-![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
 
 ## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
@@ -247,8 +233,6 @@ def logged(func):
 @logged                       # same as: add = logged(add)
 def add(a, b): return a + b
 ```
-
-![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
 
 ## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 

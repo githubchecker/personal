@@ -9,8 +9,6 @@
 
 ---
 
-![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
-
 ## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 When you write Python, you don't start with a blank slate. Python ships with dozens of **built-in functions** directly baked into the interpreter's innermost core. You never have to `import` them, and because they are implemented in low-level C, they execute faster than custom Python code.
@@ -28,8 +26,6 @@ Without these built-in primitives, everyday programming is painful: you would wr
 
 ---
 
-![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
-
 ## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
 
 - **Built-in** — a function always loaded into Python memory that can be called anywhere without an `import` statement.
@@ -45,8 +41,6 @@ Without these built-in primitives, everyday programming is painful: you would wr
 *(For general terms, reference the shared [AI Terms — Plain-English Glossary](../../AI%20Terms%20-%20Plain%20English%20Glossary.md).)*
 
 ---
-
-![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
 
 ## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (Analogy: The Built-in Toolbelt)}}$
 
@@ -76,8 +70,6 @@ flowchart TD
 **The "Aha!" Insight:** Don't reinvent what Python already solved in C. Whenever you find yourself writing a manual loop to match two lists, count iterations, check if all items meet a rule, or format numbers, Python has a dedicated built-in that does it in one line, faster and safer.
 
 ---
-
-![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
 
 ## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
 
@@ -1567,8 +1559,6 @@ except NameError as e:
 
 ---
 
-![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
-
 ## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 In modern AI engineering, these built-ins operate together in every agent framework and inference service:
@@ -1602,8 +1592,6 @@ In modern AI engineering, these built-ins operate together in every agent framew
 
 ---
 
-![Variations](https://img.shields.io/badge/COMPARISON-VARIATIONS%20%26%20WHEN%20TO%20USE-00838F?style=for-the-badge&logo=scales&logoColor=white)
-
 ## ⚖️ $\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use}}$
 
 | Problem / Task | Preferred Built-in | Competing Approach | When to Pick the Built-in | AI Architectural Trade-off |
@@ -1625,8 +1613,6 @@ In modern AI engineering, these built-ins operate together in every agent framew
 
 ---
 
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
-
 ## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
 | What you see | Cause | Fix |
@@ -1640,8 +1626,6 @@ In modern AI engineering, these built-ins operate together in every agent framew
 | Tokens appear all at once, not streaming | Terminal buffer holds tokens until newline | Add `flush=True` to your `print()` statement. |
 
 ---
-
-![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
 
 ## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
@@ -1682,8 +1666,6 @@ data = ast.literal_eval(raw_llm_str)    # Safely parses dict/list string; NO cod
 - **Always `flush=True`** when streaming tokens to terminal or UI without newlines.
 
 ---
-
-![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
 
 ## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 

@@ -9,8 +9,6 @@
 
 ---
 
-![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
-
 ## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 > [!IMPORTANT]
@@ -21,8 +19,6 @@
 
 * $\color{#0288D1}\blacktriangleright$ **$\color{#01579B}{\textsf{Builds on:}}$** [03 Strings In Depth](03%20Strings%20In%20Depth.md) — 0-based indexing and slicing mechanics.
 * $\color{#00897B}\blacktriangleright$ **$\color{#004D40}{\textsf{Unlocks:}}$** [05 Dictionaries and Sets](05%20Dictionaries%20and%20Sets.md), Comprehensions, and batch vector representations in PyTorch/NumPy.
-
-![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
 
 ## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
 
@@ -36,8 +32,6 @@
 | $\color{#00838F}\mathbf{Array}$ | A sequence storing raw, single-typed contiguous numbers (e.g. NumPy / `array.array`). |
 | $\color{#00695C}\mathbf{Unpacking}$ | Extracting elements directly into individual variables (`x, y = point`). |
 | $\color{#2E7D32}\mathbf{Rest\space Operator\space (*)}$ | Collecting all leftover elements during unpacking into a list (`first, *rest = items`). |
-
-![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
 
 ## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (Analogy: Egg Carton vs. Sealed Gift Box)}}$
 
@@ -68,8 +62,6 @@ flowchart TD
 > Lists are **mutable** (changeable in place), tuples are **immutable** (fixed). You pick based on whether the data should be allowed to change:
 > * $\color{#00C853}\blacktriangleright$ **Use a List** when collecting data that grows, shrinks, or reorders (tokens, chat history, search hits).
 > * $\color{#512DA8}\blacktriangleright$ **Use a Tuple** for fixed-dimension records, function return pairs, coordinate points, and tensor shapes `(batch_size, seq_len, dim)`. Because tuples are immutable, they are **hashable** and can serve as dictionary keys.
-
-![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
 
 ## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
 
@@ -741,8 +733,6 @@ doc_tuple[0].text = "Updated Title"
 print(doc_tuple[0].text)               # 'Updated Title' — the inner object mutated!
 ```
 
-![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
-
 ## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 AI code is full of lists and tuples:
@@ -771,8 +761,6 @@ power production frameworks like **LangGraph**:
 ### Try it yourself
 Start with `scores = [70, 95, 60, 88]`. Print them sorted descending, and print the highest and
 lowest using one function that returns a tuple.
-
-![Variations](https://img.shields.io/badge/COMPARISON-VARIATIONS%20%26%20WHEN%20TO%20USE-00838F?style=for-the-badge&logo=scales&logoColor=white)
 
 ## ⚖️ $\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use (Efficiency and Decision Guide)}}$
 
@@ -803,8 +791,6 @@ A developer constantly chooses between these operations. Here is the exact perfo
 - **Convert when needed:** Use `list(t)` to edit a tuple, and `tuple(l)` to freeze and hash a list.
 - **Unpack with `*`:** Use `first, *rest = items` to cleanly split sequences without fragile index math.
 
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
-
 ## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
 Real messages you'll actually see, plus the silent gotchas:
@@ -824,8 +810,6 @@ Real messages you'll actually see, plus the silent gotchas:
 | *(no error)* items skipped when calling `.remove()` or `del` in `for` loop | Mutating a list while iterating shifts indices left under the advancing loop counter | Use a list comprehension `[x for x in items if ...]`, slice assignment `items[:] = ...`, or loop over a copy `items[:]` |
 | *(no error)* `editing b` also changes `a` | `b = a` aliases the **same** list | Copy: `b = a.copy()` (or `a[:]`, `list(a)`) |
 | *(no error)* `append([1, 2])` nests a list | `append` adds **one** item; you wanted the items | Use `extend([1, 2])` to add the items |
-
-![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
 
 ## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
@@ -867,8 +851,6 @@ t_merged = (1, 2) + (3, 4)          # tuple concat -> (1, 2, 3, 4)
 - **In place vs New list:** `.sort()` / `.reverse()` mutate in place · `sorted(nums)` / `nums[::-1]` return a new list.
 - **`+` vs `.extend()`:** `a + b` builds a new list (originals unchanged) · `a.extend(b)` (or `a += b`) mutates `a` in place.
 - **List vs Array:** list = general mixed collection · `array.array` = standard library typed C-array · NumPy `ndarray` = fast AI vector/matrix math (Lesson 15).
-
-![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
 
 ## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 

@@ -9,8 +9,6 @@
 
 ---
 
-![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
-
 ## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 > [!IMPORTANT]
@@ -21,8 +19,6 @@
 
 * $\color{#0288D1}\blacktriangleright$ **$\color{#01579B}{\textsf{Builds on:}}$** [02 Variables, Types and Operators](02%20Variables%20Types%20and%20Operators.md) and [05 Dictionaries and Sets](05%20Dictionaries%20and%20Sets.md) — boolean logic, comparisons, and iterating collections.
 * $\color{#00897B}\blacktriangleright$ **$\color{#004D40}{\textsf{Unlocks:}}$** [07 Functions](07%20Functions.md), [08 Comprehensions and Generators](08%20Comprehensions%20and%20Generators.md), and iterative AI Agent loops (ReAct pattern).
-
-![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
 
 ## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
 
@@ -35,8 +31,6 @@
 | $\color{#E65100}\mathbf{pass}$ | A syntax placeholder that does nothing; satisfies indentation rules. |
 | $\color{#2E7D32}\mathbf{Loop\space else}$ | Block running after `for`/`while` only if the loop finishes without `break`. |
 | $\color{#00838F}\mathbf{range}$ | Built-in sequence generator for iterating over number intervals. |
-
-![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
 
 ## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (Analogy: Recipe with Choices and Repeats)}}$
 
@@ -66,8 +60,6 @@ flowchart TD
 > [!IMPORTANT]
 > ### $\color{#512DA8}{\textsf{The "Aha!" Insight}}$
 > The **indented block** under an `if`/`for`/`while` is the body that those statements control. Indentation *is* the grouping structure — there are no curly braces `{}` or begin/end tokens.
-
-![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
 
 ## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
 
@@ -641,8 +633,6 @@ if current_state is AgentState.PLANNING:
 
 Use `match` when you'd otherwise write a long `if/elif` chain comparing one value to many options.
 
-![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
-
 ## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 Branching decides which model or tool to call; loops process every document chunk, retry failed
@@ -661,8 +651,6 @@ API calls, or drive an agent's "think → act → observe" cycle. Comfort with `
 ### $\color{#0D47A1}\blacktriangleright\space\color{#1565C0}{\textsf{Try It Yourself}}$
 Use a `for` loop and `range` to print only the even numbers from 1 to 20, then rewrite it using
 `continue` to skip odds.
-
-![Variations](https://img.shields.io/badge/COMPARISON-VARIATIONS%20%26%20WHEN%20TO%20USE-00838F?style=for-the-badge&logo=scales&logoColor=white)
 
 ## ⚖️ $\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use (Control Flow Decision Guide)}}$
 
@@ -689,8 +677,6 @@ Use a `for` loop and `range` to print only the even numbers from 1 to 20, then r
 | **Loop `else`** | `for/while ... break else:` | Running a fallback when search or retry loop completes without break | Loops without a `break` statement (`else` will always run) | Document lookup or API retry exhaustion |
 | **Safe guard `(items or [])`** | `for x in items or []:` | Fast inline guard against `None` or empty iterables | You need to log an explicit warning when input is `None` | Streaming token chunks from optional API fields |
 
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
-
 ## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
 | What you see | Cause | Fix |
@@ -703,8 +689,6 @@ Use a `for` loop and `range` to print only the even numbers from 1 to 20, then r
 | `TypeError: 'NoneType' object is not iterable` | Looped over `None` | Use `for x in (items or []):` or guard with `if items:` |
 | Program hangs forever | A `while` condition never becomes False | Make the loop variable move toward the exit |
 | `range(5)` gives `0..4`, not `1..5` | The `stop` value is excluded | Use `range(1, 6)` for 1–5 |
-
-![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
 
 ## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
@@ -728,8 +712,6 @@ match value:
     case "a": ...
     case _: ...                # catch-all (like else)
 ```
-
-![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
 
 ## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 

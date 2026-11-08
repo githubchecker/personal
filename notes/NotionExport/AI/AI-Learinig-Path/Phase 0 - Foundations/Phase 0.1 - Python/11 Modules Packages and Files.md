@@ -9,13 +9,9 @@
 
 ---
 
-![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
-
 ## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 No real application lives in a single file. As codebases grow, you organize logic into **modules** (individual `.py` files) and **packages** (directories of modules). You pull in battle-tested algorithms from Python's standard library and the broader AI ecosystem (`numpy`, `pydantic`, `openai`) using the **`import` system**. Alongside modular code, applications must persist data and talk to external systems — reading and writing files and serializing **JSON** (the universal data format of web and LLM APIs). This lesson connects project structure with file and data handling.
-
-![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
 
 ## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
 
@@ -31,8 +27,6 @@ No real application lives in a single file. As codebases grow, you organize logi
 - **Standard library** — Python's rich collection of built-in modules that require no external installation (`json`, `pathlib`, `os`, `sys`).
 - **Context manager (`with`)** — an object protocol (`__enter__` and `__exit__`) that guarantees deterministic resource cleanup (e.g. closing files or releasing locks), even if unhandled exceptions occur.
 - **Serialization** — converting in-memory Python objects (dicts, lists) into text or bytes (like JSON) to save to disk or send over a network.
-
-![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
 
 ## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (analogy: the workshop toolbox and shipping crates)}}$
 
@@ -57,8 +51,6 @@ flowchart TD
     SubDir --> Tool1["📄 web_search.py"]:::mod
     SubDir --> Tool2["📄 calculator.py"]:::mod
 ```
-
-![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
 
 ## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
 
@@ -829,8 +821,6 @@ if __name__ == "__main__":
 
 ---
 
-![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
-
 ## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 In real-world AI pipelines:
@@ -848,8 +838,6 @@ In real-world AI pipelines:
 ### $\color{#0D47A1}\blacktriangleright\space\color{#1565C0}{\textsf{Try It Yourself}}$
 Create a dictionary representing an AI agent's configuration (`model`, `temperature`, `max_tokens`). Serialize it to a file `agent_config.json` with an indent of 2. Then write a function with a `try/except` block that reads the file back, parses it using `json.load`, and prints the model name.
 
-![Variations](https://img.shields.io/badge/COMPARISON-VARIATIONS%20%26%20WHEN%20TO%20USE-00838F?style=for-the-badge&logo=scales&logoColor=white)
-
 ## ⚖️ $\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use}}$
 
 | Technique | Syntax | ✅ When to Use | 🚫 Avoid When | Production AI Example |
@@ -861,8 +849,6 @@ Create a dictionary representing an AI agent's configuration (`model`, `temperat
 | **Wildcard Import** | `from x import *` | Almost NEVER in application code | Production scripts, multi-dependency applications | Restricted to library `__init__.py` |
 | **`json.dumps` / `loads`**| `json.dumps(obj)` | Converting data to/from text strings in memory | Writing or reading directly to/from disk files | Sending prompt payloads to REST API |
 | **`json.dump` / `load`** | `json.dump(obj, f)` | Streaming directly to/from opened file descriptors | Working with strings received from network responses | Saving agent session checkpoints to disk |
-
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
 
 ## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
@@ -877,8 +863,6 @@ Create a dictionary representing an AI agent's configuration (`model`, `temperat
 | `UnicodeDecodeError: 'charmap' codec can't decode byte...` | Opened a file on Windows without specifying UTF-8 encoding | Always add `encoding="utf-8"`: `open(file, "r", encoding="utf-8")` |
 | `SyntaxError: 'from ... import *' used with...` | Wildcard import placed inside a function | Wildcard imports are only permitted at the top-level module scope |
 | Overwritten function / unexpected behavior | Two imports or a local variable share the exact same identifier | Use explicit module prefixes (`json.loads`) or `as` aliasing |
-
-![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
 
 ## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
@@ -918,8 +902,6 @@ with open("data.json", "r", encoding="utf-8") as f:
 if __name__ == "__main__":
     main()
 ```
-
-![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
 
 ## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 

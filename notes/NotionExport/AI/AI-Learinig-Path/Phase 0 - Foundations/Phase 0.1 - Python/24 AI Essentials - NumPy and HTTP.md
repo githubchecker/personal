@@ -9,8 +9,6 @@
 
 ---
 
-![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
-
 ## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 Two libraries appear in almost every AI program and bridge "plain Python" to "AI work":
@@ -47,8 +45,6 @@ flowchart TD
     style Pillar2 fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#BF360C
 ```
 
-![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
-
 ## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea }}$
 
 - **NumPy** turns lists of numbers into a high-speed **array** that does math on the *whole array at
@@ -65,8 +61,6 @@ web request. These two tools are how those ideas become code.
 > A **tensor** is just a grid of numbers (Module 0.2). The full list is in the
 > [AI Terms glossary](../../AI%20Terms%20-%20Plain%20English%20Glossary.md); each term below is also
 > defined the first time it appears.
-
-![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
 
 ## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
 
@@ -278,8 +272,6 @@ if not api_key:
 | **Env Var Secret Access** | `os.environ.get("API_KEY")` | Reads process environment table | Secure zero-leak credential provisioning | $\color{#00C853}\blacksquare\space\textsf{\textbf{Core (Daily)}}$ |
 
 
-![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
-
 ## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 The OpenAI SDK is a polished wrapper around exactly these HTTP calls; embeddings you'll store and
@@ -298,8 +290,6 @@ compare are NumPy arrays; the cosine-similarity function above is the literal he
 Use `requests.get` to fetch `https://jsonplaceholder.typicode.com/todos/2`, check the status is
 `200`, and print the `title`. Then compute the cosine similarity between `[1,0,1]` and `[1,1,1]`.
 
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
-
 ## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
 | What you see | Cause | Fix |
@@ -309,8 +299,6 @@ Use `requests.get` to fetch `https://jsonplaceholder.typicode.com/todos/2`, chec
 | `ModuleNotFoundError: numpy` | Not installed in this venv | `pip install numpy` |
 | Array maths is very slow | Looping in pure Python | Vectorize — operate on the whole NumPy array |
 | `JSONDecodeError` on `.json()` | Response wasn't the JSON you expected | Inspect the body; handle the error |
-
-![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
 
 ## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
@@ -323,8 +311,6 @@ r = requests.get(url, timeout=10); r.raise_for_status(); r.json()
 import httpx                                   # async version
 # async with httpx.AsyncClient() as c: await c.get(url)
 ```
-
-![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
 
 ## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 

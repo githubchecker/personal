@@ -9,13 +9,9 @@
 
 ---
 
-![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
-
 ## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 Real programs hit problems: an external API rate-limits your request, a network socket drops, a database times out, or an LLM returns malformed JSON instead of valid tool arguments. **Error handling** is how you anticipate failures and respond gracefully instead of letting the entire application crash. In AI engineering, where models, vector stores, and external APIs are inherently non-deterministic, robust error handling is the difference between a brittle prototype and a resilient production agent.
-
-![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
 
 ## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
 
@@ -29,8 +25,6 @@ Real programs hit problems: an external API rate-limits your request, a network 
 - **Custom exception** — a user-defined error class (subclassing `Exception`) that carries domain-specific metadata.
 - **EAFP** — "Easier to Ask Forgiveness than Permission": the Pythonic philosophy of trying an action and catching errors rather than running defensive checks beforehand.
 - **LBYL** — "Look Before You Leap": checking preconditions with `if` statements before attempting an operation.
-
-![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
 
 ## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (analogy: a circuit breaker and safety net)}}$
 
@@ -57,8 +51,6 @@ flowchart TD
     Else --> Finally
     Finally --> Out(["Resume Normal Program Flow"])
 ```
-
-![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
 
 ## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
 
@@ -342,8 +334,6 @@ except AgentError as err:
 
 In Python, **EAFP is idiomatic and often faster** when failures are rare. It also avoids race conditions (e.g. checking `os.path.exists()` before opening a file is vulnerable to another process deleting the file between the check and the open; EAFP handles it safely in `try/except`).
 
-![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
-
 ## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 In modern AI engineering:
@@ -360,8 +350,6 @@ In modern AI engineering:
 ### $\color{#0D47A1}\blacktriangleright\space\color{#1565C0}{\textsf{Try It Yourself}}$
 Write a custom exception `TokenLimitExceededError` that stores `current_tokens` and `max_tokens`. Write a function `validate_prompt(text: str, max_tokens: int = 100)` that splits `text` into words; if word count exceeds `max_tokens`, raise your custom exception. Catch it and print a helpful alert.
 
-![Variations](https://img.shields.io/badge/COMPARISON-VARIATIONS%20%26%20WHEN%20TO%20USE-00838F?style=for-the-badge&logo=scales&logoColor=white)
-
 ## ⚖️ $\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use}}$
 
 | Technique | Syntax | ✅ When to Use | 🚫 Avoid When | Production AI Example |
@@ -374,8 +362,6 @@ Write a custom exception `TokenLimitExceededError` that stores `current_tokens` 
 | **Chained `raise ... from`**| `raise DomainErr from err`| Translating low-level library errors into clear application exceptions | Internal code where original exception is already self-explanatory | Wrapping `requests.HTTPError` in `LLMProviderError` |
 | **Custom Exception** | `class MyErr(Exception):` | Defining domain-specific errors with rich metadata (`status_code`, `model`)| A built-in exception (`ValueError`, `KeyError`) fits perfectly | `ContextWindowExceededError(limit=8192)` |
 
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
-
 ## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
 | What you see | Cause | Fix |
@@ -386,8 +372,6 @@ Write a custom exception `TokenLimitExceededError` that stores `current_tokens` 
 | `TypeError: catching classes that do not inherit from BaseException` | Tried to catch an object that isn't an exception class | Ensure custom exception inherits from `Exception` |
 | `NameError` inside `finally` block | Variable initialized inside `try` failed before assignment | Initialize the variable to `None` before the `try` block |
 | Original error cause lost in logs | Re-raised a new error without `from` | Use `raise CustomError("msg") from err` |
-
-![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
 
 ## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
@@ -425,8 +409,6 @@ except Exception as err:
     log_alert(err)
     raise                              # re-raises original error upward
 ```
-
-![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
 
 ## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 

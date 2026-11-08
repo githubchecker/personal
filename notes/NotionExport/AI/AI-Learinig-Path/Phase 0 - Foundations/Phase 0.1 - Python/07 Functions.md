@@ -9,8 +9,6 @@
 
 ---
 
-![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
-
 ## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 > [!IMPORTANT]
@@ -21,8 +19,6 @@
 
 * $\color{#0288D1}\blacktriangleright$ **$\color{#01579B}{\textsf{Builds on:}}$** [06 Control Flow](06%20Control%20Flow.md) — execution blocks, variable scoping, and conditional returns.
 * $\color{#00897B}\blacktriangleright$ **$\color{#004D40}{\textsf{Unlocks:}}$** [08 Comprehensions and Generators](08%20Comprehensions%20and%20Generators.md), [09 Decorators and Closures](09%20Decorators%20and%20Closures.md), and AI Tool Calling (structured schemas for LLMs).
-
-![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
 
 ## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
 
@@ -46,8 +42,6 @@
 - **`nonlocal` keyword** — binds a variable in a nested function to the nearest enclosing (outer) function's scope, neither local nor global.
 - **Mutable default trap** — the bug where a mutable default object (`[]` or `{}`) is shared across all function calls.
 
-![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
-
 ## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (Analogy: A Kitchen Appliance)}}$
 
 A function is like a blender: you put **ingredients in** (arguments), it does a defined **job** (the body), and it hands you a **result out** (the return value). Once built, you reuse it endlessly without caring about the internal wiring — you just feed it inputs and take the output.
@@ -65,8 +59,6 @@ flowchart LR
     style B fill:#FFF3E0,stroke:#F57C00,color:#E65100
     style C fill:#E8F5E9,stroke:#388E3C,color:#1B5E20
 ```
-
-![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
 
 ## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
 
@@ -931,8 +923,6 @@ sorted_docs = sorted(documents, key=lambda doc: doc["score"], reverse=True)
 print([d["id"] for d in sorted_docs])  # ['doc_c', 'doc_a', 'doc_b']
 ```
 
-![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
-
 ## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 In modern AI engineering:
@@ -951,8 +941,6 @@ In modern AI engineering:
 ### $\color{#0D47A1}\blacktriangleright\space\color{#1565C0}{\textsf{Try It Yourself}}$
 Write a function `build_prompt(template: str, *, system_role: str = "Assistant", **variables)` that formats `template` with `variables`, ensuring `system_role` cannot be passed positionally. Test skipping `system_role` while passing custom variables.
 
-![Variations](https://img.shields.io/badge/COMPARISON-VARIATIONS%20%26%20WHEN%20TO%20USE-00838F?style=for-the-badge&logo=scales&logoColor=white)
-
 ## ⚖️ $\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use (Function Argument Decision Guide)}}$
 
 | Technique | Syntax | ✅ When to Use | 🚫 Avoid When | Production AI Example |
@@ -965,8 +953,6 @@ Write a function `build_prompt(template: str, *, system_role: str = "Assistant",
 | **`*args` (Var Positional)** | `def f(*items):` | Accepting arbitrary sequences of similar items | Fixed inputs where each position has a different role | `merge_documents(*doc_lists)` |
 | **`**kwargs` (Var Keyword)** | `def f(**config):` | Passing through unknown options to underlying libraries / APIs | The function requires specific, strictly validated inputs | Forwarding kwargs to OpenAI API client |
 | **`lambda`** | `lambda x: x + 1` | Short, disposable 1-line transformation passed to `sorted()`, `map()` | Multi-step logic, error handling, or reusable functions | `sorted(chunks, key=lambda c: c.score)` |
-
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
 
 ## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
@@ -982,8 +968,6 @@ Write a function `build_prompt(template: str, *, system_role: str = "Assistant",
 | `TypeError: f() missing 1 required positional argument` | Called a function without providing a non-default parameter | Supply the required argument, or define a default value |
 | Default list/dict accumulates data across calls | Used a mutable object (`[]` or `{}`) as a default parameter | Use sentinel `None` (`param=None`) and initialize `param = []` inside |
 | Function returns `None` unexpectedly | Forgot the `return` keyword (only used `print`) | Add `return result` to hand the value back to the caller |
-
-![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
 
 ## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
@@ -1038,8 +1022,6 @@ wrapper(my_func, *items, **opts)                           # unpack list to *arg
 # 10. Lambda:
 get_score = lambda x: x["score"]                           # 1-expression inline function
 ```
-
-![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
 
 ## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 

@@ -9,16 +9,12 @@
 
 ---
 
-![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
-
 ## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 Python lets you *optionally* label what type each value should be. These **type hints** make code
 readable and catch mistakes early. **Pydantic** takes hints further: it actually **validates** data
 against them at runtime — essential when data comes from the messy outside world (users, APIs,
 LLMs). This lesson is the bridge from "plain Python" to "production AI plumbing."
-
-![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
 
 ## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
 
@@ -27,8 +23,6 @@ LLMs). This lesson is the bridge from "plain Python" to "production AI plumbing.
 - **Pydantic model** — a class that *validates* incoming data against its fields.
 - **Validation** — checking data is correct and rejecting bad values.
 - **Coercion** — auto-converting a value where sensible (`"36"` → `36`).
-
-![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
 
 ## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (analogy: labels on storage bins)}}$
 
@@ -55,8 +49,6 @@ flowchart LR
         P1 --> Gate["Strict Runtime Gate<br/>Coerces valid types, rejects malformed payloads, raises ValidationError"]:::runtime
     end
 ```
-
-![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
 
 ## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
 
@@ -187,8 +179,6 @@ class Settings(BaseSettings):
 
 This is the clean, validated way to load configuration/secrets — no hardcoding keys.
 
-![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
-
 ## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 Pydantic is everywhere in AI Python: FastAPI uses it to validate web requests (Phase 1), the
@@ -209,8 +199,6 @@ data inside" is the habit that keeps AI systems robust.
 Define a Pydantic `Product` model with `name: str`, `price: float` (must be `> 0`), and
 `tags: list[str] = []`. Try creating one with `price=-5` and read the error message.
 
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
-
 ## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
 | What you see | Cause | Fix |
@@ -219,8 +207,6 @@ Define a Pydantic `Product` model with `name: str`, `price: float` (must be `> 0
 | `ValidationError` | Data didn't match the model | Read which field failed; fix the input |
 | `ImportError: pydantic_settings` | Package not installed | `pip install pydantic-settings` |
 | Secret sitting in source code | Hardcoded API key | Load via env var / `BaseSettings` |
-
-![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
 
 ## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
@@ -234,8 +220,6 @@ class User(BaseModel):
 u = User(name="Ada", age="36")     # validates + coerces "36" -> 36
 u.model_dump(); u.model_dump_json()
 ```
-
-![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
 
 ## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 
