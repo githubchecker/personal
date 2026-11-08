@@ -11,7 +11,7 @@
 
 ![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
 
-## 🗺️ $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
+## 🗺️ $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Mental Model Overview}}$
 
 > [!IMPORTANT]
 > ### $\color{#512DA8}{\textsf{The Core Premise}}$
@@ -24,7 +24,7 @@
 
 ![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
 
-## 🔑 $\Large\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
+## 🔑 $\Large\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{Core Terminology}}$
 
 - **Function** — a named, reusable block of code defined with `def`.
 - **Parameter** — the variable name listed in the function definition (the input slot).
@@ -48,7 +48,7 @@
 
 ![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
 
-## 🎈 $\Large\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (Analogy: A Kitchen Appliance)}}$
+## 🎈 $\Large\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{The Kitchen Appliance Analogy}}$
 
 A function is like a blender: you put **ingredients in** (arguments), it does a defined **job** (the body), and it hands you a **result out** (the return value). Once built, you reuse it endlessly without caring about the internal wiring — you just feed it inputs and take the output.
 
@@ -68,7 +68,7 @@ flowchart LR
 
 ![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
 
-## ⚙️ $\Large\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
+## ⚙️ $\Large\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Core Mechanics: Definition, Scopes, and Signatures}}$
 
 > [!IMPORTANT]
 > ### 🔥 $\color{#00C853}{\textsf{The 80/20 Core Rule: What Matters in Production}}$
@@ -90,11 +90,11 @@ $$
 
 ```python
 def greet(name: str) -> str:
-    return f"Hello, {name}!"        # "return" hands value back to caller
+    return f"Hello, {name}!"
 
-message = greet("Ada")              # Call with concrete argument "Ada"
-print(message)                      # 'Hello, Ada!'
-print(greet("Bo"))                  # Reuse immediately with another argument -> 'Hello, Bo!'
+# Call with concrete arguments:
+print(greet("Ada"))                 # 'Hello, Ada!'
+print(greet("Bo"))                  # 'Hello, Bo!'
 ```
 
 #### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Returning Any Data Type (Primitives vs Collections)}}$
@@ -130,19 +130,17 @@ print(split_chunks("Sentence one. Sentence two."))  # ['Sentence one', 'Sentence
 > 📤 **Caller Unpacking:** `speed, cost = calculate_metrics(500, 2.5)` $\longrightarrow$ `speed=200.0`, `cost=0.01` *(Unpacked to variables)*
 
 ```python
-def calculate_metrics(tokens: int, duration_sec: float):
+def calculate_metrics(tokens: int, duration_sec: float) -> tuple[float, float]:
     tokens_per_sec = tokens / duration_sec
     cost_estimate = tokens * 0.00002
-    return tokens_per_sec, cost_estimate    # packs into a tuple: (tps, cost)
+    return tokens_per_sec, cost_estimate
 
-# 1. Capture as a single tuple object:
-metrics = calculate_metrics(500, 2.5)
-print(metrics)                              # (200.0, 0.01)
+# Option A: Capture as a bundled tuple
+metrics = calculate_metrics(500, 2.5)       # (200.0, 0.01)
 print(type(metrics))                        # <class 'tuple'>
 
-# 2. Unpack directly into separate variables on the caller side (idiomatic Python):
-speed, cost = calculate_metrics(500, 2.5)
-print(f"Speed: {speed} tps | Cost: ${cost}") # Speed: 200.0 tps | Cost: $0.01
+# Option B: Direct caller unpacking (idiomatic Python)
+speed, cost = calculate_metrics(500, 2.5)   # speed = 200.0, cost = 0.01
 ```
 
 #### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{3. Early Return (Guard Clauses)}}$
@@ -184,6 +182,14 @@ def send_alert(message: str) -> None:
 
 ### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.2 Positional vs Keyword (Named) Arguments}}$
 
+Given this multi-parameter function signature:
+```python
+def connect_db(host: str, port: int, db_name: str) -> str:
+    return f"Connected to {db_name} at {host}:{port}"
+```
+
+Python provides two distinct argument-passing mechanisms:
+
 | $\color{#546E7A}\textsf{\textbf{Call Style}}$ | $\color{#0D47A1}\textsf{\textbf{Invocation Code Syntax}}$ | $\color{#00695C}\textsf{\textbf{Positional Rule and Mechanism}}$ | $\color{#1B5E20}\textsf{\textbf{Verdict}}$ |
 | :--- | :--- | :--- | :---: |
 | **1. Pure Positional** | `connect_db("localhost", 5432, "vec")` | Left-to-right alignment: Order strictly matters | Valid |
@@ -191,11 +197,6 @@ def send_alert(message: str) -> None:
 | **3. Mixed Call** | `connect_db("localhost", db_name="vec", port=5432)` | Positional args FIRST, keywords AFTER | Valid |
 | **❌ Illegal Order** | `connect_db(host="loc", 5432, "vec")` | `SyntaxError`: Positional arg cannot follow keyword | ❌ SyntaxError |
 | **❌ Duplicate Slot** | `connect_db("loc", 5432, "vec", host="srv")` | `TypeError`: Multiple values assigned to `host` | ❌ TypeError |
-
-```python
-def connect_db(host: str, port: int, db_name: str):
-    return f"Connected to {db_name} at {host}:{port}"
-```
 
 ### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.3 Default Parameters and The "Defaults at the End" Rule}}$
 
@@ -402,55 +403,38 @@ $$
 | **Excess Keyword (`**kwargs`)** | `def f(**kwargs)` | Packs extra keyword args into a dict | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | Forwarding arbitrary kwargs to OpenAI / Anthropic APIs |
 | **Positional-Only (`/`)** | `def f(text, /)` | Must be passed positionally, never by keyword | $\color{#757575}\blacksquare\ \textbf{Reference Only}$ | Fast C-extensions, math wrappers (`math.sin(x)`) |
 
-| Zone | Position | Allowed Calling Style | If Violated |
-| :--- | :--- | :--- | :--- |
-| **Zone 1: Positional-Only** | Before `/` | Strictly positional (`"text"`) | `TypeError: got some positional-only arguments passed as keyword arguments` |
-| **Zone 2: Standard** | Between `/` and `*` | Positional OR Keyword (`"val"` or `arg="val"`) | Both work seamlessly |
-| **Zone 3: Keyword-Only** | After `*` | Strictly keyword (`param="val"`) | `TypeError: takes X positional arguments but Y were given` |
+| Calling Zone | Delimiter Position | Allowed Calling Style | Why AI Architects Use It (Design Intent) |
+| :--- | :---: | :--- | :--- |
+| **Zone 1: Positional-Only** | Before `/` | Strictly positional (`"text"`) | Payload data (tensors/text); allows library authors to safely rename internal parameters without breaking client callers |
+| **Zone 2: Standard** | Between `/` and `*` | Positional OR Keyword | Core options (`model="gpt-4o"`); allows positional brevity or explicit keyword clarity |
+| **Zone 3: Keyword-Only** | After `*` | Strictly keyword (`normalize=True`) | Configuration flags & thresholds; prevents accidental positional order swaps |
 
 ```python
-# Real-world AI pipeline function combining all 3 zones:
 def process_embedding(
-    text: str,                          # Zone 1 (before /): POSITIONAL-ONLY
+    text: str,
     /,
-    model: str = "text-embedding-3",    # Zone 2 (between / and *): STANDARD (positional or keyword)
+    model: str = "text-embedding-3",
     dimensions: int = 1536,
     *,
-    normalize: bool = True,             # Zone 3 (after *): KEYWORD-ONLY
+    normalize: bool = True,
     batch_size: int = 32,
 ) -> str:
-    return (
-        f"Embedding '{text}' with {model} ({dimensions}d) | "
-        f"normalize={normalize}, batch={batch_size}"
-    )
+    return f"Embedded '{text[:15]}...' with {model} ({dimensions}d) | norm={normalize}"
 
 # 1. VALID: text is positional, model is keyword, normalize is keyword:
-print(process_embedding(
-    "Deep learning notes",
-    model="text-embedding-3-large",
-    normalize=False
-))
+print(process_embedding("Deep learning notes", model="text-embedding-3-large", normalize=False))
 
-# 2. VALID: text is positional, model/dims are positional, batch_size is keyword:
-print(process_embedding(
-    "Deep learning notes",
-    "text-embedding-3-small", 512,
-    batch_size=64
-))
+# 2. VALID: text and model are positional, batch_size is keyword:
+print(process_embedding("Deep learning notes", "text-embedding-3-small", batch_size=64))
 
-# 3. ❌ INVALID: Violating Zone 1 (trying to pass 'text' by keyword):
+# 3. ❌ INVALID: Violating Zone 1 (passing 'text' by keyword):
 # process_embedding(text="Deep learning notes")
 # TypeError: process_embedding() got some positional-only arguments passed as keyword arguments: 'text'
 
-# 4. ❌ INVALID: Violating Zone 3 (trying to pass 'normalize' positionally):
+# 4. ❌ INVALID: Violating Zone 3 (passing 'normalize' positionally):
 # process_embedding("Deep learning notes", "text-embedding-3", 1536, True)
 # TypeError: process_embedding() takes from 1 to 3 positional arguments but 4 were given
 ```
-
-> **Why design APIs with all 3 zones?**
-> - **Zone 1 (Positional-only)**: The payload data (like raw text, numbers, or tensors) has an obvious role. Restricting it to positional-only allows library authors to rename internal parameters (`text` $\rightarrow$ `input_content`) in future versions without breaking downstream code.
-> - **Zone 2 (Standard)**: Core parameters like `model` or `dimensions` can be passed positionally for brevity or by name for clarity.
-> - **Zone 3 (Keyword-only)**: Configuration flags (`normalize=True`, `batch_size=32`) are forced to be named explicitly to prevent accidental order bugs.
 
 ### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.7 Flexible Arguments:}}$ `*args`, `**kwargs`, $\color{#BF360C}{\textsf{and Parameter Co-existence Rules}}$
 
@@ -531,13 +515,12 @@ $$
 | **5** | **`**kwargs`** | Excess keyword arguments (packed into dict) | `**env_metadata` |
 
 ```python
-# The Universal Parameter Hierarchy in action:
 def execute_pipeline(
-    stage_name: str,                    # 1. Positional required
-    timeout: int = 60,                  # 2. Positional with default
-    *extra_steps: str,                  # 3. Excess positional args (*args -> tuple)
-    verbose: bool = False,              # 4. Keyword-only parameter (placed after *args!)
-    **env_metadata: str                 # 5. Excess keyword args (**kwargs -> dict) MUST BE LAST!
+    stage_name: str,
+    timeout: int = 60,
+    *extra_steps: str,
+    verbose: bool = False,
+    **env_metadata: str,
 ):
     print(f"Stage: {stage_name} (timeout={timeout}s)")
     print(f"Extra steps (tuple): {extra_steps}")
@@ -547,9 +530,9 @@ def execute_pipeline(
 # Calling with all tiers populated:
 execute_pipeline(
     "DataIngestion", 120,               # fills stage_name and timeout
-    "clean_html", "tokenize",           # collected into extra_steps = ('clean_html', 'tokenize')
+    "clean_html", "tokenize",           # collected into extra_steps tuple
     verbose=True,                       # explicitly fills keyword-only 'verbose'
-    region="us-east", run_by="cron"     # collected into env_metadata = {'region': '...', 'run_by': '...'}
+    region="us-east", run_by="cron"     # collected into env_metadata dict
 )
 ```
 
@@ -649,13 +632,16 @@ $$
 > **Syntax Rule:** The type annotation **must** come *before* the `=` sign (`temperature: float = 0.7`), never after!
 
 ```python
-# Type-annotated parameters with and without defaults:
 def generate_prompt(
-    topic: str,                         # required parameter of type str
-    max_words: int = 150,               # optional int with default 150
-    include_summary: bool = True,       # optional bool with default True
-) -> str:                               # returns a str
+    topic: str,
+    max_words: int = 150,
+    include_summary: bool = True,
+) -> str:
     return f"Write about {topic} in {max_words} words."
+
+# Execution produces the typed string contract:
+prompt = generate_prompt("Reinforcement Learning", max_words=200)
+print(prompt)  # 'Write about Reinforcement Learning in 200 words.'
 ```
 
 #### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. Return Type Annotation Syntax (-> ReturnType)}}$
@@ -902,26 +888,23 @@ $$
 
 | $\color{#546E7A}\textsf{\textbf{Sorting Operation}}$ | $\color{#0D47A1}\textsf{\textbf{Python Code Syntax}}$ | $\color{#00695C}\textsf{\textbf{How Lambda Operates as Key Extractor}}$ |
 | :--- | :--- | :--- |
-| **Descend by Relevance** | `sorted(docs, key=lambda d: d["score"], reverse=True)` | Extracts `d["score"]` per item $\to$ compares values $\to$ yields `['doc_c', 'doc_a', 'doc_b']` |
+| **Descend by Relevance Score** | `sorted(docs, key=lambda d: d["score"], reverse=True)` | Extracts `d["score"]` per dictionary $\to$ sorts descending |
+| **Sort by Text Length** | `sorted(queries, key=lambda q: len(q))` | Extracts character count per string $\to$ sorts ascending |
 
 ```python
-# Syntax: lambda parameter: expression
-square = lambda x: x * x
-print(square(5))                    # 25
-
-# Production use: quick key extractor for sorting and filtering:
+# Production use: inline key extractor for ranking search results:
 documents = [
     {"id": "doc_a", "score": 0.92},
     {"id": "doc_b", "score": 0.78},
     {"id": "doc_c", "score": 0.95},
 ]
-sorted_docs = sorted(documents, key=lambda doc: doc["score"], reverse=True)
-print([d["id"] for d in sorted_docs])  # ['doc_c', 'doc_a', 'doc_b']
+ranked_docs = sorted(documents, key=lambda doc: doc["score"], reverse=True)
+print([d["id"] for d in ranked_docs])  # ['doc_c', 'doc_a', 'doc_b']
 ```
 
 ![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
 
-## 🚀 $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
+## 🚀 $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Production AI Architecture and Tool Calling}}$
 
 In modern AI engineering:
 1. **API Client Wrappers**: Every LLM API client (OpenAI, Anthropic, HuggingFace) exposes dozens of configuration options. Designing wrappers with required prompts, keyword-only hyperparameter defaults (`*, temperature=0.7`), and `**kwargs` pass-through allows your pipeline to stay stable even when third-party libraries add new parameters.
@@ -941,7 +924,7 @@ Write a function `build_prompt(template: str, *, system_role: str = "Assistant",
 
 ![Variations](https://img.shields.io/badge/COMPARISON-VARIATIONS%20%26%20WHEN%20TO%20USE-00838F?style=for-the-badge&logo=scales&logoColor=white)
 
-## ⚖️ $\Large\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use (Function Argument Decision Guide)}}$
+## ⚖️ $\Large\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Architectural Trade-Offs and Selection Guide}}$
 
 | Technique | Syntax | When to Use | Avoid When | Production AI Example |
 | :--- | :--- | :--- | :--- | :--- |
@@ -956,7 +939,7 @@ Write a function `build_prompt(template: str, *, system_role: str = "Assistant",
 
 ![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
 
-## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
+## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Debugging Traps and Solutions}}$
 
 | What you see | Cause | Fix |
 | --- | --- | --- |
@@ -973,7 +956,7 @@ Write a function `build_prompt(template: str, *, system_role: str = "Assistant",
 
 ![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
 
-## 📌 $\Large\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
+## 📌 $\Large\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Syntax and Signature Cheat Sheet}}$
 
 ```python
 # 1. The Universal Parameter Hierarchy (strict definition order):
@@ -1023,13 +1006,13 @@ def wrapper(target_fn, *args, **kwargs):
 items = [1, 2]; opts = {"timeout": 10}
 wrapper(my_func, *items, **opts)                           # unpack list to *args, dict to **kwargs
 
-# 10. Lambda:
-get_score = lambda x: x["score"]                           # 1-expression inline function
+# 10. Lambda (Inline key extractor):
+top_docs = sorted(docs, key=lambda d: d["score"], reverse=True)
 ```
 
 ![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
 
-## 🛑 $\Large\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
+## 🛑 $\Large\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{Verification Checkpoint}}$
 
 Consider the following function definition:
 
