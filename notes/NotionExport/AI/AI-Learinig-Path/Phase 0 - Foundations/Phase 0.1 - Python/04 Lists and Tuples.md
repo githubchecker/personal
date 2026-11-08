@@ -586,7 +586,7 @@ record = tuple(temp)                # rebind to updated tuple: ('Ada', 37)
 Tuple = a fixed record whose shape won't change (a coordinate, an RGB colour, a returned pair),
 or when you need an unchangeable, hashable value.
 
-### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4.7 Sequence Unpacking and the '*' (Rest) Operator}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4.7 Sequence Unpacking and the}}$ `*` $\color{#BF360C}{\textsf{(Rest) Operator}}$
 
 **Unpacking** lets you pull elements directly out of a tuple or list into separate variables in a single line.
 

@@ -722,7 +722,7 @@ print(prompt_context)
 
 ---
 
-#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{6. zip(*iterables, strict=False)}}$
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{6.}}$ `zip(*iterables, strict=False)`
 
 ```diff
 # Aligning paired datasets (prompts and ground truth)
@@ -1063,7 +1063,7 @@ if all(loss < target_loss for loss in val_losses):
 
 ### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{13.4 Functional Transformations and Sorting}}$
 
-#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{9. map(function, *iterables) and 10. filter(function, iterable)}}$
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{9.}}$ `map(function, *iterables)` $\color{#BF360C}{\textsf{and 10.}}$ `filter(function, iterable)`
 Higher-order functional primitives that transform and filter data streams.
 
 - **What & Why:** Before list comprehensions existed, `map` and `filter` were the primary functional tools in Python. While list comprehensions are often preferred for readability, `map` and `filter` remain essential because they execute in pure C, return **lazy iterators** with zero upfront memory, and pass pre-existing functions without lambda overhead.
@@ -1341,7 +1341,7 @@ print(f"Billed Amount: ${total_bill}")  # Billed Amount: $0.1265
 
 ---
 
-#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{13. print(*objects, sep=' ', end='\\n', file=None, flush=False)}}$
+#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{13.}}$ `print(*objects, sep=' ', end='\n', file=None, flush=False)`
 Prints objects to the text stream file, separated by `sep` and followed by `end`.
 
 - **What & Why:** `print()` is the universal diagnostic output. In modern AI applications, `print()` is the core mechanism for **real-time LLM token streaming** to command-line interfaces and piping logs to `sys.stderr`.
