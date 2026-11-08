@@ -9,7 +9,7 @@
 
 ---
 
-## 🎯 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Goal and Capstone Architecture}}$
+## 🎯 $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Goal and Capstone Architecture}}$
 
 Combine the whole module into one small, professional program: a **command-line tool** that calls
 an API, **validates** the response with Pydantic, handles **errors** with retries, and prints a
@@ -65,14 +65,14 @@ flowchart TD
 
 
 
-## 🧩 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{What It Exercises — Concept Synthesis}}$
+## 🧩 $\Large\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{What It Exercises — Concept Synthesis}}$
 - Setup & running scripts (01) · variables/types (02) · strings (03)
 - collections (04, 05) · control flow (06) · functions (07)
 - error handling (10) · modules/files (11) · built-in functions (13)
 - type hints & Pydantic (22) · async + HTTP (23, 24)
 
 > [!IMPORTANT]
-> ### $\color{#00C853}{\textsf{🔥 The 80/20 Core Rule: What Matters in Production}}$
+> ### 🔥 $\color{#00C853}{\textsf{The 80/20 Core Rule: What Matters in Production}}$
 > * $\color{#00C853}\blacktriangleright$ **Daily Core (90% of Real AI Work):** End-to-end integration of the core Python stack: CLI flags, type-safe request/response validation with Pydantic, robust error handling with specific exception traps, and structured terminal reporting.
 > * $\color{#FFB300}\blacktriangleright$ **Occasional (Production Tuning):** Exponential backoff retries (`tenacity`), streaming HTTP responses, environment variable loading.
 > * $\color{#757575}\blacktriangleright$ **Reference Only (CLI Polish):** Advanced subcommands, shell auto-completion.
@@ -88,7 +88,7 @@ flowchart TD
 -     data = res.json()  # What if status is 500? What if 'title' key is missing?
 -     print(data["title"])
 
-+ # ✅ Resilient Typed Architecture: Async fan-out, retry policy, Pydantic runtime schema
++ # Resilient Typed Architecture: Async fan-out, retry policy, Pydantic runtime schema
 + import asyncio, httpx
 + from pydantic import BaseModel
 + from tenacity import retry, stop_after_attempt, wait_fixed
@@ -105,7 +105,7 @@ flowchart TD
 ```
 
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{Capstone Synthesis: Module 0.1 Concepts in Production Architecture}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{Capstone Synthesis: Module 0.1 Concepts in Production Architecture}}$
 
 | Module Lesson | Python Concept / Tool | Role in `main.py` | Production Failure Guarded Against | Production Priority |
 | :--- | :--- | :--- | :--- | :--- |
@@ -121,7 +121,7 @@ flowchart TD
 
 ---
 
-## 🛠️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Environment Setup}}$
+## 🛠️ $\Large\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Environment Setup}}$
 
 ```powershell
 python -m venv .venv
@@ -134,7 +134,7 @@ pip freeze > requirements.txt
 - **`pydantic`** — validation (Lesson 22).
 - **`tenacity`** — retry-on-failure via a decorator (Lesson 09 decorators + Lesson 10 errors).
 
-## 📄 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{main.py (Production Implementation)}}$
+## 📄 $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{main.py (Production Implementation)}}$
 
 ```python
 import asyncio
@@ -178,7 +178,7 @@ if __name__ == "__main__":                                # script guard (Lesson
     asyncio.run(main())
 ```
 
-## ▶️ $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Execution and Verification}}$
+## ▶️ $\Large\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Execution and Verification}}$
 
 ```powershell
 python main.py
@@ -187,13 +187,15 @@ python main.py
 # [3] fugiat veniam minus                       — pending
 ```
 
-## ✅ $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Verification Criteria}}$
+## $\Large\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Verification Criteria}}$
 - Run it and get three validated rows.
 - **Explain each line** — what it does and which lesson it comes from.
 - Break the URL (typo the host) and watch `tenacity` retry 3 times, then raise a `TodoError`.
 - Change a `Todo` field type (e.g. `id: bool`) and see a Pydantic `ValidationError` at the boundary.
 
-## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$ (running this milestone)
+![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
+
+## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$ (running this milestone)
 
 | What you see | Cause | Fix |
 | --- | --- | --- |
@@ -202,7 +204,7 @@ python main.py
 | Hangs, then fails | No network, or no timeout | Confirm the `timeout`; check your connection |
 | `RetryError` after 3 tries | URL wrong / host down | Fix the URL; read the underlying error it wraps |
 
-## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Architectural Reflection}}$
+## 🛑 $\Large\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Architectural Reflection}}$
 Name the three "boundaries" in this program where things could go wrong, and which tool guards
 each.
 
@@ -220,7 +222,7 @@ each.
 
 ---
 
-## 🎓 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Module 0.1 Complete — Readiness for AI Systems}}$
+## 🎓 $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Module 0.1 Complete — Readiness for AI Systems}}$
 You've covered Python from "how it runs" through OOP, typing, concurrency, and the AI-essential
 libraries. Combined with **Module 0.2 (PyTorch)** and **Module 0.3 (Core AI Constructs)**, **Phase
 0 is now complete** — you can read AI code, reason about data, and make real API calls.

@@ -9,18 +9,22 @@
 
 ---
 
-## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
+![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
+
+## 🗺️ $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 > [!IMPORTANT]
 > ### $\color{#512DA8}{\textsf{The Core Premise}}$
 > Real programs work with **collections** of values, not just single ones. **Lists** (changeable sequences) and **tuples** (fixed sequences) are the two most fundamental. They build on the indexing/slicing you learned for strings and set up dictionaries, comprehensions, and the data you feed to AI models (batches of text are just lists). You will also see how Python lists compare to true **arrays**.
 
-### $\color{#00838F}\blacktriangleright\space\color{#00695C}{\textsf{Where It Fits}}$
+### $\large\color{#00838F}\blacktriangleright\space\color{#00695C}{\textsf{Where It Fits}}$
 
 * $\color{#0288D1}\blacktriangleright$ **$\color{#01579B}{\textsf{Builds on:}}$** [03 Strings In Depth](03%20Strings%20In%20Depth.md) — 0-based indexing and slicing mechanics.
 * $\color{#00897B}\blacktriangleright$ **$\color{#004D40}{\textsf{Unlocks:}}$** [05 Dictionaries and Sets](05%20Dictionaries%20and%20Sets.md), Comprehensions, and batch vector representations in PyTorch/NumPy.
 
-## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
+![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
+
+## 🔑 $\Large\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
 
 | $\color{#4A148C}\textsf{\textbf{Term}}$ | $\color{#00695C}\textsf{\textbf{One-Line Meaning}}$ |
 | :--- | :--- |
@@ -33,7 +37,9 @@
 | $\color{#00695C}\mathbf{Unpacking}$ | Extracting elements directly into individual variables (`x, y = point`). |
 | $\color{#2E7D32}\mathbf{Rest\space Operator\space (*)}$ | Collecting all leftover elements during unpacking into a list (`first, *rest = items`). |
 
-## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (Analogy: Egg Carton vs. Sealed Gift Box)}}$
+![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
+
+## 🎈 $\Large\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (Analogy: Egg Carton vs. Sealed Gift Box)}}$
 
 A **list** is like an egg carton: an ordered row of slots you can refill — take an egg out, put a new one in, add more slots. A **tuple** is like a sealed gift box: an ordered set of items fixed at packing time; you can look inside but not change the contents.
 
@@ -63,15 +69,17 @@ flowchart TD
 > * $\color{#00C853}\blacktriangleright$ **Use a List** when collecting data that grows, shrinks, or reorders (tokens, chat history, search hits).
 > * $\color{#512DA8}\blacktriangleright$ **Use a Tuple** for fixed-dimension records, function return pairs, coordinate points, and tensor shapes `(batch_size, seq_len, dim)`. Because tuples are immutable, they are **hashable** and can serve as dictionary keys.
 
-## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
+![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
+
+## ⚙️ $\Large\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
 
 > [!IMPORTANT]
-> ### $\color{#00C853}{\textsf{🔥 The 80/20 Core Rule: What Matters in Production}}$
+> ### 🔥 $\color{#00C853}{\textsf{The 80/20 Core Rule: What Matters in Production}}$
 > * $\color{#00C853}\blacktriangleright$ **Daily Core (90% of Real AI Work):** Lists as dynamic sequences (`append()`, `pop()` from end, slicing `[start:stop]`, iteration `for x in my_list:`, `len()`), and Tuples as immutable fixed records with unpacking (`a, b = coords`, `for i, item in enumerate(items):`).
 > * $\color{#FFB300}\blacktriangleright$ **Occasional (Sorting and Batching):** `extend()`, `sort(key=...)`, `sorted()`, shallow copy `list.copy()`, converting `tuple(my_list)`.
 > * $\color{#757575}\blacktriangleright$ **Reference Only (Exhaustive and Performance Traps):** `insert(0, x)` (costly $O(N)$ shift — use `collections.deque` instead), `remove()` ($O(N)$ search), `list * N` shallow copy trap, `count()`, `index()`.
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4.1 Lists: Create, Read, Slice}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4.1 Lists: Create, Read, Slice}}$
 
 ```python
 fruits = ["apple", "banana", "cherry"]   # a list literal: square brackets, comma-separated
@@ -89,7 +97,7 @@ print(nested[1][0])   # 3
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4.1.1 Deep Dive: Sequence Slicing — Complete Syntax, Exclusions and In-Place Slice Assignments}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4.1.1 Deep Dive: Sequence Slicing — Complete Syntax, Exclusions and In-Place Slice Assignments}}$
 
 Slicing extracts a contiguous or regularly spaced subsequence from a list (or string, or tuple). Slicing a list produces a **brand-new list** (a shallow copy of the selected elements).
 
@@ -167,7 +175,7 @@ countdown = data[4:1:-1]        # ['E', 'D', 'C'] (starts at idx 4, steps down t
 ```
 
 > [!WARNING]
-> ### $\color{#D84315}{\textsf{⚠️ The Directional Contradiction Trap (Negative Step Gotcha)}}$
+> ### $\color{#D84315}{\textsf{The Directional Contradiction Trap (Negative Step Gotcha)}}$
 > When `step` is negative, Python steps backwards. Therefore, `start` MUST be to the right of `stop`!
 > ```python
 > broken = data[1:4:-1]   # Returns [] !
@@ -180,7 +188,7 @@ This is one of the most critical behavioral differences in Python:
 
 | Operation | Syntax | If Index is Out of Bounds ($\ge$ len) |
 | :--- | :--- | :--- |
-| **Direct Indexing** | `items[10]` | 💥 **Crashes:** `IndexError: list index out of range` |
+| **Direct Indexing** | `items[10]` | **Crashes:** `IndexError: list index out of range` |
 | **Sequence Slicing** | `items[2:10]` | 🛡️ **Safe:** Python silently clips to actual boundaries; returns available items! |
 | **Slice Fully Past End** | `items[50:100]` | 🛡️ **Safe:** Returns empty list `[]` without error |
 
@@ -270,7 +278,7 @@ print(batch[EVEN_STRIDE])           # ['prompt1', 'prompt3', 'prompt5']
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4.2 Lists: Changing Them (Mutation)}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4.2 Lists: Changing Them (Mutation)}}$
 
 ```python
 fruits = ["apple", "banana", "date"]
@@ -290,7 +298,7 @@ print(fruits)                  # ['date']
 - a = [1, 2]
 - a.append([3, 4])  # a is now [1, 2, [3, 4]] (len is 3)
 
-+ ✅ FLAT EXTENSION: .extend() unrolls items into the list
++ FLAT EXTENSION: .extend() unrolls items into the list
 + b = [1, 2]
 + b.extend([3, 4])  # b is now [1, 2, 3, 4] (len is 4)
 ```
@@ -314,7 +322,7 @@ print(first)                   # [1, 2]           <- unchanged!
 # Use 'first.extend(second)' (or 'first += second') when you want to modify 'first' in place.
 ```
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4.3 Sorting and Reversing}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4.3 Sorting and Reversing}}$
 
 **Sorting:**
 ```python
@@ -353,7 +361,7 @@ Notice the exact same rule applies:
 - `sorted(items)` and `items[::-1]` leave the original alone and return a **new list**.
 - `reversed(items)` yields an **iterator** without allocating a whole new list copy.
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4.4 The Aliasing Pitfall (Very Important)}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4.4 The Aliasing Pitfall (Very Important)}}$
 
 A list variable holds a **reference** to the list, not a private copy. Assigning it to another
 name makes a second label for the **same** list in memory:
@@ -398,7 +406,7 @@ print(d == a)    # True  <- same items inside
 print(d is a)    # False <- different lists at different memory addresses! id(d) != id(a)
 ```
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4.5 Iterating}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4.5 Iterating}}$
 
 ```python
 fruits = ["apple", "banana", "cherry"]
@@ -417,7 +425,7 @@ for name, age in zip(names, ages):   # walk two lists in lockstep
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4.5.1 The "Mutating While Iterating" Pitfall (Skipped Elements Gotcha and Solutions)}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4.5.1 The "Mutating While Iterating" Pitfall (Skipped Elements Gotcha and Solutions)}}$
 
 One of the most notorious traps in Python occurs when you **remove or add elements to a list while looping over it with `for`**.
 
@@ -439,7 +447,7 @@ The list immediately shifts left in memory:
 
 Step 3 (index = 2): Python advances counter to 2!
                      Inspects names[2], which is now "David"!
-                     💥 "Charlie" (now at index 1) was completely SKIPPED!
+                     "Charlie" (now at index 1) was completely SKIPPED!
 ```
 
 #### 2. The Code Demonstrating the Silent Bug
@@ -513,7 +521,7 @@ for name in names[:]:
 
 print(names)          # ['Alice', 'Charlie', 'David']  <-- Works correctly!
 ```
-> ⚠️ **Performance Warning:** Calling `names.remove(x)` inside a loop has **$O(N^2)$ quadratic complexity** because `.remove()` scans the list from index 0 on every deletion. For large lists (>1,000 items), prefer Solution 1 or Solution 2 ($O(N)$ linear time).
+> **Performance Warning:** Calling `names.remove(x)` inside a loop has **$O(N^2)$ quadratic complexity** because `.remove()` scans the list from index 0 on every deletion. For large lists (>1,000 items), prefer Solution 1 or Solution 2 ($O(N)$ linear time).
 
 ##### Solution 4: Iterate Backwards by Index (For Index-Based `del`)
 When deleting by index, loop backwards from the end using `range(len(names) - 1, -1, -1)`. Deleting a high index shifts elements that have *already* been visited, leaving all lower unprocessed indices in their exact positions:
@@ -530,7 +538,7 @@ print(names)          # ['Alice', 'Charlie']  <-- Both 'Bob' instances removed c
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4.6 Tuples: Fixed Sequences}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4.6 Tuples: Fixed Sequences}}$
 
 ```python
 point = (3, 4)            # parentheses (or just: point = 3, 4)
@@ -578,7 +586,7 @@ record = tuple(temp)                # rebind to updated tuple: ('Ada', 37)
 Tuple = a fixed record whose shape won't change (a coordinate, an RGB colour, a returned pair),
 or when you need an unchangeable, hashable value.
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4.7 Sequence Unpacking and the '*' (Rest) Operator}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4.7 Sequence Unpacking and the '*' (Rest) Operator}}$
 
 **Unpacking** lets you pull elements directly out of a tuple or list into separate variables in a single line.
 
@@ -601,7 +609,7 @@ a, b = "apple", "banana"
 a, b = b, a                    # a is now 'banana', b is now 'apple' (no temp variable needed!)
 ```
 
-> ⚠️ **The exact-match rule:** The number of variables on the left MUST match the number of items
+> **The exact-match rule:** The number of variables on the left MUST match the number of items
 > on the right. If they don't match, Python crashes:
 > - Too many items: `x, y = [1, 2, 3]` $\longrightarrow$ `ValueError: too many values to unpack (expected 2)`
 > - Not enough items: `x, y, z = (1, 2)` $\longrightarrow$ `ValueError: not enough values to unpack (expected 3, got 2)`
@@ -638,7 +646,7 @@ user_id, *_, status = record   # ignores all the middle items
 print(user_id, status)         # 'user_123' 'active'
 ```
 
-> ⚠️ **Gotcha:** You can only use **one** `*` expression in an unpacking assignment. Writing `*a, *b = [1, 2, 3]`
+> **Gotcha:** You can only use **one** `*` expression in an unpacking assignment. Writing `*a, *b = [1, 2, 3]`
 > raises `SyntaxError: two starred expressions in assignment` because Python wouldn't know where `a` ends and `b` begins.
 
 #### 3. Real-World AI & LangGraph Application
@@ -653,7 +661,7 @@ system_msg, *chat_history, current_query = messages
 # Send current_query to retrieval, format chat_history as memory, apply system_msg!
 ```
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4.8 Is a List an Array? (List vs array.array vs NumPy)}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4.8 Is a List an Array? (List vs array.array vs NumPy)}}$
 
 Beginners often ask: *"Does Python have arrays?"*
 
@@ -693,9 +701,9 @@ my_arr = array.array('i', [1, 2, 3])
 | --- | --- | --- | --- | --- |
 | **`list`** | Built-in | Any mixed Python objects | ❌ (requires loops) | General programming, text chunks, API messages |
 | **`array.array`** | `import array` | Single C primitive type (`'i'`, `'d'`) | ❌ (requires loops) | Low-level C interop or tight memory without 3rd-party dependencies |
-| **NumPy `ndarray`** | `import numpy as np` | Homogeneous numeric grid | ✅ Fast C/CUDA vectorization | Embeddings, tensors, model weights (Lesson 15) |
+| **NumPy `ndarray`** | `import numpy as np` | Homogeneous numeric grid | Fast C/CUDA vectorization | Embeddings, tensors, model weights (Lesson 15) |
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4.9 Storing Custom Objects in Lists and Tuples}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4.9 Storing Custom Objects in Lists and Tuples}}$
 
 Python collections do not store data inline; they store **references (pointers) to objects in memory**. Because everything in Python is an object, lists and tuples can hold instances of custom classes, dataclasses, or library objects (like LLM messages or PyTorch tensors).
 
@@ -724,7 +732,7 @@ print(all_texts)                       # ['Attention is all you need', 'RAG pipe
 doc_tuple = (doc1, doc2)
 print(doc_tuple[1].doc_id)             # 2
 
-# ⚠️ GOTCHA: The "Tuple of Mutable Objects" trap:
+# GOTCHA: The "Tuple of Mutable Objects" trap:
 # A tuple is immutable: you CANNOT swap or reassign its slots:
 # doc_tuple[0] = Document(3, "New")    # TypeError: 'tuple' object does not support item assignment
 
@@ -733,14 +741,16 @@ doc_tuple[0].text = "Updated Title"
 print(doc_tuple[0].text)               # 'Updated Title' — the inner object mutated!
 ```
 
-## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
+![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
+
+## 🚀 $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 AI code is full of lists and tuples:
 - **Batches of text:** Sending 64 document chunks to an embedding model is just a list of strings: `["chunk 1", "chunk 2", ...]`.
 - **LLM conversation history:** The prompt sent to an API is an ordered list of message objects: `[SystemMessage(...), HumanMessage(...), AIMessage(...)]`.
 - **Ranked search results:** Vector search returns ranked lists; pairing similarity scores with documents uses tuples: `[(0.92, doc_a), (0.81, doc_b)]`.
 
-### 🤖 $\color{#00838F}\blacktriangleright\space\color{#00695C}{\textsf{Sneak Peek: How Lists and Tuples Power LangGraph and AI Agents (Phase 3)}}$
+### 🤖 $\large\color{#00838F}\blacktriangleright\space\color{#00695C}{\textsf{Sneak Peek: How Lists and Tuples Power LangGraph and AI Agents (Phase 3)}}$
 
 Even if you haven't studied AI architectures yet, here is how these exact list and tuple operations
 power production frameworks like **LangGraph**:
@@ -762,19 +772,21 @@ power production frameworks like **LangGraph**:
 Start with `scores = [70, 95, 60, 88]`. Print them sorted descending, and print the highest and
 lowest using one function that returns a tuple.
 
-## ⚖️ $\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use (Efficiency and Decision Guide)}}$
+![Variations](https://img.shields.io/badge/COMPARISON-VARIATIONS%20%26%20WHEN%20TO%20USE-00838F?style=for-the-badge&logo=scales&logoColor=white)
+
+## ⚖️ $\Large\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use (Efficiency and Decision Guide)}}$
 
 A developer constantly chooses between these operations. Here is the exact performance and decision rule:
 
-| Operation | Syntax | Time / Memory Cost | Mutates Original? | ✅ When to Use | AI / LangGraph Application |
+| Operation | Syntax | Time / Memory Cost | Mutates Original? | When to Use | AI / LangGraph Application |
 | --- | --- | --- | --- | --- | --- |
-| **Append single** | `a.append(x)` | $O(1)$ time · zero extra memory | ✅ In-place | Adding one item to an existing sequence | Adding a new user/assistant message to chat history |
-| **Extend in-place** | `a.extend(b)` or `a += b` | $O(k)$ time · zero extra memory | ✅ In-place | Merging many items when you don't need the old list | Ingesting a batch of scraped web documents into a queue |
+| **Append single** | `a.append(x)` | $O(1)$ time · zero extra memory | In-place | Adding one item to an existing sequence | Adding a new user/assistant message to chat history |
+| **Extend in-place** | `a.extend(b)` or `a += b` | $O(k)$ time · zero extra memory | In-place | Merging many items when you don't need the old list | Ingesting a batch of scraped web documents into a queue |
 | **Merge new list** | `a + b` | $O(n+m)$ time · copies all items | ❌ Brand-new list | You must keep the original list untouched | **LangGraph State Updates:** clean, immutable state checkpoints |
-| **Prepend item** | `a.insert(0, x)` | $O(n)$ time (shifts all elements) | ✅ In-place | Only on tiny lists (<100 items); avoid on big lists | Prepending a system prompt to a small message list |
-| **Pop last** | `a.pop()` | $O(1)$ time · zero extra memory | ✅ In-place | LIFO stack / undoing the most recent step | Removing the last failed tool call in an agent retry loop |
-| **Pop by index** | `a.pop(i)` | $O(n)$ time (shifts items) | ✅ In-place | Removing and retrieving an item from a specific position | Taking the highest-priority task from a task queue |
-| **Reverse in-place** | `a.reverse()` | $O(n)$ time · zero extra memory | ✅ In-place | Flipping order permanently without allocating memory | Reversing chronological database logs to newest-first |
+| **Prepend item** | `a.insert(0, x)` | $O(n)$ time (shifts all elements) | In-place | Only on tiny lists (<100 items); avoid on big lists | Prepending a system prompt to a small message list |
+| **Pop last** | `a.pop()` | $O(1)$ time · zero extra memory | In-place | LIFO stack / undoing the most recent step | Removing the last failed tool call in an agent retry loop |
+| **Pop by index** | `a.pop(i)` | $O(n)$ time (shifts items) | In-place | Removing and retrieving an item from a specific position | Taking the highest-priority task from a task queue |
+| **Reverse in-place** | `a.reverse()` | $O(n)$ time · zero extra memory | In-place | Flipping order permanently without allocating memory | Reversing chronological database logs to newest-first |
 | **Reverse stream** | `reversed(a)` | $O(1)$ time · zero extra memory | ❌ Iterator (no copy) | Looping backwards through a list without memory overhead | **Token Window Truncation:** scanning chat history backwards |
 | **Reverse copy** | `a[::-1]` | $O(n)$ time · copies all items | ❌ Brand-new list | You need a reversed copy to pass to another function | Sending a reversed view while keeping original list order |
 | **Convert to list** | `list(tuple)` | $O(n)$ time · $O(n)$ memory | ❌ Brand-new list | Unlocking an immutable tuple so you can edit, append, or sort it | Converting a fixed config tuple into an editable list |
@@ -791,7 +803,9 @@ A developer constantly chooses between these operations. Here is the exact perfo
 - **Convert when needed:** Use `list(t)` to edit a tuple, and `tuple(l)` to freeze and hash a list.
 - **Unpack with `*`:** Use `first, *rest = items` to cleanly split sequences without fragile index math.
 
-## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
+![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
+
+## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
 Real messages you'll actually see, plus the silent gotchas:
 
@@ -811,7 +825,9 @@ Real messages you'll actually see, plus the silent gotchas:
 | *(no error)* `editing b` also changes `a` | `b = a` aliases the **same** list | Copy: `b = a.copy()` (or `a[:]`, `list(a)`) |
 | *(no error)* `append([1, 2])` nests a list | `append` adds **one** item; you wanted the items | Use `extend([1, 2])` to add the items |
 
-## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
+![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
+
+## 📌 $\Large\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
 ```python
 nums = [1, 2, 3, 4, 5]
@@ -852,7 +868,9 @@ t_merged = (1, 2) + (3, 4)          # tuple concat -> (1, 2, 3, 4)
 - **`+` vs `.extend()`:** `a + b` builds a new list (originals unchanged) · `a.extend(b)` (or `a += b`) mutates `a` in place.
 - **List vs Array:** list = general mixed collection · `array.array` = standard library typed C-array · NumPy `ndarray` = fast AI vector/matrix math (Lesson 15).
 
-## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
+![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
+
+## 🛑 $\Large\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 
 What does `a` end up as, and why?
 

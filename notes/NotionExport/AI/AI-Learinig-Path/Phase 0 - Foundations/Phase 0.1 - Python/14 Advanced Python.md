@@ -9,7 +9,9 @@
 
 ---
 
-## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
+![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
+
+## 🗺️ $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 Basic Python gives you functions, loops, dictionaries, and classes. With those, you can write working scripts. But when you build **production AI pipelines, high-throughput retrieval systems (RAG), and autonomous agent networks**, standard patterns quickly hit hard engineering ceilings:
 
@@ -31,7 +33,9 @@ Basic Python gives you functions, loops, dictionaries, and classes. With those, 
 
 ---
 
-## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
+![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
+
+## 🔑 $\Large\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
 
 - **Walrus Operator (`:=`)** — Assignment expression syntax that assigns a value to a variable *inside* an expression (e.g. inside an `if` or `while` condition) and evaluates it simultaneously.
 - **Generator Delegation (`yield from`)** — Passing control transparently from one generator to an inner sub-generator, streaming items without writing nested loops.
@@ -49,7 +53,9 @@ Basic Python gives you functions, loops, dictionaries, and classes. With those, 
 
 ---
 
-## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (Analogy: The High-Performance Racing Workshop)}}$
+![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
+
+## 🎈 $\Large\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (Analogy: The High-Performance Racing Workshop)}}$
 
 Imagine you own a standard family sedan:
 - It has cup holders, glove compartments, power seats, and a plush carpet. It is comfortable and forgiving.
@@ -80,17 +86,19 @@ flowchart TD
 
 ---
 
-## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
+![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
+
+## ⚙️ $\Large\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
 
 > [!IMPORTANT]
-> ### $\color{#00C853}{\textsf{🔥 The 80/20 Core Rule: What Matters in Production}}$
+> ### 🔥 $\color{#00C853}{\textsf{The 80/20 Core Rule: What Matters in Production}}$
 > * $\color{#00C853}\blacktriangleright$ **Daily Core (90% of Real AI Work):** Custom context managers (`with` statements via `@contextlib.contextmanager` for socket/database/GPU cleanup), `collections.defaultdict` (grouping tokens/documents), `collections.Counter` (word/token frequency counts), and modern type hints.
 > * $\color{#FFB300}\blacktriangleright$ **Occasional (Optimization and Utilities):** `itertools.chain` (combining large iterables without memory copy), `itertools.islice`, `@functools.lru_cache(maxsize=128)` (caching expensive embedding or tokenizer calls), and `@dataclass`.
 > * $\color{#757575}\blacktriangleright$ **Reference Only (Metaprogramming and Low-Level):** Custom descriptors (`__get__`, `__set__`), class creation metaprogramming via `__init_subclass__`, and AST tree parsing.
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.1 Assignment Expressions: The Walrus Operator (:=)}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.1 Assignment Expressions: The Walrus Operator (:=)}}$
 
 Introduced in Python 3.8, the **walrus operator (`:=`)** assigns a value to a variable *inside an expression* while simultaneously returning that value.
 
@@ -109,7 +117,7 @@ Introduced in Python 3.8, the **walrus operator (`:=`)** assigns a value to a va
 -         break
 -     process(token)
 
-+ ✅ Clean Walrus expression (read, bind, and condition in one step):
++ Clean Walrus expression (read, bind, and condition in one step):
 + while (token := client.read_next_token()):
 +     process(token)
 ```
@@ -125,7 +133,7 @@ def read_llm_stream_old(client):
             break
         print(f"Token: {token}")
 
-# ✅ The Walrus Way (clean, readable, zero boilerplate):
+# The Walrus Way (clean, readable, zero boilerplate):
 def read_llm_stream_walrus(client):
     # Reads token, assigns to variable 'token', and checks truthiness in one line!
     while (token := client.read_next_token()):
@@ -150,7 +158,7 @@ retrieved_docs = [
 # ❌ BAD: Computes similarity TWICE per document (in the if AND the select):
 # [compute_similarity(d) for d in retrieved_docs if compute_similarity(d) > 0.8]
 
-# ✅ GOOD: Compute ONCE, assign to 'sim', and filter simultaneously:
+# GOOD: Compute ONCE, assign to 'sim', and filter simultaneously:
 relevant_scores = [
     {"id": d["id"], "score": round(sim, 3)}
     for d in retrieved_docs
@@ -161,13 +169,13 @@ print("Filtered Chunks:", relevant_scores)
 # Output: [{'id': 'doc_1', 'score': 0.892}, {'id': 'doc_3', 'score': 0.956}]
 ```
 
-- **✅ Use when:** Looping over streams/buffers (`while (chunk := file.read()):`), avoiding double calculations in comprehensions, or capturing regex matches in an `if` check.
-- **🚫 Avoid when → use sibling instead:** The line becomes hard to read. Never cram multiple walrus operators into a single expression.
-- **⚠️ Gotcha:** The walrus operator has low precedence. Always wrap it in parentheses: `if (match := pattern.search(text)):`, not `if match := pattern.search(text):`.
+- **Use when:** Looping over streams/buffers (`while (chunk := file.read()):`), avoiding double calculations in comprehensions, or capturing regex matches in an `if` check.
+- **Avoid when → use sibling instead:** The line becomes hard to read. Never cram multiple walrus operators into a single expression.
+- **Gotcha:** The walrus operator has low precedence. Always wrap it in parentheses: `if (match := pattern.search(text)):`, not `if match := pattern.search(text):`.
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.2 Advanced Iteration and Generators (yield from and itertools)}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.2 Advanced Iteration and Generators (yield from and itertools)}}$
 
 *(Cross-reference: [08 Comprehensions & Generators](08%20Comprehensions%20and%20Generators.md) covered basic `yield`).*
 
@@ -191,7 +199,7 @@ def stream_slack_docs():
     yield "Slack Announcement"
     yield "Slack Bug Report"
 
-# ✅ Clean generator delegation:
+# Clean generator delegation:
 def unified_rag_corpus():
     yield from stream_pdf_docs()
     yield from stream_slack_docs()
@@ -229,7 +237,7 @@ print("First three IDs:", first_three)  # ['ID_1', 'ID_2', 'ID_3']
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.3 Memory Management, del, and Slotted Optimization}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.3 Memory Management, del, and Slotted Optimization}}$
 
 #### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Slashing RAM Overhead with \_\_slots\_\_}}$
 
@@ -335,7 +343,7 @@ print("In Cache after deletion:", "report" in doc_cache)  # False
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.4 Performance Timing and Profiling (time.perf\_counter, timeit, cProfile)}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.4 Performance Timing and Profiling (time.perf\_counter, timeit, cProfile)}}$
 
 In AI engineering, measuring token latency, time-to-first-token (TTFT), and embedding throughput is a core architectural responsibility.
 
@@ -399,7 +407,7 @@ stats.print_stats(3)
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.5 Memoization and Advanced Decorators (@lru\_cache, Parametrized @retry)}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.5 Memoization and Advanced Decorators (@lru\_cache, Parametrized @retry)}}$
 
 *(Cross-reference: [09 Decorators & Closures](09%20Decorators%20and%20Closures.md) introduced basic decorators).*
 
@@ -427,7 +435,7 @@ print(compile_system_prompt.cache_info())
 # Output: CacheInfo(hits=1, misses=1, maxsize=1000, currsize=1)
 ```
 
-> **⚠️ Gotcha on `@lru_cache`:** All arguments to a memoized function **must be hashable** (immutable). If you pass a mutable list or dictionary (`compile_prompt(tags=["ai", "fast"])`), Python raises `TypeError: unhashable type: 'list'`. Pass tuples instead: `tags=("ai", "fast")`.
+> **Gotcha on `@lru_cache`:** All arguments to a memoized function **must be hashable** (immutable). If you pass a mutable list or dictionary (`compile_prompt(tags=["ai", "fast"])`), Python raises `TypeError: unhashable type: 'list'`. Pass tuples instead: `tags=("ai", "fast")`.
 
 #### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. Building a Parametrized @retry Decorator for AI APIs}}$
 Model APIs intermittently fail with `429 Too Many Requests` or `503 Server Overloaded`. A **parametrized decorator** takes arguments (e.g. `max_retries=3`) and wraps your API calls in resilient backoff logic:
@@ -449,7 +457,7 @@ def retry_llm_call(max_retries: int = 3, delay: float = 0.5):
                     attempts += 1
                     if attempts == max_retries:
                         raise e
-                    print(f"⚠️ Network glitch. Retry {attempts}/{max_retries} in {delay}s...")
+                    print(f"Network glitch. Retry {attempts}/{max_retries} in {delay}s...")
                     time.sleep(delay)
         return wrapper
     return decorator
@@ -467,14 +475,14 @@ def fetch_openai_completion(prompt: str):
 
 print(fetch_openai_completion("Explain attention"))
 # Output:
-# ⚠️ Network glitch. Retry 1/3 in 0.1s...
-# ⚠️ Network glitch. Retry 2/3 in 0.1s...
+# Network glitch. Retry 1/3 in 0.1s...
+# Network glitch. Retry 2/3 in 0.1s...
 # Response to: Explain attention
 ```
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.6 Advanced Context Managers (contextlib)}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.6 Advanced Context Managers (contextlib)}}$
 
 Context managers manage the life cycle of resources using the `with` statement. They ensure that **setup** and **teardown** logic executes with 100% reliability.
 
@@ -523,7 +531,7 @@ with ExitStack() as stack:
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.7 Structural Pattern Matching (match / case — Python 3.10+)}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.7 Structural Pattern Matching (match / case — Python 3.10+)}}$
 
 In Python 3.10+, `match/case` is a full **destructuring pattern engine**. It matches the *structure*, *types*, and *values* of complex objects simultaneously.
 
@@ -544,7 +552,7 @@ def dispatch_ai_payload(payload: dict):
             
         # 4. Wildcard fallback:
         case _:
-            print("⚠️ Unknown payload format:", payload)
+            print("Unknown payload format:", payload)
 
 # Test different payloads:
 dispatch_ai_payload({"action": "search", "query": "Attention mechanism"})
@@ -554,7 +562,7 @@ dispatch_ai_payload({"error": "Gateway Timeout", "code": 504})
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.8 Defensive Assertions (assert) and Production Guardrails}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.8 Defensive Assertions (assert) and Production Guardrails}}$
 
 The `assert` statement tests an internal condition: `assert condition, "optional error message"`. If the condition is `False`, Python immediately raises `AssertionError`.
 
@@ -570,17 +578,17 @@ def compute_attention_scores(query_dim: int, key_dim: int):
 print(compute_attention_scores(768, 768))
 ```
 
-#### $\color{#C62828}\blacktriangleright\space\color{#B71C1C}{\textsf{2. ⚠️ The #1 Production Trap: The -O Flag Disables Assertions!}}$
+#### $\color{#C62828}\blacktriangleright\space\color{#B71C1C}{\textsf{2. The \#1 Production Trap: The -O Flag Disables Assertions!}}$
 When Python is executed in **optimized mode** via the command-line flag `python -O script.py`, Python **completely removes and ignores all `assert` statements** at compile time!
 
 ```python
-# 🚫 DANGEROUS: Never use assert for authentication, user inputs, or billing:
+# DANGEROUS: Never use assert for authentication, user inputs, or billing:
 def charge_customer(user_balance: float, cost: float):
     # If run with 'python -O', this entire check DISAPPEARS and users get free tokens!
     assert user_balance >= cost, "Insufficient funds!"
     user_balance -= cost
 
-# ✅ PRODUCTION SAFE: Always use explicit if-checks and real Exceptions:
+# PRODUCTION SAFE: Always use explicit if-checks and real Exceptions:
 def charge_customer_safe(user_balance: float, cost: float):
     if user_balance < cost:
         raise ValueError(f"Insufficient funds: Balance ${user_balance} < Cost ${cost}")
@@ -589,7 +597,7 @@ def charge_customer_safe(user_balance: float, cost: float):
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.9 Dynamic Metaprogramming and Monkey Patching}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.9 Dynamic Metaprogramming and Monkey Patching}}$
 
 #### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Dynamic Attribute Fallback: \_\_getattr\_\_}}$
 `__getattr__` is called **only when an attribute does NOT exist** on an object. This allows you to build transparent fallback wrappers and dynamic proxies:
@@ -662,7 +670,7 @@ OpenAIClient.get_completion = original_method
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.10 Enterprise Custom Exception Hierarchies for AI Platforms}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14.10 Enterprise Custom Exception Hierarchies for AI Platforms}}$
 
 *(Cross-reference: [10 Error Handling](10%20Error%20Handling.md) introduced custom exceptions).*
 
@@ -709,7 +717,9 @@ except AIPlatformError as e:
 
 ---
 
-## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
+![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
+
+## 🚀 $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 In modern AI engineering, these advanced patterns combine to form the architecture of high-throughput RAG and Agent services:
 
@@ -748,9 +758,11 @@ In modern AI engineering, these advanced patterns combine to form the architectu
 
 ---
 
-## ⚖️ $\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use}}$
+![Variations](https://img.shields.io/badge/COMPARISON-VARIATIONS%20%26%20WHEN%20TO%20USE-00838F?style=for-the-badge&logo=scales&logoColor=white)
 
-| Technique | Syntax | ✅ When to Use | 🚫 Avoid When | AI Architectural Trade-off |
+## ⚖️ $\Large\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use}}$
+
+| Technique | Syntax | When to Use | Avoid When | AI Architectural Trade-off |
 | :--- | :--- | :--- | :--- | :--- |
 | **Walrus Operator** | `(x := expr)` | While loops over streams; filtering in comprehensions | Writing complex, nested equations | Eliminates double computation; increases density. |
 | **Generator Delegation**| `yield from gen` | Merging multi-source document loaders | Single flat iterable | C-speed generator chaining; cleaner code. |
@@ -764,7 +776,9 @@ In modern AI engineering, these advanced patterns combine to form the architectu
 
 ---
 
-## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
+![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
+
+## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
 | What you see | Cause | Fix |
 | :--- | :--- | :--- |
@@ -776,7 +790,9 @@ In modern AI engineering, these advanced patterns combine to form the architectu
 
 ---
 
-## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
+![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
+
+## 📌 $\Large\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
 ```python
 # 1. Walrus Operator & Streaming
@@ -810,7 +826,9 @@ assert tensor.shape == (32, 768), "Shape mismatch"  # Internal invariant only!
 
 ---
 
-## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
+![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
+
+## 🛑 $\Large\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 
 Look at the following snippet. What happens when this code is executed with `python -O script.py`?
 

@@ -9,7 +9,9 @@
 
 ---
 
-## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
+![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
+
+## 🗺️ $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 This lesson explains the mysterious `@something` lines you'll see above functions in every AI
 framework (FastAPI routes, `@tool`, `tenacity` retries). To understand decorators you first need
@@ -17,7 +19,9 @@ two ideas: functions are **values** you can pass around, and a function can **re
 from where it was created (a **closure**). This is the most "advanced" core-Python topic — take it
 slowly.
 
-## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
+![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
+
+## 🔑 $\Large\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
 
 - **First-class function** — a function you can store, pass, or return like any value.
 - **Closure** — an inner function that remembers variables from its outer function.
@@ -26,7 +30,9 @@ slowly.
 - **Wrapper** — the inner function a decorator returns.
 - **`functools.wraps`** — keeps the original function's name and docstring on the wrapper.
 
-## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (analogy: gift-wrapping)}}$
+![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
+
+## 🎈 $\Large\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (analogy: gift-wrapping)}}$
 
 A **decorator** wraps a function in extra behaviour without changing the function's own code — like
 gift-wrapping a box. The present inside is unchanged; the wrapping adds something around it
@@ -48,15 +54,17 @@ flowchart LR
     Post --> ReturnVal(["Return result to caller"]):::client
 ```
 
-## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
+![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
+
+## ⚙️ $\Large\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
 
 > [!IMPORTANT]
-> ### $\color{#00C853}{\textsf{🔥 The 80/20 Core Rule: What Matters in Production}}$
+> ### 🔥 $\color{#00C853}{\textsf{The 80/20 Core Rule: What Matters in Production}}$
 > * $\color{#00C853}\blacktriangleright$ **Daily Core (90% of Real AI Work):** Function decorators as reusable execution middleware, preserving metadata using `@functools.wraps(func)`, forwarding signatures with `*args, **kwargs`, and production patterns: `@timing`, `@retry` on API timeouts, and `@require_auth`.
 > * $\color{#FFB300}\blacktriangleright$ **Occasional (Configurable Middleware):** Decorators accepting custom parameters (`@retry(max_retries=3)`), memoization with `@functools.lru_cache(maxsize=128)`.
 > * $\color{#757575}\blacktriangleright$ **Reference Only (Exhaustive Variations):** Class-based decorators (implementing `__call__`), deep decorator stacks (4+ wrappers), wrapping generator/streaming functions.
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{9.1 Functions are first-class values}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{9.1 Functions are first-class values}}$
 
 ```python
 def shout(text):
@@ -70,7 +78,7 @@ def apply(func, value):   # a function can take ANOTHER function as an argument
 print(apply(shout, "hello"))   # 'HELLO'
 ```
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{9.2 Closures — a function that remembers}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{9.2 Closures — a function that remembers}}$
 
 A function defined **inside** another can capture the outer function's variables, and keeps them
 even after the outer function has returned. That captured bundle is a **closure**.
@@ -124,9 +132,9 @@ print(counter())                        # 2
 print(counter())                        # 3
 ```
 
-> ⚠️ Without `nonlocal total_calls`, Python treats `total_calls += 1` as a local assignment, crashing with `UnboundLocalError`.
+> Without `nonlocal total_calls`, Python treats `total_calls += 1` as a local assignment, crashing with `UnboundLocalError`.
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{9.3 A decorator, built up}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{9.3 A decorator, built up}}$
 
 ```python
 import functools
@@ -165,7 +173,7 @@ would wrongly say `"wrapper"`).
 -     return wrapper
 # add.__name__ becomes 'wrapper', add.__doc__ is completely lost!
 
-+ ✅ Production Decorator (Preserves metadata with @functools.wraps):
++ Production Decorator (Preserves metadata with @functools.wraps):
 + import functools
 + def logged(func):
 +     @functools.wraps(func)
@@ -183,7 +191,9 @@ would wrongly say `"wrapper"`).
 | **Parametrized Decorator** | `@retry(max_retries=3)` | Factory returning decorator | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | Exponential backoff retry loops on LLM API rate limits (`429`) |
 | **Caching / Memoization** | `@functools.lru_cache` | In-memory lookup table | $\color{#FFB300}\blacksquare\ \textbf{Occasional}$ | Caching expensive embedding computations or static prompt templates |
 
-## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
+![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
+
+## 🚀 $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 You won't write many decorators, but you'll **use** them constantly:
 - `@app.get("/items")` (FastAPI) registers a function as a web endpoint — Phase 1.
@@ -204,11 +214,13 @@ real-world code.
 4. **Expecting the decorator to run on every call** — the *decorator* runs once (at definition);
    the *wrapper* runs on every call. Put per-call logic inside `wrapper`.
 
-### $\color{#0D47A1}\blacktriangleright\space\color{#1565C0}{\textsf{Try It Yourself}}$
+### $\large\color{#0D47A1}\blacktriangleright\space\color{#1565C0}{\textsf{Try It Yourself}}$
 Write a `timed` decorator that prints how long the wrapped function took (use
 `import time; start = time.perf_counter()` before the call and the difference after).
 
-## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
+![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
+
+## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
 | What you see | Cause | Fix |
 | --- | --- | --- |
@@ -217,7 +229,9 @@ Write a `timed` decorator that prints how long the wrapped function took (use
 | `func.__name__` shows `'wrapper'` | Missing `@functools.wraps` | Add `@functools.wraps(func)` to the wrapper |
 | Your logic runs once, not per call | Code placed outside `wrapper` | Put per-call logic **inside** `wrapper` |
 
-## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
+![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
+
+## 📌 $\Large\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
 ```python
 import functools
@@ -234,7 +248,9 @@ def logged(func):
 def add(a, b): return a + b
 ```
 
-## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
+![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
+
+## 🛑 $\Large\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 
 What is a **closure**, and how does it make the `@logged` decorator above possible?
 

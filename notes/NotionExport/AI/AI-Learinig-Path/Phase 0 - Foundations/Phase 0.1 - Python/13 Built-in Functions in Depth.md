@@ -9,7 +9,9 @@
 
 ---
 
-## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
+![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
+
+## 🗺️ $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 When you write Python, you don't start with a blank slate. Python ships with dozens of **built-in functions** directly baked into the interpreter's innermost core. You never have to `import` them, and because they are implemented in low-level C, they execute faster than custom Python code.
 
@@ -26,7 +28,9 @@ Without these built-in primitives, everyday programming is painful: you would wr
 
 ---
 
-## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
+![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
+
+## 🔑 $\Large\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
 
 - **Built-in** — a function always loaded into Python memory that can be called anywhere without an `import` statement.
 - **LEGB Rule** — Python's scope lookup order: **L**ocal, **E**nclosing, **G**lobal, **B**uilt-in. Built-ins are the final fallback.
@@ -42,7 +46,9 @@ Without these built-in primitives, everyday programming is painful: you would wr
 
 ---
 
-## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (Analogy: The Built-in Toolbelt)}}$
+![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
+
+## 🎈 $\Large\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (Analogy: The Built-in Toolbelt)}}$
 
 Imagine a master carpenter stepping onto a job site. For specialized tasks like running heavy wiring or testing soil, they fetch big power tools from the supply truck (`import torch`, `import httpx`). 
 
@@ -71,10 +77,12 @@ flowchart TD
 
 ---
 
-## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
+![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
+
+## ⚙️ $\Large\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
 
 > [!IMPORTANT]
-> ### $\color{#00C853}{\textsf{🔥 The 80/20 Core Rule: What Matters in Production}}$
+> ### 🔥 $\color{#00C853}{\textsf{The 80/20 Core Rule: What Matters in Production}}$
 > Python provides 68+ built-in functions, but in real-world AI engineering, your daily work revolves around a vital few:
 > * $\color{#00C853}\blacktriangleright$ **Daily Core (90% of Real AI Work):**
 >   - **Collections and Iteration:** `len()`, `range()`, `enumerate()`, `zip()`, `any()`, `all()`, `sorted()`, `min()`, `max()`, `sum()`
@@ -87,7 +95,7 @@ Let's explore the **16 essential built-ins** across 6 practical families. Each f
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{13.1 Inspection and Dynamic Type Checking}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{13.1 Inspection and Dynamic Type Checking}}$
 
 #### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. isinstance(object, classinfo)}}$
 
@@ -98,7 +106,7 @@ Let's explore the **16 essential built-ins** across 6 practical families. Each f
 -     client.generate(prompt)
 # Fails when client is an OpenAIClient or AnthropicClient subclass!
 
-+ ✅ Production Pattern: isinstance() walks the entire inheritance hierarchy:
++ Production Pattern: isinstance() walks the entire inheritance hierarchy:
 + if isinstance(client, BaseLLMClient):
 +     client.generate(prompt)
 # Correctly accepts any subclass conforming to BaseLLMClient!
@@ -173,7 +181,7 @@ In modern AI frameworks (like **LangChain**, **LlamaIndex**, or **PyTorch**), fu
 ```python
 # A pipeline function that accepts ANY valid language model:
 def generate_response(llm: BaseLLM, prompt: str) -> str:
-    # ✅ ALWAYS use isinstance for polymorphism:
+    # ALWAYS use isinstance for polymorphism:
     if not isinstance(llm, BaseLLM):
         raise TypeError(f"Expected a BaseLLM instance, got {type(llm).__name__}")
     
@@ -182,15 +190,15 @@ def generate_response(llm: BaseLLM, prompt: str) -> str:
 ```
 *(If you used `type(llm) is BaseLLM`, this function would break for every single concrete model implementation!)*
 
-###### 4. ⚠️ The #1 Inheritance Gotcha in Python: `bool` is an `int`!
+###### 4. The #1 Inheritance Gotcha in Python: `bool` is an `int`!
 In Python, the boolean type `bool` literally inherits from `int` (`class bool(int): ...`):
 
 ```python
 # The hidden Python built-in inheritance tree:
 # object ──> int ──> bool
 
-print(isinstance(True, int))   # True! ⚠️ (Shock for most developers!)
-print(isinstance(False, int))  # True! ⚠️
+print(isinstance(True, int))   # True! (Shock for most developers!)
+print(isinstance(False, int))  # True! 
 ```
 
 **Why this causes silent bugs in AI JSON parsing:**
@@ -198,12 +206,12 @@ Suppose an AI tool expects an integer retry count (`max_retries = 5`). If an LLM
 ```python
 payload = {"max_retries": True}
 
-# 🚫 BUG: Passes because True is an int!
+# BUG: Passes because True is an int!
 if isinstance(payload["max_retries"], int):
     # max_retries silently becomes 1 instead of raising a validation error!
     pass
 
-# ✅ SAFE FIX: Disallow bool when strict integer types are required:
+# SAFE FIX: Disallow bool when strict integer types are required:
 if isinstance(payload["max_retries"], int) and not isinstance(payload["max_retries"], bool):
     print("Valid integer!")
 else:
@@ -213,12 +221,12 @@ else:
 ###### 5. Decision Table: `isinstance()` vs. `type() is`
 | Check | Walks Inheritance Tree? | When to Pick |
 | :--- | :--- | :--- |
-| **`isinstance(obj, BaseClass)`** | ✅ **Yes** | **99% of cases.** Polymorphism, checking against base classes, API validation, PyTorch modules. |
+| **`isinstance(obj, BaseClass)`** | **Yes** | **99% of cases.** Polymorphism, checking against base classes, API validation, PyTorch modules. |
 | **`type(obj) is ExactClass`** | ❌ **No** | When you must disallow subclasses (e.g. separating `bool` from `int`). |
 
-- **✅ Use when:** Validating user input, API responses, configuration dictionaries, or polymorphic function arguments.
-- **🚫 Avoid when → use sibling instead:** You need an exact type match without allowing subclasses → use `type(obj) is ExactClass`.
-- **⚠️ Gotcha:** `isinstance(True, int)` returns `True` because `bool` is a subclass of `int` in Python. If you must distinguish booleans from integers, verify `not isinstance(val, bool)` or check `type(val) is int`.
+- **Use when:** Validating user input, API responses, configuration dictionaries, or polymorphic function arguments.
+- **Avoid when → use sibling instead:** You need an exact type match without allowing subclasses → use `type(obj) is ExactClass`.
+- **Gotcha:** `isinstance(True, int)` returns `True` because `bool` is a subclass of `int` in Python. If you must distinguish booleans from integers, verify `not isinstance(val, bool)` or check `type(val) is int`.
 - **AI Practitioner Example:**
   ```python
   def process_embedding(embedding: object) -> list[float]:
@@ -335,13 +343,13 @@ print(dispatch_tool("version"))
 ###### 4. Decision Table: Checking Callability
 | Method | Checks Functions? | Checks `__call__` Classes? | Use Case |
 | :--- | :--- | :--- | :--- |
-| **`callable(obj)`** | ✅ Yes | ✅ Yes | **Recommended standard.** The universal, fast check before invoking `obj()`. |
-| *(Nice to know)* `hasattr(obj, '__call__')` | ✅ Yes | ✅ Yes | Equivalent under the hood, but slower and less idiomatic than `callable()`. |
-| *(Nice to know)* `isinstance(obj, types.FunctionType)` | ✅ Yes | ❌ No | Only if you strictly reject callable class instances and allow bare functions. |
+| **`callable(obj)`** | Yes | Yes | **Recommended standard.** The universal, fast check before invoking `obj()`. |
+| *(Nice to know)* `hasattr(obj, '__call__')` | Yes | Yes | Equivalent under the hood, but slower and less idiomatic than `callable()`. |
+| *(Nice to know)* `isinstance(obj, types.FunctionType)` | Yes | ❌ No | Only if you strictly reject callable class instances and allow bare functions. |
 
-- **✅ Use when:** Building plugin architectures, agent tool dispatchers, middleware pipelines, or dependency injection hooks.
-- **🚫 Avoid when → use sibling instead:** You need to verify the function's parameter signature or argument names → use `inspect.signature(obj)`.
-- **⚠️ Gotcha:** A class itself *is* callable (calling `MyClass()` invokes its constructor `__init__`). *(Nice to know edge-case)*: If you ever need to verify that an object is an already-instantiated tool rather than the uninstantiated class blueprint, check `callable(obj) and not isinstance(obj, type)`.
+- **Use when:** Building plugin architectures, agent tool dispatchers, middleware pipelines, or dependency injection hooks.
+- **Avoid when → use sibling instead:** You need to verify the function's parameter signature or argument names → use `inspect.signature(obj)`.
+- **Gotcha:** A class itself *is* callable (calling `MyClass()` invokes its constructor `__init__`). *(Nice to know edge-case)*: If you ever need to verify that an object is an already-instantiated tool rather than the uninstantiated class blueprint, check `callable(obj) and not isinstance(obj, type)`.
 
 ---
 
@@ -424,13 +432,13 @@ If you call `locals()` outside of any function (at the root of your file), you a
 print(globals() is locals())  # True (both point to the exact same dictionary!)
 ```
 
-###### 5. ⚠️ Gotcha: Why Modifying `locals()` Inside a Function Fails
+###### 5. Gotcha: Why Modifying `locals()` Inside a Function Fails
 While writing to `globals()["x"] = 10` works, writing to `locals()["x"] = 10` inside a function does **not** update actual variables:
 
 ```python
 def broken_update():
     x = 10
-    locals()["x"] = 99  # ⚠️ Appears to succeed, but...
+    locals()["x"] = 99  # Appears to succeed, but...
     print("x is still:", x)
 
 broken_update()
@@ -485,13 +493,13 @@ print("Safe result from AI sandbox:", sandbox_locals["result"])  # 60
 | :--- | :--- | :--- | :--- |
 | **What it reflects** | Module-level variables & imports | Temporary variables inside current function | Same as `globals()` |
 | **Analogy** | Hallway Whiteboard | Private Desk Notepad | Hallway Whiteboard |
-| **Can you write to it?** | ✅ Yes (`globals()["k"] = v` updates variable) | ❌ Read-only snapshot (writes are discarded) | ✅ Yes |
+| **Can you write to it?** | Yes (`globals()["k"] = v` updates variable) | ❌ Read-only snapshot (writes are discarded) | Yes |
 | **Lifetime** | Lives as long as the module/program runs | Destroyed when function returns | Lives as long as program runs |
 | **AI Practitioner Use** | Automatic tool discovery, plugin registries | Debugging, inspection, frame logging | Same as `globals()` |
 
-- **✅ Use when:** Dynamic module registration, inspecting available tools/classes, debugging variables, or building restricted environments for code interpreters.
-- **🚫 Avoid when → use sibling instead:** General state management → use an explicit class, dictionary, or Pydantic model. Never use `globals()` as a messy dumping ground.
-- **⚠️ Gotcha:** In CPython, updating the `locals()` dictionary inside a function does not update actual local variables because local variables live in fast C-array slots. Treat `locals()` inside functions as read-only.
+- **Use when:** Dynamic module registration, inspecting available tools/classes, debugging variables, or building restricted environments for code interpreters.
+- **Avoid when → use sibling instead:** General state management → use an explicit class, dictionary, or Pydantic model. Never use `globals()` as a messy dumping ground.
+- **Gotcha:** In CPython, updating the `locals()` dictionary inside a function does not update actual local variables because local variables live in fast C-array slots. Treat `locals()` inside functions as read-only.
 - **AI Practitioner Example (Restricted Sandbox Registry):**
   ```python
   import math
@@ -506,7 +514,7 @@ print("Safe result from AI sandbox:", sandbox_locals["result"])  # 60
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{13.2 Iteration, Indexing and Sequence Alignment}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{13.2 Iteration, Indexing and Sequence Alignment}}$
 
 #### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{4. range(start, stop[, step])}}$
 Generates an immutable sequence of integers on demand without storing them all in memory.
@@ -583,7 +591,7 @@ for i in range(10, 0, -2):
 
 print()
 
-# ⚠️ Common Negative Step Mistake:
+# Common Negative Step Mistake:
 # If start < stop with a negative step, it yields NOTHING (0 iterations):
 empty_result = list(range(1, 5, -1))
 print(empty_result)  # []
@@ -615,14 +623,14 @@ for idx in range(len(chat_history) - 1, -1, -1):
 ###### 5. Memory & Reusability Comparison
 | Usage | Are numbers stored in RAM? | RAM Cost | Can be re-looped? |
 | :--- | :--- | :--- | :--- |
-| `r = range(10_000_000)` | **No.** Only 3 integers: `(start, stop, step)` | ~48 bytes | ✅ Yes (reusable sequence) |
-| `for x in range(10_000_000):` | **No.** Computed 1-by-1 per iteration | ~48 bytes | ✅ Yes |
-| `nums = list(range(10_000_000))` | **YES.** Materializes 10M integer objects | ~80 Megabytes | ✅ Yes |
+| `r = range(10_000_000)` | **No.** Only 3 integers: `(start, stop, step)` | ~48 bytes | Yes (reusable sequence) |
+| `for x in range(10_000_000):` | **No.** Computed 1-by-1 per iteration | ~48 bytes | Yes |
+| `nums = list(range(10_000_000))` | **YES.** Materializes 10M integer objects | ~80 Megabytes | Yes |
 | `g = (x for x in range(10_000_000))` | **No.** Generator iterator | ~100 bytes | ❌ No (exhausts after 1 pass) |
 
-- **✅ Use when:** Repeating an action $N$ times, stepping through indices in batches, or building numerical sequences.
-- **🚫 Avoid when → use sibling instead:** You want to iterate over items in an existing collection → use direct `for item in collection:` or `enumerate()`.
-- **⚠️ Gotcha:** `range(5)` excludes the stop value: it yields `0, 1, 2, 3, 4`. When using negative step `range(5, 0, -1)`, the stop `0` is excluded (yields `5, 4, 3, 2, 1`).
+- **Use when:** Repeating an action $N$ times, stepping through indices in batches, or building numerical sequences.
+- **Avoid when → use sibling instead:** You want to iterate over items in an existing collection → use direct `for item in collection:` or `enumerate()`.
+- **Gotcha:** `range(5)` excludes the stop value: it yields `0, 1, 2, 3, 4`. When using negative step `range(5, 0, -1)`, the stop `0` is excluded (yields `5, 4, 3, 2, 1`).
 - **AI Practitioner Example (Batch Chunking Loop):**
   ```python
   tokens = list(range(100))  # 100 token IDs
@@ -669,7 +677,7 @@ for i in range(len(documents)):
     doc = documents[i]
     print(f"{i + 1}. {doc}")
 
-# ✅ GOOD: Pythonic enumerate with start=1 (No manual indexing, no i + 1 math!)
+# GOOD: Pythonic enumerate with start=1 (No manual indexing, no i + 1 math!)
 for rank, doc in enumerate(documents, start=1):
     print(f"{rank}. {doc}")
 ```
@@ -708,9 +716,9 @@ print(prompt_context)
 # Source [3]: GPT models use a Decoder-only architecture for autoregressive generation.
 ```
 
-- **✅ Use when:** You need both the position/rank and the item during a loop.
-- **🚫 Avoid when → use sibling instead:** You only need the items → use direct `for item in items:`. You only need the count → use `len()`.
-- **⚠️ Gotcha:** `enumerate()` is a one-time generator. Once looped over, it is exhausted! If you need to loop over it again or check its length, wrap it in a list: `pairs = list(enumerate(items))`.
+- **Use when:** You need both the position/rank and the item during a loop.
+- **Avoid when → use sibling instead:** You only need the items → use direct `for item in items:`. You only need the count → use `len()`.
+- **Gotcha:** `enumerate()` is a one-time generator. Once looped over, it is exhausted! If you need to loop over it again or check its length, wrap it in a list: `pairs = list(enumerate(items))`.
 
 ---
 
@@ -722,7 +730,7 @@ print(prompt_context)
 - pairs = list(zip(prompts, ground_truth))
 # If prompts has 100 items but ground_truth has 95, 5 answers are silently LOST without warning!
 
-+ ✅ Production Pattern: zip(..., strict=True) enforces exact length alignment:
++ Production Pattern: zip(..., strict=True) enforces exact length alignment:
 + pairs = list(zip(prompts, ground_truth, strict=True))
 # Immediately raises ValueError if lengths don't match, preventing corrupted evaluation metrics!
 ```
@@ -800,20 +808,20 @@ for name, score, model, latency in zip(names, scores, models, lat_sec):
     print(f"{name} | Model: {model} | Score: {score} | Latency: {latency}s")
 ```
 
-> **⚠️ Common Beginner Trap: Creating a `dict()` from 3 zipped lists fails!**
+> **Common Beginner Trap: Creating a `dict()` from 3 zipped lists fails!**
 > - `dict(zip(keys, values))` works **only for exactly 2 lists** because a dictionary requires key-value pairs `(key, value)`.
 > - If you try `dict(zip(list_a, list_b, list_c))`, Python will crash with:
 >   `ValueError: dictionary update sequence element #0 has length 3; 2 is required`.
 > - To store 3+ attributes in a dictionary, use a comprehension: `{name: {"score": s, "model": m} for name, s, m in zip(names, scores, models)}`.
 
-###### 3. ⚠️ The Silent Truncation Bug (Why Default `zip` is Dangerous in AI)
+###### 3. The Silent Truncation Bug (Why Default `zip` is Dangerous in AI)
 By default, when one track runs out of teeth, Python's zipper **silently stops without telling you**:
 
 ```
 List A (Prompts):     [ Prompt 1,   Prompt 2,   Prompt 3 ]
                             ▲           ▲           ▲
                             │           │           │  (DROPPED INTO VOID!)
-List B (Completions): [ Answer 1,   Answer 2 ]      └──> ⚠️ SILENTLY LOST!
+List B (Completions): [ Answer 1,   Answer 2 ]      └──> SILENTLY LOST!
 ```
 
 Look at this silent bug in action:
@@ -821,7 +829,7 @@ Look at this silent bug in action:
 prompts = ["What is 2+2?", "Capital of France?", "Who wrote Hamlet?"]  # 3 items
 answers = ["4", "Paris"]                                              # 2 items (one failed!)
 
-# 🚫 DANGEROUS: Default zip drops the 3rd prompt SILENTLY:
+# DANGEROUS: Default zip drops the 3rd prompt SILENTLY:
 pairs = list(zip(prompts, answers))
 print(f"Evaluated {len(pairs)} pairs: {pairs}")
 # Evaluated 2 pairs: [('What is 2+2?', '4'), ('Capital of France?', 'Paris')]
@@ -832,7 +840,7 @@ print(f"Evaluated {len(pairs)} pairs: {pairs}")
 In production AI pipelines, silent data loss is unacceptable. Setting `strict=True` forces Python to verify that all datasets have identical lengths:
 
 ```python
-# ✅ SAFE: Raises ValueError immediately on length mismatch:
+# SAFE: Raises ValueError immediately on length mismatch:
 try:
     pairs = list(zip(prompts, answers, strict=True))
 except ValueError as error:
@@ -895,13 +903,13 @@ for q, actual, expected in benchmark_table:
     print(f"  Expected: {expected}\n")
 ```
 
-- **✅ Use when:** Walking multiple sequences in lockstep, combining parallel lists into dictionaries (`dict(zip(keys, vals))`), or transposing matrices.
-- **🚫 Avoid when → use sibling instead:** Sequences have uneven lengths and you want to keep all data with placeholders → use `itertools.zip_longest()`.
-- **⚠️ Gotcha:** Standard `zip(a, b)` silently truncates to the shortest list. In AI pipelines, always specify `strict=True` to guarantee data integrity.
+- **Use when:** Walking multiple sequences in lockstep, combining parallel lists into dictionaries (`dict(zip(keys, vals))`), or transposing matrices.
+- **Avoid when → use sibling instead:** Sequences have uneven lengths and you want to keep all data with placeholders → use `itertools.zip_longest()`.
+- **Gotcha:** Standard `zip(a, b)` silently truncates to the shortest list. In AI pipelines, always specify `strict=True` to guarantee data integrity.
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{13.3 Logical Predicates and Batch Validation}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{13.3 Logical Predicates and Batch Validation}}$
 
 #### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7. all(iterable) and 8. any(iterable)}}$
 Evaluate boolean conditions across an entire collection using fast, C-level short-circuiting.
@@ -963,12 +971,12 @@ chunks = ["Hello world", "toxic text here", "Great response", "Super helpful"]
 # Python evaluates ALL 4 chunks FIRST (takes 2 full seconds), builds a list, then checks all().
 all([slow_ai_moderation_check(c) for c in chunks])
 
-# ✅ GOOD: Generator Expression with parentheses (...) or bare inside all()
+# GOOD: Generator Expression with parentheses (...) or bare inside all()
 # Chunk 1 passes -> Chunk 2 fails -> STOPS IMMEDIATELY! Takes only 1.0s total.
 all(slow_ai_moderation_check(c) for c in chunks)
 ```
 
-###### 3. ⚠️ The Mind-Bending Gotcha: Vacuous Truth (`all([]) == True`)
+###### 3. The Mind-Bending Gotcha: Vacuous Truth (`all([]) == True`)
 Every beginner gets surprised by this behavior:
 
 ```python
@@ -985,11 +993,11 @@ Suppose your AI agent extracts tool calls from an LLM response. If the LLM retur
 ```python
 tool_calls = []  # LLM returned no tools!
 
-# 🚫 DANGEROUS: evaluates to True because list is empty!
+# DANGEROUS: evaluates to True because list is empty!
 if all(t.is_valid for t in tool_calls):
     execute_tools(tool_calls)  # Bug: thought all tools were valid, but none exist!
 
-# ✅ SAFE: Explicitly check that the collection is non-empty first:
+# SAFE: Explicitly check that the collection is non-empty first:
 if tool_calls and all(t.is_valid for t in tool_calls):
     execute_tools(tool_calls)
 ```
@@ -1045,15 +1053,15 @@ if all(loss < target_loss for loss in val_losses):
 | `[True, True, True]` | **`True`** | **`True`** | Both agree when everything is positive. |
 | `[True, False, True]` | **`False`** (stops at 2nd item) | **`True`** (stops at 1st item) | Short-circuits at the first decisive element. |
 | `[False, False, False]`| **`False`** (stops at 1st item) | **`False`** (checks all) | Both agree when everything is negative. |
-| `[]` *(empty list)* | **`True`** (vacuous truth) | **`False`** | ⚠️ Always guard empty collections with `if items and all(...)`! |
+| `[]` *(empty list)* | **`True`** (vacuous truth) | **`False`** | Always guard empty collections with `if items and all(...)`! |
 
-- **✅ Use when:** Guardrails, input validation, checking batch convergence, monitoring errors in agent trajectories.
-- **🚫 Avoid when → use sibling instead:** You need to count how many items matched → use `sum(1 for x in items if condition)`.
-- **⚠️ Gotcha (Vacuous Truth):** `all([])` returns `True` and `any([])` returns `False`. Guard empty lists with `if items and all(...)`.
+- **Use when:** Guardrails, input validation, checking batch convergence, monitoring errors in agent trajectories.
+- **Avoid when → use sibling instead:** You need to count how many items matched → use `sum(1 for x in items if condition)`.
+- **Gotcha (Vacuous Truth):** `all([])` returns `True` and `any([])` returns `False`. Guard empty lists with `if items and all(...)`.
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{13.4 Functional Transformations and Sorting}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{13.4 Functional Transformations and Sorting}}$
 
 #### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{9. map(function, *iterables) and 10. filter(function, iterable)}}$
 Higher-order functional primitives that transform and filter data streams.
@@ -1094,7 +1102,7 @@ Beginners are frequently told: *"Always use list comprehensions, never use `map`
 
 1. **Rule 1: Use `map` when applying an EXISTING named function:**
    ```python
-   # ✅ Cleaner with map (no dummy variable 'x' needed):
+   # Cleaner with map (no dummy variable 'x' needed):
    numbers = list(map(int, ["10", "20", "30"]))
    
    # Clunky with comprehension:
@@ -1103,7 +1111,7 @@ Beginners are frequently told: *"Always use list comprehensions, never use `map`
 
 2. **Rule 2: Use List Comprehension when you need an INLINE expression:**
    ```python
-   # ✅ Cleaner with comprehension (readable math):
+   # Cleaner with comprehension (readable math):
    doubled = [x * 2 + 1 for x in numbers]
    
    # ❌ Ugly with map (requires an awkward lambda):
@@ -1112,7 +1120,7 @@ Beginners are frequently told: *"Always use list comprehensions, never use `map`
 
 3. **Rule 3: Use `filter(None, data)` for rapid C-speed cleanup:**
    ```python
-   # ✅ Fastest way in Python to drop empty strings and None:
+   # Fastest way in Python to drop empty strings and None:
    clean = list(filter(None, raw_chunks))
    ```
 
@@ -1145,9 +1153,9 @@ print(ready_for_embeddings)
 # ]
 ```
 
-- **✅ Use when:** Applying an existing function across a sequence (e.g. `map(float, ...)`) or purging falsy values (`filter(None, ...)`).
-- **🚫 Avoid when → use sibling instead:** You need custom math, inline calculations, or condition branches → use a **list comprehension** or **generator expression**.
-- **⚠️ Gotcha:** Both `map` and `filter` return single-use lazy iterators. Once you iterate through them, they are empty! Wrap them in `list()` if you need to access items by index or loop repeatedly.
+- **Use when:** Applying an existing function across a sequence (e.g. `map(float, ...)`) or purging falsy values (`filter(None, ...)`).
+- **Avoid when → use sibling instead:** You need custom math, inline calculations, or condition branches → use a **list comprehension** or **generator expression**.
+- **Gotcha:** Both `map` and `filter` return single-use lazy iterators. Once you iterate through them, they are empty! Wrap them in `list()` if you need to access items by index or loop repeatedly.
 
 ---
 
@@ -1213,15 +1221,15 @@ for c in ranked_chunks:
 # ID: doc_A | Score: 0.85 | Tokens: 100
 ```
 
-> **⚠️ Gotcha on the Negative Sign Trick:** You can only negate **numbers** (`-c["score"]`). You **cannot** negate strings (`-c["title"]` raises `TypeError: bad operand type for unary -: 'str'`). To sort strings descending, either use `reverse=True` or a custom comparison class.
+> **Gotcha on the Negative Sign Trick:** You can only negate **numbers** (`-c["score"]`). You **cannot** negate strings (`-c["title"]` raises `TypeError: bad operand type for unary -: 'str'`). To sort strings descending, either use `reverse=True` or a custom comparison class.
 
-- **✅ Use when:** Sorting immutable sequences (tuples), keeping original datasets unchanged, or ranking search chunks with multi-criteria tie-breakers.
-- **🚫 Avoid when → use sibling instead:** You already have a massive list in memory and need to conserve RAM without creating a duplicate copy → use `my_list.sort()`.
-- **⚠️ Gotcha:** `list.sort()` returns `None`. If you write `my_list = my_list.sort()`, `my_list` becomes `None`! Always remember that `sorted()` returns a list, while `.sort()` returns `None`.
+- **Use when:** Sorting immutable sequences (tuples), keeping original datasets unchanged, or ranking search chunks with multi-criteria tie-breakers.
+- **Avoid when → use sibling instead:** You already have a massive list in memory and need to conserve RAM without creating a duplicate copy → use `my_list.sort()`.
+- **Gotcha:** `list.sort()` returns `None`. If you write `my_list = my_list.sort()`, `my_list` becomes `None`! Always remember that `sorted()` returns a list, while `.sort()` returns `None`.
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{13.5 Precision, Formatting and Console Output}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{13.5 Precision, Formatting and Console Output}}$
 
 #### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{12. round(number, ndigits=None)}}$
 Rounds a number to a specified precision in decimal digits.
@@ -1264,7 +1272,7 @@ print(round(4.5))  # 4  <-- 4 is even (rounds down!)
 print(round(5.5))  # 6  <-- 6 is even (rounds up!)
 ```
 
-###### 2. ⚠️ The Binary Floating-Point Shock: Why `round(2.675, 2)` gives `2.67`!
+###### 2. The Binary Floating-Point Shock: Why `round(2.675, 2)` gives `2.67`!
 Try running this in your Python terminal:
 ```python
 print(round(2.675, 2))  # Expected: 2.68 ... Actual Output: 2.67! 😱
@@ -1327,9 +1335,9 @@ total_bill = round(tokens_used * cost_per_token, 4)
 print(f"Billed Amount: ${total_bill}")  # Billed Amount: $0.1265
 ```
 
-- **✅ Use when:** Presenting logs, rounding evaluation metrics (accuracy, F1 score), or rounding display values.
-- **🚫 Avoid when → use sibling instead:** Financial or strict per-token micro-billing where floating-point binary representation errors are intolerable → use `decimal.Decimal`. Strict rounding up/down → use `math.ceil` or `math.floor`.
-- **⚠️ Gotcha:** Banker's rounding rounds half to even (`round(2.5) == 2`). Floating-point binary representation can round unexpected numbers down (`round(2.675, 2) == 2.67`).
+- **Use when:** Presenting logs, rounding evaluation metrics (accuracy, F1 score), or rounding display values.
+- **Avoid when → use sibling instead:** Financial or strict per-token micro-billing where floating-point binary representation errors are intolerable → use `decimal.Decimal`. Strict rounding up/down → use `math.ceil` or `math.floor`.
+- **Gotcha:** Banker's rounding rounds half to even (`round(2.5) == 2`). Floating-point binary representation can round unexpected numbers down (`round(2.675, 2) == 2.67`).
 
 ---
 
@@ -1362,7 +1370,7 @@ In regular Python code, `print()` defaults to `end="\n"`. Because every normal p
 ###### 3. The AI Streaming Trap (When `end=""` Has No Newline!)
 When streaming tokens from an LLM (like ChatGPT typing out words), you do **not** want a newline after every word. You want words placed side-by-side on the same line:
 ```python
-print(token, end="")  # ⚠️ No newline!
+print(token, end="")  # No newline!
 ```
 Without a newline, Python's default `flush=False` keeps holding each token in RAM. The terminal screen stays completely blank while your model thinks and loops. Then, once the response finishes and the script exits, the entire paragraph abruptly bursts onto the screen all at once!
 
@@ -1394,7 +1402,7 @@ for word in ["Loading ", "AI ", "weights..."]:
     time.sleep(1)
 print("\n")
 
-# ✅ Test B: flush=True (Each word appears live every second)
+# Test B: flush=True (Each word appears live every second)
 print("Testing flush=True:  ", end="")
 for word in ["Loading ", "AI ", "weights..."]:
     print(word, end="", flush=True)
@@ -1408,9 +1416,9 @@ print("\n")
 | **`flush=False`** *(default)* | Holds text in RAM buffer until a newline `\n` or buffer is full. Fast, efficient. | Standard scripts, batch logging, printing full lines. |
 | **`flush=True`** | Bypasses buffer; forces immediate OS write to screen even for single letters. | LLM token streaming, progress bars, terminal spinners (`. . .`). |
 
-- **✅ Use when:** Debugging, terminal CLI output, token-by-token streaming from API generators.
-- **🚫 Avoid when → use sibling instead:** Production microservice logging → use the standard `logging` library or structured JSON loggers (`structlog`) with log levels (`INFO`, `ERROR`).
-- **⚠️ Gotcha:** In many terminal environments, standard output is line-buffered. If you use `end=""` without `flush=True`, Python buffers the tokens in memory and dumps them all at once when the loop completes, completely ruining the streaming effect!
+- **Use when:** Debugging, terminal CLI output, token-by-token streaming from API generators.
+- **Avoid when → use sibling instead:** Production microservice logging → use the standard `logging` library or structured JSON loggers (`structlog`) with log levels (`INFO`, `ERROR`).
+- **Gotcha:** In many terminal environments, standard output is line-buffered. If you use `end=""` without `flush=True`, Python buffers the tokens in memory and dumps them all at once when the loop completes, completely ruining the streaming effect!
 - **AI Practitioner Example (Streaming LLM Tokens Real-Time):**
   ```python
   import time
@@ -1426,7 +1434,7 @@ print("\n")
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{13.6 Dynamic Code Evaluation and Execution Safety}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{13.6 Dynamic Code Evaluation and Execution Safety}}$
 
 #### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{14. eval(expression, globals=None, locals=None) and 15. exec(object, globals=None, locals=None)}}$
 Dynamically parse and execute Python code strings at runtime.
@@ -1457,7 +1465,7 @@ Dynamically parse and execute Python code strings at runtime.
 - **`ast.literal_eval()` is The Airport Customs Inspector:**
   When a traveller brings a sealed parcel from overseas (raw text from an LLM), the customs inspector scans it. It only allows safe, inert data structures through (strings, numbers, tuples, lists, dictionaries, booleans, `None`). The second it sees an executable function call or system command, it sounds the alarm and refuses to let it in!
 
-###### 2. ⚠️ The Remote Code Execution (RCE) Vulnerability in AI
+###### 2. The Remote Code Execution (RCE) Vulnerability in AI
 Why are senior engineers and security architects terrified of raw `eval()` and `exec()`?
 Because of **Prompt Injection**. If you connect an LLM to `eval()` or `exec()`, a malicious user can trick the model into executing dangerous operating system commands:
 
@@ -1474,7 +1482,7 @@ Because of **Prompt Injection**. If you connect an LLM to `eval()` or `exec()`, 
 
 Look at this dangerous exploit:
 ```python
-# 🚫 DANGEROUS: An attacker injects code into an LLM response:
+# DANGEROUS: An attacker injects code into an LLM response:
 untrusted_input = "__import__('os').listdir('.')"
 
 # Raw eval executes the code immediately!
@@ -1491,7 +1499,7 @@ import ast
 # Raw string returned by an LLM:
 llm_string = "{'model': 'gpt-4o', 'temperature': 0.7, 'tools': ['search', 'calc']}"
 
-# ✅ SAFE: Parses literal data structures with ZERO risk of code execution:
+# SAFE: Parses literal data structures with ZERO risk of code execution:
 data = ast.literal_eval(llm_string)
 print(type(data), data["model"])  # <class 'dict'> gpt-4o
 
@@ -1549,17 +1557,19 @@ except NameError as e:
 ###### 5. Decision Matrix: `eval` vs. `exec` vs. `ast.literal_eval`
 | Tool | What It Does | Returns | Safe for Untrusted Strings? | Typical AI Engineering Use Case |
 | :--- | :--- | :--- | :--- | :--- |
-| **`ast.literal_eval()`** | Parses stringified dicts, lists, numbers, booleans | Real Python object | ✅ **100% Safe** | Parsing raw JSON/Python literals returned by LLMs. |
+| **`ast.literal_eval()`** | Parses stringified dicts, lists, numbers, booleans | Real Python object | **100% Safe** | Parsing raw JSON/Python literals returned by LLMs. |
 | **`eval()`** | Evaluates a single Python expression | Result of expression | ❌ **Dangerous** | Mathematical formula evaluators (with strict sandboxing). |
 | **`exec()`** | Executes full multi-line Python code scripts | `None` | ❌ **Dangerous** | AI Agent "Code Interpreter" tools (must run in sandbox/Docker). |
 
-- **✅ Use when:** Safely parsing data with `ast.literal_eval()`, or executing code inside isolated sandboxes for AI agents.
-- **🚫 Avoid when → use sibling instead:** Parsing data strings → **never use `eval()`, always use `ast.literal_eval()`**. General logic → write standard Python functions.
-- **⚠️ Gotcha:** In `exec()` and `eval()`, passing `globals={}` is **not safe** because Python automatically re-injects the standard `__builtins__` dictionary! You must explicitly block it with `{"__builtins__": None}` or provide a strict whitelist. *(Production note: Even with `{"__builtins__": None}`, language-level sandboxes are vulnerable; always isolate execution in Docker or microVMs).*
+- **Use when:** Safely parsing data with `ast.literal_eval()`, or executing code inside isolated sandboxes for AI agents.
+- **Avoid when → use sibling instead:** Parsing data strings → **never use `eval()`, always use `ast.literal_eval()`**. General logic → write standard Python functions.
+- **Gotcha:** In `exec()` and `eval()`, passing `globals={}` is **not safe** because Python automatically re-injects the standard `__builtins__` dictionary! You must explicitly block it with `{"__builtins__": None}` or provide a strict whitelist. *(Production note: Even with `{"__builtins__": None}`, language-level sandboxes are vulnerable; always isolate execution in Docker or microVMs).*
 
 ---
 
-## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
+![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
+
+## 🚀 $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 In modern AI engineering, these built-ins operate together in every agent framework and inference service:
 
@@ -1592,7 +1602,9 @@ In modern AI engineering, these built-ins operate together in every agent framew
 
 ---
 
-## ⚖️ $\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use}}$
+![Variations](https://img.shields.io/badge/COMPARISON-VARIATIONS%20%26%20WHEN%20TO%20USE-00838F?style=for-the-badge&logo=scales&logoColor=white)
+
+## ⚖️ $\Large\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use}}$
 
 | Problem / Task | Preferred Built-in | Competing Approach | When to Pick the Built-in | AI Architectural Trade-off |
 | :--- | :--- | :--- | :--- | :--- |
@@ -1613,7 +1625,9 @@ In modern AI engineering, these built-ins operate together in every agent framew
 
 ---
 
-## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
+![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
+
+## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
 | What you see | Cause | Fix |
 | :--- | :--- | :--- |
@@ -1627,7 +1641,9 @@ In modern AI engineering, these built-ins operate together in every agent framew
 
 ---
 
-## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
+![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
+
+## 📌 $\Large\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
 ```python
 # 1. Inspection & Scoping
@@ -1667,7 +1683,9 @@ data = ast.literal_eval(raw_llm_str)    # Safely parses dict/list string; NO cod
 
 ---
 
-## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
+![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
+
+## 🛑 $\Large\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 
 What does the following snippet print, and why?
 

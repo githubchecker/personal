@@ -9,18 +9,22 @@
 
 ---
 
-## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
+![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
+
+## 🗺️ $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 > [!IMPORTANT]
 > ### $\color{#512DA8}{\textsf{The Core Premise}}$
 > So far code runs top to bottom, once. **Control flow** lets a program **make decisions** (`if`) and **repeat work** (loops). This is where programs start to feel alive — and where indentation (Lesson 01) becomes load-bearing. Every algorithm, every data pipeline, every agent loop is built from these. *(Note: Exceptional control flow via `try` / `except` / `else` / `finally` has its own dedicated deep-dive in [10 — Error Handling](10%20Error%20Handling.md)).*
 
-### $\color{#00838F}\blacktriangleright\space\color{#00695C}{\textsf{Where It Fits}}$
+### $\large\color{#00838F}\blacktriangleright\space\color{#00695C}{\textsf{Where It Fits}}$
 
 * $\color{#0288D1}\blacktriangleright$ **$\color{#01579B}{\textsf{Builds on:}}$** [02 Variables, Types and Operators](02%20Variables%20Types%20and%20Operators.md) and [05 Dictionaries and Sets](05%20Dictionaries%20and%20Sets.md) — boolean logic, comparisons, and iterating collections.
 * $\color{#00897B}\blacktriangleright$ **$\color{#004D40}{\textsf{Unlocks:}}$** [07 Functions](07%20Functions.md), [08 Comprehensions and Generators](08%20Comprehensions%20and%20Generators.md), and iterative AI Agent loops (ReAct pattern).
 
-## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
+![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
+
+## 🔑 $\Large\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
 
 | $\color{#4A148C}\textsf{\textbf{Term}}$ | $\color{#00695C}\textsf{\textbf{One-Line Meaning}}$ |
 | :--- | :--- |
@@ -32,7 +36,9 @@
 | $\color{#2E7D32}\mathbf{Loop\space else}$ | Block running after `for`/`while` only if the loop finishes without `break`. |
 | $\color{#00838F}\mathbf{range}$ | Built-in sequence generator for iterating over number intervals. |
 
-## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (Analogy: Recipe with Choices and Repeats)}}$
+![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
+
+## 🎈 $\Large\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (Analogy: Recipe with Choices and Repeats)}}$
 
 A recipe sometimes says *"if the dough is too dry, add water"* (a decision) and *"stir until smooth"* (a repeat). Control flow gives your code those two powers:
 * $\color{#0288D1}\blacktriangleright$ **Branching:** Choose which steps to run based on a condition.
@@ -61,15 +67,17 @@ flowchart TD
 > ### $\color{#512DA8}{\textsf{The "Aha!" Insight}}$
 > The **indented block** under an `if`/`for`/`while` is the body that those statements control. Indentation *is* the grouping structure — there are no curly braces `{}` or begin/end tokens.
 
-## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
+![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
+
+## ⚙️ $\Large\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
 
 > [!IMPORTANT]
-> ### $\color{#00C853}{\textsf{🔥 The 80/20 Core Rule: What Matters in Production}}$
+> ### 🔥 $\color{#00C853}{\textsf{The 80/20 Core Rule: What Matters in Production}}$
 > * $\color{#00C853}\blacktriangleright$ **Daily Core (90% of Real AI Work):** `if / elif / else` branching, `for item in iterable:` loops, `enumerate()` (when you need both index and item), `zip()` (iterating two lists in lockstep), `break` and `continue`, and idiomatic truthy/falsy checks (`if not results:` instead of `if len(results) == 0:`).
 > * $\color{#FFB300}\blacktriangleright$ **Occasional (Tool Dispatch and Polling):** `match / case` (structural pattern matching for routing LLM function/tool calls), `while condition:` with a safety counter for polling API status.
 > * $\color{#757575}\blacktriangleright$ **Reference Only (Exhaustive and Confusing):** `for ... else` and `while ... else` clauses (obscure syntax prone to misunderstandings).
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{6.1 if / elif / else}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{6.1 if / elif / else}}$
 
 ```python
 score = 72
@@ -98,7 +106,7 @@ age = 25
 if 18 <= age < 65:              # Python allows chained comparisons
     print("working age")
 
-# ⚠️ Float Comparison Pitfall in 'if' conditions:
+# Float Comparison Pitfall in 'if' conditions:
 # Never write 'if val == 0.3:' because binary floating-point rounding causes false negatives.
 # Instead, check if the absolute difference is within a tolerance (Lesson 02):
 import math
@@ -107,7 +115,7 @@ if math.isclose(threshold, 0.3):  # Or: if abs(threshold - 0.3) < 1e-9:
     print("Scores match within acceptable tolerance!")
 ```
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{6.1.1 Truth Value Testing: Falsy vs. Truthy Across All Python Types}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{6.1.1 Truth Value Testing: Falsy vs. Truthy Across All Python Types}}$
 
 In Python, **any object can be tested directly in an `if` condition** without needing explicit comparisons like `if len(x) == 0` or `if x == True`.
 
@@ -151,18 +159,18 @@ flowchart TD
 
 Every object in Python is either **Falsy** or **Truthy**:
 
-| Category | Python Data Type | ❌ Falsy Values (`bool(x) == False`) | ✅ Truthy Values (`bool(x) == True`) | Production AI Context |
+| Category | Python Data Type | ❌ Falsy Values (`bool(x) == False`) | Truthy Values (`bool(x) == True`) | Production AI Context |
 | :--- | :--- | :--- | :--- | :--- |
 | **Booleans** | `bool` | `False` | `True` | Flags (`is_streaming = True`) |
 | **Null / Singleton** | `NoneType` | `None` | *(None is always falsy)* | Unconfigured parameters (`api_key = None`) |
-| **Integers** | `int` | `0` | Any non-zero: `1`, `42`, `-1`, `-99` ⚠️ *(negatives are Truthy!)* | Retry attempts, token counters |
+| **Integers** | `int` | `0` | Any non-zero: `1`, `42`, `-1`, `-99` *(negatives are Truthy!)* | Retry attempts, token counters |
 | **Floats** | `float` | `0.0`, `-0.0` | Any non-zero: `0.001`, `-1.5`, `float('inf')` | Temperature setting (`0.0` is falsy!) |
 | **Complex Numbers** | `complex` | `0j`, `0.0 + 0.0j` | `1j`, `2.0 + 3.0j` | Embedding signal transformations |
-| **Strings (Text)** | `str` | `""` (empty string) | Any non-empty string: `"Ada"`, `"0"`, `"False"`, `" "` ⚠️ | Prompt text, system instructions |
+| **Strings (Text)** | `str` | `""` (empty string) | Any non-empty string: `"Ada"`, `"0"`, `"False"`, `" "` | Prompt text, system instructions |
 | **Byte Sequences** | `bytes`, `bytearray` | `b""`, `bytearray()` | Any non-empty bytes: `b"abc"`, `b"\x00"` | Raw audio / binary embedding buffers |
-| **Lists** | `list` | `[]` (empty list) | Any list with $\ge 1$ item: `[1]`, `[0]`, `[None]` ⚠️ | Retrieved search chunks, tool calls |
-| **Tuples** | `tuple` | `()` (empty tuple) | Any tuple with $\ge 1$ item: `(1,)`, `(0,)`, `(None,)` ⚠️ | Embedding vector dimensions `(1536,)` |
-| **Dictionaries** | `dict` | `{}` (empty dict) | Any dict with $\ge 1$ key: `{"a": 1}`, `{"status": False}` ⚠️ | JSON response bodies, tool arguments |
+| **Lists** | `list` | `[]` (empty list) | Any list with $\ge 1$ item: `[1]`, `[0]`, `[None]` | Retrieved search chunks, tool calls |
+| **Tuples** | `tuple` | `()` (empty tuple) | Any tuple with $\ge 1$ item: `(1,)`, `(0,)`, `(None,)` | Embedding vector dimensions `(1536,)` |
+| **Dictionaries** | `dict` | `{}` (empty dict) | Any dict with $\ge 1$ key: `{"a": 1}`, `{"status": False}` | JSON response bodies, tool arguments |
 | **Sets** | `set` | `set()` (empty set; note `{}` is a dict!) | Any set with $\ge 1$ item: `{"user"}`, `{0}` | Unique stop-words, seen document IDs |
 | **Frozen Sets** | `frozenset` | `frozenset()` | `frozenset([1, 2])` | Immutable prompt categories |
 | **Ranges** | `range` | `range(0)` | Any range producing $\ge 1$ number: `range(1)`, `range(5)` | Batch chunk indices |
@@ -170,20 +178,20 @@ Every object in Python is either **Falsy** or **Truthy**:
 
 ---
 
-#### $\color{#C62828}\blacktriangleright\space\color{#B71C1C}{\textsf{⚠️ The 5 Infamous \"Truthy Traps\" (Where Production Bugs Happen)}}$
+#### $\color{#C62828}\blacktriangleright\space\color{#B71C1C}{\textsf{The 5 Infamous \"Truthy Traps\" (Where Production Bugs Happen)}}$
 
 ##### $\color{#C62828}\blacktriangleright\space\color{#B71C1C}{\textsf{1. Strings \"0\" and \"False\" are TRUTHY!}}$
 A string is only falsy if its length is 0 (`""`). Any string containing characters — even `"0"` or `"False"` — has a length $> 0$ and is **Truthy**:
 ```python
 user_input = "0"
 if user_input:
-    print("Runs!")                     # 💥 RUNS because len("0") == 1!
+    print("Runs!")                     # RUNS because len("0") == 1!
 
 flag_str = "False"
 if flag_str:
-    print("Also runs!")                 # 💥 RUNS because len("False") == 5!
+    print("Also runs!")                 # RUNS because len("False") == 5!
 
-# ✅ Fix: Cast or parse explicitly:
+# Fix: Cast or parse explicitly:
 if user_input != "0":
     ...
 ```
@@ -192,9 +200,9 @@ if user_input != "0":
 ```python
 raw_query = "   "                       # User pressed the spacebar
 if raw_query:
-    print("Valid query!")               # 💥 Runs because length is 3!
+    print("Valid query!")               # Runs because length is 3!
 
-# ✅ Fix: Always call .strip() when checking user text input:
+# Fix: Always call .strip() when checking user text input:
 if raw_query.strip():
     print("Only runs if non-whitespace characters exist")
 ```
@@ -230,13 +238,13 @@ This is one of the most common production bugs in Python SDKs and agent code:
 ```python
 # ❌ BUGGY: Fails when user intentionally specifies temperature=0.0 (deterministic mode):
 def generate(prompt: str, temperature: float = None):
-    # 💥 BUG: bool(0.0) is False! The user's 0.0 is ignored and overridden with 0.7!
+    # BUG: bool(0.0) is False! The user's 0.0 is ignored and overridden with 0.7!
     temp = temperature if temperature else 0.7
     return f"Sampling with temp={temp}"
 
 print(generate("Hi", temperature=0.0))  # Output: 'Sampling with temp=0.7' (WRONG!)
 
-# ✅ CORRECT: Distinguish explicitly between unprovided (None) and falsy values (0.0):
+# CORRECT: Distinguish explicitly between unprovided (None) and falsy values (0.0):
 def generate_safe(prompt: str, temperature: float = None):
     temp = temperature if temperature is not None else 0.7
     return f"Sampling with temp={temp}"
@@ -258,7 +266,7 @@ print(generate_safe("Hi", temperature=0.0))  # Output: 'Sampling with temp=0.0' 
 - if query != "":
 -     process(query)
 
-+ ✅ Clean, idiomatic Python:
++ Clean, idiomatic Python:
 + if not chat_history:
 +     print("No messages yet")
 + if is_active:
@@ -279,7 +287,7 @@ print(generate_safe("Hi", temperature=0.0))  # Output: 'Sampling with temp=0.0' 
   ```
 * **Checking explicitly for `None`:**
   ```python
-  # ✅ Always use 'is' / 'is not' when checking if an optional argument was provided:
+  # Always use 'is' / 'is not' when checking if an optional argument was provided:
   if response is None:
       retry()
   ```
@@ -314,7 +322,7 @@ print(f"Sampling mode: {'Creative' if temp > 0.5 else 'Deterministic'}")
 # Output: 'Sampling mode: Creative'
 ```
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{6.2 while Loops — Repeat Until a Condition Fails}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{6.2 while Loops — Repeat Until a Condition Fails}}$
 
 ```python
 count = 3
@@ -337,7 +345,7 @@ while True:                     # an intentional "loop forever" — exit with br
     print(n)                    # 1 2 4 5
 ```
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{6.3 for Loops — Walk Through a Collection}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{6.3 for Loops — Walk Through a Collection}}$
 
 A `for` loop in Python is a "for-each" loop. It iterates directly over the items of any sequence or iterable (lists, strings, tuples, dictionaries, or ranges).
 
@@ -414,7 +422,7 @@ for _ in range(3):
 -     tool = tools[i]
 -     print(f"{i + 1}. {tool}")
 
-+ ✅ Idiomatic enumerate:
++ Idiomatic enumerate:
 + for idx, tool in enumerate(tools, start=1):
 +     print(f"{idx}. {tool}")
 ```
@@ -448,7 +456,7 @@ If a function or API returns `None` instead of a list, a normal loop crashes wit
 ```python
 # The risk:
 # response_docs = None
-# for doc in response_docs: ...       # 💥 TypeError: 'NoneType' object is not iterable
+# for doc in response_docs: ...       # TypeError: 'NoneType' object is not iterable
 
 # 1. Inline shorthand: '(items or [])':
 # If response_docs is None (or empty), it evaluates to [] and runs 0 times safely:
@@ -498,7 +506,7 @@ else:
     print("Failed to connect after 3 attempts.")  # runs because break was never hit
 ```
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{6.4 Loop Control: continue vs break vs pass}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{6.4 Loop Control: continue vs break vs pass}}$
 
 ```mermaid
 flowchart TD
@@ -570,7 +578,7 @@ class ToolExecutionError(Exception):
     pass                               # Empty class definition
 ```
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{6.5 match — Clean Multi-Way Branching (Modern Python)}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{6.5 match — Clean Multi-Way Branching (Modern Python)}}$
 
 ```mermaid
 flowchart TD
@@ -633,7 +641,9 @@ if current_state is AgentState.PLANNING:
 
 Use `match` when you'd otherwise write a long `if/elif` chain comparing one value to many options.
 
-## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
+![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
+
+## 🚀 $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 Branching decides which model or tool to call; loops process every document chunk, retry failed
 API calls, or drive an agent's "think → act → observe" cycle. Comfort with `for`, `range`,
@@ -648,23 +658,25 @@ API calls, or drive an agent's "think → act → observe" cycle. Comfort with `
    over a copy (`for x in items[:]:`) or build a new list instead.
 4. **Off-by-one with `range`** — `range(5)` is `0..4`, not `1..5`; the stop is excluded.
 
-### $\color{#0D47A1}\blacktriangleright\space\color{#1565C0}{\textsf{Try It Yourself}}$
+### $\large\color{#0D47A1}\blacktriangleright\space\color{#1565C0}{\textsf{Try It Yourself}}$
 Use a `for` loop and `range` to print only the even numbers from 1 to 20, then rewrite it using
 `continue` to skip odds.
 
-## ⚖️ $\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use (Control Flow Decision Guide)}}$
+![Variations](https://img.shields.io/badge/COMPARISON-VARIATIONS%20%26%20WHEN%20TO%20USE-00838F?style=for-the-badge&logo=scales&logoColor=white)
 
-### $\color{#00695C}\blacktriangleright\space\color{#00838F}{\textsf{Branching Decisions}}$
+## ⚖️ $\Large\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use (Control Flow Decision Guide)}}$
 
-| Technique | Syntax | ✅ When to Use | 🚫 Avoid When | AI / Pipeline Use Case |
+### $\large\color{#00695C}\blacktriangleright\space\color{#00838F}{\textsf{Branching Decisions}}$
+
+| Technique | Syntax | When to Use | Avoid When | AI / Pipeline Use Case |
 | :--- | :--- | :--- | :--- | :--- |
 | **`if / elif / else`** | `if c1: ... elif c2: ... else: ...` | Multi-line logic, distinct side effects, or complex boolean checks | Assigning a single variable between 2 simple choices | Guarding invalid inputs, routing logic |
 | **Shorthand `if-else` (Ternary)** | `val = x if cond else y` | Single inline value selection, f-string formatting, defaults | Complex multi-line bodies or nested conditions | Choosing model tier (`"gpt-4o"` vs `"mini"`) |
 | **`match / case`** | `match val: case "a": ...` | Clean branching against known literal commands or structural shapes | Simple binary True/False checks | Agent tool/action dispatcher |
 
-### $\color{#00695C}\blacktriangleright\space\color{#00838F}{\textsf{Looping Decisions}}$
+### $\large\color{#00695C}\blacktriangleright\space\color{#00838F}{\textsf{Looping Decisions}}$
 
-| Technique | Syntax | ✅ When to Use | 🚫 Avoid When | AI / Pipeline Use Case |
+| Technique | Syntax | When to Use | Avoid When | AI / Pipeline Use Case |
 | :--- | :--- | :--- | :--- | :--- |
 | **Direct `for` iteration** | `for item in seq:` | Inspecting or processing all items in a collection or string | You need the item's numeric index | Processing document chunks |
 | **`range(start, stop, step)`** | `for i in range(n):` | Repeating a specific number of times or stepping through indices | Looping over an existing collection (use direct `for`) | Retrying API requests (`for _ in range(3):`) |
@@ -677,7 +689,9 @@ Use a `for` loop and `range` to print only the even numbers from 1 to 20, then r
 | **Loop `else`** | `for/while ... break else:` | Running a fallback when search or retry loop completes without break | Loops without a `break` statement (`else` will always run) | Document lookup or API retry exhaustion |
 | **Safe guard `(items or [])`** | `for x in items or []:` | Fast inline guard against `None` or empty iterables | You need to log an explicit warning when input is `None` | Streaming token chunks from optional API fields |
 
-## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
+![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
+
+## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
 | What you see | Cause | Fix |
 | --- | --- | --- |
@@ -690,7 +704,9 @@ Use a `for` loop and `range` to print only the even numbers from 1 to 20, then r
 | Program hangs forever | A `while` condition never becomes False | Make the loop variable move toward the exit |
 | `range(5)` gives `0..4`, not `1..5` | The `stop` value is excluded | Use `range(1, 6)` for 1–5 |
 
-## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
+![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
+
+## 📌 $\Large\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
 ```python
 if c: ...        elif c2: ...        else: ...
@@ -713,7 +729,9 @@ match value:
     case _: ...                # catch-all (like else)
 ```
 
-## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
+![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
+
+## 🛑 $\Large\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 
 What does this print, and why does it stop where it does?
 

@@ -9,13 +9,15 @@
 
 ---
 
-## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
+![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
+
+## 🗺️ $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 So far you've used data (lists, dicts) and behaviour (functions) separately. **OOP** bundles them together: a **class** packages related data *and* the functions that work on it into one reusable type. You'll mostly *use* classes that libraries provide (a `SentenceTransformer`, an `OpenAI` client, a Pydantic `BaseModel`), so understanding how they work makes every library click.
 
 ---
 
-## 📚 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{What's in This Lesson — Sub-Module Architecture}}$
+## 📚 $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{What's in This Lesson — Sub-Module Architecture}}$
 
 ```mermaid
 flowchart LR
@@ -42,12 +44,12 @@ This lesson is split into **6 focused sub-modules**. Work through them in order 
 
 ---
 
-## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{Full Vocabulary}}$
+## 🔑 $\Large\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{Full Vocabulary}}$
 
 <details>
 <summary>Click to expand — all 19 terms defined</summary>
 
-### $\color{#512DA8}\blacktriangleright\space\color{#311B92}{\textsf{Core Objects and Lifecycle}}$
+### $\large\color{#512DA8}\blacktriangleright\space\color{#311B92}{\textsf{Core Objects and Lifecycle}}$
 - **Class** — a blueprint for making objects.
 - **Object / instance** — a specific thing built from a class.
 - **`__new__`** — the allocator method; runs *before* `__init__` to allocate raw heap memory. Receives `cls` and returns the new instance.
@@ -55,7 +57,7 @@ This lesson is split into **6 focused sub-modules**. Work through them in order 
 - **`self`** — the current instance, inside a method (a strict convention, not a reserved keyword).
 - **Singleton** — a design pattern ensuring only one instance of a class exists in memory.
 
-### $\color{#512DA8}\blacktriangleright\space\color{#311B92}{\textsf{Encapsulation and Polymorphism}}$
+### $\large\color{#512DA8}\blacktriangleright\space\color{#311B92}{\textsf{Encapsulation and Polymorphism}}$
 - **Class attribute** — data shared by all instances of a class (acts like a shared static variable; trap if mutable!).
 - **`_variable` (Protected by convention)** — single leading underscore signals internal use (accessible, but hands-off by convention).
 - **`__variable` (Private / name mangling)** — double leading underscores trigger Python name mangling (`_Class__var`) to prevent subclass collisions.
@@ -66,7 +68,7 @@ This lesson is split into **6 focused sub-modules**. Work through them in order 
 - **`self.__dict__`** — internal dictionary mapping attribute names to their values for an instance.
 - **`__eq__`** — dunder method defining equality (`==`); defaults to identity (`is`) unless overridden.
 
-### $\color{#512DA8}\blacktriangleright\space\color{#311B92}{\textsf{Contracts and Advanced Types}}$
+### $\large\color{#512DA8}\blacktriangleright\space\color{#311B92}{\textsf{Contracts and Advanced Types}}$
 - **`ABC` & `@abstractmethod`** — Abstract Base Class; defines an interface contract that cannot be instantiated until subclasses implement all required methods and properties.
 - **`Enum` (Enumeration)** — a symbolic set of named constant values; prevents invalid string bugs and provides type-safe options.
 - **`Protocol` (`typing.Protocol`)** — structural subtyping (static duck typing); defines an interface contract satisfied by any class with matching methods/attributes without inheritance.
@@ -76,7 +78,9 @@ This lesson is split into **6 focused sub-modules**. Work through them in order 
 
 ---
 
-## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea }}$
+![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
+
+## 🎈 $\Large\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea }}$
 
 A **class** is a cookie cutter — a blueprint that defines a shape. An **object** (or **instance**) is an actual cookie stamped from it. One cutter, many cookies, each with its own decorations. The class says *what every dog has* (a name, a `bark()` ability); each dog object fills in its own details.
 
@@ -97,14 +101,14 @@ flowchart TD
 ---
 
 > [!IMPORTANT]
-> ### $\color{#00C853}{\textsf{🔥 The 80/20 Core Rule: What Matters in Production}}$
+> ### 🔥 $\color{#00C853}{\textsf{The 80/20 Core Rule: What Matters in Production}}$
 > * $\color{#00C853}\blacktriangleright$ **Daily Core (90% of Real AI Work):** Encapsulating state in classes (`class DocumentChunker:`), `__init__`, `self`, `@property` for clean computed attributes, `@classmethod` for factory constructors (`LLMClient.from_env()`), Pydantic models for structured schema validation, and essential dunders (`__repr__`, `__call__`).
 > * $\color{#FFB300}\blacktriangleright$ **Occasional (Framework Integration):** Subclassing base classes (`class CustomEmbedding(BaseEmbedding):`), `__enter__` and `__exit__` for custom context managers, `@abstractmethod`.
 > * $\color{#757575}\blacktriangleright$ **Reference Only (Exhaustive and Metaprogramming):** Metaclasses (`type`), `__slots__`, multiple inheritance diamond resolution (MRO C3 linearization), arithmetic operator overloading (`__add__`, `__matmul__`).
 
 ---
 
-## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Master Quick Reference}}$
+## 📌 $\Large\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Master Quick Reference}}$
 
 ```python
 class Dog(Animal):
@@ -181,7 +185,9 @@ class Embedder(Protocol):
 
 ---
 
-## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
+![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
+
+## 🛑 $\Large\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 
 In `rex = Dog("Rex", 3)`, what does `__init__` do, and what is `self` inside it?
 

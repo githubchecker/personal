@@ -9,18 +9,22 @@
 
 ---
 
-## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
+![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
+
+## 🗺️ $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 > [!IMPORTANT]
 > ### $\color{#512DA8}{\textsf{The Core Premise}}$
 > Lists store items by **position**. But often you want to look something up by **name** — a price by product, a score by user. That's a **dictionary**, the most-used data structure in real Python. A **set** is its cousin: an unordered bag of **unique** items. And just as lists have immutable tuples, sets have an immutable counterpart: **`frozenset`**. Both build on what you know and power configuration, JSON data, and the `messages`/metadata you'll send to AI models.
 
-### $\color{#00838F}\blacktriangleright\space\color{#00695C}{\textsf{Where It Fits}}$
+### $\large\color{#00838F}\blacktriangleright\space\color{#00695C}{\textsf{Where It Fits}}$
 
 * $\color{#0288D1}\blacktriangleright$ **$\color{#01579B}{\textsf{Builds on:}}$** [04 Lists and Tuples](04%20Lists%20and%20Tuples.md) — collections, mutability, and immutability.
 * $\color{#00897B}\blacktriangleright$ **$\color{#004D40}{\textsf{Unlocks:}}$** [06 Control Flow](06%20Control%20Flow.md), JSON API serialization, Pydantic schemas, and document chunk deduplication.
 
-## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
+![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
+
+## 🔑 $\Large\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
 
 | $\color{#4A148C}\textsf{\textbf{Term}}$ | $\color{#00695C}\textsf{\textbf{One-Line Meaning}}$ |
 | :--- | :--- |
@@ -32,7 +36,9 @@
 | $\color{#4A148C}\mathbf{Hashable}$ | An object with a fixed hash code that never changes over its lifetime. |
 | $\color{#00838F}\mathbf{Membership}$ | Instant $O(1)$ test checking whether an item exists: `x in collection`. |
 
-## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (Analogy: Real Dictionary and Marble Bag)}}$
+![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
+
+## 🎈 $\Large\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (Analogy: Real Dictionary and Marble Bag)}}$
 
 A **dictionary (dict)** is like a word dictionary: you look up a **key** (the word) to get its **value** (the definition). Lookups are by key, not position, and they're instant.
 
@@ -73,15 +79,17 @@ flowchart LR
 > 🟣 Immutable: tuple ──►  frozenset
 > ```
 
-## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
+![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
+
+## ⚙️ $\Large\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
 
 > [!IMPORTANT]
-> ### $\color{#00C853}{\textsf{🔥 The 80/20 Core Rule: What Matters in Production}}$
+> ### 🔥 $\color{#00C853}{\textsf{The 80/20 Core Rule: What Matters in Production}}$
 > * $\color{#00C853}\blacktriangleright$ **Daily Core (90% of Real AI Work):** Dicts as standard JSON data containers, safe lookups with `d.get(key, default)` (avoids crashes on optional LLM fields), iterating with `for k, v in d.items():`, checking key presence with `k in d` ($O(1)$), and Sets for instant deduplication `set(chunk_ids)` and lightning-fast membership testing `id in seen_ids` ($O(1)$).
 > * $\color{#FFB300}\blacktriangleright$ **Occasional (Batch Updates and Set Algebra):** `d.update()`, `d.pop(key, default)`, set union `|`, intersection `&`, and difference `-` (comparing tool lists or token vocabularies).
 > * $\color{#757575}\blacktriangleright$ **Reference Only (Exhaustive Variations):** `d.setdefault()`, `d.popitem()`, `frozenset`, `symmetric_difference`.
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5.1 Creating and Reading Dicts}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5.1 Creating and Reading Dicts}}$
 
 ```python
 # keys -> values, in curly braces. Keys are usually strings; values can be anything.
@@ -97,16 +105,16 @@ print(person.get("email", "n/a"))     # 'n/a'  — supply a fallback
 
 ```diff
 - # ❌ FRAGILE: Direct indexing crashes on optional API fields
-- user_email = payload["email"]  # 💥 KeyError: 'email' if key is omitted!
+- user_email = payload["email"]  # KeyError: 'email' if key is omitted!
 
-+ # ✅ ROBUST: Safe .get() returns fallback default instead of crashing
-+ user_email = payload.get("email", "support@company.com")  # ✅ Safe fallback!
++ # ROBUST: Safe .get() returns fallback default instead of crashing
++ user_email = payload.get("email", "support@company.com")  # Safe fallback!
 ```
 
 ```python
 ```
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5.2 Adding, Updating, Deleting}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5.2 Adding, Updating, Deleting}}$
 
 ```python
 person["email"] = "ada@example.com"   # add a new key (or overwrite if it exists)
@@ -118,7 +126,7 @@ removed = person.pop("city")           # remove AND return the value
 print("name" in person)                # True — membership tests the KEYS
 ```
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5.3 Looping Over a Dict}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5.3 Looping Over a Dict}}$
 
 ```python
 scores = {"math": 90, "art": 75}
@@ -133,7 +141,7 @@ print(list(scores.keys()))         # ['math', 'art']
 print(list(scores.values()))       # [90, 75]
 ```
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5.4 Nested Dictionaries and Real-Life Patterns (JSON, APIs, and setdefault)}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5.4 Nested Dictionaries and Real-Life Patterns (JSON, APIs, and setdefault)}}$
 
 Real-world Python and AI code rarely deals with flat dictionaries. API responses, database records, and LLM payloads are **nested dictionaries** containing lists and other dicts.
 
@@ -157,7 +165,7 @@ print(user["address"]["city"])             # 'London'
 theme = user.get("profile", {}).get("theme", "light")
 print(theme)                               # 'light' (default used safely)
 
-# ⚠️ Real-world API gotcha: What if a key exists, but its value is None?
+# Real-world API gotcha: What if a key exists, but its value is None?
 # {"profile": None}.get("profile", {}) returns None, not {}!
 # Pattern: use '(d.get("key") or {})' to guarantee a dict:
 api_user = {"name": "Bo", "profile": None}
@@ -306,7 +314,7 @@ call_counts[tool_obj] += 1
 print(call_counts[tool_obj])               # 1
 ```
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5.5 Sets — Unique, Fast Membership}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5.5 Sets — Unique, Fast Membership}}$
 
 A set is an unordered collection of unique, hashable items. Duplicates collapse automatically, and membership checks (`in`) run in $O(1)$ constant time.
 
@@ -329,7 +337,7 @@ s.add(3)
 s.add(2)                             # 2 already exists, nothing changes
 print(s)                             # {1, 2, 3}
 
-# ⚠️ GOTCHA: add() CANNOT take a list (lists are unhashable):
+# GOTCHA: add() CANNOT take a list (lists are unhashable):
 # s.add([4, 5])                      # TypeError: unhashable type: 'list'
 
 # Adding a tuple with add() stores the tuple as ONE compound item:
@@ -380,14 +388,14 @@ print(items)                         # {'chunk_1', 'chunk_2', 'chunk_3'}
 # (b) remove(x) — strict removal (crashes if missing):
 items.remove("chunk_1")              # successfully removed
 print(items)                         # {'chunk_2', 'chunk_3'}
-# items.remove("chunk_99")           # 💥 KeyError: 'chunk_99'
+# items.remove("chunk_99")           # KeyError: 'chunk_99'
 
 # (c) pop() — removes and returns an arbitrary item:
-# ⚠️ Cannot pass an index like items.pop(0) — raises TypeError: set.pop() takes no arguments
+# Cannot pass an index like items.pop(0) — raises TypeError: set.pop() takes no arguments
 popped_item = items.pop()            # removes an arbitrary item
 print("Popped:", popped_item)        # e.g. 'chunk_2'
 print("Remaining:", items)           # e.g. {'chunk_3'}
-# empty_s = set(); empty_s.pop()     # 💥 KeyError: 'pop from an empty set'
+# empty_s = set(); empty_s.pop()     # KeyError: 'pop from an empty set'
 
 # (d) clear() — removes all elements in-place:
 items.clear()
@@ -403,7 +411,7 @@ A set can hold multiple different data types at once as long as each element is 
 mixed_set = {"user_101", 42, (1, 2), 3.14}
 print(mixed_set)                     # {'user_101', 42, (1, 2), 3.14}
 
-# ⚠️ GOTCHA: bool is a subclass of int (True == 1, False == 0, hash matches):
+# GOTCHA: bool is a subclass of int (True == 1, False == 0, hash matches):
 bool_gotcha = {1, True, 0, False}
 print(bool_gotcha)                   # {0, 1} (True collapsed into 1, False into 0!)
 ```
@@ -436,7 +444,7 @@ Sets do not support the `+` operator. Use the union operator `|` or the `.union(
 set_a = {"retrieve", "rerank"}
 set_b = {"rerank", "generate"}
 
-# ⚠️ GOTCHA: '+' does NOT work on sets!
+# GOTCHA: '+' does NOT work on sets!
 # combined = set_a + set_b           # TypeError: unsupported operand type(s) for +: 'set' and 'set'
 
 # Use union operator '|' (requires both sides to be sets):
@@ -475,7 +483,7 @@ unique_to_a = agent_a_tools - agent_b_tools
 print(unique_to_a)                   # {'search'}
 # In-place: agent_a_tools -= agent_b_tools (or agent_a_tools.difference_update(...))
 
-# ⚠️ Operator vs Method difference:
+# Operator vs Method difference:
 # Operators ('&', '|', '-', '^') require BOTH operands to be sets:
 # print(agent_a_tools & ["search"])  # TypeError: unsupported operand type(s) for &: 'set' and 'list'
 # Methods accept ANY iterable:
@@ -488,8 +496,8 @@ Pass any iterable to the `set()` constructor to convert it into a set and dedupl
 
 ```python
 # (a) The empty set gotcha:
-empty_set = set()                    # ✅ Correct way to create an empty set
-empty_dict = {}                      # ⚠️ Gotcha: '{}' creates an empty DICT, not a set!
+empty_set = set()                    # Correct way to create an empty set
+empty_dict = {}                      # Gotcha: '{}' creates an empty DICT, not a set!
 
 # (b) From a list or tuple (instantly deduplicates):
 nums = [1, 2, 2, 3, 3, 3]
@@ -544,7 +552,7 @@ print(frozen_doc_set)                      # {FrozenDoc(doc_id=101, text='Intro 
 
 **Why sets are fast:** checking `x in big_list` scans every item ($O(n)$); `x in big_set` jumps almost instantly ($O(1)$) regardless of size. For "have I seen this already?" checks, sets win.
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5.6 frozenset — The Immutable Set}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{5.6 frozenset — The Immutable Set}}$
 
 Because a normal `set` is mutable (you can `.add()` or `.discard()` items), Python considers it
 **unhashable**. That means you **cannot** use a standard set as a dictionary key, nor can you put a
@@ -585,7 +593,9 @@ print(role_permissions[user_claims])       # 'Editor'
 groups = {frozenset([1, 2]), frozenset([3, 4])}
 ```
 
-## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
+![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
+
+## 🚀 $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 Dicts are the backbone of AI code: an LLM message is `{"role": "user", "content": "..."}`, API
 responses are nested dicts, configuration is a dict. Sets are perfect for deduplicating retrieved
@@ -607,7 +617,7 @@ function results where the lookup key is an unordered set of tags, filters, or p
 9. **Chaining `[]` on nested dictionaries** — `user["profile"]["theme"]` crashes with `KeyError` if `"profile"` is missing. Use safe chained navigation: `(user.get("profile") or {}).get("theme", "light")`.
 10. **Confusing `.get()` with `.setdefault()`** — `d.get("k", [])` only reads and returns `[]` without altering the dictionary; `d.setdefault("k", [])` actively inserts `"k": []` into `d`.
 
-### 🤖 $\color{#00838F}\blacktriangleright\space\color{#00695C}{\textsf{Sneak Peek: How Sets Power AI Agents and LangGraph (Phase 3)}}$
+### 🤖 $\large\color{#00838F}\blacktriangleright\space\color{#00695C}{\textsf{Sneak Peek: How Sets Power AI Agents and LangGraph (Phase 3)}}$
 
 1. **Cycle Detection & Visited State Tracking (`s.add()` / `in`):**
    In LangGraph workflows with conditional loops, agents can get caught in infinite reasoning loops.
@@ -624,37 +634,41 @@ Build a dict `inventory = {"apples": 3, "pears": 5}`. Safely print the count of 
 if absent, then add 2 bananas, then print all item→count pairs.
 Then create a `frozenset` of your favorite AI tools and test if `"python"` is inside.
 
-## ⚖️ $\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use (Dictionary and Set Efficiency Guide)}}$
+![Variations](https://img.shields.io/badge/COMPARISON-VARIATIONS%20%26%20WHEN%20TO%20USE-00838F?style=for-the-badge&logo=scales&logoColor=white)
+
+## ⚖️ $\Large\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use (Dictionary and Set Efficiency Guide)}}$
 
 ### Dictionary Operations
 
-| Operation | Syntax | Mutates Original? | Time Cost (Avg) | ✅ When to Use | AI / LangGraph Application |
+| Operation | Syntax | Mutates Original? | Time Cost (Avg) | When to Use | AI / LangGraph Application |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Lookup / Set** | `d[k]` / `d[k] = v` | ✅ In-place (write) | $O(1)$ | Direct read/write when key is guaranteed | Reading known state keys e.g. `state["messages"]` |
+| **Lookup / Set** | `d[k]` / `d[k] = v` | In-place (write) | $O(1)$ | Direct read/write when key is guaranteed | Reading known state keys e.g. `state["messages"]` |
 | **Safe Read** | `d.get(k, default)` | ❌ Read-only | $O(1)$ | Reading optional keys without crashing | Reading optional hyperparameters: `cfg.get("seed", 42)` |
-| **Read or Insert** | `d.setdefault(k, def)` | ✅ In-place (if missing) | $O(1)$ | Grouping items or initializing nested structures | Grouping messages by role or initializing node checkpoints |
-| **Safe Pop** | `d.pop(k, default)` | ✅ In-place | $O(1)$ | Extracting and removing an optional key | Stripping API keys or internal tokens before logging |
+| **Read or Insert** | `d.setdefault(k, def)` | In-place (if missing) | $O(1)$ | Grouping items or initializing nested structures | Grouping messages by role or initializing node checkpoints |
+| **Safe Pop** | `d.pop(k, default)` | In-place | $O(1)$ | Extracting and removing an optional key | Stripping API keys or internal tokens before logging |
 | **Dict Merge** | `d1 \| d2` | ❌ New dict | $O(n+m)$ | Combining configs without mutating inputs | Merging default model config with user-supplied overrides |
-| **Dict Update** | `d1 \|= d2` / `.update()` | ✅ In-place | $O(k)$ | Bulk applying new values in-place | Merging tool outputs directly into agent state |
+| **Dict Update** | `d1 \|= d2` / `.update()` | In-place | $O(k)$ | Bulk applying new values in-place | Merging tool outputs directly into agent state |
 | **Key Check** | `k in d` | ❌ Read-only | $O(1)$ | Fast constant-time existence guard | Checking if an embedding or response is cached |
 
 ### Set Operations
 
-| Operation | Operator Syntax | Method Syntax | Mutates Original? | Time Cost (Avg) | ✅ When to Use | AI / LangGraph Application |
+| Operation | Operator Syntax | Method Syntax | Mutates Original? | Time Cost (Avg) | When to Use | AI / LangGraph Application |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Add Single** | — | `s.add(x)` | ✅ In-place | $O(1)$ | Adding one hashable element | Recording a newly visited agent state or chunk ID |
-| **Update Batch** | `s \|= other` | `s.update(iter)` | ✅ In-place | $O(k)$ | Adding many items in-place with deduplication | Ingesting a batch of doc IDs into a cache |
-| **Discard (Safe)** | — | `s.discard(x)` | ✅ In-place | $O(1)$ | Removing an item when absence is acceptable (no error) | Dropping a tool from an active permissions pool |
-| **Remove (Strict)** | — | `s.remove(x)` | ✅ In-place | $O(1)$ | Removing an item that *must* exist (raises `KeyError`) | Strict state machines where missing ID is a bug |
-| **Pop Arbitrary** | — | `s.pop()` | ✅ In-place | $O(1)$ | Removing any item when order is completely irrelevant | Draining an unvisited web-crawler URL queue |
-| **Clear All** | — | `s.clear()` | ✅ In-place | $O(n)$ | Emptying set while keeping same memory object | Resetting state between agent sessions |
+| **Add Single** | — | `s.add(x)` | In-place | $O(1)$ | Adding one hashable element | Recording a newly visited agent state or chunk ID |
+| **Update Batch** | `s \|= other` | `s.update(iter)` | In-place | $O(k)$ | Adding many items in-place with deduplication | Ingesting a batch of doc IDs into a cache |
+| **Discard (Safe)** | — | `s.discard(x)` | In-place | $O(1)$ | Removing an item when absence is acceptable (no error) | Dropping a tool from an active permissions pool |
+| **Remove (Strict)** | — | `s.remove(x)` | In-place | $O(1)$ | Removing an item that *must* exist (raises `KeyError`) | Strict state machines where missing ID is a bug |
+| **Pop Arbitrary** | — | `s.pop()` | In-place | $O(1)$ | Removing any item when order is completely irrelevant | Draining an unvisited web-crawler URL queue |
+| **Clear All** | — | `s.clear()` | In-place | $O(n)$ | Emptying set while keeping same memory object | Resetting state between agent sessions |
 | **Union** | `s1 \| s2` | `s1.union(iter)` | ❌ New set | $O(n+m)$ | Combining all unique items across two collections | Merging tools or tags from parallel agent branches |
 | **Intersection** | `s1 & s2` | `s1.intersection(iter)` | ❌ New set | $O(\min(n, m))$ | **Keeping only duplicates/overlaps** present in both | Finding document IDs agreed upon by both Dense & BM25 search |
 | **Difference** | `s1 - s2` | `s1.difference(iter)` | ❌ New set | $O(n)$ | Items in first set that are NOT in the second | Finding un-embedded documents: `all_docs - indexed_docs` |
 | **Symmetric Diff** | `s1 ^ s2` | `s1.symmetric_difference(iter)` | ❌ New set | $O(n+m)$ | Items in either set, but **not in both** (exclusive items) | Detecting configuration drift between two agent versions |
 | **Membership** | `x in s` | — | ❌ Read-only | $O(1)$ | Checking presence in constant time | Fast duplicate check before invoking an expensive LLM |
 
-## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
+![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
+
+## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
 | What you see | Cause | Fix |
 | --- | --- | --- |
@@ -671,7 +685,9 @@ Then create a `frozenset` of your favorite AI tools and test if `"python"` is in
 | `TypeError: unsupported operand type(s) for &: 'set' and 'list'` | Operator used with non-set | Convert non-set to set (`s & set(lst)`) or use method `s.intersection(lst)` |
 | Loop gives keys, not values | `for x in d:` yields **keys** | Use `d.items()` (pairs) or `d.values()` |
 
-## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
+![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
+
+## 📌 $\Large\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
 ```python
 # Dicts — Lookup, Mutation & Merging
@@ -709,7 +725,9 @@ fs = frozenset([1, 2])             # valid dict key or set item
 # @dataclass(frozen=True) collapses duplicates in sets by value (default class hashes by id)
 ```
 
-## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
+![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
+
+## 🛑 $\Large\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 
 Why might you choose `.get("age")` over `["age"]`, and what does each do when the key is missing?
 

@@ -9,20 +9,24 @@
 
 ---
 
-## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
+![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
+
+## 🗺️ $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 > [!IMPORTANT]
 > ### $\color{#512DA8}{\textsf{The Core Premise}}$
 > Programs move **data** around: numbers, text, true/false flags. This lesson covers how Python **stores** data (variables), the **kinds** of data (types), and how you **combine** data (operators). You'll also see how Python tracks objects in computer memory with **`id()`**, and why checking equality (**`==`**) is fundamentally different from checking identity (**`is`**). Every line of code you ever write uses these. It comes right after setup because you can't do anything without it.
 
-### $\color{#00838F}\blacktriangleright\space\color{#00695C}{\textsf{Where It Fits}}$
+### $\large\color{#00838F}\blacktriangleright\space\color{#00695C}{\textsf{Where It Fits}}$
 
 * $\color{#0288D1}\blacktriangleright$ **$\color{#01579B}{\textsf{Builds on:}}$** [01 How Python Runs and Setup](01%20How%20Python%20Runs%20and%20Setup.md) — interpreter execution and virtual environment isolation.
 * $\color{#00897B}\blacktriangleright$ **$\color{#004D40}{\textsf{Unlocks:}}$** Strings, data structures (Lists, Dicts, Tuples), control flow, and every mathematical operation in PyTorch and NumPy.
 
 ---
 
-## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
+![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
+
+## 🔑 $\Large\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
 
 | $\color{#4A148C}\textsf{\textbf{Term}}$ | $\color{#00695C}\textsf{\textbf{One-Line Meaning}}$ |
 | :--- | :--- |
@@ -36,7 +40,9 @@
 
 ---
 
-## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (Analogy: Labelled Boxes)}}$
+![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
+
+## 🎈 $\Large\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (Analogy: Labelled Boxes)}}$
 
 A **variable** is a labelled box you put a value in. You write the label, drop a value inside, and later refer to the value by its label. In Python you don't declare the box's size or type up front — you just assign, and Python figures out the type from the value.
 
@@ -72,17 +78,19 @@ flowchart LR
 
 ---
 
-## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
+![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
+
+## ⚙️ $\Large\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
 
 > [!IMPORTANT]
-> ### $\color{#00C853}{\textsf{🔥 The 80/20 Core Rule: What Matters in Production}}$
+> ### 🔥 $\color{#00C853}{\textsf{The 80/20 Core Rule: What Matters in Production}}$
 > * $\color{#00C853}\blacktriangleright$ **Daily Core (90% of Real AI Work):** `int`, `float`, `str`, `bool`, `NoneType`, `is None` identity checks, `==` value equality, augmented assignment (`+=`), and explicit casting (`int()`, `float()`, `str()`).
 > * $\color{#FFB300}\blacktriangleright$ **Occasional (Specialized Calculations):** Floor division `//` and modulo `%` (batching, pagination, token window math), exponentiation `**`.
 > * $\color{#757575}\blacktriangleright$ **Reference Only (Exhaustive Variations):** Bitwise operators (`&`, `|`, `^`, `<<`), complex numbers (`3+4j`), inspecting internal memory IDs (`id()`).
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2.1 Assignment and Naming}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2.1 Assignment and Naming}}$
 
 ```python
 first_name = "Ada"      # use lowercase_with_underscores (the Python convention, "snake_case")
@@ -97,7 +105,7 @@ PI = 3.14159            # ALL_CAPS by convention means "constant — don't chang
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2.1.1 Shorthand Assignments (Multiple, Swapping and Chained)}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2.1.1 Shorthand Assignments (Multiple, Swapping and Chained)}}$
 
 Python provides clean shorthands for assigning and updating variables without verbose boilerplate:
 
@@ -125,22 +133,22 @@ count -= 3                     # equivalent to: count = count - 3 (becomes 9)
 - ❌ FRAGILE: Chained assignment with mutable objects points both labels to ONE object!
 - a = b = []
 - a.append("token_1")
-- print(b)  # 💥 ['token_1'] — Modifying 'a' silently corrupted 'b'!
+- print(b)  # ['token_1'] — Modifying 'a' silently corrupted 'b'!
 
-+ ✅ SAFE: Always instantiate independent mutable collections separately:
++ SAFE: Always instantiate independent mutable collections separately:
 + a = []
 + b = []
 + a.append("token_1")
-+ print(b)  # ✅ [] — 'b' remains completely unaffected!
++ print(b)  # [] — 'b' remains completely unaffected!
 ```
 
 > [!WARNING]
-> ### $\color{#D84315}{\textsf{⚠️ Gotcha with Chained Assignment}}$
+> ### $\color{#D84315}{\textsf{Gotcha with Chained Assignment}}$
 > `a = b = []` points **both** variables to the **same** mutable list in memory! If you do `a.append(1)`, `b` will also become `[1]`! For independent mutable collections, always assign separately: `a = []; b = []`.
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2.2 The Core Built-in Types}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2.2 The Core Built-in Types}}$
 
 In Python, you interact primarily with 5 fundamental primitive types. Each serves a distinct purpose in general programming and production AI:
 
@@ -173,7 +181,7 @@ print(isinstance(count, int))    # True
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2.3 Converting Between Types (Casting)}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2.3 Converting Between Types (Casting)}}$
 
 User input, environment variables, and API network payloads almost universally arrive as **strings**. You must cast them into typed numbers or booleans before performing operations:
 
@@ -210,13 +218,13 @@ flag = bool(0)             # 0 -> False ; any non-zero/with-content -> True
 ```
 
 > [!WARNING]
-> ### $\color{#D84315}{\textsf{⚠️ Casting Trap: int() on Decimal Strings}}$
+> ### $\color{#D84315}{\textsf{Casting Trap: int() on Decimal Strings}}$
 > `int("42")` succeeds, but `int("42.8")` crashes with **`ValueError: invalid literal for int() with base 10`**!  
 > **The Fix:** If the incoming string can have decimals, cast through float first: `int(float("42.8")) -> 42`.
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2.4 Operators — Combining Values}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2.4 Operators — Combining Values}}$
 
 Python provides three primary groups of operators for manipulating primitive values:
 
@@ -278,7 +286,7 @@ total *= 2      # -> 30
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2.4.1 Floating-Point Comparison and The Tolerance Pattern (abs(a - b) < tolerance)}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2.4.1 Floating-Point Comparison and The Tolerance Pattern (abs(a - b) < tolerance)}}$
 
 One of the most surprising pitfalls for software engineers in any language is **floating-point inaccuracy**.
 
@@ -295,7 +303,7 @@ print(b)                        # 0.3
 # ❌ THE FATAL EQUALITY BUG:
 print(a == b)                   # False!
 if a == b:
-    print("Matches!")           # 💥 This NEVER executes!
+    print("Matches!")           # This NEVER executes!
 ```
 
 ```mermaid
@@ -325,7 +333,7 @@ $$\text{difference} = |a - b| < \text{tolerance}$$
 - if a == b:
 -     execute_trade()
 
-+ # ✅ SAFE TOLERANCE PATTERN: Check if distance is negligible
++ # SAFE TOLERANCE PATTERN: Check if distance is negligible
 + tolerance = 1e-9
 + if abs(a - b) < tolerance:
 +     execute_trade()
@@ -345,7 +353,7 @@ tolerance = 1e-9                # 0.000000001 (10^-9)
 
 # 3. Check if difference is within tolerance:
 if abs(a - b) < tolerance:
-    print("Values are practically equal!")  # ✅ Runs successfully!
+    print("Values are practically equal!")  # Runs successfully!
 ```
 
 > [!NOTE]
@@ -380,7 +388,7 @@ print(math.isclose(a, b, rel_tol=1e-9, abs_tol=1e-12))  # True!
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2.5 Object Identity: id(), Memory Addresses, and is vs ==}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2.5 Object Identity: id(), Memory Addresses, and is vs ==}}$
 
 Every object created in Python sits at a specific memory location. Python gives each object a unique integer ID called its **memory address**. You can see this address using the built-in `id()` function:
 
@@ -441,22 +449,22 @@ print(id(c) == id(a)) # True   <- identical memory addresses
 > ```python
 > api_key = None
 > 
-> if api_key is None:        # ✅ The correct, idiomatic way (fast, checks memory identity)
+> if api_key is None:        # The correct, idiomatic way (fast, checks memory identity)
 >     print("API key not provided")
 > 
-> if api_key is not None:    # ✅ The correct way to verify a value is present
+> if api_key is not None:    # The correct way to verify a value is present
 >     print("Ready to make calls")
 > 
 > # Avoid: if api_key == None  # ❌ Works, but unidiomatic and can be misled by custom classes
 > ```
 
 > [!WARNING]
-> ### $\color{#D84315}{\textsf{⚠️ Gotcha: Small Integer Caching}}$
+> ### $\color{#D84315}{\textsf{Gotcha: Small Integer Caching}}$
 > For performance, Python pre-allocates and reuses the same memory addresses for small integers (`-5` to `256`) and short strings. That means `x = 10; y = 10; x is y` may evaluate to `True`. **Never rely on `is` to compare numbers or strings** — always use `==` to compare values, and reserve `is` for identity checks (especially `is None`).
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2.6 Truthiness (Testing Values in Conditions)}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2.6 Truthiness (Testing Values in Conditions)}}$
 
 In Python, every single value evaluates to either **`True`** (truthy) or **`False`** (falsy) when passed to `bool()` or used in an `if` condition.
 
@@ -480,7 +488,7 @@ print(bool(name))            # False — empty string is falsy
 items = []
 print(bool(items))           # False — empty list is falsy
 
-# 2. ⚠️ Common Truthy Traps (Beginner Pitfalls):
+# 2. Common Truthy Traps (Beginner Pitfalls):
 print(bool("0"))             # True! (non-empty string of length 1)
 print(bool("False"))         # True! (non-empty string)
 print(bool(" "))             # True! (whitespace string has length 1)
@@ -496,7 +504,7 @@ print(bool(-1))              # True! (only 0 is falsy, negative numbers are trut
 - if user_prompt != "":
 -     send_query(user_prompt)
 
-+ # ✅ PYTHONIC & ELEGANT: Rely on direct truthiness
++ # PYTHONIC & ELEGANT: Rely on direct truthiness
 + if token_list:
 +     process_tokens(token_list)
 + if user_prompt:
@@ -507,7 +515,9 @@ print(bool(-1))              # True! (only 0 is falsy, negative numbers are trut
 
 ---
 
-## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
+![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
+
+## 🚀 $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 In production AI development, variable discipline and type handling prevent subtle bugs:
 
@@ -515,7 +525,7 @@ In production AI development, variable discipline and type handling prevent subt
 * $\color{#00897B}\blacktriangleright$ **$\color{#004D40}{\textsf{Handling Optional Model Hyperparameters:}}$** LLM client parameters almost always default to `None` (e.g. `def generate(prompt: str, temperature: float | None = None)`). You verify whether the user supplied an override using `if temperature is not None:`.
 * $\color{#E65100}\blacktriangleright$ **$\color{#BF360C}{\textsf{Batch Slicing and Token Budgeting:}}$** You will use integer floor division `//` and modulo `%` on every large data ingestion pipeline to split documents into fixed-size context window chunks (`chunk_idx = total_tokens // max_window`).
 
-### $\color{#00838F}\blacktriangleright\space\color{#00695C}{\textsf{Common Beginner Mistakes (The Reasoning)}}$
+### $\large\color{#00838F}\blacktriangleright\space\color{#00695C}{\textsf{Common Beginner Mistakes (The Reasoning)}}$
 
 * $\color{#D32F2F}\blacktriangleright$ **`=` vs `==`:** `=` *assigns*, `==` *compares*. `if x = 5:` is an error; you want `if x == 5:`.
 * $\color{#D32F2F}\blacktriangleright$ **Adding a string and a number:** `"3" + 5` raises `TypeError`. Convert first: `int("3") + 5`.  
@@ -527,7 +537,7 @@ In production AI development, variable discipline and type handling prevent subt
 * $\color{#D32F2F}\blacktriangleright$ **Using `is` to compare values:** writing `if score is 100:` or `if name is "Ada":`.  
   *Reason:* `is` checks memory address (`id()`), not value content. Python can assign separate addresses to identical numbers or strings. Always use `==` for values.
 
-### $\color{#00838F}\blacktriangleright\space\color{#00695C}{\textsf{Try It Yourself}}$
+### $\large\color{#00838F}\blacktriangleright\space\color{#00695C}{\textsf{Try It Yourself}}$
 Predict, then run: `print(10 / 3)`, `print(10 // 3)`, `print(10 % 3)`, `print(2 ** 10)`.  
 Then test:
 ```python
@@ -538,7 +548,9 @@ print(x == y, x is y, id(x) == id(y))
 
 ---
 
-## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
+![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
+
+## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
 | $\color{#C2185B}\textsf{\textbf{What You See}}$ | $\color{#E65100}\textsf{\textbf{Cause}}$ | $\color{#2E7D32}\textsf{\textbf{Fix}}$ |
 | :--- | :--- | :--- |
@@ -550,7 +562,9 @@ print(x == y, x is y, id(x) == id(y))
 
 ---
 
-## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
+![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
+
+## 📌 $\Large\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
 ```python
 x = 5            # int   |  5.0 float  |  "5" str  |  True bool  |  None
@@ -572,7 +586,9 @@ math.isclose(a, b) # safe float equality check: abs(a - b) < 1e-9
 
 ---
 
-## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
+![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
+
+## 🛑 $\Large\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 
 What are the **values and types** of `a` and `b` here, and why are they different?
 

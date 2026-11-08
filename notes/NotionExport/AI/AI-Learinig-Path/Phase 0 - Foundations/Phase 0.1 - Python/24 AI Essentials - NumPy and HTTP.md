@@ -9,7 +9,9 @@
 
 ---
 
-## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
+![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
+
+## 🗺️ $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 Two libraries appear in almost every AI program and bridge "plain Python" to "AI work":
 **NumPy** (fast numerical arrays — the foundation under embeddings and tensors) and an **HTTP
@@ -45,7 +47,9 @@ flowchart TD
     style Pillar2 fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#BF360C
 ```
 
-## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea }}$
+![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
+
+## 🎈 $\Large\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea }}$
 
 - **NumPy** turns lists of numbers into a high-speed **array** that does math on the *whole array at
   once* (called **vectorization**) — like applying an operation to every cell of a spreadsheet in a
@@ -62,17 +66,19 @@ web request. These two tools are how those ideas become code.
 > [AI Terms glossary](../../AI%20Terms%20-%20Plain%20English%20Glossary.md); each term below is also
 > defined the first time it appears.
 
-## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
+![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
+
+## ⚙️ $\Large\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
 
 > [!IMPORTANT]
-> ### $\color{#00C853}{\textsf{🔥 The 80/20 Core Rule: What Matters in Production}}$
+> ### 🔥 $\color{#00C853}{\textsf{The 80/20 Core Rule: What Matters in Production}}$
 > * $\color{#00C853}\blacktriangleright$ **Daily Core (90% of Real AI Work):**
 >   - **NumPy:** `np.array()`, checking `.shape`, matrix multiplication / dot product `@` or `np.dot()` for vector cosine similarity in RAG embeddings.
 >   - **HTTP:** `httpx.post()` / `requests.post()` with headers (`Authorization: Bearer <key>`) and JSON payloads (`{"model": ..., "messages": [...]}`), checking status with `resp.raise_for_status()`, and parsing response JSON (`resp.json()`).
 > * $\color{#FFB300}\blacktriangleright$ **Occasional (Data Shaping and Streams):** NumPy broadcasting rules, `.reshape()`, `np.zeros()`, `np.ones()`, HTTP streaming responses (`httpx.stream()`) for SSE token streaming.
 > * $\color{#757575}\blacktriangleright$ **Reference Only (Exhaustive):** Advanced multidimensional slicing, NumPy memory strides, custom HTTP connection adapters and proxies.
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{24.1 NumPy basics}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{24.1 NumPy basics}}$
 
 Install: `pip install numpy`.
 
@@ -101,14 +107,14 @@ print(a.mean(), a.sum(), a.max())  # 2.0 6 3
 -         total += vec_a[i] * vec_b[i]
 -     return total
 
-+ # ✅ Fast: NumPy Vectorized C BLAS Execution (Contiguous memory, zero loop overhead)
++ # Fast: NumPy Vectorized C BLAS Execution (Contiguous memory, zero loop overhead)
 + def numpy_dot_product(vec_a: np.ndarray, vec_b: np.ndarray) -> float:
 +     return float(np.dot(vec_a, vec_b))  # or vec_a @ vec_b
 ```
 
 
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{24.2 Why NumPy matters: cosine similarity by hand}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{24.2 Why NumPy matters: cosine similarity by hand}}$
 
 Three plain-English ideas this builds on (also in the
 [glossary](../../AI%20Terms%20-%20Plain%20English%20Glossary.md)):
@@ -173,7 +179,7 @@ keywords. Two more terms this unlocks:
 
 That retrieve-then-answer loop is the backbone of Phase 2 — and you've just hand-built its engine.
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{24.3 Calling an API — synchronous (requests)}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{24.3 Calling an API — synchronous (requests)}}$
 
 Install: `pip install requests`.
 
@@ -196,7 +202,7 @@ resp = requests.post(
 print(resp.json()["json"])     # {'name': 'Ada'}
 ```
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{24.4 Calling an API — asynchronous (httpx)}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{24.4 Calling an API — asynchronous (httpx)}}$
 
 Install: `pip install httpx`. Same shape, but `await`-able so you can overlap many calls (Lesson 23).
 
@@ -226,7 +232,7 @@ asyncio.run(main())
 -                          json={"model": "gpt-4o", "messages": []})
 - data = response.json()  # May crash or parse HTTP 500 error HTML as JSON!
 
-+ # ✅ Resilient: Async client with connection pool, explicit timeout, env secrets, and status check
++ # Resilient: Async client with connection pool, explicit timeout, env secrets, and status check
 + import os, httpx
 + api_key = os.environ.get("OPENAI_API_KEY")
 + if not api_key:
@@ -244,7 +250,7 @@ asyncio.run(main())
 
 
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{24.5 Secrets via environment variables (never hardcode)}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{24.5 Secrets via environment variables (never hardcode)}}$
 
 ```python
 import os
@@ -254,7 +260,7 @@ if not api_key:
 # headers = {"Authorization": f"Bearer {api_key}"}
 ```
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{AI Essentials: NumPy and HTTP Production Matrix}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{AI Essentials: NumPy and HTTP Production Matrix}}$
 
 | Capability / API | Canonical Syntax | Mechanism / Execution | AI Production Role | Production Priority |
 | :--- | :--- | :--- | :--- | :--- |
@@ -272,7 +278,9 @@ if not api_key:
 | **Env Var Secret Access** | `os.environ.get("API_KEY")` | Reads process environment table | Secure zero-leak credential provisioning | $\color{#00C853}\blacksquare\space\textsf{\textbf{Core (Daily)}}$ |
 
 
-## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
+![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
+
+## 🚀 $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 The OpenAI SDK is a polished wrapper around exactly these HTTP calls; embeddings you'll store and
 compare are NumPy arrays; the cosine-similarity function above is the literal heart of RAG (Phase
@@ -286,11 +294,13 @@ compare are NumPy arrays; the cosine-similarity function above is the literal he
    magnitude slower. Let NumPy operate on the whole array.
 4. **Hardcoding API keys** — leak risk. Read from `os.environ` / a `.env` file.
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{Try it yourself}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{Try it yourself}}$
 Use `requests.get` to fetch `https://jsonplaceholder.typicode.com/todos/2`, check the status is
 `200`, and print the `title`. Then compute the cosine similarity between `[1,0,1]` and `[1,1,1]`.
 
-## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
+![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
+
+## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
 | What you see | Cause | Fix |
 | --- | --- | --- |
@@ -300,7 +310,9 @@ Use `requests.get` to fetch `https://jsonplaceholder.typicode.com/todos/2`, chec
 | Array maths is very slow | Looping in pure Python | Vectorize — operate on the whole NumPy array |
 | `JSONDecodeError` on `.json()` | Response wasn't the JSON you expected | Inspect the body; handle the error |
 
-## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
+![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
+
+## 📌 $\Large\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
 ```python
 import numpy as np
@@ -312,7 +324,9 @@ import httpx                                   # async version
 # async with httpx.AsyncClient() as c: await c.get(url)
 ```
 
-## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
+![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
+
+## 🛑 $\Large\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 
 Why do AI libraries represent embeddings as **NumPy arrays** rather than plain Python lists, and
 why should every API call include a `timeout`?

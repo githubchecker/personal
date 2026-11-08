@@ -9,18 +9,22 @@
 
 ---
 
-## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
+![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
+
+## 🗺️ $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 > [!IMPORTANT]
 > ### $\color{#512DA8}{\textsf{The Core Premise}}$
 > A **function** is a named, reusable block of code. Functions are how you stop repeating yourself, give names to ideas, and build programs out of small testable parts. In modern Python and AI engineering, functions are more than just reusability — they are the foundational contract for **LLM tool calling**, where AI models inspect function signatures, docstrings, and type hints to interact with the real world. Everything from here on — decorators, methods, async functions, agent tools — is built on functions.
 
-### $\color{#00838F}\blacktriangleright\space\color{#00695C}{\textsf{Where It Fits}}$
+### $\large\color{#00838F}\blacktriangleright\space\color{#00695C}{\textsf{Where It Fits}}$
 
 * $\color{#0288D1}\blacktriangleright$ **$\color{#01579B}{\textsf{Builds on:}}$** [06 Control Flow](06%20Control%20Flow.md) — execution blocks, variable scoping, and conditional returns.
 * $\color{#00897B}\blacktriangleright$ **$\color{#004D40}{\textsf{Unlocks:}}$** [08 Comprehensions and Generators](08%20Comprehensions%20and%20Generators.md), [09 Decorators and Closures](09%20Decorators%20and%20Closures.md), and AI Tool Calling (structured schemas for LLMs).
 
-## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
+![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
+
+## 🔑 $\Large\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
 
 - **Function** — a named, reusable block of code defined with `def`.
 - **Parameter** — the variable name listed in the function definition (the input slot).
@@ -42,7 +46,9 @@
 - **`nonlocal` keyword** — binds a variable in a nested function to the nearest enclosing (outer) function's scope, neither local nor global.
 - **Mutable default trap** — the bug where a mutable default object (`[]` or `{}`) is shared across all function calls.
 
-## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (Analogy: A Kitchen Appliance)}}$
+![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
+
+## 🎈 $\Large\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (Analogy: A Kitchen Appliance)}}$
 
 A function is like a blender: you put **ingredients in** (arguments), it does a defined **job** (the body), and it hands you a **result out** (the return value). Once built, you reuse it endlessly without caring about the internal wiring — you just feed it inputs and take the output.
 
@@ -60,21 +66,23 @@ flowchart LR
     style C fill:#E8F5E9,stroke:#388E3C,color:#1B5E20
 ```
 
-## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
+![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
+
+## ⚙️ $\Large\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
 
 > [!IMPORTANT]
-> ### $\color{#00C853}{\textsf{🔥 The 80/20 Core Rule: What Matters in Production}}$
+> ### 🔥 $\color{#00C853}{\textsf{The 80/20 Core Rule: What Matters in Production}}$
 > * $\color{#00C853}\blacktriangleright$ **Daily Core (90% of Real AI Work):** Function definitions `def func(...)`, immutable default arguments (always `default=None`, never mutable lists `default=[]`), `*args` and `**kwargs` (essential for decorators, middleware, and forwarding options to LLM client libraries), explicit `return`, and type annotations.
 > * $\color{#FFB300}\blacktriangleright$ **Occasional (Clean API Signatures):** Keyword-only parameters (`def func(*, prompt, model)` for safer configuration), lambdas for custom sorting `key=lambda d: d.score`.
 > * $\color{#757575}\blacktriangleright$ **Reference Only (Exhaustive and Fragile):** Positional-only parameters (`/`), `global` and `nonlocal` keywords (avoid global mutable state in production), deep recursion (Python lacks tail-call optimization).
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.1 Defining, Calling and Return Values (Data Types, Multiple Returns, Implicit None)}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.1 Defining, Calling and Return Values (Data Types, Multiple Returns, Implicit None)}}$
 
 $$
-\overbrace{\color{#E53935}\texttt{def}}^{\color{#B71C1C}\textsf{🔒\ 1.\ Keyword\ (Starts\ definition)}}\space\space
-\underbrace{\color{#0D47A1}\texttt{greet}}_{\color{#1565C0}\textsf{🏷️\ 2.\ Function\ Name}}\space\space
-\overbrace{\color{#00897B}\texttt{(name:\ str)}}^{\color{#004D40}\textsf{💻\ 3.\ Parameter\ (Input\ slot\ placeholder)}}\space\space
-\underbrace{\color{#7B1FA2}\texttt{->\ str:}}_{\color{#4A148C}\textsf{🎯\ 4.\ Return\ Type\ Contract}}
+\overbrace{\color{#E53935}\texttt{def}}^{\color{#B71C1C}\textsf{1.\ Keyword\ (Starts\ definition)}}\space\space
+\underbrace{\color{#0D47A1}\texttt{greet}}_{\color{#1565C0}\textsf{2.\ Function\ Name}}\space\space
+\overbrace{\color{#00897B}\texttt{(name:\ str)}}^{\color{#004D40}\textsf{3.\ Parameter\ (Input\ slot\ placeholder)}}\space\space
+\underbrace{\color{#7B1FA2}\texttt{->\ str:}}_{\color{#4A148C}\textsf{4.\ Return\ Type\ Contract}}
 $$
 
 $$
@@ -182,13 +190,13 @@ def send_alert(message: str) -> None:
     print(f"ALERT: {message}")
 ```
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.2 Positional vs Keyword (Named) Arguments}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.2 Positional vs Keyword (Named) Arguments}}$
 
 | $\color{#546E7A}\textsf{\textbf{Call Style}}$ | $\color{#0D47A1}\textsf{\textbf{Invocation Code Syntax}}$ | $\color{#00695C}\textsf{\textbf{Positional Rule and Mechanism}}$ | $\color{#1B5E20}\textsf{\textbf{Verdict}}$ |
 | :--- | :--- | :--- | :---: |
-| **1. Pure Positional** | $\color{#0D47A1}\texttt{connect\_db}\color{#263238}\texttt{(}\color{#00897B}\texttt{"localhost"}\color{#263238}\texttt{,}\space\color{#00897B}\texttt{5432}\color{#263238}\texttt{,}\space\color{#00897B}\texttt{"vec"}\color{#263238}\texttt{)}$ | Left-to-right alignment: Order strictly matters | ✅ Valid |
-| **2. Pure Keyword** | $\color{#0D47A1}\texttt{connect\_db}\color{#263238}\texttt{(}\color{#D84315}\texttt{db\_name=}\color{#00897B}\texttt{"vec"}\color{#263238}\texttt{,}\space\color{#D84315}\texttt{host=}\color{#00897B}\texttt{"loc"}\color{#263238}\texttt{,}\space\color{#D84315}\texttt{port=}\color{#00897B}\texttt{5432}\color{#263238}\texttt{)}$ | Name-matched: Any order produces identical call | ✅ Valid |
-| **3. Mixed Call** | $\color{#0D47A1}\texttt{connect\_db}\color{#263238}\texttt{(}\color{#00897B}\texttt{"localhost"}\color{#263238}\texttt{,}\space\color{#D84315}\texttt{db\_name=}\color{#00897B}\texttt{"vec"}\color{#263238}\texttt{,}\space\color{#D84315}\texttt{port=}\color{#00897B}\texttt{5432}\color{#263238}\texttt{)}$ | Positional args FIRST, keywords AFTER | ✅ Valid |
+| **1. Pure Positional** | $\color{#0D47A1}\texttt{connect\_db}\color{#263238}\texttt{(}\color{#00897B}\texttt{"localhost"}\color{#263238}\texttt{,}\space\color{#00897B}\texttt{5432}\color{#263238}\texttt{,}\space\color{#00897B}\texttt{"vec"}\color{#263238}\texttt{)}$ | Left-to-right alignment: Order strictly matters | Valid |
+| **2. Pure Keyword** | $\color{#0D47A1}\texttt{connect\_db}\color{#263238}\texttt{(}\color{#D84315}\texttt{db\_name=}\color{#00897B}\texttt{"vec"}\color{#263238}\texttt{,}\space\color{#D84315}\texttt{host=}\color{#00897B}\texttt{"loc"}\color{#263238}\texttt{,}\space\color{#D84315}\texttt{port=}\color{#00897B}\texttt{5432}\color{#263238}\texttt{)}$ | Name-matched: Any order produces identical call | Valid |
+| **3. Mixed Call** | $\color{#0D47A1}\texttt{connect\_db}\color{#263238}\texttt{(}\color{#00897B}\texttt{"localhost"}\color{#263238}\texttt{,}\space\color{#D84315}\texttt{db\_name=}\color{#00897B}\texttt{"vec"}\color{#263238}\texttt{,}\space\color{#D84315}\texttt{port=}\color{#00897B}\texttt{5432}\color{#263238}\texttt{)}$ | Positional args FIRST, keywords AFTER | Valid |
 | **❌ Illegal Order** | $\color{#0D47A1}\texttt{connect\_db}\color{#263238}\texttt{(}\color{#D84315}\texttt{host=}\color{#00897B}\texttt{"loc"}\color{#263238}\texttt{,}\space\color{#C62828}\texttt{5432}\color{#263238}\texttt{,}\space\color{#C62828}\texttt{"vec"}\color{#263238}\texttt{)}$ | `SyntaxError`: Positional arg cannot follow keyword | ❌ SyntaxError |
 | **❌ Duplicate Slot** | $\color{#0D47A1}\texttt{connect\_db}\color{#263238}\texttt{(}\color{#00897B}\texttt{"loc"}\color{#263238}\texttt{,}\space\color{#00897B}\texttt{5432}\color{#263238}\texttt{,}\space\color{#00897B}\texttt{"vec"}\color{#263238}\texttt{,}\space\color{#C62828}\texttt{host=}\color{#00897B}\texttt{"srv"}\color{#263238}\texttt{)}$ | `TypeError`: Multiple values assigned to `host` | ❌ TypeError |
 
@@ -197,7 +205,7 @@ def connect_db(host: str, port: int, db_name: str):
     return f"Connected to {db_name} at {host}:{port}"
 ```
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.3 Default Parameters and The "Defaults at the End" Rule}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.3 Default Parameters and The "Defaults at the End" Rule}}$
 
 $$
 \overbrace{\color{#E53935}\texttt{def}}^{\textsf{Keyword}}\space\space
@@ -221,7 +229,7 @@ print(power(5, exponent=4))         # 625 — exponent overridden by keyword to 
 **Parameters with default values MUST follow all parameters without default values.**
 
 ```python
-# ✅ VALID: non-default parameter ('prompt') comes first; defaults come after:
+# VALID: non-default parameter ('prompt') comes first; defaults come after:
 def query_model(prompt: str, model: str = "gpt-4o", temp: float = 0.7):
     pass
 
@@ -233,7 +241,7 @@ def query_model(prompt: str, model: str = "gpt-4o", temp: float = 0.7):
 > **Why does Python enforce this under the hood?**
 > Python evaluates arguments positionally from left to right. If default parameters could be placed before required parameters, a call like `query_model("Hello")` would be completely ambiguous: does `"Hello"` belong to the optional `model` or the required `prompt`? Putting required parameters first ensures unambiguous left-to-right matching.
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.4 Multiple Defaults and Skipping Defaults with Named Arguments}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.4 Multiple Defaults and Skipping Defaults with Named Arguments}}$
 
 Real-world functions often have **multiple default parameters** to provide sensible configuration out of the box while allowing fine-grained customization.
 
@@ -265,7 +273,7 @@ print(generate_completion("Translate to French", "gpt-4o-mini", 0.2))
 # ❌ The awkward positional way (forces you to re-specify every intermediate default):
 print(generate_completion("Translate to French", "gpt-4o", 0.7, 2048, True))
 
-# ✅ The idiomatic Python way (skip intermediate defaults by naming 'stream'):
+# The idiomatic Python way (skip intermediate defaults by naming 'stream'):
 print(generate_completion("Translate to French", stream=True))
 # Output: '... Model: gpt-4o | Temp: 0.7 | Tokens: 2048 | Stream: True'
 
@@ -274,7 +282,7 @@ print(generate_completion("Explain RAG", stream=True, temperature=0.0))
 # Output: '... Model: gpt-4o | Temp: 0.0 | Tokens: 2048 | Stream: True'
 ```
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.5 The Mutable Default Trap and The Sentinel None Pattern}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.5 The Mutable Default Trap and The Sentinel None Pattern}}$
 
 This is one of the most famous traps in Python. **Never use a mutable object (like a list `[]`, dictionary `{}`, or set) as a default parameter value.**
 
@@ -293,7 +301,7 @@ flowchart TD
         Call2["Call 2: add_document('doc_02')"] --> SharedList
     end
 
-    subgraph Safe["✅ Sentinel None Pattern (Independent Heap Instances)"]
+    subgraph Safe["Sentinel None Pattern (Independent Heap Instances)"]
         SafeDef["def add_document(doc, document_store=None)"]:::defScope
         CallSafe1["Call 1: creates fresh []"] --> Fresh1["New Heap list: 0x20A<br/>['doc_01']"]:::safeObj
         CallSafe2["Call 2: creates fresh []"] --> Fresh2["New Heap list: 0x30B<br/>['doc_02']"]:::safeObj
@@ -307,7 +315,7 @@ flowchart TD
 -     document_store.append(doc)
 -     return document_store
 
-+ ✅ Production Sentinel None pattern (fresh list per call):
++ Production Sentinel None pattern (fresh list per call):
 + def add_document(doc: str, document_store: list | None = None) -> list:
 +     if document_store is None:
 +         document_store = []
@@ -316,13 +324,13 @@ flowchart TD
 ```
 
 ```python
-# ⚠️ BUGGY CODE:
+# BUGGY CODE:
 def add_document(doc: str, document_store: list = []) -> list:
     document_store.append(doc)
     return document_store
 
 print(add_document("doc_01"))       # ['doc_01']
-print(add_document("doc_02"))       # ['doc_01', 'doc_02']  <-- 💥 Reused the previous list!
+print(add_document("doc_02"))       # ['doc_01', 'doc_02']  <-- Reused the previous list!
 print(add_document("doc_03"))       # ['doc_01', 'doc_02', 'doc_03']
 ```
 
@@ -342,10 +350,10 @@ def add_document(doc: str, document_store: list | None = None) -> list:
     return document_store
 
 print(add_document("doc_01"))       # ['doc_01']
-print(add_document("doc_02"))       # ['doc_02']  <-- ✅ Clean and isolated!
+print(add_document("doc_02"))       # ['doc_02']  <-- Clean and isolated!
 ```
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.6 Keyword-Only (*) and Positional-Only (/) Parameters}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.6 Keyword-Only (*) and Positional-Only (/) Parameters}}$
 
 Modern Python allows you to strictly control whether callers must use positional or keyword arguments.
 
@@ -356,7 +364,7 @@ Any parameter listed **after a bare `*`** CANNOT be passed positionally. The cal
 def search_vector_db(query: str, *, top_k: int = 5, score_threshold: float = 0.8):
     return f"Searching '{query}' (top_k={top_k}, threshold={score_threshold})"
 
-# ✅ Call with keyword arguments:
+# Call with keyword arguments:
 print(search_vector_db("transformer architecture", top_k=10, score_threshold=0.85))
 
 # ❌ TypeError: search_vector_db() takes 1 positional argument but 3 were given:
@@ -373,7 +381,7 @@ Any parameter listed **before a `/`** CANNOT be passed by keyword. It must be pa
 def calculate_tokens(text: str, /) -> int:
     return len(text.split())
 
-print(calculate_tokens("Hello world"))  # ✅ 2
+print(calculate_tokens("Hello world"))  # 2
 
 # ❌ TypeError: calculate_tokens() got some positional-only arguments passed as keyword arguments: 'text'
 # calculate_tokens(text="Hello world")
@@ -424,14 +432,14 @@ def process_embedding(
         f"normalize={normalize}, batch={batch_size}"
     )
 
-# 1. ✅ VALID: text is positional, model is keyword, normalize is keyword:
+# 1. VALID: text is positional, model is keyword, normalize is keyword:
 print(process_embedding(
     "Deep learning notes",
     model="text-embedding-3-large",
     normalize=False
 ))
 
-# 2. ✅ VALID: text is positional, model/dims are positional, batch_size is keyword:
+# 2. VALID: text is positional, model/dims are positional, batch_size is keyword:
 print(process_embedding(
     "Deep learning notes",
     "text-embedding-3-small", 512,
@@ -440,11 +448,11 @@ print(process_embedding(
 
 # 3. ❌ INVALID: Violating Zone 1 (trying to pass 'text' by keyword):
 # process_embedding(text="Deep learning notes")
-# 💥 TypeError: process_embedding() got some positional-only arguments passed as keyword arguments: 'text'
+# TypeError: process_embedding() got some positional-only arguments passed as keyword arguments: 'text'
 
 # 4. ❌ INVALID: Violating Zone 3 (trying to pass 'normalize' positionally):
 # process_embedding("Deep learning notes", "text-embedding-3", 1536, True)
-# 💥 TypeError: process_embedding() takes from 1 to 3 positional arguments but 4 were given
+# TypeError: process_embedding() takes from 1 to 3 positional arguments but 4 were given
 ```
 
 > **Why design APIs with all 3 zones?**
@@ -452,7 +460,7 @@ print(process_embedding(
 > - **Zone 2 (Standard)**: Core parameters like `model` or `dimensions` can be passed positionally for brevity or by name for clarity.
 > - **Zone 3 (Keyword-only)**: Configuration flags (`normalize=True`, `batch_size=32`) are forced to be named explicitly to prevent accidental order bugs.
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.7 Flexible Arguments: *args, **kwargs, and Parameter Co-existence Rules}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.7 Flexible Arguments: *args, **kwargs, and Parameter Co-existence Rules}}$
 
 When writing flexible APIs, decorators, middleware, or AI agent tool wrappers, you often do not know in advance how many arguments a caller might pass. Python provides two packing operators:
 
@@ -565,8 +573,8 @@ execute_pipeline(
   Because `*args` absorbs all remaining positional arguments, Python cannot match any subsequent parameter by position. Any parameter placed between `*args` and `**kwargs` **must** be passed by keyword!
   ```python
   # In 'execute_pipeline' above, 'verbose' follows '*extra_steps':
-  # execute_pipeline("Ingest", 60, "step1", True)         # 💥 True gets absorbed into extra_steps!
-  # execute_pipeline("Ingest", 60, "step1", verbose=True) # ✅ Correct!
+  # execute_pipeline("Ingest", 60, "step1", True)         # True gets absorbed into extra_steps!
+  # execute_pipeline("Ingest", 60, "step1", verbose=True) # Correct!
   ```
 - **Rule 3: Only ONE `*args` and ONE `**kwargs` are allowed.**
   You cannot define multiple `*args` or multiple `**kwargs` in the same function signature.
@@ -632,12 +640,12 @@ def call_api(prompt: str, model: str, temperature: float):
 # Unpacks dictionary key-value pairs into named parameters:
 print(call_api(**request_payload))
 
-# ⚠️ Call-Site Order Rule:
+# Call-Site Order Rule:
 # Positional unpacking (*args) MUST come before keyword unpacking (**kwargs):
 # call_api(**request_payload, *chunk_data)  # ❌ SyntaxError!
 ```
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.8 Parameter and Return Type Annotations (Foundations of AI Tool Calling)}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.8 Parameter and Return Type Annotations (Foundations of AI Tool Calling)}}$
 
 In Python, type hints provide clear contracts for what a function expects to receive and what it promises to return.
 
@@ -650,7 +658,7 @@ $$
 \overbrace{\color{#7B1FA2}\texttt{->\ str:}}^{\color{#4A148C}\textsf{Return\ Type\ Contract}}
 $$
 
-> ⚠️ **Syntax Rule:** The type annotation **must** come *before* the `=` sign (`temperature: float = 0.7`), never after!
+> **Syntax Rule:** The type annotation **must** come *before* the `=` sign (`temperature: float = 0.7`), never after!
 
 ```python
 # Type-annotated parameters with and without defaults:
@@ -670,7 +678,7 @@ def generate_prompt(
 | **2. Homogeneous List** | $\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{get\_model\_tiers}\texttt{()}\space\color{#7B1FA2}\texttt{->\ list[str]:}$ | Available LLM tier models, chunked sentences | `["gpt-4o", "o3-mini"]` |
 | **3. Structured Mapping** | $\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{get\_metadata}\texttt{()}\space\color{#7B1FA2}\texttt{->\ dict[str,\ str]:}$ | System environment info, headers, configs | `{"region": "eastus"}` |
 | **4. Multi-Value Tuple** | $\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{calc\_tokens}\texttt{()}\space\color{#7B1FA2}\texttt{->\ tuple[int,\ float]:}$ | Bundled return metrics (token count + dollar cost) | `(500, 0.01)` |
-| **5. Nullable / Optional** | $\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{find\_tool}\texttt{()}\space\color{#7B1FA2}\texttt{->\ str\ \|\ None:}$ | Lookup operations that may return a missing record | `"Search"` or `None` |
+| **5. Nullable / Optional** | $\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{find\_tool}\texttt{()}\space\color{#7B1FA2}\texttt{->\ str | None:}$ | Lookup operations that may return a missing record | `"Search"` or `None` |
 
 ```python
 def save_checkpoint(step: int) -> None:
@@ -732,7 +740,7 @@ def calculate_chunk_overlap(
 > **🤖 The AI Agent Superpower:**
 > When creating tools for LangChain, AutoGen, or OpenAI Assistants, the AI does **not** see your Python code. It inspects your function's **docstring** (to understand *what* the tool does) and **type hints** (to generate the JSON schema for required parameters). Writing clean docstrings and types is literally prompt engineering for agent tool selection!
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.9 Variable Scoping: Local vs. Global, global, and nonlocal}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.9 Variable Scoping: Local vs. Global, global, and nonlocal}}$
 
 **Scope** defines where a variable can be seen and accessed in computer memory. Python resolves variable names using the strict **LEGB Rule** (Local $\rightarrow$ Enclosing $\rightarrow$ Global $\rightarrow$ Built-in).
 
@@ -751,7 +759,7 @@ flowchart TD
     G -- "Found" --> Done3(["Use Global x"]):::gScope
     G -- "Not Found" --> B["4. Built-in Scope (len, print, range)"]:::bScope
     B -- "Found" --> Done4(["Use Built-in x"]):::bScope
-    B -- "Not Found" --> Err(["💥 NameError: name 'x' is not defined"]):::bScope
+    B -- "Not Found" --> Err(["NameError: name 'x' is not defined"]):::bScope
 ```
 
 ---
@@ -766,13 +774,13 @@ global_app_name = "AgentEngine"        # GLOBAL: lives at module level
 
 def process_batch(items: list[str]):
     local_count = len(items)           # LOCAL: exists only during this specific call
-    print(f"Running {global_app_name}") # ✅ CAN READ globals freely without special keywords
+    print(f"Running {global_app_name}") # CAN READ globals freely without special keywords
     return local_count
 
 print(process_batch(["chunk_1", "chunk_2"]))  # 2
 
 # ❌ Trying to access a local variable from outside fails:
-# print(local_count)                   # 💥 NameError: name 'local_count' is not defined
+# print(local_count)                   # NameError: name 'local_count' is not defined
 ```
 
 ---
@@ -806,7 +814,7 @@ initialize_system()
 print(DB_CONNECTION_URL)               # 'postgresql://localhost:5432/ai_db' (Accessible globally!)
 ```
 
-> ⚠️ **Why Declaring Globals Inside Functions is a Strong Anti-Pattern:**
+> **Why Declaring Globals Inside Functions is a Strong Anti-Pattern:**
 > 1. **Hidden Side Effects:** Callers of `initialize_system()` have no idea it silently mutated the global namespace.
 > 2. **Order Dependency:** If another function tries to use `DB_CONNECTION_URL` before `initialize_system()` is invoked, the program crashes with a `NameError`.
 > 3. **Breaks Testability & Concurrency:** Code that relies on mutating global state cannot be easily unit-tested or run safely in multi-threaded/async environments.
@@ -815,7 +823,7 @@ print(DB_CONNECTION_URL)               # 'postgresql://localhost:5432/ai_db' (Ac
 
 ---
 
-#### $\color{#C62828}\blacktriangleright\space\color{#B71C1C}{\textsf{3. 💥 The Infamous UnboundLocalError Trap}}$
+#### $\color{#C62828}\blacktriangleright\space\color{#B71C1C}{\textsf{3. The Infamous UnboundLocalError Trap}}$
 
 One of the most common beginner traps in Python occurs when attempting to read and rebind a variable without declaring `global`:
 
@@ -823,7 +831,7 @@ One of the most common beginner traps in Python occurs when attempting to read a
 counter = 0
 
 def increment():
-    # 💥 CRASH: UnboundLocalError: cannot access local variable 'counter' where it is not associated with a value
+    # CRASH: UnboundLocalError: cannot access local variable 'counter' where it is not associated with a value
     counter += 1
 
 # increment()
@@ -861,7 +869,7 @@ def make_rate_limiter(max_calls: int):
 limiter = make_rate_limiter(max_calls=2)
 print(limiter())                       # 'Request 1/2 approved'
 print(limiter())                       # 'Request 2/2 approved'
-# print(limiter())                     # 💥 RuntimeError: Rate limit exceeded!
+# print(limiter())                     # RuntimeError: Rate limit exceeded!
 ```
 
 ##### $\color{#C62828}\blacktriangleright\space\color{#B71C1C}{\textsf{What Happens If You Omit nonlocal?}}$
@@ -878,7 +886,7 @@ If you remove `nonlocal call_count` and write `call_count += 1`, Python assumes 
 | **`nonlocal x`** | **Enclosing** | Nearest outer parent function | Stateful closures, custom decorators, event counters |
 | **`global x`** | **Global** | Module level (top-level file scope) | Rebinding module configuration or shared global state |
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.10 lambda — Tiny Anonymous Functions}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.10 lambda — Tiny Anonymous Functions}}$
 
 A `lambda` is a small, one-line anonymous function defined without a name:
 
@@ -887,19 +895,19 @@ A `lambda` is a small, one-line anonymous function defined without a name:
 - ❌ Anti-pattern: Assigning lambda to a variable (PEP 8 violation):
 - compute_similarity = lambda v1, v2: sum(a * b for a, b in zip(v1, v2))
 
-+ ✅ Idiomatic Python: Use def for named functions:
++ Idiomatic Python: Use def for named functions:
 + def compute_similarity(v1: list[float], v2: list[float]) -> float:
 +     return sum(a * b for a, b in zip(v1, v2))
 
-+ ✅ Best use of lambda: Throwaway key in sort/filter:
++ Best use of lambda: Throwaway key in sort/filter:
 + documents.sort(key=lambda d: d["score"], reverse=True)
 ```
 
 $$
-\overbrace{\color{#E53935}\texttt{lambda}}^{\color{#B71C1C}\textsf{🔒\ 1.\ Anonymous\ Keyword}}\space\space
-\underbrace{\color{#00897B}\texttt{doc}}_{\color{#004D40}\textsf{💻\ 2.\ Input\ Parameter}}\space
+\overbrace{\color{#E53935}\texttt{lambda}}^{\color{#B71C1C}\textsf{1.\ Anonymous\ Keyword}}\space\space
+\underbrace{\color{#00897B}\texttt{doc}}_{\color{#004D40}\textsf{2.\ Input\ Parameter}}\space
 \color{#37474F}\texttt{:}\space\space
-\overbrace{\color{#7B1FA2}\texttt{doc["score"]}}^{\color{#4A148C}\textsf{🎯\ 3.\ Single\ Expression\ (Implicitly\ Returned)}}
+\overbrace{\color{#7B1FA2}\texttt{doc["score"]}}^{\color{#4A148C}\textsf{3.\ Single\ Expression\ (Implicitly\ Returned)}}
 $$
 
 > 💡 *'Like a quick chai recipe: no teapot, no formal sit-down — just instant essence in a single line!'*
@@ -923,7 +931,9 @@ sorted_docs = sorted(documents, key=lambda doc: doc["score"], reverse=True)
 print([d["id"] for d in sorted_docs])  # ['doc_c', 'doc_a', 'doc_b']
 ```
 
-## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
+![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
+
+## 🚀 $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 In modern AI engineering:
 1. **API Client Wrappers**: Every LLM API client (OpenAI, Anthropic, HuggingFace) exposes dozens of configuration options. Designing wrappers with required prompts, keyword-only hyperparameter defaults (`*, temperature=0.7`), and `**kwargs` pass-through allows your pipeline to stay stable even when third-party libraries add new parameters.
@@ -938,12 +948,14 @@ In modern AI engineering:
 3. **Putting positional arguments after keyword arguments** — `f(x=1, 2)` crashes with `SyntaxError`. *Reason:* Once you switch to keyword mapping, positional order can no longer be guaranteed.
 4. **Forgetting `return`** — a function that only calls `print()` hands back `None` to the caller. *Reason:* `print` produces output on the console screen; `return` hands data back to your program logic.
 
-### $\color{#0D47A1}\blacktriangleright\space\color{#1565C0}{\textsf{Try It Yourself}}$
+### $\large\color{#0D47A1}\blacktriangleright\space\color{#1565C0}{\textsf{Try It Yourself}}$
 Write a function `build_prompt(template: str, *, system_role: str = "Assistant", **variables)` that formats `template` with `variables`, ensuring `system_role` cannot be passed positionally. Test skipping `system_role` while passing custom variables.
 
-## ⚖️ $\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use (Function Argument Decision Guide)}}$
+![Variations](https://img.shields.io/badge/COMPARISON-VARIATIONS%20%26%20WHEN%20TO%20USE-00838F?style=for-the-badge&logo=scales&logoColor=white)
 
-| Technique | Syntax | ✅ When to Use | 🚫 Avoid When | Production AI Example |
+## ⚖️ $\Large\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use (Function Argument Decision Guide)}}$
+
+| Technique | Syntax | When to Use | Avoid When | Production AI Example |
 | :--- | :--- | :--- | :--- | :--- |
 | **Positional Parameters** | `def f(a, b):` | Core, mandatory inputs that have an obvious, intuitive order | Function has >3 parameters or ambiguous order | `embed(text, model)` |
 | **Default Parameters** | `def f(a, b=val):` | Optional settings where 90% of callers want a sensible standard value | The default value is mutable (list/dict/set) | `generate(prompt, max_tokens=1000)` |
@@ -954,7 +966,9 @@ Write a function `build_prompt(template: str, *, system_role: str = "Assistant",
 | **`**kwargs` (Var Keyword)** | `def f(**config):` | Passing through unknown options to underlying libraries / APIs | The function requires specific, strictly validated inputs | Forwarding kwargs to OpenAI API client |
 | **`lambda`** | `lambda x: x + 1` | Short, disposable 1-line transformation passed to `sorted()`, `map()` | Multi-step logic, error handling, or reusable functions | `sorted(chunks, key=lambda c: c.score)` |
 
-## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
+![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
+
+## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
 | What you see | Cause | Fix |
 | --- | --- | --- |
@@ -969,7 +983,9 @@ Write a function `build_prompt(template: str, *, system_role: str = "Assistant",
 | Default list/dict accumulates data across calls | Used a mutable object (`[]` or `{}`) as a default parameter | Use sentinel `None` (`param=None`) and initialize `param = []` inside |
 | Function returns `None` unexpectedly | Forgot the `return` keyword (only used `print`) | Add `return result` to hand the value back to the caller |
 
-## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
+![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
+
+## 📌 $\Large\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
 ```python
 # 1. The Universal Parameter Hierarchy (strict definition order):
@@ -1004,7 +1020,7 @@ query_model(temperature=0.2, prompt="Hi", model="o3-mini") # keyword args in ANY
 # 7. Keyword-Only enforcement with bare '*':
 def safe_eval(data, *, strict: bool = True, timeout: int = 30) -> None:
     pass
-safe_eval(data, strict=False)                              # ✅ Must pass 'strict' by name!
+safe_eval(data, strict=False)                              # Must pass 'strict' by name!
 
 # 8. Mutable Default Sentinel Pattern:
 def append_entry(entry: str, store: list | None = None) -> list:
@@ -1023,7 +1039,9 @@ wrapper(my_func, *items, **opts)                           # unpack list to *arg
 get_score = lambda x: x["score"]                           # 1-expression inline function
 ```
 
-## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
+![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
+
+## 🛑 $\Large\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 
 Consider the following function definition:
 

@@ -9,13 +9,15 @@
 
 ---
 
-## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
+![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
+
+## 🗺️ $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 > [!IMPORTANT]
 > ### $\color{#512DA8}{\textsf{The Problem}}$
 > **Without knowing how Python executes and isolates code**, you end up with mysterious errors: commands not recognized in your terminal, packages conflicting and breaking across different projects, and scripts running against the wrong interpreter.
 
-### $\color{#00838F}\blacktriangleright\space\color{#00695C}{\textsf{Where It Fits}}$
+### $\large\color{#00838F}\blacktriangleright\space\color{#00695C}{\textsf{Where It Fits}}$
 
 * $\color{#0288D1}\blacktriangleright$ **$\color{#01579B}{\textsf{Builds on:}}$** **Nothing** — this is the absolute starting point.
 * $\color{#00897B}\blacktriangleright$ **$\color{#004D40}{\textsf{Unlocks:}}$** **Every subsequent module** in this road map, from basic syntax to PyTorch, LangChain, and production API servers.
@@ -26,7 +28,9 @@
 
 ---
 
-## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
+![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
+
+## 🔑 $\Large\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
 
 | $\color{#4A148C}\textsf{\textbf{Term}}$ | $\color{#00695C}\textsf{\textbf{One-Line Meaning}}$ |
 | :--- | :--- |
@@ -42,9 +46,11 @@
 
 ---
 
-## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea}}$
+![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
 
-### $\color{#00838F}\blacktriangleright\space\color{#00695C}{\textsf{Analogy 1: The Live Interpreter}}$
+## 🎈 $\Large\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea}}$
+
+### $\large\color{#00838F}\blacktriangleright\space\color{#00695C}{\textsf{Analogy 1: The Live Interpreter}}$
 
 A computer processor only understands raw machine switches (binary machine code) — not English, not Python. **$\color{#0D47A1}{\textsf{Python is a live human translator standing between you and the computer.}}$** You speak readable Python; the translator reads it sentence by sentence and tells the machine what to do as it goes.
 
@@ -58,7 +64,7 @@ Because translation happens on the fly, Python is called an **$\color{#0D47A1}{\
 
 ---
 
-### $\color{#00838F}\blacktriangleright\space\color{#00695C}{\textsf{Analogy 2: Virtual Environments (venv) as Dedicated Toolboxes}}$
+### $\large\color{#00838F}\blacktriangleright\space\color{#00695C}{\textsf{Analogy 2: Virtual Environments (venv) as Dedicated Toolboxes}}$
 
 Imagine you are building two different physical models in your garage:
 * $\color{#0288D1}\blacktriangleright$ **$\color{#01579B}{\textsf{Project A:}}$** A delicate vintage watch requiring tiny micro-screwdrivers.
@@ -73,15 +79,17 @@ A **$\color{#2E7D32}{\textsf{virtual environment}}$** is a dedicated, self-conta
 
 ---
 
-## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
+![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
+
+## ⚙️ $\Large\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
 
 > [!IMPORTANT]
-> ### $\color{#00C853}{\textsf{🔥 The 80/20 Core Rule: What Matters in Production}}$
+> ### 🔥 $\color{#00C853}{\textsf{The 80/20 Core Rule: What Matters in Production}}$
 > * $\color{#00C853}\blacktriangleright$ **Daily Core (90% of Real AI Work):** Always isolate projects with a virtual environment (`python -m venv .venv`), activate it (`.venv/Scripts/Activate.ps1`), install dependencies (`pip install <package>`), and run via your environment's interpreter (`.venv/Scripts/python.exe main.py`).
 > * $\color{#FFB300}\blacktriangleright$ **Occasional (Setup and CI/CD Pipelines):** Managing multiple Python versions via `pyenv-win`, freezing dependencies with `pip freeze > requirements.txt`, selecting interpreter in VS Code (<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>).
 > * $\color{#757575}\blacktriangleright$ **Reference Only (Under the Hood):** Bytecode `.pyc` cache mechanics, manual PATH registry editing, compiling C-extensions from source.
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1.1 What Happens When You Run a Program}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1.1 What Happens When You Run a Program}}$
 
 ```mermaid
 flowchart LR
@@ -104,11 +112,11 @@ flowchart LR
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1.2 Installing Python on Windows}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1.2 Installing Python on Windows}}$
 
 1. Download the latest stable Python 3 release from the official website: **[python.org/downloads](https://www.python.org/downloads/)**.
 2. Run the installer.
-3. ⚠️ **$\color{#D32F2F}{\textsf{Critical Step:}}$** On the very first screen of the installer, check the box:  
+3. **$\color{#D32F2F}{\textsf{Critical Step:}}$** On the very first screen of the installer, check the box:  
    `☑ Add python.exe to PATH`
 4. Click **Install Now**.
 5. Verify the installation by opening a new PowerShell window:
@@ -128,7 +136,7 @@ py --version
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1.3 Running Python: REPL vs. Script}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1.3 Running Python: REPL vs. Script}}$
 
 #### $\color{#4527A0}\blacklozenge\space\color{#283593}{\textsf{(a) The REPL (Interactive Scratchpad)}}$
 Type `python` with no arguments to enter the REPL:
@@ -172,7 +180,7 @@ python main.py
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1.4 Virtual Environments (venv): Isolation and Setup}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1.4 Virtual Environments (venv): Isolation and Setup}}$
 
 #### $\color{#C2185B}\blacktriangleright\space\color{#880E4F}{\textsf{The Problem: Global Package Pollution}}$
 
@@ -190,7 +198,7 @@ If you install globally, Project Beta's install will overwrite Project Alpha's f
 -                              ▲
 -               Both projects share this folder
 
-+ ✅ VIRTUAL ENVIRONMENTS (Isolated):
++ VIRTUAL ENVIRONMENTS (Isolated):
 + Project-Alpha/ ──► .venv/ ──► site-packages ──► pydantic 1.10.13  (Safe!)
 + Project-Beta/  ──► .venv/ ──► site-packages ──► pydantic 2.8.2    (Safe!)
 ```
@@ -203,7 +211,7 @@ flowchart TD
         PB1["Project Beta"] -->|Overwrites with v2.8!| G_SITE
     end
 
-    subgraph Robust ["✅ Isolated Sandboxes (With venv)"]
+    subgraph Robust ["Isolated Sandboxes (With venv)"]
         PA2["Project Alpha"] --> VENV_A[".venv-alpha/site-packages<br/><b>pydantic 1.10.13</b>"]
         PB2["Project Beta"] --> VENV_B[".venv-beta/site-packages<br/><b>pydantic 2.8.2</b>"]
     end
@@ -285,7 +293,7 @@ source .venv/bin/activate
 ---
 
 > [!WARNING]
-> ### $\color{#D32F2F}{\textsf{⚠️ THE POWERSHELL EXECUTION POLICY TRAP}}$
+> ### $\color{#D32F2F}{\textsf{THE POWERSHELL EXECUTION POLICY TRAP}}$
 > On fresh Windows machines, running `.\.venv\Scripts\Activate.ps1` often fails with this error:
 > ```text
 > File ... .venv\Scripts\Activate.ps1 cannot be loaded because running scripts 
@@ -344,7 +352,7 @@ deactivate
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1.5 Version Control: Never Commit .venv}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1.5 Version Control: Never Commit .venv}}$
 
 > [!CAUTION]
 > ### $\color{#B71C1C}{\textsf{Never Commit .venv to Git}}$
@@ -371,7 +379,7 @@ pip install -r requirements.txt
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1.6 Configuring VS Code for venv}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1.6 Configuring VS Code for venv}}$
 
 To ensure VS Code provides autocomplete, linting, and runs your code using the virtual environment:
 
@@ -384,7 +392,7 @@ To ensure VS Code provides autocomplete, linting, and runs your code using the v
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1.7 Comments and Indentation Rules}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1.7 Comments and Indentation Rules}}$
 
 ```python
 # 1. COMMENTS:
@@ -408,7 +416,9 @@ check_status(True)
 
 ---
 
-## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
+![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
+
+## 🚀 $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 In production AI development, virtual environment hygiene is the difference between reliable systems and untraceable bugs:
 
@@ -418,9 +428,11 @@ In production AI development, virtual environment hygiene is the difference betw
 
 ---
 
-## ⚖️ $\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use}}$
+![Variations](https://img.shields.io/badge/COMPARISON-VARIATIONS%20%26%20WHEN%20TO%20USE-00838F?style=for-the-badge&logo=scales&logoColor=white)
 
-| $\color{#0D47A1}\textsf{\textbf{Tool}}$ | $\color{#00C853}\textsf{\textbf{Production Priority}}$ | $\color{#00695C}\textsf{\textbf{What It Is}}$ | $\color{#2E7D32}\textsf{\textbf{✅ When to Use It}}$ | $\color{#D32F2F}\textsf{\textbf{🚫 When to Avoid It}}$ |
+## ⚖️ $\Large\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use}}$
+
+| $\color{#0D47A1}\textsf{\textbf{Tool}}$ | $\color{#00C853}\textsf{\textbf{Production Priority}}$ | $\color{#00695C}\textsf{\textbf{What It Is}}$ | $\color{#2E7D32}\textsf{\textbf{When to Use It}}$ | $\color{#D32F2F}\textsf{\textbf{When to Avoid It}}$ |
 | :--- | :---: | :--- | :--- | :--- |
 | **`venv`** | `🟢 Core (Daily Default)` | Python built-in standard library tool | **$\color{#2E7D32}{\textsf{Default for 95 percent of projects.}}$** Zero installation required, standard in all tutorials and production pipelines. | When you need to manage multiple different Python engine versions (e.g., Python 3.10 vs 3.12). |
 | **`uv`** | `🟡 Occasional (Modern Speed)` | Modern ultra-fast package manager written in Rust | Large projects with complex dependencies where `pip install` is slow. Installs packages in milliseconds. | When keeping your environment minimal with zero external tool dependencies. |
@@ -428,7 +440,9 @@ In production AI development, virtual environment hygiene is the difference betw
 
 ---
 
-## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
+![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
+
+## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
 | $\color{#C2185B}\textsf{\textbf{What You See}}$ | $\color{#E65100}\textsf{\textbf{Cause}}$ | $\color{#2E7D32}\textsf{\textbf{Fix}}$ |
 | :--- | :--- | :--- |
@@ -440,7 +454,9 @@ In production AI development, virtual environment hygiene is the difference betw
 
 ---
 
-## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
+![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
+
+## 📌 $\Large\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
 ```powershell
 # 1. Create a virtual environment
@@ -465,7 +481,9 @@ deactivate
 
 ---
 
-## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
+![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
+
+## 🛑 $\Large\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 
 You open a new PowerShell terminal, navigate to your AI project, and immediately run:
 ```powershell
@@ -482,11 +500,11 @@ ModuleNotFoundError: No module named 'openai'
 
 <br/>
 
-### $\color{#D32F2F}\blacktriangleright\space\color{#B71C1C}{\textsf{The Mistakes:}}$
+### $\large\color{#D32F2F}\blacktriangleright\space\color{#B71C1C}{\textsf{The Mistakes:}}$
 1. **$\color{#D32F2F}{\textsf{No Virtual Environment Activation:}}$** You ran `pip install openai` globally against your machine's base Python because the prompt did not show `(.venv)`.
 2. **$\color{#D32F2F}{\textsf{Missing Dependency Manifest:}}$** You did not record the dependency into a version-controlled `requirements.txt` file.
 
-### $\color{#2E7D32}\blacktriangleright\space\color{#1B5E20}{\textsf{The Proper Sequence:}}$
+### $\large\color{#2E7D32}\blacktriangleright\space\color{#1B5E20}{\textsf{The Proper Sequence:}}$
 ```powershell
 # 1. Create and activate the virtual environment
 python -m venv .venv

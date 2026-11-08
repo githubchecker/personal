@@ -15,7 +15,7 @@
 > $\color{#00C853}\blacktriangleright$ New AI word? $\to$ **[AI Terms — Plain-English Glossary](../../AI%20Terms%20-%20Plain%20English%20Glossary.md)**.
 
 > [!IMPORTANT]
-> ### $\color{#00C853}{\textsf{🔥 The 80/20 Framework for AI Engineers}}$
+> ### 🔥 $\color{#00C853}{\textsf{The 80/20 Framework for AI Engineers}}$
 > Every lesson in this module distinguishes daily production essentials from exhaustive language variations:
 > * $\color{#00C853}\blacktriangleright$ **Daily Core (The 80/20):** Look for green `[CORE 80/20]` cards and badges. These cover the syntax, patterns, and methods used in 90% of real-world AI engineering workflows. Master these first.
 > * $\color{#757575}\blacktriangleright$ **Exhaustive Variations and Edge Cases:** Retained for comprehensive architectural reference. Skim for mental awareness and consult when specialized edge cases arise.

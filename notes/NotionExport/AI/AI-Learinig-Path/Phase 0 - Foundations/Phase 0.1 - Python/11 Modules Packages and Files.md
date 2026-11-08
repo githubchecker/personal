@@ -9,11 +9,15 @@
 
 ---
 
-## 🗺️ $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
+![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
+
+## 🗺️ $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 No real application lives in a single file. As codebases grow, you organize logic into **modules** (individual `.py` files) and **packages** (directories of modules). You pull in battle-tested algorithms from Python's standard library and the broader AI ecosystem (`numpy`, `pydantic`, `openai`) using the **`import` system**. Alongside modular code, applications must persist data and talk to external systems — reading and writing files and serializing **JSON** (the universal data format of web and LLM APIs). This lesson connects project structure with file and data handling.
 
-## 🔑 $\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
+![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
+
+## 🔑 $\Large\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
 
 - **Module** — a single `.py` file containing functions, classes, and variables. The module name in Python code is always the filename without the `.py` extension (`planner.py` $\rightarrow$ `import planner`).
 - **Package** — a folder containing one or more modules and an `__init__.py` file that groups related modules under a common namespace.
@@ -28,7 +32,9 @@ No real application lives in a single file. As codebases grow, you organize logi
 - **Context manager (`with`)** — an object protocol (`__enter__` and `__exit__`) that guarantees deterministic resource cleanup (e.g. closing files or releasing locks), even if unhandled exceptions occur.
 - **Serialization** — converting in-memory Python objects (dicts, lists) into text or bytes (like JSON) to save to disk or send over a network.
 
-## 🎈 $\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (analogy: the workshop toolbox and shipping crates)}}$
+![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
+
+## 🎈 $\Large\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (analogy: the workshop toolbox and shipping crates)}}$
 
 You don't forge a screwdriver every time you need to tighten a screw — you reach into a **toolbox** and grab the ready-made tool.
 - A **module** is a single toolbox (a `.py` file of specialized tools).
@@ -52,15 +58,17 @@ flowchart TD
     SubDir --> Tool2["📄 calculator.py"]:::mod
 ```
 
-## ⚙️ $\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
+![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
+
+## ⚙️ $\Large\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
 
 > [!IMPORTANT]
-> ### $\color{#00C853}{\textsf{🔥 The 80/20 Core Rule: What Matters in Production}}$
+> ### 🔥 $\color{#00C853}{\textsf{The 80/20 Core Rule: What Matters in Production}}$
 > * $\color{#00C853}\blacktriangleright$ **Daily Core (90% of Real AI Work):** Clean module imports (`import module`, `from module import func`), the entrypoint guard `if __name__ == "__main__":`, context manager file access `with open(...) as f:`, reading/writing structured JSON (`json.loads()`, `json.dumps()`), and modern cross-platform path handling with `pathlib.Path` (e.g. `Path(__file__).parent / "data"`).
 > * $\color{#FFB300}\blacktriangleright$ **Occasional (Package Authoring):** `__init__.py` with `__all__`, streaming large files line-by-line (`for line in f:`), reading environment variables via `os.getenv()` or `python-dotenv`.
 > * $\color{#757575}\blacktriangleright$ **Reference Only (Legacy and Insecure):** `sys.path.append(...)` hacks, relative imports (`from ..sub import`), legacy `os.path` functions, `pickle` (security vulnerability with untrusted data).
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{11.1 The Import System: Syntax Variations and Best Practices}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{11.1 The Import System: Syntax Variations and Best Practices}}$
 
 Python gives you four distinct ways to import code:
 
@@ -73,8 +81,8 @@ import math
 print(math.sqrt(25))                # 5.0 — accessed via module prefix
 print(math.pi)                      # 3.141592653589793
 ```
-- ✅ **Pros:** Completely prevents name collisions. Anyone reading your code immediately knows where `math.sqrt` came from.
-- 🚫 **Cons:** Slightly more verbose for frequently repeated names.
+- **Pros:** Completely prevents name collisions. Anyone reading your code immediately knows where `math.sqrt` came from.
+- **Cons:** Slightly more verbose for frequently repeated names.
 
 #### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. Importing Specific Items (from module\_name import item1, item2)}}$
 This extracts specific functions, classes, or constants directly into your current local namespace:
@@ -85,8 +93,8 @@ from math import sqrt, ceil
 print(sqrt(25))                     # 5.0 — no 'math.' prefix needed!
 print(ceil(4.2))                    # 5
 ```
-- ✅ **Pros:** Clean, concise call sites.
-- 🚫 **Cons:** Can cause collisions if a local variable or another import shares the same name.
+- **Pros:** Clean, concise call sites.
+- **Cons:** Can cause collisions if a local variable or another import shares the same name.
 
 #### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{3. Aliasing on Import (as Keyword)}}$
 Use `as` to assign a local alias (nickname) to an imported module or specific symbol:
@@ -113,7 +121,7 @@ from math import *
 print(sin(0))                       # 0.0 — works, BUT dangerous!
 ```
 
-> ⚠️ **Why Wildcard Imports (`*`) are Strongly Discouraged in Production:**
+> **Why Wildcard Imports (`*`) are Strongly Discouraged in Production:**
 > 1. **Pollutes the Local Namespace:** It silently dumps hundreds of names into your code.
 > 2. **Silent Shadowing Bugs:** If `math` has a function called `pow()` and you define or import your own `pow()`, one will silently overwrite the other without warning!
 > 3. **Destroys Readability:** Future developers (and AI assistants) cannot tell which module a function came from.
@@ -123,7 +131,7 @@ print(sin(0))                       # 0.0 — works, BUT dangerous!
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{11.2 Handling Name Collisions and Conflicts}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{11.2 Handling Name Collisions and Conflicts}}$
 
 When working in complex AI pipelines, it is very common for two libraries (or your own code) to define identically named symbols. Python provides clean mechanisms to handle these collisions.
 
@@ -131,18 +139,18 @@ When working in complex AI pipelines, it is very common for two libraries (or yo
 Suppose you need to parse both JSON and YAML configurations, both of which provide a `.loads()` function:
 
 ```python
-# 🚫 BUGGY / AMBIGUOUS:
+# BUGGY / AMBIGUOUS:
 # from json import loads
 # from yaml import loads             # Overwrites json's 'loads'! Now json.loads is lost!
 
-# ✅ SOLUTION 1: Keep the module prefix (The Namespace Shield):
+# SOLUTION 1: Keep the module prefix (The Namespace Shield):
 import json
 import yaml
 
 config_a = json.loads('{"model": "gpt-4o"}')
 config_b = yaml.loads('model: gpt-4o')          # Clean, explicit, zero confusion
 
-# ✅ SOLUTION 2: Disambiguate using 'as' aliases:
+# SOLUTION 2: Disambiguate using 'as' aliases:
 from json import loads as json_loads
 from yaml import loads as yaml_loads
 
@@ -168,15 +176,15 @@ Never name a variable after an imported module or class:
 ```python
 from datetime import date
 
-# ⚠️ DANGEROUS SHADOWING:
+# DANGEROUS SHADOWING:
 date = "2026-09-14"                 # Local string variable 'date' now shadows imported class!
 
-# print(date.today())               # 💥 AttributeError: 'str' object has no attribute 'today'!
+# print(date.today())               # AttributeError: 'str' object has no attribute 'today'!
 ```
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{11.3 How Python Finds Modules and The Shadowing Bug}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{11.3 How Python Finds Modules and The Shadowing Bug}}$
 
 When you execute `import foo`, Python searches locations in a strict sequence defined in `sys.path`:
 
@@ -207,14 +215,14 @@ flowchart TD
     Step2 -- "Not Found" --> Step3{"3. Virtual Env (.venv/site-packages)"}:::step
 
     Step3 -- "Found" --> Load3["Load Installed Package (pip)"]:::found
-    Step3 -- "Not Found" --> Fail["💥 ModuleNotFoundError: No module named 'my_module'"]:::err
+    Step3 -- "Not Found" --> Fail["ModuleNotFoundError: No module named 'my_module'"]:::err
 ```
 
 1. **Current Directory**: The folder containing the script you are running.
 2. **Standard Library**: Built-in Python library folders.
 3. **Site-Packages**: The `site-packages` directory inside your active virtual environment (`.venv`).
 
-> 💥 **The Deadly "Self-Shadowing" Bug:**
+> **The Deadly "Self-Shadowing" Bug:**
 > Because the **current directory is searched first**, if you create a local file named `random.py`, `math.py`, `json.py`, or `openai.py`, any attempt to `import random` will import **your local file** instead of the real library!
 >
 > **Symptom:** `AttributeError: partially initialized module 'random' has no attribute 'choice' (most likely due to a circular import)`.
@@ -222,7 +230,7 @@ flowchart TD
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{11.4 Packages, Submodules and The \_\_init\_\_.py Mechanism}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{11.4 Packages, Submodules and The \_\_init\_\_.py Mechanism}}$
 
 #### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Module vs. Package vs. Library (The Architecture Hierarchy)}}$
 
@@ -272,7 +280,7 @@ import my_ai_agent.tools.web_search as search_tool
 ```
 
 #### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{3. The Package Import Trap: Does import my\_ai\_agent Load All Submodules?}}$
-> 💥 **NO! By default, `import my_ai_agent` does NOT load submodules!**
+> **NO! By default, `import my_ai_agent` does NOT load submodules!**
 
 When you write `import my_ai_agent`, Python only reads and executes `my_ai_agent/__init__.py`. It does **not** recursively inspect the directory or import `planner.py` or `memory.py`.
 
@@ -281,16 +289,16 @@ import my_ai_agent
 
 # ❌ RUNTIME ERROR if my_ai_agent/__init__.py is empty:
 # my_ai_agent.planner.create_plan()
-# 💥 AttributeError: module 'my_ai_agent' has no attribute 'planner'
+# AttributeError: module 'my_ai_agent' has no attribute 'planner'
 ```
 
 If `__init__.py` is empty, you **must explicitly import the submodule**:
 ```python
-# ✅ This explicitly loads planner.py into memory:
+# This explicitly loads planner.py into memory:
 import my_ai_agent.planner
 my_ai_agent.planner.create_plan()
 
-# ✅ Or bring the submodule directly into your namespace:
+# Or bring the submodule directly into your namespace:
 from my_ai_agent import planner
 planner.create_plan()
 ```
@@ -313,9 +321,9 @@ The secret is **how the package author configured `__init__.py`**:
    Even standard library packages do not re-export submodules unless intentional. For instance, `urllib`:
    ```python
    import urllib
-   # urllib.request.urlopen("https://python.org")  # 💥 AttributeError: module 'urllib' has no attribute 'request'!
+   # urllib.request.urlopen("https://python.org")  # AttributeError: module 'urllib' has no attribute 'request'!
 
-   import urllib.request                           # ✅ Must import submodule explicitly!
+   import urllib.request                           # Must import submodule explicitly!
    urllib.request.urlopen("https://python.org")    # Works!
    ```
 
@@ -398,7 +406,7 @@ __all__ = [
 ]
 ```
 
-> ⚠️ **The "Heavy Init" Anti-Pattern (What NOT to do):**
+> **The "Heavy Init" Anti-Pattern (What NOT to do):**
 > Never perform heavy computations, open database connections, make network calls, or download 10GB model weights inside `__init__.py`. Because `__init__.py` runs on the first import, doing heavy work causes any file that touches your package (even a lightweight test or CLI `--help` flag) to freeze! Keep `__init__.py` fast, lean, and focused on wiring.
 
 ---
@@ -428,7 +436,7 @@ from ..shared.config import AppConfig       # Double dot .. = parent package dir
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{11.5 Standard Library Tour for AI Engineers}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{11.5 Standard Library Tour for AI Engineers}}$
 
 Python's built-in standard library is world-class. You do not need `pip install` for any of these:
 
@@ -456,7 +464,7 @@ print(f"Agent event logged at: {now_utc}")
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{11.6 File I/O and The with Context Manager (Under the Hood)}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{11.6 File I/O and The with Context Manager (Under the Hood)}}$
 
 ```diff
 # Modern Path Manipulation
@@ -467,7 +475,7 @@ print(f"Agent event logged at: {now_utc}")
 -     with open(prompt_path, "r", encoding="utf-8") as f:
 -         system_prompt = f.read()
 
-+ ✅ Modern object-oriented pathlib.Path:
++ Modern object-oriented pathlib.Path:
 + from pathlib import Path
 + prompt_path = Path(__file__).parent / "prompts" / "agent.txt"
 + if prompt_path.exists():
@@ -567,11 +575,11 @@ In CPython, a file object's destructor (`__del__`) does attempt to close the fil
 2. **Exhaustion of OS File Descriptors (`OSError: [Errno 24] Too many open files`):**
    Operating systems enforce strict hard limits on concurrent open file descriptors (typically 1,024 to 4,096 per process). If an AI data pipeline processes 5,000 document files in a loop relying on GC:
    ```python
-   # 🚫 CRITICAL LEAK (Relies on GC):
+   # CRITICAL LEAK (Relies on GC):
    for path in chunk_files:
        f = open(path, "r")
        data = f.read()                  # f goes out of scope, BUT GC has not deallocated it yet!
-   # 💥 CRASH: OSError: [Errno 24] Too many open files! Process dies!
+   # CRASH: OSError: [Errno 24] Too many open files! Process dies!
    ```
    With `with open(...) as f:`, exactly **one** file descriptor is open at any microsecond. As soon as the loop body ends, `__exit__` immediately closes the file descriptor.
 3. **Data Loss from Unflushed User-Space Buffers:**
@@ -633,12 +641,12 @@ with open("agent_log.txt", "r", encoding="utf-8") as f:
         print(f"[{line_number}] {line.strip()}")
 ```
 
-> ⚠️ **Always specify `encoding="utf-8"`:**
+> **Always specify `encoding="utf-8"`:**
 > On Windows, Python's default encoding is often `cp1252` (Windows ANSI). If a document chunk contains curly quotes, em-dashes, or emojis (`🤖`), reading or writing without `encoding="utf-8"` raises a `UnicodeDecodeError` or corrupts your text into mojibake!
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{11.7 JSON Serialization: The Universal AI Data Bridge}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{11.7 JSON Serialization: The Universal AI Data Bridge}}$
 
 Web APIs, vector databases, and LLM tool calling all speak **JSON**. The standard library `json` module provides 4 primary functions:
 
@@ -684,7 +692,7 @@ print(recovered_state["session_id"])            # 'sess_102'
 
 ---
 
-### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{11.8 The if \_\_name\_\_ == "\_\_main\_\_": Execution Guard (Entry Point vs. Import)}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{11.8 The if \_\_name\_\_ == "\_\_main\_\_": Execution Guard (Entry Point vs. Import)}}$
 
 Every Python file is dual-purpose: it can be **executed directly** as a standalone script (e.g. `python my_file.py`), or it can be **imported** as a reusable module into another file (e.g. `import my_file`).
 
@@ -745,7 +753,7 @@ In Python, **`import` is an executable statement** — Python executes the impor
 def fetch_embeddings():
     return [[0.1, 0.2], [0.3, 0.4]]
 
-# 💥 UNPROTECTED TOP-LEVEL CODE (NO GUARD!):
+# UNPROTECTED TOP-LEVEL CODE (NO GUARD!):
 print("Connecting to live production database...")
 data = fetch_embeddings()
 print(f"Downloaded {len(data)} records!")
@@ -768,7 +776,7 @@ Downloaded 2 records!
 Starting model training...
 ```
 
-💥 **What happened?**
+**What happened?**
 Because `data_loader.py` lacked an execution guard, simply importing `fetch_embeddings` forced the production database connection and test script to execute immediately! If that test had dropped tables, retrained a model, or billed an external API, disaster strikes!
 
 ---
@@ -788,7 +796,7 @@ def test_harness():
     data = fetch_embeddings()
     print(f"Test run completed: {len(data)} records verified.")
 
-# ✅ THE EXECUTION GUARD:
+# THE EXECUTION GUARD:
 if __name__ == "__main__":
     # This block executes ONLY if run directly: python data_loader.py
     # This block is COMPLETELY IGNORED when imported by other files!
@@ -821,7 +829,9 @@ if __name__ == "__main__":
 
 ---
 
-## 🚀 $\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
+![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
+
+## 🚀 $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 In real-world AI pipelines:
 1. **API Client Namespaces**: When building a production agent, you interact with multiple SDKs: `from openai import OpenAI`, `import anthropic`, `import google.generativeai as genai`. Clean imports and aliasing keep your code maintainable.
@@ -835,12 +845,14 @@ In real-world AI pipelines:
 4. **Confusing `dumps` (string) with `dump` (file)** — calling `json.dump(data)` without a file object raises `TypeError: dump() missing 1 required positional argument: 'fp'`. *Reason:* `s` indicates string output.
 5. **Placing heavy logic or network calls inside `__init__.py`** — freezes every script, test, or CLI command that imports even a single function from your package. *Reason:* `__init__.py` runs immediately on the first import. Keep package initialization fast, lean, and focused on exports.
 
-### $\color{#0D47A1}\blacktriangleright\space\color{#1565C0}{\textsf{Try It Yourself}}$
+### $\large\color{#0D47A1}\blacktriangleright\space\color{#1565C0}{\textsf{Try It Yourself}}$
 Create a dictionary representing an AI agent's configuration (`model`, `temperature`, `max_tokens`). Serialize it to a file `agent_config.json` with an indent of 2. Then write a function with a `try/except` block that reads the file back, parses it using `json.load`, and prints the model name.
 
-## ⚖️ $\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use}}$
+![Variations](https://img.shields.io/badge/COMPARISON-VARIATIONS%20%26%20WHEN%20TO%20USE-00838F?style=for-the-badge&logo=scales&logoColor=white)
 
-| Technique | Syntax | ✅ When to Use | 🚫 Avoid When | Production AI Example |
+## ⚖️ $\Large\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use}}$
+
+| Technique | Syntax | When to Use | Avoid When | Production AI Example |
 | :--- | :--- | :--- | :--- | :--- |
 | **Full Module Import** | `import math` | Default safe choice; prevents collisions; clarifies origins | Name is excessively long and used dozens of times | `import httpx` |
 | **Specific Item Import**| `from math import sqrt`| Clean, readable code for 1–3 specific utilities | Function names are generic (`load`, `connect`, `get`)| `from pydantic import BaseModel` |
@@ -850,7 +862,9 @@ Create a dictionary representing an AI agent's configuration (`model`, `temperat
 | **`json.dumps` / `loads`**| `json.dumps(obj)` | Converting data to/from text strings in memory | Writing or reading directly to/from disk files | Sending prompt payloads to REST API |
 | **`json.dump` / `load`** | `json.dump(obj, f)` | Streaming directly to/from opened file descriptors | Working with strings received from network responses | Saving agent session checkpoints to disk |
 
-## 🐛 $\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
+![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
+
+## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
 | What you see | Cause | Fix |
 | --- | --- | --- |
@@ -864,7 +878,9 @@ Create a dictionary representing an AI agent's configuration (`model`, `temperat
 | `SyntaxError: 'from ... import *' used with...` | Wildcard import placed inside a function | Wildcard imports are only permitted at the top-level module scope |
 | Overwritten function / unexpected behavior | Two imports or a local variable share the exact same identifier | Use explicit module prefixes (`json.loads`) or `as` aliasing |
 
-## 📌 $\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
+![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
+
+## 📌 $\Large\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
 ```python
 # 1. Import Variations:
@@ -903,7 +919,9 @@ if __name__ == "__main__":
     main()
 ```
 
-## 🛑 $\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
+![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
+
+## 🛑 $\Large\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 
 Suppose you are writing an AI document processor and you write:
 
