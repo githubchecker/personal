@@ -113,8 +113,11 @@ Use KaTeX math formulas within Markdown headers. Always wrap title text in `\tex
 >    GitHub treats raw HTML elements literally and does NOT parse math inside `<summary>`, `<details>`, `<div>`, or `<span>`. Putting `\color{...}` inside `<summary>` prints the raw unrendered LaTeX string. Keep `<summary>` in clean bold Markdown (e.g., `<summary><b>🔍 Click to Reveal...</b></summary>`), and place KaTeX inside the dropdown body after a blank line.
 > 3. **NEVER wrap `\texttt` inside `\mathbf` or `\textbf`:**  
 >    Computer Modern Typewriter has no bold font metrics in KaTeX (`Font metrics not found for font: Typewriter-Bold`). To style code keywords or parameters, use `\color{#HEX}\texttt{...}` alone.
-> 4. **ALWAYS escape underscores inside `\textsf` and `\texttt`:**  
->    In KaTeX math mode, unescaped underscores trigger `'_' allowed only in math mode`. Write `\_` instead (e.g. `\texttt{max\_words}`, `\textsf{\__init\__}`).
+> 4. **NEVER use literal `_` or `\textunderscore` inside KaTeX `\textsf` or `\texttt`:**  
+>    GitHub's CommonMark parser strips single backslashes (`\_` &rarr; `_`), causing KaTeX to throw `'_' allowed only in math mode`, while `\textunderscore` triggers `\textunderscore is only supported in math mode`.  
+>    - **In Headings:** Keep code identifiers with underscores OUTSIDE KaTeX using native Markdown backticks (e.g., `#### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{Slashing RAM Overhead with}}$ `__slots__``).  
+>    - **In Tables:** Code invocations and signatures should use native Markdown code backticks (e.g., `` `connect_db(...)` `` or `` `def save_checkpoint() -> None:` ``) for clean syntax styling, zero parsing failures, and easy copy-pasting.  
+>    - **In KaTeX Syntax Breakdown Diagrams:** When an identifier in `\texttt{...}` requires an underscore (e.g., `process_embedding` or `max_words`), use `\rule{0.45em}{0.08ex}` (e.g. `\texttt{max\rule{0.45em}{0.08ex}words}`). It renders an exact monospace baseline underscore without using any underscore character, ensuring 100% crash-proof rendering on GitHub.
 > 5. **KEEP Emojis OUTSIDE math blocks:**  
 >    Unicode emojis do not exist in KaTeX font metrics and cause symbol metric warnings or rendering glitches. Place emojis in standard markdown outside `$...$` (e.g. `## 🎈 $\Large...$`).
 > 6. **Always wrap words in `\textsf{...}`:**  
