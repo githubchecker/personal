@@ -11,7 +11,7 @@
 
 ![Stage 0](https://img.shields.io/badge/STAGE%200-CONCEPT%20MAP-0288D1?style=for-the-badge&logo=gitbook&logoColor=white)
 
-## 🗺️ $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Mental Model Overview}}$
+## 🗺️ $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 0 — Concept Map}}$
 
 > [!IMPORTANT]
 > ### $\color{#512DA8}{\textsf{The Core Premise}}$
@@ -24,7 +24,7 @@
 
 ![Key Terms](https://img.shields.io/badge/KEY%20TERMS-GLOSSARY-7B1FA2?style=for-the-badge&logo=book&logoColor=white)
 
-## 🔑 $\Large\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{Core Terminology}}$
+## 🔑 $\Large\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{New Terms (Plain English)}}$
 
 - **Function** — a named, reusable block of code defined with `def`.
 - **Parameter** — the variable name listed in the function definition (the input slot).
@@ -48,7 +48,7 @@
 
 ![Stage 1](https://img.shields.io/badge/STAGE%201-THE%20SIMPLE%20IDEA-00897B?style=for-the-badge&logo=lightbulb&logoColor=white)
 
-## 🎈 $\Large\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{The Kitchen Appliance Analogy}}$
+## 🎈 $\Large\color{#00695C}\blacksquare\space\color{#00897B}{\textsf{Stage 1 — The Simple Idea (Analogy: A Kitchen Appliance)}}$
 
 A function is like a blender: you put **ingredients in** (arguments), it does a defined **job** (the body), and it hands you a **result out** (the return value). Once built, you reuse it endlessly without caring about the internal wiring — you just feed it inputs and take the output.
 
@@ -68,7 +68,7 @@ flowchart LR
 
 ![Stage 2](https://img.shields.io/badge/STAGE%202-HOW%20IT%20ACTUALLY%20WORKS-E65100?style=for-the-badge&logo=gear&logoColor=white)
 
-## ⚙️ $\Large\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Core Mechanics: Definition, Scopes, and Signatures}}$
+## ⚙️ $\Large\color{#BF360C}\blacksquare\space\color{#D84315}{\textsf{Stage 2 — How It Actually Works}}$
 
 > [!IMPORTANT]
 > ### 🔥 $\color{#00C853}{\textsf{The 80/20 Core Rule: What Matters in Production}}$
@@ -303,17 +303,9 @@ flowchart TD
 
 ```diff
 # Comparing mutable default anti-pattern against Sentinel None
-- ❌ Dangerous mutable default argument (shared across all calls):
-- def add_document(doc: str, document_store: list = []) -> list:
--     document_store.append(doc)
--     return document_store
-
-+ Production Sentinel None pattern (fresh list per call):
-+ def add_document(doc: str, document_store: list | None = None) -> list:
-+     if document_store is None:
-+         document_store = []
-+     document_store.append(doc)
-+     return document_store
+- ❌ Anti-pattern: def add_document(doc: str, document_store: list = []):
++ ✅ Production Fix: def add_document(doc: str, document_store: list | None = None):
++     if document_store is None: document_store = []
 ```
 
 ```python
@@ -393,15 +385,6 @@ $$
 \overbrace{\color{#00897B}\texttt{normalize:\ bool\ =\ True}}^{\color{#004D40}\textsf{Zone\ 3:\ Keyword-Only}}\space
 \texttt{):}
 $$
-
-| Parameter Kind | Syntax | Calling Rule | Production Priority | Real-World AI Application |
-| :--- | :--- | :--- | :--- | :--- |
-| **Standard (Positional / Keyword)** | `def f(x, model="gpt-4o")` | Can be passed by position or by keyword | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | General inputs, prompt text, model names |
-| **Default / Optional** | `def f(temperature=0.7)` | Uses default value if omitted by caller | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | Hyperparameters (`temperature=0.7`, `top_p=1.0`) |
-| **Excess Positional (`*args`)** | `def f(*args)` | Packs extra positional args into a tuple | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | Universal middleware wrappers, batch string chunks |
-| **Keyword-Only (`*`)** | `def f(*, stream=True)` | Forces caller to explicitly name the argument | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | AI SDK safety (`stream=True`, `max_retries=3`) |
-| **Excess Keyword (`**kwargs`)** | `def f(**kwargs)` | Packs extra keyword args into a dict | $\color{#00C853}\blacksquare\ \textbf{Core (Daily)}$ | Forwarding arbitrary kwargs to OpenAI / Anthropic APIs |
-| **Positional-Only (`/`)** | `def f(text, /)` | Must be passed positionally, never by keyword | $\color{#757575}\blacksquare\ \textbf{Reference Only}$ | Fast C-extensions, math wrappers (`math.sin(x)`) |
 
 | Calling Zone | Delimiter Position | Allowed Calling Style | Why AI Architects Use It (Design Intent) |
 | :--- | :---: | :--- | :--- |
@@ -500,9 +483,9 @@ $$
 \color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{execute\rule{0.45em}{0.08ex}pipeline}\texttt{(}
 \overbrace{\color{#00897B}\texttt{stage:\ str}}^{\color{#004D40}\textsf{1.\ Positional\ Req}}\texttt{,}\space
 \underbrace{\color{#1565C0}\texttt{timeout:\ int\ =\ 60}}_{\color{#0D47A1}\textsf{2.\ Positional\ Default}}\texttt{,}\space
-\overbrace{\color{#D84315}\ast\texttt{extra\rule{0.45em}{0.08ex}steps:\ str}}^{\color{#BF360C}\textsf{3.\ *args\ (Tuple\ Pack)}}\texttt{,}\space
+\overbrace{\color{#D84315}\ast\texttt{extra\rule{0.45em}{0.08ex}steps:\ str}}^{\color{#BF360C}\textsf{3.\ Excess\ Positional\ (Tuple\ Pack)}}\texttt{,}\space
 \underbrace{\color{#7B1FA2}\texttt{verbose:\ bool\ =\ False}}_{\color{#4A148C}\textsf{4.\ Keyword-Only}}\texttt{,}\space
-\overbrace{\color{#C2185B}\ast\ast\texttt{env\rule{0.45em}{0.08ex}metadata:\ str}}^{\color{#880E4F}\textsf{5.\ **kwargs\ (Dict\ Pack\ -\ MUST\ BE\ LAST)}}\space
+\overbrace{\color{#C2185B}\ast\ast\texttt{env\rule{0.45em}{0.08ex}metadata:\ str}}^{\color{#880E4F}\textsf{5.\ Excess\ Keyword\ (Dict\ Pack\ ---\ MUST\ BE\ LAST)}}\space
 \texttt{):}
 $$
 
@@ -510,9 +493,9 @@ $$
 | :---: | :--- | :--- | :--- |
 | **1** | **Positional Required** | Mandatory positional arguments | `name, query` |
 | **2** | **Positional Defaults** | Optional arguments with fallbacks | `timeout=30` |
-| **3** | **`*args`** | Excess positional arguments (packed into tuple) | `*extra_queries` |
+| **3** | `*args` | Excess positional arguments (packed into tuple) | `*extra_queries` |
 | **4** | **Keyword-Only** | Parameters placed after `*args` (must be named) | `verbose=False` |
-| **5** | **`**kwargs`** | Excess keyword arguments (packed into dict) | `**env_metadata` |
+| **5** | `**kwargs` | Excess keyword arguments (packed into dict) | `**env_metadata` |
 
 ```python
 def execute_pipeline(
@@ -904,7 +887,7 @@ print([d["id"] for d in ranked_docs])  # ['doc_c', 'doc_a', 'doc_b']
 
 ![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
 
-## 🚀 $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Production AI Architecture and Tool Calling}}$
+## 🚀 $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
 
 In modern AI engineering:
 1. **API Client Wrappers**: Every LLM API client (OpenAI, Anthropic, HuggingFace) exposes dozens of configuration options. Designing wrappers with required prompts, keyword-only hyperparameter defaults (`*, temperature=0.7`), and `**kwargs` pass-through allows your pipeline to stay stable even when third-party libraries add new parameters.
@@ -924,22 +907,24 @@ Write a function `build_prompt(template: str, *, system_role: str = "Assistant",
 
 ![Variations](https://img.shields.io/badge/COMPARISON-VARIATIONS%20%26%20WHEN%20TO%20USE-00838F?style=for-the-badge&logo=scales&logoColor=white)
 
-## ⚖️ $\Large\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Architectural Trade-Offs and Selection Guide}}$
+## ⚖️ $\Large\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use (Function Argument Decision Guide)}}$
+
+Here is the architectural comparison and decision guide for selecting function argument patterns:
 
 | Technique | Syntax | When to Use | Avoid When | Production AI Example |
 | :--- | :--- | :--- | :--- | :--- |
 | **Positional Parameters** | `def f(a, b):` | Core, mandatory inputs that have an obvious, intuitive order | Function has >3 parameters or ambiguous order | `embed(text, model)` |
 | **Default Parameters** | `def f(a, b=val):` | Optional settings where 90% of callers want a sensible standard value | The default value is mutable (list/dict/set) | `generate(prompt, max_tokens=1000)` |
 | **Keyword Arguments** | `f(b=2, a=1)` | Passing values with explicit names for readability; skipping defaults | Simple 1-parameter functions (too verbose) | `query(stream=True, prompt="hi")` |
-| **Keyword-Only (`*`)** | `def f(a, *, b=1):` | Disambiguating boolean flags and hyperparameters; preventing order bugs | Natural mathematical functions like `add(x, y)` | `chat(query, *, temp=0.7, seed=42)` |
-| **Positional-Only (`/`)** | `def f(a, /, b):` | Parameter name has no semantic meaning or shouldn't be bound to API | Callers would benefit from named readability | `len(obj, /)`, `math.sin(x, /)` |
-| **`*args` (Var Positional)** | `def f(*items):` | Accepting arbitrary sequences of similar items | Fixed inputs where each position has a different role | `merge_documents(*doc_lists)` |
-| **`**kwargs` (Var Keyword)** | `def f(**config):` | Passing through unknown options to underlying libraries / APIs | The function requires specific, strictly validated inputs | Forwarding kwargs to OpenAI API client |
-| **`lambda`** | `lambda x: x + 1` | Short, disposable 1-line transformation passed to `sorted()`, `map()` | Multi-step logic, error handling, or reusable functions | `sorted(chunks, key=lambda c: c.score)` |
+| **Keyword-Only** (`*`) | `def f(a, *, b=1):` | Disambiguating boolean flags and hyperparameters; preventing order bugs | Natural mathematical functions like `add(x, y)` | `chat(query, *, temp=0.7, seed=42)` |
+| **Positional-Only** (`/`) | `def f(a, /, b):` | Parameter name has no semantic meaning or shouldn't be bound to API | Callers would benefit from named readability | `len(obj, /)`, `math.sin(x, /)` |
+| `*args` **(Var Positional)** | `def f(*items):` | Accepting arbitrary sequences of similar items | Fixed inputs where each position has a different role | `merge_documents(*doc_lists)` |
+| `**kwargs` **(Var Keyword)** | `def f(**config):` | Passing through unknown options to underlying libraries / APIs | The function requires specific, strictly validated inputs | Forwarding kwargs to OpenAI API client |
+| `lambda` | `lambda x: x + 1` | Short, disposable 1-line transformation passed to `sorted()`, `map()` | Multi-step logic, error handling, or reusable functions | `sorted(chunks, key=lambda c: c.score)` |
 
 ![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
 
-## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Debugging Traps and Solutions}}$
+## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
 
 | What you see | Cause | Fix |
 | --- | --- | --- |
@@ -956,7 +941,7 @@ Write a function `build_prompt(template: str, *, system_role: str = "Assistant",
 
 ![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
 
-## 📌 $\Large\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Syntax and Signature Cheat Sheet}}$
+## 📌 $\Large\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
 
 ```python
 # 1. The Universal Parameter Hierarchy (strict definition order):
@@ -1012,7 +997,7 @@ top_docs = sorted(docs, key=lambda d: d["score"], reverse=True)
 
 ![Stop Check](https://img.shields.io/badge/CHECKPOINT-STOP%20%26%20SELF%20CHECK-D32F2F?style=for-the-badge&logo=stop&logoColor=white)
 
-## 🛑 $\Large\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{Verification Checkpoint}}$
+## 🛑 $\Large\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Self-Check}}$
 
 Consider the following function definition:
 
