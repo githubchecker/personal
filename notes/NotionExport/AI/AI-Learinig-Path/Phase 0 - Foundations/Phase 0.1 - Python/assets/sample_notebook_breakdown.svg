@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="100%" height="100%">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#000000" flood-opacity="0.07"/>
+    </filter>
+    <marker id="curved-arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#FB8C00"/>
+    </marker>
+    <pattern id="notebook-lines" width="960" height="32" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="31" x2="960" y2="31" stroke="#E3EDF7" stroke-width="1.2"/>
+    </pattern>
+  </defs>
+
+  <!-- Lined Notebook Page Background -->
+  <rect width="960" height="540" rx="16" fill="#FDFDFB"/>
+  <rect width="960" height="540" fill="url(#notebook-lines)"/>
+  <!-- Red margin line on left -->
+  <line x1="60" y1="0" x2="60" y2="540" stroke="#FFCDD2" stroke-width="2"/>
+  <rect x="1" y="1" width="958" height="538" rx="15" fill="none" stroke="#E0E0E0" stroke-width="1.5"/>
+
+  <!-- Top Yellow Pill Header (Part 1 - Module Imports) -->
+  <rect x="90" y="30" width="460" height="42" rx="21" fill="#FFF176" filter="url(#shadow)"/>
+  <text x="320" y="58" font-family="'Comic Sans MS', 'Chalkboard SE', -apple-system, sans-serif" font-size="20" font-weight="700" text-anchor="middle" fill="#212121">
+    Part 1 – Python Imports &amp; File Resolution
+  </text>
+
+  <!-- Explanatory note -->
+  <text x="95" y="105" font-family="-apple-system, sans-serif" font-size="18" font-weight="600" fill="#212121">
+    The module name in <tspan fill="#000000" font-weight="800">import</tspan> must match the exact file name on disk.
+  </text>
+
+  <!-- Code Box 1 -->
+  <rect x="90" y="130" width="420" height="46" rx="8" fill="#FFFFFF" stroke="#1E88E5" stroke-width="2" filter="url(#shadow)"/>
+  <text x="110" y="160" font-family="'Fira Code', monospace" font-size="16" font-weight="600" fill="#0D47A1">
+    from utils.math import cosine_sim
+  </text>
+  <!-- Target Tag 1 -->
+  <rect x="630" y="130" width="220" height="46" rx="14" fill="#FFE082" filter="url(#shadow)"/>
+  <text x="740" y="159" font-family="sans-serif" font-size="15" font-weight="700" text-anchor="middle" fill="#5D4037">
+    📄 utils/math.py (Python file)
+  </text>
+  <!-- Curved Arrow 1 -->
+  <path d="M 515 153 Q 570 153 620 153" fill="none" stroke="#FB8C00" stroke-width="2.5" marker-end="url(#curved-arrow)"/>
+
+  <!-- Subheading: Folder Example -->
+  <rect x="90" y="200" width="180" height="34" rx="17" fill="#FFF176"/>
+  <text x="180" y="223" font-family="sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#212121">
+    Folder Example:
+  </text>
+
+  <!-- Folder Tree Box -->
+  <rect x="90" y="245" width="420" height="195" rx="10" fill="#FFFFFF" stroke="#7E57C2" stroke-width="2" filter="url(#shadow)"/>
+  <text x="115" y="280" font-family="'Fira Code', monospace" font-size="16" font-weight="600" fill="#311B92">📁 my-ai-project/</text>
+  <text x="135" y="315" font-family="'Fira Code', monospace" font-size="15" fill="#424242">├── 📄 main.py</text>
+  <text x="135" y="350" font-family="'Fira Code', monospace" font-size="15" fill="#424242">├── 📄 config.py</text>
+  <text x="135" y="385" font-family="'Fira Code', monospace" font-size="15" fill="#424242">└── 📁 utils/</text>
+  <text x="175" y="420" font-family="'Fira Code', monospace" font-size="15" font-weight="700" fill="#E65100">└── 📄 math.py ◄──</text>
+
+  <!-- Connecting curved loop from Code to Folder item -->
+  <path d="M 740 180 C 740 280 620 420 280 420" fill="none" stroke="#FB8C00" stroke-width="2.5" stroke-dasharray="4 4" marker-end="url(#curved-arrow)"/>
+
+  <!-- Sticky Note at Bottom -->
+  <rect x="90" y="465" width="600" height="46" rx="12" fill="#FFF59D" filter="url(#shadow)"/>
+  <text x="110" y="494" font-family="sans-serif" font-size="16">📌</text>
+  <text x="140" y="494" font-family="-apple-system, sans-serif" font-size="15" font-weight="600" fill="#424242">
+    Always ensure __init__.py exists in packages for older Python compat.
+  </text>
+
+  <!-- Purple Save Button -->
+  <rect x="740" y="465" width="160" height="46" rx="23" fill="#6A1B9A" filter="url(#shadow)"/>
+  <text x="820" y="494" font-family="sans-serif" font-size="14" font-weight="800" text-anchor="middle" fill="#FFFFFF">
+    KEY ARCH PATTERN
+  </text>
+</svg>

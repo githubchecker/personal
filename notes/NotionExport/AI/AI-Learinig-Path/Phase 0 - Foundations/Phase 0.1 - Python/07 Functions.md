@@ -78,19 +78,28 @@ flowchart LR
 
 ### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.1 Defining, Calling and Return Values (Data Types, Multiple Returns, Implicit None)}}$
 
-A function definition specifies its **parameters** (the input slots), runs its internal block, and hands back data to the caller via **`return`**:
+$$
+\overbrace{\color{#E53935}\mathbf{\texttt{def}}}^{\color{#B71C1C}\textsf{🔒\ 1.\ Keyword\ (Starts\ definition)}}\space\space
+\underbrace{\color{#0D47A1}\mathbf{\texttt{greet}}}_{\color{#1565C0}\textsf{🏷️\ 2.\ Function\ Name}}\space\space
+\overbrace{\color{#00897B}\mathbf{\texttt{(name:\ str)}}}^{\color{#004D40}\textsf{💻\ 3.\ Parameter\ (Input\ slot\ placeholder)}}\space\space
+\underbrace{\color{#7B1FA2}\mathbf{\texttt{->\ str:}}}_{\color{#4A148C}\textsf{🎯\ 4.\ Return\ Type\ Contract}}
+$$
+
+$$
+\begin{array}{rcccl}
+\textsf{\textbf{Definition Time:}} & \color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{greet}\texttt{(} & \color{#00897B}\mathbf{\texttt{name}} & \texttt{):} & \leftarrow\space \color{#00897B}\textbf{\textsf{Parameter}}\textsf{ (The variable placeholder slot)} \\
+\textsf{\textbf{Call Time:}} & \color{#0D47A1}\texttt{greet}\texttt{(} & \color{#D84315}\mathbf{\texttt{"Ada"}} & \texttt{)} & \leftarrow\space \color{#D84315}\textbf{\textsf{Argument}}\textsf{ (The concrete value passed into slot)}
+\end{array}
+$$
 
 ```python
-def greet(name: str) -> str:        # "def" names the function; "name" is the PARAMETER
-    return f"Hello, {name}!"        # "return" hands a value back to the caller
+def greet(name: str) -> str:
+    return f"Hello, {name}!"        # "return" hands value back to caller
 
-message = greet("Ada")              # CALL it with an ARGUMENT ("Ada"); message = "Hello, Ada!"
+message = greet("Ada")              # Call with concrete argument "Ada"
 print(message)                      # 'Hello, Ada!'
-print(greet("Bo"))                  # reuse immediately with another argument -> 'Hello, Bo!'
+print(greet("Bo"))                  # Reuse immediately with another argument -> 'Hello, Bo!'
 ```
-
-- **parameter** = the variable name in the definition (`name`).
-- **argument** = the concrete value passed during the call (`"Ada"`).
 
 #### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Returning Any Data Type (Primitives vs Collections)}}$
 
@@ -121,7 +130,12 @@ print(split_chunks("Sentence one. Sentence two."))  # ['Sentence one', 'Sentence
 
 #### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. Returning Multiple Values (Automatic Tuple Packing and Unpacking)}}$
 
-Python allows you to return **multiple comma-separated values** in a single `return` statement. Under the hood, Python automatically **packs** them into a single `tuple`:
+$$
+\textsf{\textbf{Return Packing:}}\space \color{#E53935}\texttt{return}\space \color{#00897B}\texttt{tokens\_per\_sec,\ cost\_estimate}\space \longrightarrow\space \color{#7B1FA2}\mathbf{\texttt{(200.0,\ 0.01)}}\space\textsf{(Packed into immutable Tuple)}
+$$
+$$
+\textsf{\textbf{Caller Unpacking:}}\space \color{#00897B}\mathbf{\texttt{speed,\ cost}}\space \color{#37474F}\texttt{=}\space \color{#0D47A1}\texttt{calculate\_metrics(500,\ 2.5)}\space \longrightarrow\space \color{#00897B}\texttt{speed=200.0},\space \color{#00897B}\texttt{cost=0.01}
+$$
 
 ```python
 def calculate_metrics(tokens: int, duration_sec: float):
@@ -178,47 +192,29 @@ def send_alert(message: str) -> None:
 
 ### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.2 Positional vs Keyword (Named) Arguments}}$
 
-When calling a function with multiple parameters, Python gives you two ways to deliver arguments:
-
-1. **Positional arguments**: values are matched strictly by their left-to-right position.
-2. **Keyword (named) arguments**: values are explicitly assigned to parameter names (`name=value`).
+| $\color{#546E7A}\textsf{\textbf{Call Style}}$ | $\color{#0D47A1}\textsf{\textbf{Invocation Code Syntax}}$ | $\color{#00695C}\textsf{\textbf{Positional Rule and Mechanism}}$ | $\color{#1B5E20}\textsf{\textbf{Verdict}}$ |
+| :--- | :--- | :--- | :---: |
+| **1. Pure Positional** | $\color{#0D47A1}\texttt{connect\_db}\color{#263238}\texttt{(}\color{#00897B}\texttt{"localhost"}\color{#263238}\texttt{,}\space\color{#00897B}\texttt{5432}\color{#263238}\texttt{,}\space\color{#00897B}\texttt{"vec"}\color{#263238}\texttt{)}$ | Left-to-right alignment: Order strictly matters | ✅ Valid |
+| **2. Pure Keyword** | $\color{#0D47A1}\texttt{connect\_db}\color{#263238}\texttt{(}\color{#D84315}\texttt{db\_name=}\color{#00897B}\texttt{"vec"}\color{#263238}\texttt{,}\space\color{#D84315}\texttt{host=}\color{#00897B}\texttt{"loc"}\color{#263238}\texttt{,}\space\color{#D84315}\texttt{port=}\color{#00897B}\texttt{5432}\color{#263238}\texttt{)}$ | Name-matched: Any order produces identical call | ✅ Valid |
+| **3. Mixed Call** | $\color{#0D47A1}\texttt{connect\_db}\color{#263238}\texttt{(}\color{#00897B}\texttt{"localhost"}\color{#263238}\texttt{,}\space\color{#D84315}\texttt{db\_name=}\color{#00897B}\texttt{"vec"}\color{#263238}\texttt{,}\space\color{#D84315}\texttt{port=}\color{#00897B}\texttt{5432}\color{#263238}\texttt{)}$ | Positional args FIRST, keywords AFTER | ✅ Valid |
+| **❌ Illegal Order** | $\color{#0D47A1}\texttt{connect\_db}\color{#263238}\texttt{(}\color{#D84315}\texttt{host=}\color{#00897B}\texttt{"loc"}\color{#263238}\texttt{,}\space\color{#C62828}\mathbf{\texttt{5432}}\color{#263238}\texttt{,}\space\color{#C62828}\mathbf{\texttt{"vec"}}\color{#263238}\texttt{)}$ | `SyntaxError`: Positional arg cannot follow keyword | ❌ SyntaxError |
+| **❌ Duplicate Slot** | $\color{#0D47A1}\texttt{connect\_db}\color{#263238}\texttt{(}\color{#00897B}\texttt{"loc"}\color{#263238}\texttt{,}\space\color{#00897B}\texttt{5432}\color{#263238}\texttt{,}\space\color{#00897B}\texttt{"vec"}\color{#263238}\texttt{,}\space\color{#C62828}\mathbf{\texttt{host=}}\color{#00897B}\texttt{"srv"}\color{#263238}\texttt{)}$ | `TypeError`: Multiple values assigned to `host` | ❌ TypeError |
 
 ```python
 def connect_db(host: str, port: int, db_name: str):
     return f"Connected to {db_name} at {host}:{port}"
-
-# 1. Positional call: order MATTERS:
-print(connect_db("localhost", 5432, "vector_store"))
-# 'Connected to vector_store at localhost:5432'
-
-# 2. Keyword call: order DOES NOT MATTER!
-# You can pass keyword arguments in ANY order:
-print(connect_db(db_name="vector_store", host="localhost", port=5432))
-# 'Connected to vector_store at localhost:5432' (identical result!)
-
-# 3. Mixing positional and keyword arguments:
-print(connect_db("localhost", db_name="vector_store", port=5432))
-# 'Connected to vector_store at localhost:5432'
 ```
-
-#### $\color{#00695C}\blacktriangleright\space\color{#004D40}{\textsf{The Golden Rules of Passing Arguments}}$
-
-- **Rule 1: Positional arguments MUST come before keyword arguments.**
-  Once you supply a keyword argument, every argument after it must also be a keyword argument:
-  ```python
-  # ❌ SyntaxError: positional argument follows keyword argument
-  # connect_db(host="localhost", 5432, "vector_store")
-  ```
-- **Rule 2: You cannot pass multiple values for the same parameter.**
-  If a parameter was already filled by a positional argument, you cannot assign it again by name:
-  ```python
-  # ❌ TypeError: connect_db() got multiple values for argument 'host'
-  # connect_db("localhost", 5432, "vector_store", host="remote_host")
-  ```
 
 ### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{7.3 Default Parameters and The "Defaults at the End" Rule}}$
 
-A **default parameter** provides a fallback value. If the caller does not pass an argument for that parameter, Python automatically uses the default:
+$$
+\overbrace{\color{#E53935}\mathbf{\texttt{def}}}^{\textsf{Keyword}}\space\space
+\color{#0D47A1}\mathbf{\texttt{power}}\texttt{(}\space
+\overbrace{\color{#00897B}\mathbf{\texttt{base:\ int}}}^{\color{#004D40}\textsf{1.\ Required\ Positional\ (No\ Default)}}\space\texttt{,}\space\space
+\overbrace{\color{#D84315}\mathbf{\texttt{exponent:\ int}}\space\color{#BF360C}\mathbf{\texttt{=\ 2}}}^{\color{#BF360C}\textsf{2.\ Optional\ Parameter\ (Fallback\ =\ 2)}}\space
+\texttt{)}\space\space
+\overbrace{\color{#7B1FA2}\mathbf{\texttt{->\ int:}}}^{\textsf{Return\ Type}}
+$$
 
 ```python
 def power(base: int, exponent: int = 2) -> int:
@@ -395,12 +391,15 @@ print(calculate_tokens("Hello world"))  # ✅ 2
 
 Python allows you to use **both `/` and `*` in the same function definition**. This establishes **three distinct calling zones**:
 
-```
-def func( pos_only, / , standard , * , kw_only ):
-          ^^^^^^^^^     ^^^^^^^^       ^^^^^^^
-          Zone 1        Zone 2         Zone 3
-       Positional-Only  Either Way   Keyword-Only
-```
+$$
+\color{#E53935}\textbf{\texttt{def}}\space\color{#0D47A1}\textbf{\texttt{process\_embedding}}\texttt{(}
+\overbrace{\color{#B71C1C}\mathbf{\texttt{text:\ str}}}^{\color{#B71C1C}\textsf{Zone\ 1:\ Positional-Only}}\space\texttt{,}\space
+\color{#D84315}\mathbf{\texttt{/}}\space\texttt{,}\space
+\underbrace{\color{#1565C0}\mathbf{\texttt{model:\ str\ =\ "text-embedding-3"}}}_{\color{#0D47A1}\textsf{Zone\ 2:\ Standard\ (Either\ Way)}}\space\texttt{,}\space
+\color{#D84315}\mathbf{\texttt{*}}\space\texttt{,}\space
+\overbrace{\color{#00897B}\mathbf{\texttt{normalize:\ bool\ =\ True}}}^{\color{#004D40}\textsf{Zone\ 3:\ Keyword-Only}}\space
+\texttt{):}
+$$
 
 | Parameter Kind | Syntax | Calling Rule | Production Priority | Real-World AI Application |
 | :--- | :--- | :--- | :--- | :--- |
@@ -521,9 +520,15 @@ build_agent_config("SimpleBot")
 
 In Python, you can combine standard parameters, default parameters, `*args`, keyword-only parameters, and `**kwargs` in the **same function**, but they **MUST follow this exact strict order**:
 
-```
-[ Positional Required ]  --->  [ Positional Defaults ]  --->  [ *args ]  --->  [ Keyword-Only ]  --->  [ **kwargs ]
-```
+$$
+\color{#E53935}\textbf{\texttt{def}}\space\color{#0D47A1}\textbf{\texttt{execute\_pipeline}}\texttt{(}
+\overbrace{\color{#00897B}\mathbf{\texttt{stage:\ str}}}^{\color{#004D40}\textsf{1.\ Positional\ Req}}\texttt{,}\space
+\underbrace{\color{#1565C0}\mathbf{\texttt{timeout:\ int\ =\ 60}}}_{\color{#0D47A1}\textsf{2.\ Positional\ Default}}\texttt{,}\space
+\overbrace{\color{#D84315}\mathbf{\texttt{*extra\_steps:\ str}}}^{\color{#BF360C}\textsf{3.\ *args\ (Tuple\ Pack)}}\texttt{,}\space
+\underbrace{\color{#7B1FA2}\mathbf{\texttt{verbose:\ bool\ =\ False}}}_{\color{#4A148C}\textsf{4.\ Keyword-Only}}\texttt{,}\space
+\overbrace{\color{#C2185B}\mathbf{\texttt{**env\_metadata:\ str}}}^{\color{#880E4F}\textsf{5.\ **kwargs\ (Dict\ Pack\ -\ MUST\ BE\ LAST)}}\space
+\texttt{):}
+$$
 
 | Order | Parameter Kind | Purpose | Example |
 | :---: | :--- | :--- | :--- |
@@ -607,6 +612,13 @@ timer_middleware(fetch_embeddings, "AI safety", model="text-embedding-3-small")
 
 While `*` and `**` in a `def` **pack** values into a tuple or dict, using them in a function **call** does the exact opposite: it **unpacks (explodes)** a collection into individual arguments:
 
+$$
+\begin{array}{rcccl}
+\textsf{\textbf{Positional Unpack (*):}} & \color{#0D47A1}\texttt{func}\texttt{(} & \color{#D84315}\mathbf{\texttt{*}}\color{#00897B}\texttt{[101,\ "text",\ 20]} & \texttt{)} & \longrightarrow\space \color{#0D47A1}\texttt{func}\texttt{(}\color{#00897B}\texttt{101,\ "text",\ 20}\texttt{)} \\
+\textsf{\textbf{Keyword Unpack (**):}} & \color{#0D47A1}\texttt{func}\texttt{(} & \color{#C2185B}\mathbf{\texttt{**}}\color{#7B1FA2}\texttt{\{"model":\ "gpt-4o"\}} & \texttt{)} & \longrightarrow\space \color{#0D47A1}\texttt{func}\texttt{(}\color{#7B1FA2}\texttt{model="gpt-4o"}\texttt{)}
+\end{array}
+$$
+
 ```python
 # 1. Unpacking a list/tuple into positional arguments (*):
 def configure_embedding_chunk(chunk_id: int, text: str, overlap: int):
@@ -639,9 +651,14 @@ In Python, type hints provide clear contracts for what a function expects to rec
 
 #### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{1. Parameter Type Hint Syntax}}$
 
-- **Basic parameter type**: `param: type`
-- **Parameter with default value**: `param: type = default`
-  > ⚠️ **Syntax Rule:** The type annotation **must** come *before* the `=` sign (`temperature: float = 0.7`), never after!
+$$
+\overbrace{\color{#00897B}\mathbf{\texttt{topic:\ str}}}^{\color{#004D40}\textsf{Required\ Parameter\ Type}}\texttt{,}\space\space
+\overbrace{\color{#1565C0}\mathbf{\texttt{max\_words:\ int}}}^{\color{#0D47A1}\textsf{Type\ Hint\ Annotation}}\space\space
+\overbrace{\color{#D84315}\mathbf{\texttt{=\ 150}}}^{\color{#BF360C}\textsf{Default\ Fallback\ Value}}\space\space
+\overbrace{\color{#7B1FA2}\mathbf{\texttt{->\ str:}}}^{\color{#4A148C}\textsf{Return\ Type\ Contract}}
+$$
+
+> ⚠️ **Syntax Rule:** The type annotation **must** come *before* the `=` sign (`temperature: float = 0.7`), never after!
 
 ```python
 # Type-annotated parameters with and without defaults:
@@ -655,30 +672,30 @@ def generate_prompt(
 
 #### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. Return Type Annotation Syntax (-> ReturnType)}}$
 
-The return type annotation is placed after the parameter closing parenthesis `)` and before the colon `:` using `->`:
+| $\color{#546E7A}\textsf{\textbf{Pattern}}$ | $\color{#0D47A1}\textsf{\textbf{Return Annotation Syntax}}$ | $\color{#00695C}\textsf{\textbf{Real-World AI Application}}$ | $\color{#1B5E20}\textsf{\textbf{Example Output}}$ |
+| :--- | :--- | :--- | :--- |
+| **1. Side Effect Only** | $\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{save\_checkpoint}\texttt{()}\space\color{#7B1FA2}\mathbf{\texttt{->\ None:}}$ | Logging, disk checkpointing, weights saving | `None` |
+| **2. Homogeneous List** | $\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{get\_model\_tiers}\texttt{()}\space\color{#7B1FA2}\mathbf{\texttt{->\ list[str]:}}$ | Available LLM tier models, chunked sentences | `["gpt-4o", "o3-mini"]` |
+| **3. Structured Mapping** | $\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{get\_metadata}\texttt{()}\space\color{#7B1FA2}\mathbf{\texttt{->\ dict[str,\ str]:}}$ | System environment info, headers, configs | `{"region": "eastus"}` |
+| **4. Multi-Value Tuple** | $\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{calc\_tokens}\texttt{()}\space\color{#7B1FA2}\mathbf{\texttt{->\ tuple[int,\ float]:}}$ | Bundled return metrics (token count + dollar cost) | `(500, 0.01)` |
+| **5. Nullable / Optional** | $\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{find\_tool}\texttt{()}\space\color{#7B1FA2}\mathbf{\texttt{->\ str\ \|\ None:}}$ | Lookup operations that may return a missing record | `"Search"` or `None` |
 
 ```python
-# 1. Returning None (side-effect functions like logging or saving):
 def save_checkpoint(step: int) -> None:
     print(f"Saved step {step}")
 
-# 2. Returning collections (lists, dicts, sets):
 def get_model_tiers() -> list[str]:
     return ["gpt-4o", "gpt-4o-mini", "o3-mini"]
 
 def get_system_metadata() -> dict[str, str]:
     return {"environment": "production", "region": "eastus"}
 
-# 3. Returning multiple values (annotated as a tuple):
 def get_token_usage(prompt: str) -> tuple[int, float]:
     tokens = len(prompt.split())
-    cost = tokens * 0.00002
-    return tokens, cost                 # returns a tuple[int, float]
+    return tokens, tokens * 0.00002     # returns tuple[int, float]
 
-# 4. Optional / Nullable return types (using the modern union pipe '|'):
 def find_tool(tool_name: str) -> str | None:
-    available_tools = {"search": "Web Search Tool", "calc": "Calculator"}
-    return available_tools.get(tool_name)  # returns str if found, None if missing
+    return {"search": "Web Search Tool"}.get(tool_name)
 ```
 
 #### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{3. The Runtime Non-Enforcement Rule}}$
@@ -886,22 +903,32 @@ A `lambda` is a small, one-line anonymous function defined without a name:
 + documents.sort(key=lambda d: d["score"], reverse=True)
 ```
 
+$$
+\overbrace{\color{#E53935}\mathbf{\texttt{lambda}}}^{\color{#B71C1C}\textsf{🔒\ 1.\ Anonymous\ Keyword}}\space\space
+\underbrace{\color{#00897B}\mathbf{\texttt{doc}}}_{\color{#004D40}\textsf{💻\ 2.\ Input\ Parameter}}\space
+\color{#37474F}\mathbf{\texttt{:}}\space\space
+\overbrace{\color{#7B1FA2}\mathbf{\texttt{doc["score"]}}}^{\color{#4A148C}\textsf{🎯\ 3.\ Single\ Expression\ (Implicitly\ Returned)}}
+$$
+
+> 💡 *'Like a quick chai recipe: no teapot, no formal sit-down — just instant essence in a single line!'*
+
+| $\color{#546E7A}\textsf{\textbf{Sorting Operation}}$ | $\color{#0D47A1}\textsf{\textbf{Python Code Syntax}}$ | $\color{#00695C}\textsf{\textbf{How Lambda Operates as Key Extractor}}$ |
+| :--- | :--- | :--- |
+| **Descend by Relevance** | $\color{#0D47A1}\texttt{sorted(docs,\ key=}\color{#E53935}\mathbf{\texttt{lambda}}\space\color{#00897B}\texttt{d:\ }\color{#7B1FA2}\texttt{d["score"]}\color{#0D47A1}\texttt{,\ rev=True)}$ | Extracts `d["score"]` per item $\to$ compares values $\to$ yields `['doc_c', 'doc_a', 'doc_b']` |
+
 ```python
-# Syntax: lambda parameter1, parameter2: expression
+# Syntax: lambda parameter: expression
 square = lambda x: x * x
 print(square(5))                    # 25
 
-# Most common production use: quick key extractor for sorting and filtering:
+# Production use: quick key extractor for sorting and filtering:
 documents = [
     {"id": "doc_a", "score": 0.92},
     {"id": "doc_b", "score": 0.78},
     {"id": "doc_c", "score": 0.95},
 ]
-
-# Sort documents by relevance score descending:
 sorted_docs = sorted(documents, key=lambda doc: doc["score"], reverse=True)
-print([d["id"] for d in sorted_docs])
-# Output: ['doc_c', 'doc_a', 'doc_b']
+print([d["id"] for d in sorted_docs])  # ['doc_c', 'doc_a', 'doc_b']
 ```
 
 ![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
