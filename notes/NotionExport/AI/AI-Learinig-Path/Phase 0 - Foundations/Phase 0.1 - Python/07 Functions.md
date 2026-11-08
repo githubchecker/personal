@@ -131,10 +131,10 @@ print(split_chunks("Sentence one. Sentence two."))  # ['Sentence one', 'Sentence
 #### $\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{2. Returning Multiple Values (Automatic Tuple Packing and Unpacking)}}$
 
 $$
-\textsf{\textbf{Return Packing:}}\space \color{#E53935}\texttt{return}\space \color{#00897B}\texttt{tokens\_per\_sec,\ cost\_estimate}\space \longrightarrow\space \color{#7B1FA2}\texttt{(200.0,\ 0.01)}\space\textsf{(Packed into immutable Tuple)}
+\textsf{\textbf{Return Packing:}}\space \color{#E53935}\texttt{return}\space \color{#00897B}\texttt{tokens\textunderscore per\textunderscore sec,\ cost\textunderscore estimate}\space \longrightarrow\space \color{#7B1FA2}\texttt{(200.0,\ 0.01)}\space\textsf{(Packed into immutable Tuple)}
 $$
 $$
-\textsf{\textbf{Caller Unpacking:}}\space \color{#00897B}\texttt{speed,\ cost}\space \color{#37474F}\texttt{=}\space \color{#0D47A1}\texttt{calculate\_metrics(500,\ 2.5)}\space \longrightarrow\space \color{#00897B}\texttt{speed=200.0},\space \color{#00897B}\texttt{cost=0.01}
+\textsf{\textbf{Caller Unpacking:}}\space \color{#00897B}\texttt{speed,\ cost}\space \color{#37474F}\texttt{=}\space \color{#0D47A1}\texttt{calculate\textunderscore metrics(500,\ 2.5)}\space \longrightarrow\space \color{#00897B}\texttt{speed=200.0},\space \color{#00897B}\texttt{cost=0.01}
 $$
 
 ```python
@@ -194,11 +194,11 @@ def send_alert(message: str) -> None:
 
 | $\color{#546E7A}\textsf{\textbf{Call Style}}$ | $\color{#0D47A1}\textsf{\textbf{Invocation Code Syntax}}$ | $\color{#00695C}\textsf{\textbf{Positional Rule and Mechanism}}$ | $\color{#1B5E20}\textsf{\textbf{Verdict}}$ |
 | :--- | :--- | :--- | :---: |
-| **1. Pure Positional** | $\color{#0D47A1}\texttt{connect\_db}\color{#263238}\texttt{(}\color{#00897B}\texttt{"localhost"}\color{#263238}\texttt{,}\space\color{#00897B}\texttt{5432}\color{#263238}\texttt{,}\space\color{#00897B}\texttt{"vec"}\color{#263238}\texttt{)}$ | Left-to-right alignment: Order strictly matters | Valid |
-| **2. Pure Keyword** | $\color{#0D47A1}\texttt{connect\_db}\color{#263238}\texttt{(}\color{#D84315}\texttt{db\_name=}\color{#00897B}\texttt{"vec"}\color{#263238}\texttt{,}\space\color{#D84315}\texttt{host=}\color{#00897B}\texttt{"loc"}\color{#263238}\texttt{,}\space\color{#D84315}\texttt{port=}\color{#00897B}\texttt{5432}\color{#263238}\texttt{)}$ | Name-matched: Any order produces identical call | Valid |
-| **3. Mixed Call** | $\color{#0D47A1}\texttt{connect\_db}\color{#263238}\texttt{(}\color{#00897B}\texttt{"localhost"}\color{#263238}\texttt{,}\space\color{#D84315}\texttt{db\_name=}\color{#00897B}\texttt{"vec"}\color{#263238}\texttt{,}\space\color{#D84315}\texttt{port=}\color{#00897B}\texttt{5432}\color{#263238}\texttt{)}$ | Positional args FIRST, keywords AFTER | Valid |
-| **❌ Illegal Order** | $\color{#0D47A1}\texttt{connect\_db}\color{#263238}\texttt{(}\color{#D84315}\texttt{host=}\color{#00897B}\texttt{"loc"}\color{#263238}\texttt{,}\space\color{#C62828}\texttt{5432}\color{#263238}\texttt{,}\space\color{#C62828}\texttt{"vec"}\color{#263238}\texttt{)}$ | `SyntaxError`: Positional arg cannot follow keyword | ❌ SyntaxError |
-| **❌ Duplicate Slot** | $\color{#0D47A1}\texttt{connect\_db}\color{#263238}\texttt{(}\color{#00897B}\texttt{"loc"}\color{#263238}\texttt{,}\space\color{#00897B}\texttt{5432}\color{#263238}\texttt{,}\space\color{#00897B}\texttt{"vec"}\color{#263238}\texttt{,}\space\color{#C62828}\texttt{host=}\color{#00897B}\texttt{"srv"}\color{#263238}\texttt{)}$ | `TypeError`: Multiple values assigned to `host` | ❌ TypeError |
+| **1. Pure Positional** | $\color{#0D47A1}\texttt{connect\textunderscore db}\color{#263238}\texttt{(}\color{#00897B}\texttt{"localhost"}\color{#263238}\texttt{,}\space\color{#00897B}\texttt{5432}\color{#263238}\texttt{,}\space\color{#00897B}\texttt{"vec"}\color{#263238}\texttt{)}$ | Left-to-right alignment: Order strictly matters | Valid |
+| **2. Pure Keyword** | $\color{#0D47A1}\texttt{connect\textunderscore db}\color{#263238}\texttt{(}\color{#D84315}\texttt{db\textunderscore name=}\color{#00897B}\texttt{"vec"}\color{#263238}\texttt{,}\space\color{#D84315}\texttt{host=}\color{#00897B}\texttt{"loc"}\color{#263238}\texttt{,}\space\color{#D84315}\texttt{port=}\color{#00897B}\texttt{5432}\color{#263238}\texttt{)}$ | Name-matched: Any order produces identical call | Valid |
+| **3. Mixed Call** | $\color{#0D47A1}\texttt{connect\textunderscore db}\color{#263238}\texttt{(}\color{#00897B}\texttt{"localhost"}\color{#263238}\texttt{,}\space\color{#D84315}\texttt{db\textunderscore name=}\color{#00897B}\texttt{"vec"}\color{#263238}\texttt{,}\space\color{#D84315}\texttt{port=}\color{#00897B}\texttt{5432}\color{#263238}\texttt{)}$ | Positional args FIRST, keywords AFTER | Valid |
+| **❌ Illegal Order** | $\color{#0D47A1}\texttt{connect\textunderscore db}\color{#263238}\texttt{(}\color{#D84315}\texttt{host=}\color{#00897B}\texttt{"loc"}\color{#263238}\texttt{,}\space\color{#C62828}\texttt{5432}\color{#263238}\texttt{,}\space\color{#C62828}\texttt{"vec"}\color{#263238}\texttt{)}$ | `SyntaxError`: Positional arg cannot follow keyword | ❌ SyntaxError |
+| **❌ Duplicate Slot** | $\color{#0D47A1}\texttt{connect\textunderscore db}\color{#263238}\texttt{(}\color{#00897B}\texttt{"loc"}\color{#263238}\texttt{,}\space\color{#00897B}\texttt{5432}\color{#263238}\texttt{,}\space\color{#00897B}\texttt{"vec"}\color{#263238}\texttt{,}\space\color{#C62828}\texttt{host=}\color{#00897B}\texttt{"srv"}\color{#263238}\texttt{)}$ | `TypeError`: Multiple values assigned to `host` | ❌ TypeError |
 
 ```python
 def connect_db(host: str, port: int, db_name: str):
@@ -392,7 +392,7 @@ print(calculate_tokens("Hello world"))  # 2
 Python allows you to use **both `/` and `*` in the same function definition**. This establishes **three distinct calling zones**:
 
 $$
-\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{process\_embedding}\texttt{(}
+\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{process\textunderscore embedding}\texttt{(}
 \overbrace{\color{#B71C1C}\texttt{text:\ str}}^{\color{#B71C1C}\textsf{Zone\ 1:\ Positional-Only}}\space\texttt{,}\space
 \color{#D84315}\texttt{/}\space\texttt{,}\space
 \underbrace{\color{#1565C0}\texttt{model:\ str\ =\ "text-embedding-3"}}_{\color{#0D47A1}\textsf{Zone\ 2:\ Standard\ (Either\ Way)}}\space\texttt{,}\space
@@ -521,12 +521,12 @@ build_agent_config("SimpleBot")
 In Python, you can combine standard parameters, default parameters, `*args`, keyword-only parameters, and `**kwargs` in the **same function**, but they **MUST follow this exact strict order**:
 
 $$
-\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{execute\_pipeline}\texttt{(}
+\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{execute\textunderscore pipeline}\texttt{(}
 \overbrace{\color{#00897B}\texttt{stage:\ str}}^{\color{#004D40}\textsf{1.\ Positional\ Req}}\texttt{,}\space
 \underbrace{\color{#1565C0}\texttt{timeout:\ int\ =\ 60}}_{\color{#0D47A1}\textsf{2.\ Positional\ Default}}\texttt{,}\space
-\overbrace{\color{#D84315}\texttt{*extra\_steps:\ str}}^{\color{#BF360C}\textsf{3.\ *args\ (Tuple\ Pack)}}\texttt{,}\space
+\overbrace{\color{#D84315}\texttt{*extra\textunderscore steps:\ str}}^{\color{#BF360C}\textsf{3.\ *args\ (Tuple\ Pack)}}\texttt{,}\space
 \underbrace{\color{#7B1FA2}\texttt{verbose:\ bool\ =\ False}}_{\color{#4A148C}\textsf{4.\ Keyword-Only}}\texttt{,}\space
-\overbrace{\color{#C2185B}\texttt{**env\_metadata:\ str}}^{\color{#880E4F}\textsf{5.\ **kwargs\ (Dict\ Pack\ -\ MUST\ BE\ LAST)}}\space
+\overbrace{\color{#C2185B}\texttt{**env\textunderscore metadata:\ str}}^{\color{#880E4F}\textsf{5.\ **kwargs\ (Dict\ Pack\ -\ MUST\ BE\ LAST)}}\space
 \texttt{):}
 $$
 
@@ -653,7 +653,7 @@ In Python, type hints provide clear contracts for what a function expects to rec
 
 $$
 \overbrace{\color{#00897B}\texttt{topic:\ str}}^{\color{#004D40}\textsf{Required\ Parameter\ Type}}\texttt{,}\space\space
-\overbrace{\color{#1565C0}\texttt{max\_words:\ int}}^{\color{#0D47A1}\textsf{Type\ Hint\ Annotation}}\space\space
+\overbrace{\color{#1565C0}\texttt{max\textunderscore words:\ int}}^{\color{#0D47A1}\textsf{Type\ Hint\ Annotation}}\space\space
 \overbrace{\color{#D84315}\texttt{=\ 150}}^{\color{#BF360C}\textsf{Default\ Fallback\ Value}}\space\space
 \overbrace{\color{#7B1FA2}\texttt{->\ str:}}^{\color{#4A148C}\textsf{Return\ Type\ Contract}}
 $$
@@ -674,11 +674,11 @@ def generate_prompt(
 
 | $\color{#546E7A}\textsf{\textbf{Pattern}}$ | $\color{#0D47A1}\textsf{\textbf{Return Annotation Syntax}}$ | $\color{#00695C}\textsf{\textbf{Real-World AI Application}}$ | $\color{#1B5E20}\textsf{\textbf{Example Output}}$ |
 | :--- | :--- | :--- | :--- |
-| **1. Side Effect Only** | $\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{save\_checkpoint}\texttt{()}\space\color{#7B1FA2}\texttt{->\ None:}$ | Logging, disk checkpointing, weights saving | `None` |
-| **2. Homogeneous List** | $\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{get\_model\_tiers}\texttt{()}\space\color{#7B1FA2}\texttt{->\ list[str]:}$ | Available LLM tier models, chunked sentences | `["gpt-4o", "o3-mini"]` |
-| **3. Structured Mapping** | $\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{get\_metadata}\texttt{()}\space\color{#7B1FA2}\texttt{->\ dict[str,\ str]:}$ | System environment info, headers, configs | `{"region": "eastus"}` |
-| **4. Multi-Value Tuple** | $\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{calc\_tokens}\texttt{()}\space\color{#7B1FA2}\texttt{->\ tuple[int,\ float]:}$ | Bundled return metrics (token count + dollar cost) | `(500, 0.01)` |
-| **5. Nullable / Optional** | $\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{find\_tool}\texttt{()}\space\color{#7B1FA2}\texttt{->\ str | None:}$ | Lookup operations that may return a missing record | `"Search"` or `None` |
+| **1. Side Effect Only** | $\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{save\textunderscore checkpoint}\texttt{()}\space\color{#7B1FA2}\texttt{->\ None:}$ | Logging, disk checkpointing, weights saving | `None` |
+| **2. Homogeneous List** | $\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{get\textunderscore model\textunderscore tiers}\texttt{()}\space\color{#7B1FA2}\texttt{->\ list[str]:}$ | Available LLM tier models, chunked sentences | `["gpt-4o", "o3-mini"]` |
+| **3. Structured Mapping** | $\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{get\textunderscore metadata}\texttt{()}\space\color{#7B1FA2}\texttt{->\ dict[str,\ str]:}$ | System environment info, headers, configs | `{"region": "eastus"}` |
+| **4. Multi-Value Tuple** | $\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{calc\textunderscore tokens}\texttt{()}\space\color{#7B1FA2}\texttt{->\ tuple[int,\ float]:}$ | Bundled return metrics (token count + dollar cost) | `(500, 0.01)` |
+| **5. Nullable / Optional** | $\color{#E53935}\texttt{def}\space\color{#0D47A1}\texttt{find\textunderscore tool}\texttt{()}\space\color{#7B1FA2}\texttt{->\ str | None:}$ | Lookup operations that may return a missing record | `"Search"` or `None` |
 
 ```python
 def save_checkpoint(step: int) -> None:

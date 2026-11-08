@@ -221,7 +221,7 @@ def call_model_with_logging(prompt: str):
         raise  # A bare 'raise' re-raises the active exception up to the caller!
 ```
 
-### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{10.4 Exception Chaining (raise ... from original\_error)}}$
+### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{10.4 Exception Chaining (raise ... from original\textunderscore error)}}$
 
 In modern Python, when low-level library errors happen, you often want to wrap them in a meaningful domain exception. Using **`raise ... from err`** preserves the entire causal chain in the traceback:
 
