@@ -364,6 +364,8 @@ Write a custom exception `TokenLimitExceededError` that stores `current_tokens` 
 
 ## ⚖️ $\Large\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use}}$
 
+Here is the architectural comparison and decision guide for exception handling patterns:
+
 | Technique | Syntax | When to Use | Avoid When | Production AI Example |
 | :--- | :--- | :--- | :--- | :--- |
 | **Specific `except`** | `except SpecificError:` | Standard error handling where failure mode is known | Handling errors you don't know how to recover from | Catching `KeyError` on API response payload |
@@ -373,19 +375,6 @@ Write a custom exception `TokenLimitExceededError` that stores `current_tokens` 
 | **Bare `raise`** | `raise` (inside `except`) | Logging or auditing an error before letting it propagate upward | You have completely resolved and recovered from the error | Emitting error metric to Datadog / OpenTelemetry |
 | **Chained `raise ... from`**| `raise DomainErr from err`| Translating low-level library errors into clear application exceptions | Internal code where original exception is already self-explanatory | Wrapping `requests.HTTPError` in `LLMProviderError` |
 | **Custom Exception** | `class MyErr(Exception):` | Defining domain-specific errors with rich metadata (`status_code`, `model`)| A built-in exception (`ValueError`, `KeyError`) fits perfectly | `ContextWindowExceededError(limit=8192)` |
-
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
-
-## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
-
-| What you see | Cause | Fix |
-| --- | --- | --- |
-| Script won't stop with `Ctrl+C` | Used bare `except:` or caught `BaseException` | Change to `except Exception:` or specific error class |
-| Silent bugs / program behaves weirdly | Used `except Exception: pass` (swallowed error) | Log the exception with `logging.exception(err)` |
-| Cleanup didn't execute on crash | Placed cleanup code in `try` or `else` | Move cleanup code to `finally` |
-| `TypeError: catching classes that do not inherit from BaseException` | Tried to catch an object that isn't an exception class | Ensure custom exception inherits from `Exception` |
-| `NameError` inside `finally` block | Variable initialized inside `try` failed before assignment | Initialize the variable to `None` before the `try` block |
-| Original error cause lost in logs | Re-raised a new error without `from` | Use `raise CustomError("msg") from err` |
 
 ![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
 

@@ -762,6 +762,8 @@ In modern AI engineering, these advanced patterns combine to form the architectu
 
 ## ⚖️ $\Large\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use}}$
 
+Here is the architectural comparison and decision guide for advanced Python architectural patterns:
+
 | Technique | Syntax | When to Use | Avoid When | AI Architectural Trade-off |
 | :--- | :--- | :--- | :--- | :--- |
 | **Walrus Operator** | `(x := expr)` | While loops over streams; filtering in comprehensions | Writing complex, nested equations | Eliminates double computation; increases density. |
@@ -773,20 +775,6 @@ In modern AI engineering, these advanced patterns combine to form the architectu
 | **Structural Match** | `match / case` | Parsing LLM JSON payloads & multi-modal events | Simple single-variable equality checks | Single-step structural destructuring and validation. |
 | **Assertions** | `assert cond, msg` | Verifying developer invariants / tensor shapes | User input validation or billing | Stripped in production by `python -O`! |
 | **Monkey Patching** | `obj.fn = mock_fn` | Mocking paid AI APIs in unit tests | Production application logic | Enables offline testing; hard to trace if abused. |
-
----
-
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
-
-## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
-
-| What you see | Cause | Fix |
-| :--- | :--- | :--- |
-| `TypeError: unhashable type: 'list'` | Passed a mutable list to an `@lru_cache` memoized function | Convert arguments to immutable tuples: `tuple(my_list)`. |
-| `AttributeError: 'Slotted' object has no attribute 'x'` | Tried to assign a dynamic attribute not declared in `__slots__` | Add `'x'` to `__slots__` or use a standard class. |
-| Security check bypassed in production | Used `assert user.is_authenticated` with `python -O` | Replace `assert` with `if not user.is_authenticated: raise PermissionError()`. |
-| `SyntaxError: cannot use assignment expressions with...` | Walrus operator used without required enclosing parentheses | Wrap in parentheses: `if (val := get_data()):`. |
-| Weak cache entry disappears immediately | Assigned an object without saving a strong reference variable: `cache['k'] = Object()` | Keep a strong reference variable alive in active memory while needed. |
 
 ---
 

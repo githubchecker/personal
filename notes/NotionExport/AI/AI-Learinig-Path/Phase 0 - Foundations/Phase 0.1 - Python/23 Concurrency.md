@@ -213,17 +213,6 @@ to fan out many model/tool calls in Phase 1 and Phase 3, collapsing total latenc
 Rewrite three sequential `await asyncio.sleep(1)` calls so they run concurrently and finish in ~1
 second instead of ~3.
 
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
-
-## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
-
-| What you see | Cause | Fix |
-| --- | --- | --- |
-| Async code runs slowly, one-by-one | Sequential `await`s | Use `asyncio.gather(...)` to overlap them |
-| The whole program freezes | A blocking call inside async code | Use the async version, or offload to a thread |
-| Threads don't speed up the maths | The GIL serialises CPU work | Use `multiprocessing` for CPU-bound work |
-| `RuntimeWarning: coroutine '...' was never awaited` | Called a coroutine without `await` | `await` it, or run via `asyncio.run(...)` |
-
 ![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
 
 ## 📌 $\Large\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$

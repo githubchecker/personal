@@ -666,25 +666,6 @@ Then create a `frozenset` of your favorite AI tools and test if `"python"` is in
 | **Symmetric Diff** | `s1 ^ s2` | `s1.symmetric_difference(iter)` | ❌ New set | $O(n+m)$ | Items in either set, but **not in both** (exclusive items) | Detecting configuration drift between two agent versions |
 | **Membership** | `x in s` | — | ❌ Read-only | $O(1)$ | Checking presence in constant time | Fast duplicate check before invoking an expensive LLM |
 
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
-
-## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
-
-| What you see | Cause | Fix |
-| --- | --- | --- |
-| `KeyError: 'email'` | `d["email"]` on a missing key | Use `d.get("email")` or `d.get("email", default)` |
-| `KeyError: 'profile'` on nested access | Intermediate dictionary key is missing | Use safe navigation: `(user.get("profile") or {}).get("theme", "light")` |
-| `AttributeError: 'NoneType' object has no attribute 'get'` | Chained `.get()` failed because intermediate key exists with value `None` | Use `(d.get("key") or {}).get("sub_key", default)` |
-| `TypeError: unhashable type: 'list'` | Used list as dict key/set item, or tried `s.add([1, 2])` | Use tuple for keys, or `s.update([1, 2])` to add multiple items |
-| `TypeError: unhashable type: 'set'` | Used a mutable set as a dict key or inside a set | Use an immutable `frozenset(my_set)` |
-| `TypeError: 'set' object is not subscriptable` | `myset[0]` — sets aren't ordered | Convert to a list (`list(myset)[0]`) if you need indexing |
-| `s = {}` creates a dict, not a set | `{}` literal syntax is reserved for empty dicts | Use `s = set()` to create an empty set |
-| `TypeError: unsupported operand type(s) for +: 'set' and 'set'` | Used `+` to merge sets | Use `s1 \| s2` (new set) or `s1.update(s2)` / `s1 \|= s2` (in-place) |
-| `KeyError: 'chunk_99'` on `s.remove()` | Item does not exist in set | Use `s.discard("chunk_99")` to remove without errors |
-| `KeyError: 'pop from an empty set'` | Called `s.pop()` on an empty set | Check `if s:` before calling `.pop()` |
-| `TypeError: unsupported operand type(s) for &: 'set' and 'list'` | Operator used with non-set | Convert non-set to set (`s & set(lst)`) or use method `s.intersection(lst)` |
-| Loop gives keys, not values | `for x in d:` yields **keys** | Use `d.items()` (pairs) or `d.values()` |
-
 ![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
 
 ## 📌 $\Large\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$

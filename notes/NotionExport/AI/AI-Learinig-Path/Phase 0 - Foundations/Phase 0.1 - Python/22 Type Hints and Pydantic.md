@@ -209,17 +209,6 @@ data inside" is the habit that keeps AI systems robust.
 Define a Pydantic `Product` model with `name: str`, `price: float` (must be `> 0`), and
 `tags: list[str] = []`. Try creating one with `price=-5` and read the error message.
 
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
-
-## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
-
-| What you see | Cause | Fix |
-| --- | --- | --- |
-| Bad value isn't caught | Plain type hints aren't enforced at runtime | Use a **Pydantic** model for real validation |
-| `ValidationError` | Data didn't match the model | Read which field failed; fix the input |
-| `ImportError: pydantic_settings` | Package not installed | `pip install pydantic-settings` |
-| Secret sitting in source code | Hardcoded API key | Load via env var / `BaseSettings` |
-
 ![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
 
 ## 📌 $\Large\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$

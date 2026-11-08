@@ -803,28 +803,6 @@ A developer constantly chooses between these operations. Here is the exact perfo
 - **Convert when needed:** Use `list(t)` to edit a tuple, and `tuple(l)` to freeze and hash a list.
 - **Unpack with `*`:** Use `first, *rest = items` to cleanly split sequences without fragile index math.
 
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
-
-## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
-
-Real messages you'll actually see, plus the silent gotchas:
-
-| What you see | Cause | Fix |
-| --- | --- | --- |
-| `IndexError: list index out of range` | A position that doesn't exist (`x[5]` on 3 items) | Check `len(x)`; the last index is `len(x) - 1` (note: slicing `x[2:10]` never raises IndexError!) |
-| *(no error)* `items[1:4:-1]` returns `[]` | Direction contradiction: negative step steps backwards, but start < stop | When `step < 0`, start must be greater than stop (e.g. `items[4:1:-1]`) |
-| `ValueError: attempt to assign sequence of size X to extended slice of size Y` | Assigned wrong number of elements to a strided slice (`nums[::2] = [...]`) | Right-hand side sequence length must exactly equal the number of items in the extended slice |
-| `TypeError: slice indices must be integers or None` | Used a float or string in a slice index (`items[1.5:4]`) | Cast slice boundaries to `int` |
-| `ValueError: too many values to unpack (expected 2)` | Sequence has more items than variables (`x, y = [1, 2, 3]`) | Match variable count, or collect extra items with `*rest` (`x, *rest = ...`) |
-| `ValueError: not enough values to unpack (expected 3, got 2)` | Sequence has fewer items than variables (`x, y, z = (1, 2)`) | Check sequence length, or use default parameters |
-| `SyntaxError: two starred expressions in assignment` | Used `*` twice in one unpacking line (`*a, *b = items`) | Only one `*` variable is allowed per unpacking line |
-| `TypeError: 'tuple' object does not support item assignment` | Editing a tuple (`t[0] = 9`) | Convert to a list first (`temp = list(t)`), edit, then `tuple(temp)` |
-| `AttributeError: 'tuple' object has no attribute 'append'` | A list method called on a tuple | Convert to list (`list(t)`) or use tuple concatenation (`t + (new_item,)`) |
-| *(no error)* `x = nums.sort()` or `nums.reverse()` makes `x` `None` | `.sort()` and `.reverse()` mutate in place and return `None` | Use `sorted(nums)` or `nums[::-1]` when you want a new list back |
-| *(no error)* items skipped when calling `.remove()` or `del` in `for` loop | Mutating a list while iterating shifts indices left under the advancing loop counter | Use a list comprehension `[x for x in items if ...]`, slice assignment `items[:] = ...`, or loop over a copy `items[:]` |
-| *(no error)* `editing b` also changes `a` | `b = a` aliases the **same** list | Copy: `b = a.copy()` (or `a[:]`, `list(a)`) |
-| *(no error)* `append([1, 2])` nests a list | `append` adds **one** item; you wanted the items | Use `extend([1, 2])` to add the items |
-
 ![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
 
 ## 📌 $\Large\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$

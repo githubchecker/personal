@@ -548,20 +548,6 @@ print(x == y, x is y, id(x) == id(y))
 
 ---
 
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
-
-## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
-
-| $\color{#C2185B}\textsf{\textbf{What You See}}$ | $\color{#E65100}\textsf{\textbf{Cause}}$ | $\color{#2E7D32}\textsf{\textbf{Fix}}$ |
-| :--- | :--- | :--- |
-| `SyntaxError: cannot assign to expression` | Used `=` (assign) instead of `==` (compare) in `if x = 5:` | Use `==` in conditions |
-| `SyntaxWarning: "is" with 'int' literal` | Used `is` with a number (`x is 5`) | Use `==` for values (`x == 5`); use `is` only for identity (`is None`) |
-| `TypeError: can only concatenate str (not "int") to str` | Added a string and a number | Convert first: `int("3") + 5` or `str(5)` |
-| `ValueError: invalid literal for int()` | `int("forty")` — not a numeric string | Only cast numeric strings; validate input |
-| `0.1 + 0.2 == 0.3` returns False | Binary floating-point representation has rounding inaccuracies | Never use `==` on floats; use `abs(a - b) < 1e-9` or `math.isclose(a, b)` |
-
----
-
 ![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
 
 ## 📌 $\Large\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$

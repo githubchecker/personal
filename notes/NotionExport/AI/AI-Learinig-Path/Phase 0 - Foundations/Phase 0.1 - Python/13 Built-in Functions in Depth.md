@@ -1606,6 +1606,8 @@ In modern AI engineering, these built-ins operate together in every agent framew
 
 ## ⚖️ $\Large\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use}}$
 
+Here is the architectural comparison and decision guide for Python built-in operations:
+
 | Problem / Task | Preferred Built-in | Competing Approach | When to Pick the Built-in | AI Architectural Trade-off |
 | :--- | :--- | :--- | :--- | :--- |
 | **Walk sequence with count** | `enumerate(seq, start=0)` | `i = 0; ...; i += 1` | Always | $O(1)$ memory generator; prevents manual index drift. |
@@ -1622,22 +1624,6 @@ In modern AI engineering, these built-ins operate together in every agent framew
 - **Never `eval()` external input:** Use `ast.literal_eval()` for stringified JSON/Python literals.
 - **`isinstance` over `type`:** Check `isinstance(x, (A, B))` so subclasses and structural protocols work smoothly.
 - **Generator expressions inside `all()`/`any()`:** Pass `all(x > 0 for x in nums)`, not list comprehensions `all([x > 0 for x in nums])`, to take full advantage of short-circuiting.
-
----
-
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
-
-## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
-
-| What you see | Cause | Fix |
-| :--- | :--- | :--- |
-| `TypeError: 'list' object is not callable` | You named a variable `list = [...]` or `print = ...`, shadowing the built-in | Rename your variable (e.g. `items` or `token_list`). Never use built-in names as variables! |
-| `ValueError: zip() argument 2 is shorter than argument 1` | `zip(..., strict=True)` detected mismatched sequence lengths | Ensure datasets are aligned or use `itertools.zip_longest()`. |
-| `TypeError: isinstance() arg 2 must be a type, a tuple of types...` | Passed a list instead of a tuple: `isinstance(x, [int, str])` | Pass a tuple: `isinstance(x, (int, str))` or union `int \| str`. |
-| `round(2.5) == 2` *(unexpected behavior)* | Banker's rounding rounds half to nearest *even* number | Expected behavior. If you need commercial round-up, use `decimal.Decimal` with `ROUND_HALF_UP`. |
-| `all([])` returns `True` *(unexpected behavior)* | Vacuous truth: empty iterable has no `False` items | Guard before checking: `bool(items) and all(items)`. |
-| Second loop over `map`/`filter`/`zip` produces nothing | Generators and iterators are single-use and exhaust after one pass | Wrap in `list(...)` if you need to iterate multiple times. |
-| Tokens appear all at once, not streaming | Terminal buffer holds tokens until newline | Add `flush=True` to your `print()` statement. |
 
 ---
 

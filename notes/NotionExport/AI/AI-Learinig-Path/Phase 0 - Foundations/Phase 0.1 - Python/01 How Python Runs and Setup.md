@@ -432,25 +432,13 @@ In production AI development, virtual environment hygiene is the difference betw
 
 ## ⚖️ $\Large\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use}}$
 
+Here is the architectural comparison and decision guide for Python environments and execution tooling:
+
 | $\color{#0D47A1}\textsf{\textbf{Tool}}$ | $\color{#00C853}\textsf{\textbf{Production Priority}}$ | $\color{#00695C}\textsf{\textbf{What It Is}}$ | $\color{#2E7D32}\textsf{\textbf{When to Use It}}$ | $\color{#D32F2F}\textsf{\textbf{When to Avoid It}}$ |
 | :--- | :---: | :--- | :--- | :--- |
 | **`venv`** | `🟢 Core (Daily Default)` | Python built-in standard library tool | **$\color{#2E7D32}{\textsf{Default for 95 percent of projects.}}$** Zero installation required, standard in all tutorials and production pipelines. | When you need to manage multiple different Python engine versions (e.g., Python 3.10 vs 3.12). |
 | **`uv`** | `🟡 Occasional (Modern Speed)` | Modern ultra-fast package manager written in Rust | Large projects with complex dependencies where `pip install` is slow. Installs packages in milliseconds. | When keeping your environment minimal with zero external tool dependencies. |
 | **`conda`** | `⚪ Reference (Legacy / C-Heavy)` | Multi-language environment and package manager | Heavy data science projects requiring complex non-Python C/Fortran/CUDA system libraries outside Python. | Standard web APIs, microservices, and general Python development (it is heavy and slow). |
-
----
-
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
-
-## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
-
-| $\color{#C2185B}\textsf{\textbf{What You See}}$ | $\color{#E65100}\textsf{\textbf{Cause}}$ | $\color{#2E7D32}\textsf{\textbf{Fix}}$ |
-| :--- | :--- | :--- |
-| `'python' is not recognized...` | Python was installed without checking "Add to PATH" | Re-run installer, click "Modify", check "Add to PATH"; or use `py`. |
-| `File ... Activate.ps1 cannot be loaded... PSSecurityException` | PowerShell blocks unsigned script execution by default | Run `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser` in PowerShell. |
-| `ModuleNotFoundError: No module named 'requests'` | Package was installed in another environment, or venv is not activated | Look for `(.venv)` in prompt. Run `.\.venv\Scripts\Activate.ps1`, then check `pip list`. |
-| Script runs against wrong Python in VS Code | VS Code selected the global interpreter instead of `.venv` | Press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> → `Python: Select Interpreter` → Select `./.venv/Scripts/python.exe`. |
-| `python: can't open file 'main.py': No such file or directory` | Your terminal current working directory is not the project folder | Run `pwd` or `dir` to verify directory; `cd` to the directory containing `main.py`. |
 
 ---
 

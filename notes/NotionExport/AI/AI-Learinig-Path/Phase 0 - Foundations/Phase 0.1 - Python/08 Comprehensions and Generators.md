@@ -376,25 +376,14 @@ non-empty, stripped names: `["Ada", "Bo"]`.
 
 ## ⚖️ $\Large\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use}}$
 
+Here is the architectural comparison and decision guide for data transformation constructs:
+
 | Construct | Syntax | When to Use | Avoid When | Production AI Example |
 | :--- | :--- | :--- | :--- | :--- |
 | **List Comprehension** | `[f(x) for x in data if c]` | Clean 1-line filtering and dynamic transformation of existing data | Multiple nested loops (>2) or heavy side-effects (file I/O) | Sanitizing prompt chunks, extracting API fields |
 | **Generator Expression** | `(f(x) for x in data)` | Massive collections, infinite streams, or 1-pass pipelines | You need indexing (`gen[0]`), length (`len(gen)`), or multiple passes | Streaming tokens, processing 10GB log files |
 | **Traditional `for` Loop** | `for x in data: ...` | Complex multi-step mutations, early `break`/`continue`, error handling | Simple 1-line mapping or filtering (unnecessarily verbose) | Agent step-by-step reasoning cycle |
 | **`map()` / `filter()`** | `map(func, data)` | Passing pre-existing functions without writing a lambda | Writing inline expressions (comprehensions are cleaner) | Functional pipelines |
-
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
-
-## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
-
-| What you see | Cause | Fix |
-| --- | --- | --- |
-| `SyntaxError: invalid syntax` on trailing `else` | Wrote `[x for x in data if c else y]` | Trailing `if` is filter-only; place `if-else` ternary at the front: `[x if c else y for x in data]` |
-| Generator is empty the 2nd time | Generators exhaust after one pass | Rebuild it, or use a list if you'll reuse it |
-| `MemoryError` on a huge `[...]` | Built a giant list in memory | Use a generator `(...)` instead |
-| `TypeError: 'NoneType' object is not iterable` | Attempted comprehension on `None` | Use inline guard: `[x for x in (data or [])]` |
-| Pipeline hangs / slow latency | Called synchronous network/LLM API inside a comprehension | Comprehensions are sequential; use `asyncio.gather` for concurrent API calls |
-| Comprehension is unreadable | Crammed too much logic into one line | Refactor into a helper function or write a standard `for` loop |
 
 ![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
 

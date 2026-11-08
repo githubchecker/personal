@@ -852,6 +852,8 @@ Create a dictionary representing an AI agent's configuration (`model`, `temperat
 
 ## ⚖️ $\Large\color{#00695C}\blacksquare\space\color{#00838F}{\textsf{Variations and When to Use}}$
 
+Here is the architectural comparison and decision guide for module import and file management patterns:
+
 | Technique | Syntax | When to Use | Avoid When | Production AI Example |
 | :--- | :--- | :--- | :--- | :--- |
 | **Full Module Import** | `import math` | Default safe choice; prevents collisions; clarifies origins | Name is excessively long and used dozens of times | `import httpx` |
@@ -861,22 +863,6 @@ Create a dictionary representing an AI agent's configuration (`model`, `temperat
 | **Wildcard Import** | `from x import *` | Almost NEVER in application code | Production scripts, multi-dependency applications | Restricted to library `__init__.py` |
 | **`json.dumps` / `loads`**| `json.dumps(obj)` | Converting data to/from text strings in memory | Writing or reading directly to/from disk files | Sending prompt payloads to REST API |
 | **`json.dump` / `load`** | `json.dump(obj, f)` | Streaming directly to/from opened file descriptors | Working with strings received from network responses | Saving agent session checkpoints to disk |
-
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
-
-## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
-
-| What you see | Cause | Fix |
-| --- | --- | --- |
-| `OSError: [Errno 24] Too many open files` | Opened files in a loop without `with open(...)`, exhausting OS file descriptors before GC runs | Always manage file handles with `with open(...) as f:` to close them deterministically |
-| `AttributeError: module 'X' has no attribute 'Y'` | Tried accessing submodule `X.Y` after doing `import X`, but `X/__init__.py` did not re-export `Y` | Explicitly import the submodule (`from X import Y` or `import X.Y`), or add `from . import Y` in `X/__init__.py` |
-| `AttributeError: partially initialized module 'X' has no attribute 'Y'` | Local file shares the same name as a standard library module (shadowing) | Rename your local file (e.g. rename `random.py` $\rightarrow$ `random_test.py`) |
-| `ModuleNotFoundError: No module named 'X'` | Package not installed, or running under wrong virtual environment | Activate your venv (`.venv\Scripts\activate`) and run `pip install X` |
-| `ImportError: attempted relative import with no known parent package` | Ran a file containing relative imports directly as a script (`python pkg/mod.py`) | Run from project root with module flag: `python -m pkg.mod` |
-| `TypeError: dump() missing 1 required positional argument: 'fp'` | Used `json.dump` (file target) instead of `json.dumps` (string target) | Use `json.dumps()` for strings, or provide a file handle `json.dump(data, f)` |
-| `UnicodeDecodeError: 'charmap' codec can't decode byte...` | Opened a file on Windows without specifying UTF-8 encoding | Always add `encoding="utf-8"`: `open(file, "r", encoding="utf-8")` |
-| `SyntaxError: 'from ... import *' used with...` | Wildcard import placed inside a function | Wildcard imports are only permitted at the top-level module scope |
-| Overwritten function / unexpected behavior | Two imports or a local variable share the exact same identifier | Use explicit module prefixes (`json.loads`) or `as` aliasing |
 
 ![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
 

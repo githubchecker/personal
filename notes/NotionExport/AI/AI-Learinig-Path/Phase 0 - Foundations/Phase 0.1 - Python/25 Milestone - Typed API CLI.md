@@ -193,17 +193,6 @@ python main.py
 - Break the URL (typo the host) and watch `tenacity` retry 3 times, then raise a `TodoError`.
 - Change a `Todo` field type (e.g. `id: bool`) and see a Pydantic `ValidationError` at the boundary.
 
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
-
-## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$ (running this milestone)
-
-| What you see | Cause | Fix |
-| --- | --- | --- |
-| `ModuleNotFoundError` | venv not active / packages not installed | Activate the venv; `pip install httpx pydantic tenacity` |
-| `ValidationError` | API JSON didn't match `Todo` | Compare the model fields to the actual response |
-| Hangs, then fails | No network, or no timeout | Confirm the `timeout`; check your connection |
-| `RetryError` after 3 tries | URL wrong / host down | Fix the URL; read the underlying error it wraps |
-
 ## 🛑 $\Large\color{#B71C1C}\blacksquare\space\color{#D32F2F}{\textsf{STOP — Architectural Reflection}}$
 Name the three "boundaries" in this program where things could go wrong, and which tool guards
 each.

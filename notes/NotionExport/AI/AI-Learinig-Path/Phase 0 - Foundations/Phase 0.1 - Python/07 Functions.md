@@ -922,23 +922,6 @@ Here is the architectural comparison and decision guide for selecting function a
 | `**kwargs` **(Var Keyword)** | `def f(**config):` | Passing through unknown options to underlying libraries / APIs | The function requires specific, strictly validated inputs | Forwarding kwargs to OpenAI API client |
 | `lambda` | `lambda x: x + 1` | Short, disposable 1-line transformation passed to `sorted()`, `map()` | Multi-step logic, error handling, or reusable functions | `sorted(chunks, key=lambda c: c.score)` |
 
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
-
-## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
-
-| What you see | Cause | Fix |
-| --- | --- | --- |
-| `SyntaxError: non-default argument follows default argument` | Placed a required parameter after an optional default parameter in `def` | Move all default parameters to the **end** of the parameter list |
-| `SyntaxError: positional argument follows keyword argument` | Passed a positional argument after passing a `name=val` keyword argument | Ensure all positional arguments come **first** in the call |
-| `SyntaxError: arguments cannot follow var-keyword argument` | Defined a parameter after `**kwargs` in a function signature | `**kwargs` must **always** be the absolute last parameter |
-| `SyntaxError: iterable argument unpacking follows keyword argument unpacking` | Passed `*args` after `**kwargs` at the call site | Ensure positional unpacking (`*list`) comes before keyword unpacking (`**dict`) |
-| `TypeError: f() got multiple values for argument 'x'` | Passed argument for `'x'` positionally AND by keyword in the same call | Pass `'x'` only once (either positionally or by keyword) |
-| `TypeError: f() takes 1 positional argument but 3 were given` | Passed arguments positionally to parameters defined after a bare `*` or `*args` | Call the parameters by name (`param_name=value`) |
-| `UnboundLocalError: cannot access local variable 'X'` | Attempted `X += 1` or referenced `X` before assignment inside a function | Add `global X` (for module globals) or `nonlocal X` (for nested closures) |
-| `TypeError: f() missing 1 required positional argument` | Called a function without providing a non-default parameter | Supply the required argument, or define a default value |
-| Default list/dict accumulates data across calls | Used a mutable object (`[]` or `{}`) as a default parameter | Use sentinel `None` (`param=None`) and initialize `param = []` inside |
-| Function returns `None` unexpectedly | Forgot the `return` keyword (only used `print`) | Add `return result` to hand the value back to the caller |
-
 ![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
 
 ## 📌 $\Large\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$

@@ -287,19 +287,6 @@ Given `path = "report_2026.pdf"`, use slicing and/or methods to print the extens
 
 ---
 
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
-
-## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
-
-| $\color{#C2185B}\textsf{\textbf{What You See}}$ | $\color{#E65100}\textsf{\textbf{Cause}}$ | $\color{#2E7D32}\textsf{\textbf{Fix}}$ |
-| :--- | :--- | :--- |
-| `TypeError: 'str' object does not support item assignment` | `s[0] = "x"` — strings are immutable | Build a new string: `"x" + s[1:]` |
-| `IndexError: string index out of range` | Asked for a position past the end | Check `len(s)`; last index is `len(s) - 1` |
-| `text.strip()` "did nothing" | Didn't capture the result | `text = text.strip()` |
-| `.find(...)` returns `-1` | Substring not present | `-1` means "not found" — check before using it |
-
----
-
 ![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
 
 ## 📌 $\Large\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$

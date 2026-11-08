@@ -277,7 +277,6 @@ if not api_key:
 | **HTTP Token Streaming** | `async with client.stream(...) as resp:` | Server-Sent Events (SSE) chunk streaming | Streaming token-by-token LLM output to UI | $\color{#FFB300}\blacksquare\space\textsf{\textbf{Occasional}}$ |
 | **Env Var Secret Access** | `os.environ.get("API_KEY")` | Reads process environment table | Secure zero-leak credential provisioning | $\color{#00C853}\blacksquare\space\textsf{\textbf{Core (Daily)}}$ |
 
-
 ![Stage 3](https://img.shields.io/badge/STAGE%203-IN%20PRACTICE%20%2F%20WHY%20IT%20MATTERS-1565C0?style=for-the-badge&logo=rocket&logoColor=white)
 
 ## 🚀 $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{Stage 3 — In Practice / Why It Matters}}$
@@ -297,18 +296,6 @@ compare are NumPy arrays; the cosine-similarity function above is the literal he
 ### $\large\color{#D84315}\blacktriangleright\space\color{#BF360C}{\textsf{Try it yourself}}$
 Use `requests.get` to fetch `https://jsonplaceholder.typicode.com/todos/2`, check the status is
 `200`, and print the `title`. Then compute the cosine similarity between `[1,0,1]` and `[1,1,1]`.
-
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
-
-## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
-
-| What you see | Cause | Fix |
-| --- | --- | --- |
-| The request hangs forever | No timeout set | Always pass `timeout=...` |
-| You parse an error page as data | Didn't check the status | Check `status_code` / call `raise_for_status()` |
-| `ModuleNotFoundError: numpy` | Not installed in this venv | `pip install numpy` |
-| Array maths is very slow | Looping in pure Python | Vectorize — operate on the whole NumPy array |
-| `JSONDecodeError` on `.json()` | Response wasn't the JSON you expected | Inspect the body; handle the error |
 
 ![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
 

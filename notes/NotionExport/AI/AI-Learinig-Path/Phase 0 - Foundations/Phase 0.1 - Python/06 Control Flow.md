@@ -689,21 +689,6 @@ Use a `for` loop and `range` to print only the even numbers from 1 to 20, then r
 | **Loop `else`** | `for/while ... break else:` | Running a fallback when search or retry loop completes without break | Loops without a `break` statement (`else` will always run) | Document lookup or API retry exhaustion |
 | **Safe guard `(items or [])`** | `for x in items or []:` | Fast inline guard against `None` or empty iterables | You need to log an explicit warning when input is `None` | Streaming token chunks from optional API fields |
 
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
-
-## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
-
-| What you see | Cause | Fix |
-| --- | --- | --- |
-| Default `0` or `0.0` parameter overridden by fallback | Used `val = x if x else default`, but `0` / `0.0` is falsy | Check explicitly for `None`: `val = x if x is not None else default` |
-| `if input_str:` evaluates to True on spaces or "0" | Non-empty strings (even `" "` or `"0"`) have `len > 0` and are Truthy | Strip whitespace (`if input_str.strip():`) or cast to int/bool |
-| `IndentationError: expected an indented block` | Left an `if`/`for`/`def` body completely empty | Add `pass` as a placeholder |
-| Unexpected execution after condition | Used `pass` thinking it skips to the next iteration | Use `continue` instead of `pass` |
-| `TabError: inconsistent use of tabs and spaces` | Mixed tabs and spaces | Use spaces only (VS Code does this for `.py`) |
-| `TypeError: 'NoneType' object is not iterable` | Looped over `None` | Use `for x in (items or []):` or guard with `if items:` |
-| Program hangs forever | A `while` condition never becomes False | Make the loop variable move toward the exit |
-| `range(5)` gives `0..4`, not `1..5` | The `stop` value is excluded | Use `range(1, 6)` for 1–5 |
-
 ![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
 
 ## 📌 $\Large\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$

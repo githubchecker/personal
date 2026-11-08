@@ -218,17 +218,6 @@ real-world code.
 Write a `timed` decorator that prints how long the wrapped function took (use
 `import time; start = time.perf_counter()` before the call and the difference after).
 
-![Errors](https://img.shields.io/badge/DEBUGGING-COMMON%20ERRORS%20%26%20FIXES-C2185B?style=for-the-badge&logo=debug&logoColor=white)
-
-## 🐛 $\Large\color{#880E4F}\blacksquare\space\color{#AD1457}{\textsf{Common Errors and Fixes}}$
-
-| What you see | Cause | Fix |
-| --- | --- | --- |
-| The function runs when you meant to store it | Added `()` — `x = func()` calls it | Store without parentheses: `x = func` |
-| Decorated function breaks on some arguments | Wrapper didn't accept `*args, **kwargs` | Define `def wrapper(*args, **kwargs)` |
-| `func.__name__` shows `'wrapper'` | Missing `@functools.wraps` | Add `@functools.wraps(func)` to the wrapper |
-| Your logic runs once, not per call | Code placed outside `wrapper` | Put per-call logic **inside** `wrapper` |
-
 ![Quick Reference](https://img.shields.io/badge/CHEAT%20SHEET-QUICK%20REFERENCE-2E7D32?style=for-the-badge&logo=codeigniter&logoColor=white)
 
 ## 📌 $\Large\color{#1B5E20}\blacksquare\space\color{#2E7D32}{\textsf{Quick Reference}}$
