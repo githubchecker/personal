@@ -193,11 +193,11 @@ flowchart LR
     BOOL_NODE["⚖️ bool()<br/>True (Boolean)"]
     STR_OUT["📝 Prompt / Log (str)<br/>str(...)"]
 
-    RAW -->|int('42')| INT_NODE
-    RAW -->|float('19.99')| FLOAT_NODE
-    RAW -->|bool('...')| BOOL_NODE
-    INT_NODE -->|str(42)| STR_OUT
-    FLOAT_NODE -->|str(19.99)| STR_OUT
+    RAW -->|"int('42')"| INT_NODE
+    RAW -->|"float('19.99')"| FLOAT_NODE
+    RAW -->|"bool('...')"| BOOL_NODE
+    INT_NODE -->|"str(42)"| STR_OUT
+    FLOAT_NODE -->|"str(19.99)"| STR_OUT
 
     style RAW fill:#E1F5FE,stroke:#0288D1,color:#01579B
     style INT_NODE fill:#FFF3E0,stroke:#F57C00,color:#E65100

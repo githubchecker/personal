@@ -50,8 +50,8 @@ A **`frozenset`** is that same bag of marbles sealed tight in clear epoxy resin 
 flowchart LR
     subgraph DictModel ["🔑 Python Dictionary (Hash Map)"]
         direction LR
-        K1["Key: 'model'"] -->|Hash Lookup O(1)| V1["Value: 'gpt-4o'"]
-        K2["Key: 'tokens'"] -->|Hash Lookup O(1)| V2["Value: 1500"]
+        K1["Key: 'model'"] -->|"Hash Lookup O(1)"| V1["Value: 'gpt-4o'"]
+        K2["Key: 'tokens'"] -->|"Hash Lookup O(1)"| V2["Value: 1500"]
     end
 
     subgraph SetModel ["🔵 Python Set (Deduplication Bag)"]
