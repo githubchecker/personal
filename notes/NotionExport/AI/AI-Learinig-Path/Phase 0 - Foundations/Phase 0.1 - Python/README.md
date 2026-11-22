@@ -62,7 +62,8 @@
 | :---: | :--- | :---: | :--- |
 | **13** | Built-in Functions in Depth | `🟢 Complete` | [13 Built-in Functions in Depth](13%20Built-in%20Functions%20in%20Depth.md) |
 | **14** | Advanced Python | `🟢 Complete` | [14 Advanced Python](14%20Advanced%20Python.md) |
-| *15–21* | *Reserved for upcoming topics* | `🟡 Upcoming` | *[15–21 Reserved for upcoming topics]* |
+| **15** | Production Python Essentials (`logging`, `collections`, `pytest`, `re`, `dotenv`) | `🟢 Complete` | [15 Production Python Essentials](15%20Production%20Python%20Essentials.md) |
+| *16–21* | *Reserved for upcoming topics* | `🟡 Upcoming` | *[16–21 Reserved for upcoming topics]* |
 
 ---
 

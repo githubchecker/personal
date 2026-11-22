@@ -5,7 +5,7 @@
 [![Priority](https://img.shields.io/badge/Priority-MUST%20KNOW-D32F2F?style=for-the-badge&logo=target&logoColor=white)](../../AI%20Engineer%20Architect%20Road%20Map.md)
 [![Status](https://img.shields.io/badge/Status-Foundational-2E7D32?style=for-the-badge&logo=checkmarx&logoColor=white)](#)
 
-> $\color{#546E7A}\mathbf{Navigation:}$ **Phase 0** · **Module 0.1** · **Lesson 22 of 25** · [← Prev: 14 Advanced Python](14%20Advanced%20Python.md) · [Phase 0.1 — Python Index](README.md) · [Next: 23 Concurrency →](23%20Concurrency.md)
+> $\color{#546E7A}\mathbf{Navigation:}$ **Phase 0** · **Module 0.1** · **Lesson 22 of 25** · [← Prev: 15 Production Python Essentials](15%20Production%20Python%20Essentials.md) · [Phase 0.1 — Python Index](README.md) · [Next: 23 Concurrency →](23%20Concurrency.md)
 
 ---
 

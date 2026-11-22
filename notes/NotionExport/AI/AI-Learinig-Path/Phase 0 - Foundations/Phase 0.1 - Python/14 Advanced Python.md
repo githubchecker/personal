@@ -5,7 +5,7 @@
 [![Priority](https://img.shields.io/badge/Priority-MUST%20KNOW-D32F2F?style=for-the-badge&logo=target&logoColor=white)](../../AI%20Engineer%20Architect%20Road%20Map.md)
 [![Status](https://img.shields.io/badge/Status-Foundational-2E7D32?style=for-the-badge&logo=checkmarx&logoColor=white)](#)
 
-> $\color{#546E7A}\mathbf{Navigation:}$ **Phase 0** · **Module 0.1** · **Lesson 14 of 25** · [← Prev: 13 Built-in Functions in Depth](13%20Built-in%20Functions%20in%20Depth.md) · [Phase 0.1 — Python Index](README.md) · [Next: 22 Type Hints and Pydantic →](22%20Type%20Hints%20and%20Pydantic.md)
+> $\color{#546E7A}\mathbf{Navigation:}$ **Phase 0** · **Module 0.1** · **Lesson 14 of 25** · [← Prev: 13 Built-in Functions in Depth](13%20Built-in%20Functions%20in%20Depth.md) · [Phase 0.1 — Python Index](README.md) · [Next: 15 Production Python Essentials →](15%20Production%20Python%20Essentials.md)
 
 ---
 

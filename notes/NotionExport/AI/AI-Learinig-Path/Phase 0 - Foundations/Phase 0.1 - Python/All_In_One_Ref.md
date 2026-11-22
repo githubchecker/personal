@@ -13,7 +13,7 @@
 
 | 🔹 Part 1: Core Fundamentals | 🔸 Part 2: Functions & Control | 🧱 Part 3: OOP Architecture | 🚀 Part 4: Advanced & AI Ops |
 | :--- | :--- | :--- | :--- |
-| • [01 — Setup & How Runs](#chapter-01)<br>• [02 — Variables & Types](#chapter-02)<br>• [03 — Strings In Depth](#chapter-03)<br>• [04 — Lists & Tuples](#chapter-04) | • [05 — Dictionaries & Sets](#chapter-05)<br>• [06 — Control Flow](#chapter-06)<br>• [07 — Functions](#chapter-07)<br>• [08 — Comprehensions](#chapter-08)<br>• [09 — Decorators](#chapter-09)<br>• [10 — Error Handling](#chapter-10)<br>• [11 — Modules & Files](#chapter-11) | • [12.1 — Object Lifecycle](#chapter-12-1)<br>• [12.2 — Inheritance](#chapter-12-2)<br>• [12.3 — Dunder Methods](#chapter-12-3)<br>• [12.4 — Properties](#chapter-12-4)<br>• [12.5 — Method Types](#chapter-12-5)<br>• [12.6 — Advanced Types](#chapter-12-6) | • [13 — Built-in Functions](#chapter-13)<br>• [14 — Advanced Python](#chapter-14)<br>• [22 — Type Hints & Pydantic](#chapter-22)<br>• [23 — Concurrency](#chapter-23)<br>• [24 — AI Essentials: NumPy](#chapter-24)<br>• [25 — Milestone CLI Tool](#chapter-25) |
+| • [01 — Setup & How Runs](#chapter-01)<br>• [02 — Variables & Types](#chapter-02)<br>• [03 — Strings In Depth](#chapter-03)<br>• [04 — Lists & Tuples](#chapter-04) | • [05 — Dictionaries & Sets](#chapter-05)<br>• [06 — Control Flow](#chapter-06)<br>• [07 — Functions](#chapter-07)<br>• [08 — Comprehensions](#chapter-08)<br>• [09 — Decorators](#chapter-09)<br>• [10 — Error Handling](#chapter-10)<br>• [11 — Modules & Files](#chapter-11) | • [12.1 — Object Lifecycle](#chapter-12-1)<br>• [12.2 — Inheritance](#chapter-12-2)<br>• [12.3 — Dunder Methods](#chapter-12-3)<br>• [12.4 — Properties](#chapter-12-4)<br>• [12.5 — Method Types](#chapter-12-5)<br>• [12.6 — Advanced Types](#chapter-12-6) | • [13 — Built-in Functions](#chapter-13)<br>• [14 — Advanced Python](#chapter-14)<br>• [15 — Production Essentials](#chapter-15)<br>• [22 — Type Hints & Pydantic](#chapter-22)<br>• [23 — Concurrency](#chapter-23)<br>• [24 — AI Essentials: NumPy](#chapter-24)<br>• [25 — Milestone CLI Tool](#chapter-25) |
 
 ---
 
@@ -1505,6 +1505,72 @@ f"{42:5d} | {42:<5}| | {tokens=}"                           # '   42 | 42   | | 
 
 ---
 
+<a id="chapter-15"></a>
+
+## 🛠️ $\Large\color{#0D47A1}\blacksquare\space\color{#1565C0}{\textsf{15 — Production Python Essentials}}$
+
+* $\color{#0288D1}\blacktriangleright$ **`logging` (Production Replacement for `print`):** Severity levels: `DEBUG < INFO < WARNING < ERROR < CRITICAL`. Create a per-module logger with `logging.getLogger(__name__)` and configure `basicConfig()` once in your entrypoint. Use `logger.exception(...)` inside `except` blocks to auto-attach the full traceback.
+  * $\color{#0288D1}\bullet$ **Performance Tip:** Prefer lazy `%s` placeholders (`logger.debug("tok=%s", n)`) over f-strings — **Why:** Python skips string formatting entirely when that log level is disabled.
+  ```python
+  import logging
+  logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
+  logger = logging.getLogger(__name__)
+
+  logger.info("Loaded model=%s", "gpt-4o")           # formatted only if INFO enabled
+  try: 1 / 0
+  except ZeroDivisionError:
+      logger.exception("Inference failed")           # logs message + full traceback automatically
+  ```
+
+* $\color{#00897B}\blacktriangleright$ **`collections` (`deque`, `defaultdict`, `Counter`):**
+  * $\color{#0288D1}\bullet$ **`deque(maxlen=N)`:** $O(1)$ `append`/`appendleft`/`pop`/`popleft` (replaces $O(N)$ `list.insert(0)` / `list.pop(0)`). Setting `maxlen` auto-evicts oldest items (ideal for fixed sliding-window chat buffers).
+  * $\color{#D32F2F}\bullet$ **`defaultdict(factory)` Trap:** Auto-creates missing keys using a callable (`list`, `int`, `set`). Merely reading `d["missing"]` *inserts* that key into the dict.
+  * $\color{#0288D1}\bullet$ **`Counter(iterable)`:** Instant frequency table with `.most_common(k)` and dict arithmetic (`+`, `-`).
+  ```python
+  from collections import Counter, defaultdict, deque
+
+  win = deque(maxlen=2); win.extend(["m1", "m2", "m3"])  # deque(['m2', 'm3']) — 'm1' auto-evicted
+  groups = defaultdict(list); groups["user"].append("Hi") # {'user': ['Hi']} (no KeyError)
+  Counter("banana").most_common(2)                        # [('a', 3), ('n', 2)]
+  ```
+
+* $\color{#BF360C}\blacktriangleright$ **`pytest` & `unittest.mock.patch` (Testing Without Paid API Calls):** `pytest` auto-discovers `test_*.py` files and `test_*` functions, using plain `assert`, `pytest.raises(Err)`, `@pytest.fixture`, and `@pytest.mark.parametrize`. Use `unittest.mock.patch` (context manager or decorator) instead of manual monkey patching — it **auto-restores** the original object on exit.
+  * $\color{#D32F2F}\bullet$ **Patch Target Trap:** Patch where the symbol is **imported/used** (`"my_app.fetch"`), not where it was originally defined (`"httpx.get"`).
+  ```python
+  import pytest
+  from unittest.mock import patch
+
+  @pytest.mark.parametrize("text,expected", [("hi", 1), ("hello world", 2)])
+  def test_word_count(text, expected):
+      assert len(text.split()) == expected
+
+  def test_llm_offline():
+      with patch("my_agent.call_openai", return_value="mocked") as mock_fn:
+          assert my_agent.run("hi") == "mocked"
+          mock_fn.assert_called_once_with("hi")      # verifies call args; auto-restored on exit
+      with pytest.raises(ValueError): int("bad")     # asserts exception is raised
+  ```
+
+* $\color{#4A148C}\blacktriangleright$ **Regular Expressions (`re`):** Always use **raw strings** (`r"..."`) so backslashes aren't consumed by Python escapes. Core ops: `re.search()` (first match $\to$ `Match | None`), `re.findall()` (all matches $\to$ `list`), `re.sub()` (replace/redact), and `re.compile()` (cache patterns reused in loops).
+  * $\color{#D32F2F}\bullet$ **Greedy vs. Lazy Trap:** `.*` is **greedy** (matches to the *last* delimiter across the whole text); `.*?` is **lazy/non-greedy** (stops at the *first* closing delimiter — mandatory for extracting ```` ```json ... ``` ```` blocks).
+  ```python
+  import re
+  text = "```json\n{\"a\": 1}\n``` and ```json\n{\"b\": 2}\n```"
+  re.findall(r"```json\s*(.*?)\s*```", text, re.DOTALL)  # ['{"a": 1}', '{"b": 2}'] (lazy .*? + DOTALL)
+  re.sub(r"\b\d{3}-\d{4}\b", "[REDACTED]", "Call 555-0199")  # 'Call [REDACTED]'
+  ```
+
+* $\color{#1B5E20}\blacktriangleright$ **Local Environment Files (`python-dotenv`):** (`pip install python-dotenv`). Loads `KEY=VALUE` pairs from a local `.env` file into `os.environ` at startup (`load_dotenv()`). Always put `.env` in `.gitignore` and commit a blank `.env.example` template.
+  ```python
+  import os
+  from dotenv import load_dotenv
+
+  load_dotenv()                                      # reads .env into os.environ (does not overwrite existing vars)
+  api_key = os.environ["OPENAI_API_KEY"]             # fails fast with KeyError if missing
+  ```
+
+---
+
 <a id="chapter-22"></a>
 
 ## 📐 $\Large\color{#4A148C}\blacksquare\space\color{#6A1B9A}{\textsf{22 — Type Hints and Pydantic}}$
@@ -1737,3 +1803,9 @@ f"{42:5d} | {42:<5}| | {tokens=}"                           # '   42 | 42   | | 
   if __name__ == "__main__":
       asyncio.run(main())                                # entry guard + event loop
   ```
+
+---
+
+> [!TIP]
+> ### 🎓 $\color{#2E7D32}{\textsf{Phase 0.1 Complete — Ready for Next Steps}}$
+> You now have a complete, non-lossy, fast-path Python reference for **Phase 0.1** ready for quick revision anytime. Ready whenever you want to start **Phase 0.2 (PyTorch)** or test yourself on any topic!
